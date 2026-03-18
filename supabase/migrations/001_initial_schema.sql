@@ -128,10 +128,10 @@ CREATE POLICY "letters_insert" ON letters FOR INSERT WITH CHECK (true);
 CREATE POLICY "replies_select" ON replies FOR SELECT USING (true);
 CREATE POLICY "replies_insert" ON replies FOR INSERT WITH CHECK (true);
 
--- 프로필: 자기 프로필만 수정
+-- 프로필: 누구나 읽기/쓰기 (익명 플랫폼)
 CREATE POLICY "profiles_select" ON profiles FOR SELECT USING (true);
 CREATE POLICY "profiles_insert" ON profiles FOR INSERT WITH CHECK (true);
-CREATE POLICY "profiles_update" ON profiles FOR UPDATE USING (id = auth.uid());
+CREATE POLICY "profiles_update" ON profiles FOR UPDATE USING (true);
 
 -- 좋아요
 CREATE POLICY "likes_select" ON letter_likes FOR SELECT USING (true);
@@ -140,3 +140,22 @@ CREATE POLICY "likes_insert" ON letter_likes FOR INSERT WITH CHECK (true);
 -- 하루 한 통
 CREATE POLICY "daily_select" ON daily_letters FOR SELECT USING (true);
 CREATE POLICY "daily_insert" ON daily_letters FOR INSERT WITH CHECK (true);
+
+-- 편지 UPDATE 허용 (매칭 시 matched_letter_id 업데이트 필요)
+CREATE POLICY "letters_update" ON letters FOR UPDATE USING (true);
+
+-- RPC: 편지 작성 수 증가
+CREATE OR REPLACE FUNCTION increment_letters_written(user_id UUID)
+RETURNS void AS $$
+BEGIN
+  UPDATE profiles SET letters_written = letters_written + 1 WHERE id = user_id;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- RPC: 답장 수 증가
+CREATE OR REPLACE FUNCTION increment_reply_count(lid UUID)
+RETURNS void AS $$
+BEGIN
+  UPDATE letters SET reply_count = reply_count + 1 WHERE id = lid;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
