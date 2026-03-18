@@ -9,6 +9,7 @@ import { displayId } from "@/types/database";
 import ProxyReplyForm from "@/components/ProxyReplyForm";
 import TranslatedText from "@/components/TranslatedText";
 import type { Letter, Reply } from "@/types/database";
+import { useLanguage } from "@/components/LanguageProvider";
 
 // 데모 편지 데이터
 const DEMO_LETTERS: Record<string, Letter & { demoReplies: Reply[] }> = {
@@ -49,15 +50,8 @@ const DEMO_LETTERS: Record<string, Letter & { demoReplies: Reply[] }> = {
   },
 };
 
-function timeAgo(dateStr: string): string {
-  const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
-  if (diff < 60) return "방금";
-  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
-  return `${Math.floor(diff / 86400)}일 전`;
-}
-
 function LetterDetail() {
+  const { t } = useLanguage();
   const searchParams = useSearchParams();
   const letterId = searchParams.get("id") || "";
 
@@ -131,10 +125,18 @@ function LetterDetail() {
     localStorage.setItem("deadletter_likes", JSON.stringify(stored));
   }
 
+  function timeAgo(dateStr: string): string {
+    const diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+    if (diff < 60) return t("letters.ago_just");
+    if (diff < 3600) return t("letters.ago_min").replace("{n}", String(Math.floor(diff / 60)));
+    if (diff < 86400) return t("letters.ago_hour").replace("{n}", String(Math.floor(diff / 3600)));
+    return t("letters.ago_day").replace("{n}", String(Math.floor(diff / 86400)));
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <span className="font-mono text-sm text-dim tracking-widest">loading...</span>
+        <span className="font-mono text-sm text-dim tracking-widest">{t("letters.loading")}</span>
       </div>
     );
   }
@@ -142,9 +144,9 @@ function LetterDetail() {
   if (!letter) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-        <h2 className="font-display text-2xl font-light text-accent">편지를 찾을 수 없어요</h2>
+        <h2 className="font-display text-2xl font-light text-accent">{t("letter.notFound")}</h2>
         <Link href="/letters/" className="font-mono text-[11px] tracking-wider text-dim hover:text-fg">
-          &larr; 모든 편지 보기
+          &larr; {t("letter.backToAll")}
         </Link>
       </div>
     );
@@ -157,7 +159,7 @@ function LetterDetail() {
   return (
     <section className="max-w-[640px] mx-auto pt-32 pb-20 px-6">
       <Link href="/letters/" className="font-mono text-[11px] tracking-[2px] text-dim hover:text-fg transition-colors inline-block mb-10">
-        &larr; ALL LETTERS
+        &larr; {t("letter.backToAll")}
       </Link>
 
       <div className="flex justify-between items-center mb-6">
@@ -172,10 +174,10 @@ function LetterDetail() {
 
       <div className="flex gap-2 mb-8">
         <span className="font-mono text-[9px] tracking-wider px-2 py-1 border border-card-border text-dim">
-          {category.emoji} {category.label}
+          {category.emoji} {t(`categories.${letter.category}`)}
         </span>
         <span className={`font-mono text-[9px] tracking-wider px-2 py-1 border border-card-border ${emotion.color}`}>
-          {emotion.label}
+          {t(`emotions.${letter.emotion}`)}
         </span>
       </div>
 
@@ -191,14 +193,14 @@ function LetterDetail() {
           &#9829; {letter.likes + (liked ? 1 : 0)}
         </button>
         <span className="font-mono text-[10px] tracking-wider text-dim">&#128065; {letter.views}</span>
-        <span className="font-mono text-[10px] tracking-wider text-dim">&#9993; {replies.length}개 답장</span>
+        <span className="font-mono text-[10px] tracking-wider text-dim">&#9993; {replies.length}{t("letters.replyCount")}</span>
       </div>
 
       <div className="mb-10">
-        <div className="font-mono text-[10px] tracking-[4px] uppercase text-dim mb-8">Replies from strangers</div>
+        <div className="font-mono text-[10px] tracking-[4px] uppercase text-dim mb-8">{t("letter.repliesTitle")}</div>
 
         {replies.length === 0 ? (
-          <p className="text-dim text-sm mb-8">아직 답장이 없어요. 첫 번째 답장을 남겨보세요.</p>
+          <p className="text-dim text-sm mb-8">{t("letter.noReplies")}</p>
         ) : (
           <div className="space-y-6 mb-10">
             {replies.map((reply) => (
@@ -218,10 +220,11 @@ function LetterDetail() {
 }
 
 export default function LetterPage() {
+  const { t } = useLanguage();
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <span className="font-mono text-sm text-dim tracking-widest">loading...</span>
+        <span className="font-mono text-sm text-dim tracking-widest">{t("letters.loading")}</span>
       </div>
     }>
       <LetterDetail />

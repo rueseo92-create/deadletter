@@ -1,0 +1,32 @@
+{
+  "letters": [
+    {
+      "id": "DL-0003",
+      "text": "I ghosted my best friend of 12 years because I was jealous of her life. It's been 2 years and I think about her every single day.",
+      "reply": "Two years of thinking about someone every day \u2014 that's not a dead friendship, it's a paused one. Jealousy made you run, but missing her this much tells you what matters more. A simple \"I'm sorry, I disappeared and I miss you\" might be the hardest and best text you'll ever send.",
+      "lang": "en",
+      "likes": 891,
+      "created": "2026-03-17T16:00:00Z"
+    },
+    {
+      "id": "DL-0002",
+      "text": "\ub9e4\uc77c \ubc24 \ub0a8\ud3b8\uc774 \uc7a0\ub4e0 \ud6c4\uc5d0 \uc6b8\uc5b4\uc694. \uc774\ud63c\uc744 \uc6d0\ud558\ub294 \uac8c \uc544\ub2c8\ub77c \uadf8\ub0e5\u2026 \ub204\uad70\uac00 \ub0b4 \uc774\uc57c\uae30\ub97c \ub4e4\uc5b4\uc92c\uc73c\uba74 \uc88b\uaca0\uc5b4\uc694.",
+      "reply": "\ub4e4\ub9ac\uace0 \uc788\uc5b4\uc694. \uc774\ud63c\uc774 \uc544\ub2c8\ub77c '\ub4e4\uc5b4\uc90c'\uc744 \uc6d0\ud55c\ub2e4\ub294 \uac78 \uc2a4\uc2a4\ub85c \uc544\ub294 \uac83, \uadf8\uac8c \uc774\ubbf8 \uc911\uc694\ud55c \uc790\uac01\uc774\uc5d0\uc694. \ud63c\uc790 \uc6b0\ub294 \ubc24\uc774 \uc313\uc774\uba74 \uc9c0\uce58\ub2c8\uae4c \u2014 \ub098\ub9cc\uc758 \uc2dc\uac04\uc5d0 \ub098\ub97c \uc704\ud55c \ub300\ud654\ub97c \uc2dc\uc791\ud574\ubcf4\ub294 \uac74 \uc5b4\ub5a8\uae4c\uc694?",
+      "lang": "ko",
+      "likes": 512,
+      "created": "2026-03-17T19:00:00Z"
+    },
+    {
+      "id": "DL-0001",
+      "text": "I got promoted last week but I feel nothing. Everyone's congratulating me and I just keep smiling. I think I chose the wrong life.",
+      "reply": "That emptiness after getting what you wanted? It's not a sign you're broken \u2014 it's a signal worth listening to. The \"wrong life\" feeling usually means one specific thing is off, not everything. What did the version of you before this career actually want?",
+      "lang": "en",
+      "likes": 284,
+      "created": "2026-03-17T21:00:00Z"
+    }
+  ],
+  "meta": {
+    "total": 3,
+    "updated": "2026-03-18T00:00:00Z"
+  }
+}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase, getOrCreateUserId } from "@/lib/supabase-browser";
 import { detectHarmful } from "@/lib/anonymizer";
+import { useLanguage } from "@/components/LanguageProvider";
 
 interface ProxyReplyFormProps {
   letterId: string;
@@ -15,6 +16,7 @@ export default function ProxyReplyForm({
   recipientLabel,
   onReplySubmitted,
 }: ProxyReplyFormProps) {
+  const { t } = useLanguage();
   const [body, setBody] = useState("");
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -55,7 +57,7 @@ export default function ProxyReplyForm({
   if (sent) {
     return (
       <div className="border border-card-border bg-card-bg p-6 text-center">
-        <p className="text-accent text-sm">답장이 전해졌습니다.</p>
+        <p className="text-accent text-sm">{t("letter.replySent")}</p>
       </div>
     );
   }
@@ -63,13 +65,13 @@ export default function ProxyReplyForm({
   return (
     <div className="border border-card-border bg-card-bg p-6">
       <div className="font-mono text-[9px] tracking-[3px] uppercase text-blue mb-4">
-        나는 &ldquo;{recipientLabel}&rdquo;이/가 아니지만...
+        {t("letter.replyLabel").replace("{name}", recipientLabel)}
       </div>
 
       <textarea
         value={body}
         onChange={(e) => setBody(e.target.value)}
-        placeholder="낯선 사람으로서, 이 편지에 답장을 써주세요"
+        placeholder={t("letter.replyPlaceholder")}
         maxLength={1000}
         rows={4}
         className="w-full bg-transparent border border-card-border text-fg text-sm leading-relaxed p-4 placeholder:text-dim/30 focus:outline-none focus:border-accent/40 resize-none font-display transition-colors"
@@ -89,7 +91,7 @@ export default function ProxyReplyForm({
           disabled={body.trim().length < 5 || sending}
           className="font-mono text-[11px] tracking-wider px-5 py-2 bg-blue text-white disabled:opacity-30 hover:bg-blue/80 transition-colors cursor-pointer disabled:cursor-not-allowed"
         >
-          {sending ? "보내는 중..." : "답장 보내기"}
+          {sending ? t("letter.replySending") : t("letter.replySend")}
         </button>
       </div>
     </div>

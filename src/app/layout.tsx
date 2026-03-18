@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { LanguageProvider } from "@/components/LanguageProvider";
 
 export const metadata: Metadata = {
-  title: "deadletter — 보내지 못한 편지",
+  title: "deadletter — unsent letters",
   description:
-    "절대 전달되지 않을 편지를 쓰세요. 대신, 낯선 사람이 읽습니다. 당신의 말 못한 말이 누군가의 위로가 됩니다.",
+    "Write a letter that will never be delivered. A stranger will read it and reply.",
   openGraph: {
-    title: "deadletter — 보내지 못한 편지",
-    description: "절대 전달되지 않을 편지를 쓰세요. 대신, 낯선 사람이 읽습니다.",
+    title: "deadletter — unsent letters",
+    description: "Write a letter that will never be delivered. A stranger will read it and reply.",
     type: "website",
   },
 };
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+        <LanguageProvider>
+          <Nav />
+          <main>{children}</main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

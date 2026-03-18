@@ -2,14 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/components/LanguageProvider";
+import { LANGUAGES } from "@/lib/i18n";
 
 export default function Nav() {
   const pathname = usePathname();
+  const { t, lang, setLang } = useLanguage();
 
   const links = [
-    { href: "/write", label: "write" },
-    { href: "/letters", label: "letters" },
-    { href: "/daily", label: "daily" },
+    { href: "/write", label: t("nav.write") },
+    { href: "/letters", label: t("nav.letters") },
+    { href: "/daily", label: t("nav.daily") },
   ];
 
   return (
@@ -21,22 +24,40 @@ export default function Nav() {
         deadletter<span className="text-stamp-red">.</span>
       </Link>
 
-      <ul className="flex gap-6 md:gap-8">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              className={`font-mono text-[11px] tracking-[2px] uppercase transition-colors ${
-                pathname === link.href
-                  ? "text-accent"
+      <div className="flex items-center gap-6 md:gap-8">
+        <ul className="flex gap-6 md:gap-8">
+          {links.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={`font-mono text-[11px] tracking-[2px] uppercase transition-colors ${
+                  pathname === link.href
+                    ? "text-accent"
+                    : "text-dim hover:text-fg"
+                }`}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-1.5 border-l border-dim/20 pl-4 ml-2">
+          {LANGUAGES.map((l) => (
+            <button
+              key={l.value}
+              onClick={() => setLang(l.value)}
+              className={`font-mono text-[10px] transition-colors ${
+                lang === l.value
+                  ? "text-accent-bright"
                   : "text-dim hover:text-fg"
               }`}
             >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+              {l.label}
+            </button>
+          ))}
+        </div>
+      </div>
     </nav>
   );
 }

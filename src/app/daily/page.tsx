@@ -7,8 +7,10 @@ import { getCategoryInfo, getEmotionInfo } from "@/lib/categories";
 import { displayId } from "@/types/database";
 import type { Letter } from "@/types/database";
 import TranslatedText from "@/components/TranslatedText";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function DailyPage() {
+  const { t } = useLanguage();
   const [letter, setLetter] = useState<Letter | null>(null);
   const [loading, setLoading] = useState(true);
   const [revealed, setRevealed] = useState(false);
@@ -70,7 +72,7 @@ export default function DailyPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <span className="font-mono text-sm text-dim tracking-widest animate-pulse">
-          오늘의 편지를 찾는 중...
+          {t("daily.loading")}
         </span>
       </div>
     );
@@ -80,16 +82,16 @@ export default function DailyPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-6">
         <h2 className="font-display text-2xl font-light text-accent-bright">
-          아직 읽을 편지가 없어요
+          {t("daily.noLetterTitle")}
         </h2>
         <p className="text-dim text-sm text-center max-w-sm leading-relaxed">
-          사람들이 편지를 쓰면, 매일 아침 한 통이 당신에게 도착합니다.
+          {t("daily.noLetterDesc")}
         </p>
         <Link
           href="/write"
           className="font-mono text-[11px] tracking-wider px-6 py-3 bg-blue text-white hover:bg-blue/80 transition-colors"
         >
-          먼저 편지를 써보세요
+          {t("daily.noLetterCta")}
         </Link>
       </div>
     );
@@ -102,7 +104,7 @@ export default function DailyPage() {
     <section className="min-h-screen flex flex-col items-center justify-center px-6">
       <div className="max-w-lg w-full text-center">
         <div className="font-mono text-[10px] tracking-[6px] uppercase text-dim mb-16">
-          오늘의 편지
+          {t("daily.title")}
         </div>
 
         {!revealed ? (
@@ -116,13 +118,13 @@ export default function DailyPage() {
               </div>
 
               <div className="text-accent-bright text-lg mb-4">
-                누군가가 보내지 못한 편지가
+                {t("daily.envelope1")}
                 <br />
-                당신에게 도착했습니다.
+                {t("daily.envelope2")}
               </div>
 
               <div className="font-mono text-[10px] text-blue tracking-wider mt-8">
-                탭하여 읽기
+                {t("daily.tapToRead")}
               </div>
             </div>
           </div>
@@ -142,12 +144,12 @@ export default function DailyPage() {
               {/* Tags */}
               <div className="flex gap-2 mb-6">
                 <span className="font-mono text-[9px] tracking-wider px-2 py-1 border border-card-border text-dim">
-                  {category.emoji} {category.label}
+                  {category.emoji} {t(`categories.${letter.category}`)}
                 </span>
                 <span
                   className={`font-mono text-[9px] tracking-wider px-2 py-1 border border-card-border ${emotion.color}`}
                 >
-                  {emotion.label}
+                  {t(`emotions.${letter.emotion}`)}
                 </span>
               </div>
 
@@ -165,19 +167,19 @@ export default function DailyPage() {
                   href={`/letter/?id=${letter.id}`}
                   className="font-mono text-[11px] tracking-wider text-blue hover:text-accent-bright transition-colors"
                 >
-                  답장 쓰기 &rarr;
+                  {t("done.writeReply")} &rarr;
                 </Link>
                 <Link
                   href="/letters"
                   className="font-mono text-[11px] tracking-wider text-dim hover:text-fg transition-colors"
                 >
-                  더 많은 편지
+                  {t("letters.loadMore")}
                 </Link>
               </div>
             </div>
 
             <div className="text-center mt-8 font-mono text-[9px] text-dim tracking-wider">
-              내일 새로운 편지가 도착합니다
+              {t("daily.tomorrowNote")}
             </div>
           </div>
         )}

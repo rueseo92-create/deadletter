@@ -5,16 +5,7 @@ import type { Letter } from "@/types/database";
 import { displayId } from "@/types/database";
 import { getCategoryInfo, getEmotionInfo } from "@/lib/categories";
 import TranslatedText from "@/components/TranslatedText";
-
-function timeAgo(dateStr: string): string {
-  const now = Date.now();
-  const then = new Date(dateStr).getTime();
-  const diff = Math.floor((now - then) / 1000);
-  if (diff < 60) return "방금";
-  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
-  return `${Math.floor(diff / 86400)}일 전`;
-}
+import { useLanguage } from "@/components/LanguageProvider";
 
 interface LetterCardProps {
   letter: Letter;
@@ -23,9 +14,20 @@ interface LetterCardProps {
 }
 
 export default function LetterCard({ letter, onLike, isLiked }: LetterCardProps) {
+  const { t } = useLanguage();
   const category = getCategoryInfo(letter.category);
   const emotion = getEmotionInfo(letter.emotion);
   const did = displayId(letter.letter_number);
+
+  function timeAgo(dateStr: string): string {
+    const now = Date.now();
+    const then = new Date(dateStr).getTime();
+    const diff = Math.floor((now - then) / 1000);
+    if (diff < 60) return t("letters.ago_just");
+    if (diff < 3600) return t("letters.ago_min").replace("{n}", String(Math.floor(diff / 60)));
+    if (diff < 86400) return t("letters.ago_hour").replace("{n}", String(Math.floor(diff / 3600)));
+    return t("letters.ago_day").replace("{n}", String(Math.floor(diff / 86400)));
+  }
 
   function handleShare() {
     const url = `${window.location.origin}/letter/?id=${letter.id}`;
@@ -64,10 +66,10 @@ export default function LetterCard({ letter, onLike, isLiked }: LetterCardProps)
       {/* Tags */}
       <div className="flex gap-2 mb-5">
         <span className="font-mono text-[9px] tracking-wider px-2 py-1 border border-card-border text-dim">
-          {category.emoji} {category.label}
+          {category.emoji} {t(`categories.${letter.category}`)}
         </span>
         <span className={`font-mono text-[9px] tracking-wider px-2 py-1 border border-card-border ${emotion.color}`}>
-          {emotion.label}
+          {t(`emotions.${letter.emotion}`)}
         </span>
       </div>
 
@@ -92,13 +94,13 @@ export default function LetterCard({ letter, onLike, isLiked }: LetterCardProps)
           &#9829; {letter.likes + (isLiked ? 1 : 0)}
         </button>
         <span className="font-mono text-[10px] tracking-wider text-dim">
-          &#9993; {letter.reply_count}개 답장
+          &#9993; {letter.reply_count}{t("letters.replyCount")}
         </span>
         <button
           onClick={handleShare}
           className="font-mono text-[10px] tracking-wider text-dim hover:text-accent transition-colors cursor-pointer"
         >
-          &#8599; 공유
+          &#8599; {t("letters.share")}
         </button>
       </div>
     </article>

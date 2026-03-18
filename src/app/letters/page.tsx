@@ -5,10 +5,12 @@ import { supabase, getOrCreateUserId } from "@/lib/supabase-browser";
 import LetterCard from "@/components/LetterCard";
 import type { Letter, LetterCategory, LetterEmotion } from "@/types/database";
 import { CATEGORIES, EMOTIONS } from "@/lib/categories";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const PAGE_SIZE = 10;
 
 export default function LettersPage() {
+  const { t } = useLanguage();
   const [letters, setLetters] = useState<Letter[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
@@ -98,7 +100,7 @@ export default function LettersPage() {
                 : "border-card-border text-dim hover:text-fg"
             }`}
           >
-            전체
+            {t("letters.all")}
           </button>
           {CATEGORIES.slice(0, 6).map((cat) => (
             <button
@@ -110,7 +112,7 @@ export default function LettersPage() {
                   : "border-card-border text-dim hover:text-fg"
               }`}
             >
-              {cat.emoji} {cat.label}
+              {cat.emoji} {t(`categories.${cat.value}`)}
             </button>
           ))}
         </div>
@@ -124,7 +126,7 @@ export default function LettersPage() {
                 : "border-card-border text-dim hover:text-fg"
             }`}
           >
-            모든 감정
+            {t("letters.allEmotions")}
           </button>
           {EMOTIONS.map((em) => (
             <button
@@ -136,7 +138,7 @@ export default function LettersPage() {
                   : "border-card-border text-dim hover:text-fg"
               }`}
             >
-              {em.label}
+              {t(`emotions.${em.value}`)}
             </button>
           ))}
         </div>
@@ -146,14 +148,14 @@ export default function LettersPage() {
       <div className="max-w-[640px] mx-auto px-6">
         {loading && letters.length === 0 ? (
           <div className="text-center py-20 font-mono text-sm text-dim tracking-widest">
-            loading...
+            {t("letters.loading")}
           </div>
         ) : letters.length === 0 ? (
           <div className="text-center py-20">
             <h2 className="font-display text-2xl font-light text-accent mb-3">
-              아직 편지가 없어요
+              {t("letters.noLetters")}
             </h2>
-            <p className="text-dim text-sm">첫 번째 편지를 써보세요.</p>
+            <p className="text-dim text-sm">{t("letters.noLettersDesc")}</p>
           </div>
         ) : (
           <>
@@ -173,7 +175,7 @@ export default function LettersPage() {
                   disabled={loading}
                   className="font-mono text-[11px] tracking-wider text-dim hover:text-fg transition-colors cursor-pointer"
                 >
-                  {loading ? "loading..." : "더 보기 \u2193"}
+                  {loading ? t("letters.loading") : `${t("letters.loadMore")} \u2193`}
                 </button>
               </div>
             )}

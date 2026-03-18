@@ -35,3 +35,5 @@ _legacy/db/deadletter.db
 # Testing
 .pytest_cache/
 coverage/
+
+.vercel

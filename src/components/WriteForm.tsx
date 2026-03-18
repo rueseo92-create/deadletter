@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import { CATEGORIES, EMOTIONS } from "@/lib/categories";
 import { anonymize, detectCrisis, detectHarmful, detectLanguage } from "@/lib/anonymizer";
 import { supabase, getOrCreateUserId, isSupabaseConfigured } from "@/lib/supabase-browser";
+import { useLanguage } from "@/components/LanguageProvider";
 import type { LetterCategory, LetterEmotion } from "@/types/database";
 
 type Step = "category" | "recipient" | "emotion" | "body" | "sending" | "done";
 
 export default function WriteForm() {
   const router = useRouter();
+  const { t, lang } = useLanguage();
   const [step, setStep] = useState<Step>("category");
   const [category, setCategory] = useState<LetterCategory | null>(null);
   const [recipientLabel, setRecipientLabel] = useState("");
@@ -28,7 +30,14 @@ export default function WriteForm() {
     // 유해 콘텐츠 감지
     const harmfulMsg = detectHarmful(body);
     if (harmfulMsg) {
-      setError(harmfulMsg);
+      // Map the Korean return value to the correct translation key
+      if (harmfulMsg.includes("욕설") || harmfulMsg.includes("비속어")) {
+        setError(t("filter.harmfulProfanity"));
+      } else if (harmfulMsg.includes("성적")) {
+        setError(t("filter.harmfulSexual"));
+      } else {
+        setError(harmfulMsg);
+      }
       setStep("body");
       return;
     }
@@ -36,16 +45,14 @@ export default function WriteForm() {
     // 수신인 유해 콘텐츠 감지
     const harmfulRecipient = detectHarmful(recipientLabel);
     if (harmfulRecipient) {
-      setError("수신인에 부적절한 표현이 포함되어 있어요.");
+      setError(t("filter.harmfulRecipient"));
       setStep("body");
       return;
     }
 
     // 위기 감지
     if (detectCrisis(body)) {
-      setError(
-        "당신의 이야기를 들을 수 있어서 다행이에요. 지금 힘드시다면 전문 상담을 받아보세요.\n\n자살예방상담전화: 1393\n정신건강위기상담전화: 1577-0199"
-      );
+      setError(t("filter.crisisMessage"));
       setStep("body");
       return;
     }
@@ -151,16 +158,16 @@ export default function WriteForm() {
         </div>
 
         <h2 className="text-3xl md:text-4xl font-light text-accent-bright mb-4">
-          편지가 떠났습니다
+          {t("done.title")}
         </h2>
         <p className="text-dim mb-12 max-w-md mx-auto leading-relaxed">
-          당신의 말은 이제 바다 위를 떠다니다 누군가에게 닿을 거예요.
+          {t("done.subtitle")}
         </p>
 
         {matchedLetter && (
           <div className="max-w-lg mx-auto mb-12 text-left border border-card-border bg-card-bg p-8">
             <div className="font-mono text-[9px] tracking-[3px] uppercase text-blue mb-6">
-              당신에게 도착한 편지
+              {t("done.matchedTitle")}
             </div>
             <div className="font-mono text-[10px] tracking-[2px] text-dim mb-3">
               To: {matchedLetter.recipient_label}
@@ -172,7 +179,7 @@ export default function WriteForm() {
               onClick={() => router.push(`/letter/?id=${matchedLetter.id}`)}
               className="font-mono text-[11px] tracking-wider text-blue hover:text-accent-bright transition-colors cursor-pointer"
             >
-              답장 쓰기 &rarr;
+              {t("done.writeReply")} &rarr;
             </button>
           </div>
         )}
@@ -189,13 +196,13 @@ export default function WriteForm() {
             }}
             className="font-mono text-[11px] tracking-wider text-dim hover:text-fg transition-colors cursor-pointer"
           >
-            한 통 더 쓰기
+            {t("done.writeAnother")}
           </button>
           <button
             onClick={() => router.push("/letters")}
             className="font-mono text-[11px] tracking-wider px-6 py-3 bg-blue text-white hover:bg-blue/80 transition-colors cursor-pointer"
           >
-            다른 편지 읽기
+            {t("done.readOthers")}
           </button>
         </div>
       </div>
@@ -206,7 +213,7 @@ export default function WriteForm() {
     return (
       <div className="text-center py-20">
         <div className="font-mono text-sm text-dim tracking-widest animate-pulse">
-          편지를 보내는 중...
+          {t("write.sending")}
         </div>
       </div>
     );
@@ -218,9 +225,9 @@ export default function WriteForm() {
       {step === "category" && (
         <div className="opacity-0 animate-fade-up">
           <h2 className="text-2xl md:text-3xl font-light text-accent-bright mb-2">
-            누구에게 쓰나요?
+            {t("write.categoryTitle")}
           </h2>
-          <p className="text-dim text-sm mb-10">이 편지는 전달되지 않습니다.</p>
+          <p className="text-dim text-sm mb-10">{t("write.categorySubtitle")}</p>
 
           <div className="grid grid-cols-2 gap-3">
             {CATEGORIES.map((cat) => (
@@ -234,7 +241,7 @@ export default function WriteForm() {
               >
                 <span className="text-lg mr-2">{cat.emoji}</span>
                 <span className="text-sm text-dim group-hover:text-accent-bright transition-colors">
-                  {cat.label}
+                  {t(`categories.${cat.value}`)}
                 </span>
               </button>
             ))}
@@ -246,10 +253,10 @@ export default function WriteForm() {
       {step === "recipient" && (
         <div className="opacity-0 animate-fade-up">
           <h2 className="text-2xl md:text-3xl font-light text-accent-bright mb-2">
-            편지의 수신인을 적어주세요
+            {t("write.recipientTitle")}
           </h2>
           <p className="text-dim text-sm mb-10">
-            이름 대신 당신만 아는 호칭으로.
+            {t("write.recipientSubtitle")}
           </p>
 
           <div className="mb-4">
@@ -261,7 +268,7 @@ export default function WriteForm() {
             type="text"
             value={recipientLabel}
             onChange={(e) => setRecipientLabel(e.target.value)}
-            placeholder="3년 전 헤어진 너에게"
+            placeholder={t("write.recipientPlaceholder")}
             maxLength={50}
             autoFocus
             className="w-full bg-transparent border-b border-card-border text-fg text-lg py-3 px-0 placeholder:text-dim/40 focus:outline-none focus:border-accent transition-colors"
@@ -272,14 +279,14 @@ export default function WriteForm() {
               onClick={() => setStep("category")}
               className="font-mono text-[11px] tracking-wider text-dim hover:text-fg transition-colors cursor-pointer"
             >
-              &larr; 뒤로
+              &larr; {t("write.back")}
             </button>
             <button
               onClick={() => recipientLabel.trim() && setStep("emotion")}
               disabled={!recipientLabel.trim()}
               className="font-mono text-[11px] tracking-wider px-6 py-3 bg-blue text-white disabled:opacity-30 hover:bg-blue/80 transition-colors cursor-pointer disabled:cursor-not-allowed"
             >
-              다음
+              {t("write.next")}
             </button>
           </div>
         </div>
@@ -289,10 +296,10 @@ export default function WriteForm() {
       {step === "emotion" && (
         <div className="opacity-0 animate-fade-up">
           <h2 className="text-2xl md:text-3xl font-light text-accent-bright mb-2">
-            어떤 마음인가요?
+            {t("write.emotionTitle")}
           </h2>
           <p className="text-dim text-sm mb-10">
-            비슷한 감정의 편지와 연결됩니다.
+            {t("write.emotionSubtitle")}
           </p>
 
           <div className="flex flex-wrap gap-3">
@@ -305,7 +312,7 @@ export default function WriteForm() {
                 }}
                 className={`font-mono text-[11px] tracking-wider px-4 py-2 border border-card-border hover:border-accent/40 transition-all cursor-pointer ${em.color}`}
               >
-                {em.label}
+                {t(`emotions.${em.value}`)}
               </button>
             ))}
           </div>
@@ -315,7 +322,7 @@ export default function WriteForm() {
               onClick={() => setStep("recipient")}
               className="font-mono text-[11px] tracking-wider text-dim hover:text-fg transition-colors cursor-pointer"
             >
-              &larr; 뒤로
+              &larr; {t("write.back")}
             </button>
           </div>
         </div>
@@ -333,7 +340,7 @@ export default function WriteForm() {
           <textarea
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            placeholder="보내지 못한 말을 여기에 적어주세요..."
+            placeholder={t("write.bodyPlaceholder")}
             maxLength={2000}
             rows={10}
             autoFocus
@@ -356,14 +363,14 @@ export default function WriteForm() {
               onClick={() => setStep("emotion")}
               className="font-mono text-[11px] tracking-wider text-dim hover:text-fg transition-colors cursor-pointer"
             >
-              &larr; 뒤로
+              &larr; {t("write.back")}
             </button>
             <button
               onClick={handleSubmit}
               disabled={body.trim().length < 10}
               className="font-mono text-[11px] tracking-wider px-8 py-3 bg-blue text-white disabled:opacity-30 hover:bg-blue/80 transition-colors cursor-pointer disabled:cursor-not-allowed"
             >
-              편지 보내기
+              {t("write.send")}
             </button>
           </div>
         </div>

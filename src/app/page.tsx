@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function LandingPage() {
+  const { t } = useLanguage();
+
   return (
     <>
       {/* Hero */}
@@ -11,16 +16,12 @@ export default function LandingPage() {
           return to sender
         </div>
 
-        <h1 className="font-display font-light text-[clamp(36px,6vw,72px)] leading-[1.15] text-accent-bright max-w-[700px] opacity-0 animate-fade-up animation-delay-200">
-          보내지 못한 편지를
-          <br />
-          <em className="italic text-accent">여기에</em> 보내세요.
+        <h1 className="font-display font-light text-[clamp(36px,6vw,72px)] leading-[1.15] text-accent-bright max-w-[700px] opacity-0 animate-fade-up animation-delay-200 whitespace-pre-line">
+          {t("hero.title")}
         </h1>
 
-        <p className="text-dim text-base mt-7 max-w-[420px] leading-relaxed opacity-0 animate-fade-up animation-delay-400">
-          절대 전달되지 않을 편지를 쓰세요.
-          <br />
-          대신, 낯선 사람이 읽고 답장합니다.
+        <p className="text-dim text-base mt-7 max-w-[420px] leading-relaxed opacity-0 animate-fade-up animation-delay-400 whitespace-pre-line">
+          {t("hero.subtitle")}
         </p>
 
         <div className="mt-12 flex flex-col items-center gap-3 opacity-0 animate-fade-up animation-delay-600">
@@ -28,10 +29,10 @@ export default function LandingPage() {
             href="/write"
             className="font-mono text-[13px] tracking-wider bg-blue text-white px-9 py-3.5 hover:bg-blue/80 transition-all hover:-translate-y-0.5"
           >
-            편지 쓰기 &rarr;
+            {t("hero.cta")} &rarr;
           </Link>
           <span className="font-mono text-[10px] text-dim tracking-wider">
-            가입 없이. 익명으로. 지금 바로.
+            {t("hero.tagline")}
           </span>
         </div>
 
@@ -68,7 +69,7 @@ export default function LandingPage() {
       {/* How it works */}
       <section className="py-24 md:py-32 px-6 md:px-10 max-w-[900px] mx-auto">
         <div className="font-mono text-[10px] tracking-[4px] uppercase text-dim mb-12">
-          How it works
+          {t("hero.howItWorksTitle")}
         </div>
 
         <div className="relative">
@@ -77,23 +78,23 @@ export default function LandingPage() {
           {[
             {
               num: "01",
-              title: "편지를 쓰세요",
-              desc: "전 연인에게, 부모님에게, 과거의 나에게 — 말하지 못한 것을 적어주세요. 이 편지는 그 사람에게 전달되지 않습니다.",
+              title: t("hero.step1title"),
+              desc: t("hero.step1desc"),
             },
             {
               num: "02",
-              title: "비슷한 편지가 도착합니다",
-              desc: "당신과 비슷한 감정의 편지가 매칭됩니다. 부모님에게 쓴 편지는 자녀에게 쓴 편지와 만납니다. 나만 이런 게 아니라는 걸 느낄 수 있어요.",
+              title: t("hero.step2title"),
+              desc: t("hero.step2desc"),
             },
             {
               num: "03",
-              title: "낯선 사람이 답장합니다",
-              desc: "'나는 네 엄마가 아니지만, 엄마로서 말해줄게...' — AI가 아닌, 진짜 사람이 수신인의 입장에서 답장을 써줍니다.",
+              title: t("hero.step3title"),
+              desc: t("hero.step3desc"),
             },
             {
               num: "04",
-              title: "당신의 말이 누군가의 위로가 됩니다",
-              desc: "익명화된 편지들은 아카이브에 남아, 비슷한 고민을 가진 사람들에게 위로가 됩니다.",
+              title: t("hero.step4title"),
+              desc: t("hero.step4desc"),
             },
           ].map((step) => (
             <div key={step.num} className="flex gap-8 md:gap-10 py-9">
@@ -117,7 +118,7 @@ export default function LandingPage() {
       <div className="text-center py-20 relative">
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-card-border" />
         <span className="font-mono text-[10px] tracking-[4px] text-dim bg-bg px-4 py-4 relative">
-          LETTERS FROM STRANGERS
+          {t("hero.sampleTitle")}
         </span>
       </div>
 
@@ -202,24 +203,22 @@ export default function LandingPage() {
       <div className="text-center py-20 relative">
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-card-border" />
         <span className="font-mono text-[10px] tracking-[4px] text-dim bg-bg px-4 py-4 relative">
-          YOUR TURN
+          {t("hero.yourTurn")}
         </span>
       </div>
 
       <section className="min-h-[60vh] flex flex-col justify-center items-center text-center px-6 pb-20">
-        <h2 className="font-display font-light text-[clamp(28px,4vw,48px)] text-accent-bright mb-4">
-          당신은 누구에게
-          <br />
-          무슨 말을 못 했나요?
+        <h2 className="font-display font-light text-[clamp(28px,4vw,48px)] text-accent-bright mb-4 whitespace-pre-line">
+          {t("hero.bottomTitle")}
         </h2>
         <p className="text-dim mb-10 max-w-md leading-relaxed">
-          적어보세요. 보내보세요. 그 말이 누군가에게 닿게 해주세요.
+          {t("hero.bottomSubtitle")}
         </p>
         <Link
           href="/write"
           className="font-mono text-[13px] tracking-wider bg-blue text-white px-9 py-3.5 hover:bg-blue/80 transition-all hover:-translate-y-0.5"
         >
-          편지 쓰기 &rarr;
+          {t("hero.cta")} &rarr;
         </Link>
       </section>
     </>
