@@ -1,7 +1,7 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://czfrshrprbxquynvnubc.supabase.co";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6ZnJzaHJwcmJ4cXV5bnZudWJjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MzQ5MDcsImV4cCI6MjA4OTQxMDkwN30.C3y9kbTZhj9rxELXVjNp-TFFD5G8lGOcCJhX-3vjzak";
 
 export const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
 
