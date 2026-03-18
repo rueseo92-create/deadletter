@@ -6,6 +6,7 @@ import { supabase, getOrCreateUserId } from "@/lib/supabase-browser";
 import { getCategoryInfo, getEmotionInfo } from "@/lib/categories";
 import { displayId } from "@/types/database";
 import type { Letter } from "@/types/database";
+import TranslatedText from "@/components/TranslatedText";
 
 export default function DailyPage() {
   const [letter, setLetter] = useState<Letter | null>(null);
@@ -151,8 +152,11 @@ export default function DailyPage() {
               </div>
 
               {/* Body */}
-              <div className="text-lg leading-[1.9] text-fg italic mb-8">
+              <div className="text-lg leading-[1.9] text-fg italic mb-4">
                 &ldquo;{letter.body}&rdquo;
+              </div>
+              <div className="mb-8">
+                <TranslatedText text={letter.body} className="text-base leading-[1.9] text-fg italic" />
               </div>
 
               {/* Actions */}

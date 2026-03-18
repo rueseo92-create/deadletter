@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Letter } from "@/types/database";
 import { displayId } from "@/types/database";
 import { getCategoryInfo, getEmotionInfo } from "@/lib/categories";
+import TranslatedText from "@/components/TranslatedText";
 
 function timeAgo(dateStr: string): string {
   const now = Date.now();
@@ -71,11 +72,14 @@ export default function LetterCard({ letter, onLike, isLiked }: LetterCardProps)
       </div>
 
       {/* Body */}
-      <Link href={`/letter/?id=${letter.id}`}>
-        <div className="text-[17px] leading-[1.8] text-fg mb-6 italic cursor-pointer">
-          &ldquo;{letter.body}&rdquo;
-        </div>
-      </Link>
+      <div className="mb-6">
+        <Link href={`/letter/?id=${letter.id}`}>
+          <div className="text-[17px] leading-[1.8] text-fg italic cursor-pointer">
+            &ldquo;{letter.body}&rdquo;
+          </div>
+        </Link>
+        <TranslatedText text={letter.body} className="text-[15px] leading-[1.8] text-fg italic" />
+      </div>
 
       {/* Stats */}
       <div className="flex gap-6">

@@ -7,6 +7,7 @@ import { supabase, getOrCreateUserId, isSupabaseConfigured } from "@/lib/supabas
 import { getCategoryInfo, getEmotionInfo } from "@/lib/categories";
 import { displayId } from "@/types/database";
 import ProxyReplyForm from "@/components/ProxyReplyForm";
+import TranslatedText from "@/components/TranslatedText";
 import type { Letter, Reply } from "@/types/database";
 
 // 데모 편지 데이터
@@ -178,8 +179,11 @@ function LetterDetail() {
         </span>
       </div>
 
-      <div className="text-xl leading-[1.9] text-fg italic mb-10">
+      <div className="text-xl leading-[1.9] text-fg italic mb-4">
         &ldquo;{letter.body}&rdquo;
+      </div>
+      <div className="mb-10">
+        <TranslatedText text={letter.body} className="text-lg leading-[1.9] text-fg italic" />
       </div>
 
       <div className="flex gap-6 mb-12 pb-8 border-b border-card-border">
@@ -199,8 +203,9 @@ function LetterDetail() {
           <div className="space-y-6 mb-10">
             {replies.map((reply) => (
               <div key={reply.id} className="bg-card-bg border-l-2 border-blue p-5">
-                <p className="text-sm text-accent leading-relaxed mb-3">{reply.body}</p>
-                <span className="font-mono text-[9px] text-dim">{timeAgo(reply.created_at)}</span>
+                <p className="text-sm text-accent leading-relaxed mb-2">{reply.body}</p>
+                <TranslatedText text={reply.body} className="text-sm text-accent leading-relaxed" />
+                <span className="font-mono text-[9px] text-dim mt-2 block">{timeAgo(reply.created_at)}</span>
               </div>
             ))}
           </div>
