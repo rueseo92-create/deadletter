@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { supabase, getOrCreateUserId } from "@/lib/supabase-browser";
+import { detectHarmful } from "@/lib/anonymizer";
 
 interface ProxyReplyFormProps {
   letterId: string;
@@ -18,9 +19,19 @@ export default function ProxyReplyForm({
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
+  const [error, setError] = useState("");
+
   async function handleSubmit() {
     if (body.trim().length < 5) return;
+
+    const harmfulMsg = detectHarmful(body);
+    if (harmfulMsg) {
+      setError(harmfulMsg);
+      return;
+    }
+
     setSending(true);
+    setError("");
 
     const userId = getOrCreateUserId();
 
@@ -65,9 +76,14 @@ export default function ProxyReplyForm({
       />
 
       <div className="flex justify-between items-center mt-3">
-        <span className="font-mono text-[10px] text-dim">
-          {body.length}/1000
-        </span>
+        <div>
+          <span className="font-mono text-[10px] text-dim">
+            {body.length}/1000
+          </span>
+          {error && (
+            <span className="text-stamp-red text-xs ml-3">{error}</span>
+          )}
+        </div>
         <button
           onClick={handleSubmit}
           disabled={body.trim().length < 5 || sending}

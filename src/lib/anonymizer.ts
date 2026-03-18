@@ -16,6 +16,35 @@ const PATTERNS: Record<string, RegExp> = {
   social_handle: /@[a-zA-Z0-9_.]{2,30}/g,
 };
 
+// 유해 콘텐츠 키워드 (성적, 욕설, 혐오)
+const PROFANITY_KO = [
+  "씨발", "시발", "ㅅㅂ", "ㅆㅂ", "씹", "좆", "ㅈㄹ", "지랄",
+  "병신", "ㅂㅅ", "미친년", "미친놈", "꺼져", "닥쳐",
+  "개새끼", "개새", "개년", "년놈", "썅", "니미", "느금마",
+  "호로", "후레", "애미", "애비", "엠창", "니엄마",
+  "ㅗ", "ㅁㅊ",
+];
+
+const PROFANITY_EN = [
+  "fuck", "shit", "bitch", "asshole", "dick", "pussy",
+  "bastard", "damn", "crap", "whore", "slut",
+  "motherfucker", "cock", "cunt",
+];
+
+const SEXUAL_KO = [
+  "섹스", "성관계", "자위", "포르노", "야동", "보지", "자지",
+  "강간", "성폭행", "성추행", "몰카", "딸딸이",
+  "떡치", "박히", "따먹", "빨아", "핥아",
+  "가슴 만", "엉덩이 만", "벗겨", "알몸",
+  "19금", "음란", "변태",
+];
+
+const SEXUAL_EN = [
+  "sex", "porn", "nude", "naked", "masturbat",
+  "rape", "molest", "blowjob", "handjob",
+  "orgasm", "erotic", "hentai", "xxx",
+];
+
 // 위기 키워드
 const CRISIS_KEYWORDS_KO = [
   "죽고 싶", "죽고싶", "자살", "자해",
@@ -53,6 +82,27 @@ export function detectCrisis(text: string): boolean {
     CRISIS_KEYWORDS_KO.some((kw) => lower.includes(kw)) ||
     CRISIS_KEYWORDS_EN.some((kw) => lower.includes(kw))
   );
+}
+
+export function detectHarmful(text: string): string | null {
+  const lower = text.toLowerCase();
+  const normalized = lower.replace(/\s+/g, "");
+
+  if (
+    PROFANITY_KO.some((kw) => normalized.includes(kw)) ||
+    PROFANITY_EN.some((kw) => lower.includes(kw))
+  ) {
+    return "욕설이나 비속어가 포함된 편지는 보낼 수 없어요.";
+  }
+
+  if (
+    SEXUAL_KO.some((kw) => normalized.includes(kw)) ||
+    SEXUAL_EN.some((kw) => lower.includes(kw))
+  ) {
+    return "성적인 내용이 포함된 편지는 보낼 수 없어요.";
+  }
+
+  return null;
 }
 
 export function detectLanguage(text: string): "ko" | "en" {

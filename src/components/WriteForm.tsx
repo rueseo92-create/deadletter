@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CATEGORIES, EMOTIONS } from "@/lib/categories";
-import { anonymize, detectCrisis, detectLanguage } from "@/lib/anonymizer";
+import { anonymize, detectCrisis, detectHarmful, detectLanguage } from "@/lib/anonymizer";
 import { supabase, getOrCreateUserId, isSupabaseConfigured } from "@/lib/supabase-browser";
 import type { LetterCategory, LetterEmotion } from "@/types/database";
 
@@ -24,6 +24,22 @@ export default function WriteForm() {
 
     setStep("sending");
     setError("");
+
+    // 유해 콘텐츠 감지
+    const harmfulMsg = detectHarmful(body);
+    if (harmfulMsg) {
+      setError(harmfulMsg);
+      setStep("body");
+      return;
+    }
+
+    // 수신인 유해 콘텐츠 감지
+    const harmfulRecipient = detectHarmful(recipientLabel);
+    if (harmfulRecipient) {
+      setError("수신인에 부적절한 표현이 포함되어 있어요.");
+      setStep("body");
+      return;
+    }
 
     // 위기 감지
     if (detectCrisis(body)) {
