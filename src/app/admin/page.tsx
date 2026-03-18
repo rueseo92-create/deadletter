@@ -107,7 +107,7 @@ export default function AdminPage() {
 
   const deleteLetter = async (id: string) => {
     if (!window.confirm("이 편지를 삭제하시겠습니까?")) return;
-    const { error } = await supabase.rpc("admin_delete_letter", { letter_id: id });
+    const { error } = await supabase.rpc("admin_delete_letter", { target_id: id });
     if (error) {
       alert("삭제 실패: " + error.message);
     }
@@ -124,7 +124,7 @@ export default function AdminPage() {
 
   const deleteReply = async (id: string) => {
     if (!window.confirm("이 답장을 삭제하시겠습니까?")) return;
-    const { error } = await supabase.rpc("admin_delete_reply", { reply_id: id });
+    const { error } = await supabase.rpc("admin_delete_reply", { target_id: id });
     if (error) {
       alert("삭제 실패: " + error.message);
     }
