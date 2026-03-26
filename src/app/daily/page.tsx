@@ -8,6 +8,7 @@ import { displayId } from "@/types/database";
 import type { Letter } from "@/types/database";
 import TranslatedText from "@/components/TranslatedText";
 import { useLanguage } from "@/components/LanguageProvider";
+import AdBanner from "@/components/AdBanner";
 
 export default function DailyPage() {
   const { t } = useLanguage();
@@ -23,7 +24,6 @@ export default function DailyPage() {
     const userId = getOrCreateUserId();
     const today = new Date().toISOString().split("T")[0];
 
-    // 오늘 이미 배정된 편지가 있는지 확인
     const { data: existing } = await supabase
       .from("daily_letters")
       .select("letter_id")
@@ -42,7 +42,6 @@ export default function DailyPage() {
       return;
     }
 
-    // 새 편지 배정: 랜덤 게시 편지 선택 (자기 편지 제외)
     const { data: candidates } = await supabase
       .from("letters")
       .select("*")
@@ -70,8 +69,13 @@ export default function DailyPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="font-mono text-sm text-dim tracking-widest animate-pulse">
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4">
+        <div className="inline-flex gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDelay: "0ms" }} />
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDelay: "200ms" }} />
+          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" style={{ animationDelay: "400ms" }} />
+        </div>
+        <span className="font-mono text-sm text-dim tracking-widest">
           {t("daily.loading")}
         </span>
       </div>
@@ -81,6 +85,7 @@ export default function DailyPage() {
   if (!letter) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-6 px-6">
+        <div className="text-5xl opacity-20 mb-2">&#9993;</div>
         <h2 className="font-display text-2xl font-light text-accent-bright">
           {t("daily.noLetterTitle")}
         </h2>
@@ -89,7 +94,7 @@ export default function DailyPage() {
         </p>
         <Link
           href="/write"
-          className="font-mono text-[11px] tracking-wider px-6 py-3 bg-blue text-white hover:bg-blue/80 transition-colors"
+          className="font-mono text-[11px] tracking-wider px-6 py-3 bg-blue text-white hover:bg-blue/80 transition-all hover:-translate-y-0.5"
         >
           {t("daily.noLetterCta")}
         </Link>
@@ -109,12 +114,17 @@ export default function DailyPage() {
 
         {!revealed ? (
           <div className="opacity-0 animate-fade-up">
-            {/* 봉투 모양 */}
-            <div className="border border-card-border bg-card-bg p-10 md:p-14 cursor-pointer hover:border-accent/30 transition-all"
+            {/* 봉투 */}
+            <div
+              className="border border-card-border bg-card-bg p-10 md:p-14 cursor-pointer hover:border-accent/30 hover:bg-hover/30 transition-all group"
               onClick={() => setRevealed(true)}
             >
               <div className="font-mono text-[9px] tracking-[4px] uppercase text-dim mb-8">
                 {displayId(letter.letter_number)}
+              </div>
+
+              <div className="text-5xl opacity-20 mb-6 group-hover:opacity-40 transition-opacity">
+                &#9993;
               </div>
 
               <div className="text-accent-bright text-lg mb-4">
@@ -123,13 +133,13 @@ export default function DailyPage() {
                 {t("daily.envelope2")}
               </div>
 
-              <div className="font-mono text-[10px] text-blue tracking-wider mt-8">
+              <div className="font-mono text-[10px] text-blue tracking-wider mt-8 group-hover:text-accent-bright transition-colors">
                 {t("daily.tapToRead")}
               </div>
             </div>
           </div>
         ) : (
-          <div className="opacity-0 animate-fade-up text-left">
+          <div className="opacity-0 animate-scale-in text-left">
             <div className="border border-card-border bg-card-bg p-8 md:p-12">
               {/* To label */}
               <div className="mb-6">
@@ -154,11 +164,8 @@ export default function DailyPage() {
               </div>
 
               {/* Body */}
-              <div className="text-lg leading-[1.9] text-fg italic mb-4">
-                &ldquo;{letter.body}&rdquo;
-              </div>
               <div className="mb-8">
-                <TranslatedText text={letter.body} className="text-base leading-[1.9] text-fg italic" />
+                <TranslatedText text={letter.body} className="text-lg leading-[1.9] text-fg italic" />
               </div>
 
               {/* Actions */}
@@ -178,7 +185,12 @@ export default function DailyPage() {
               </div>
             </div>
 
-            <div className="text-center mt-8 font-mono text-[9px] text-dim tracking-wider">
+            {/* Ad: daily bottom */}
+            <div className="mt-8">
+              <AdBanner slot="dailyBottom" format="horizontal" />
+            </div>
+
+            <div className="text-center mt-6 font-mono text-[9px] text-dim tracking-wider">
               {t("daily.tomorrowNote")}
             </div>
           </div>

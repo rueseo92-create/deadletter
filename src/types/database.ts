@@ -1,5 +1,6 @@
 export type LetterCategory =
   | "ex_lover"
+  | "boss"
   | "parent"
   | "child"
   | "friend"
@@ -7,6 +8,7 @@ export type LetterCategory =
   | "future_self"
   | "deceased"
   | "someone_who_hurt"
+  | "society"
   | "mentor"
   | "stranger"
   | "other";

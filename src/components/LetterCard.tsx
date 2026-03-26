@@ -39,7 +39,7 @@ export default function LetterCard({ letter, onLike, isLiked }: LetterCardProps)
   }
 
   return (
-    <article className="border-t border-card-border py-10 transition-colors hover:bg-hover/30">
+    <article className="border-t border-card-border py-10 group">
       {/* Meta */}
       <div className="flex justify-between items-center mb-5">
         <Link
@@ -75,27 +75,29 @@ export default function LetterCard({ letter, onLike, isLiked }: LetterCardProps)
 
       {/* Body */}
       <div className="mb-6">
-        <Link href={`/letter/?id=${letter.id}`}>
-          <div className="text-[17px] leading-[1.8] text-fg italic cursor-pointer">
-            &ldquo;{letter.body}&rdquo;
-          </div>
+        <Link href={`/letter/?id=${letter.id}`} className="cursor-pointer block">
+          <TranslatedText text={letter.body} className="text-[17px] leading-[1.8] text-fg italic" />
         </Link>
-        <TranslatedText text={letter.body} className="text-[15px] leading-[1.8] text-fg italic" />
       </div>
 
       {/* Stats */}
-      <div className="flex gap-6">
+      <div className="flex gap-6 items-center">
         <button
           onClick={() => onLike?.(letter.id)}
-          className={`font-mono text-[10px] tracking-wider transition-colors cursor-pointer ${
-            isLiked ? "text-stamp-red" : "text-dim hover:text-accent"
+          className={`font-mono text-[10px] tracking-wider transition-all cursor-pointer ${
+            isLiked
+              ? "text-stamp-red scale-105"
+              : "text-dim hover:text-stamp-red"
           }`}
         >
-          &#9829; {letter.likes + (isLiked ? 1 : 0)}
+          {isLiked ? "\u2665" : "\u2661"} {letter.likes + (isLiked ? 1 : 0)}
         </button>
-        <span className="font-mono text-[10px] tracking-wider text-dim">
+        <Link
+          href={`/letter/?id=${letter.id}`}
+          className="font-mono text-[10px] tracking-wider text-dim hover:text-blue transition-colors"
+        >
           &#9993; {letter.reply_count}{t("letters.replyCount")}
-        </span>
+        </Link>
         <button
           onClick={handleShare}
           className="font-mono text-[10px] tracking-wider text-dim hover:text-accent transition-colors cursor-pointer"

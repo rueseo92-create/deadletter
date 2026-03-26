@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/components/LanguageProvider";
+import AdBanner from "@/components/AdBanner";
 
 export default function LandingPage() {
   const { t } = useLanguage();
@@ -13,7 +14,7 @@ export default function LandingPage() {
         <div
           className="font-mono text-[10px] tracking-[6px] uppercase text-stamp-red border border-stamp-red px-4 py-1.5 inline-block mb-12 -rotate-2 opacity-0 animate-fade-in"
         >
-          return to sender
+          {t("hero.stamp")}
         </div>
 
         <h1 className="font-display font-light text-[clamp(36px,6vw,72px)] leading-[1.15] text-accent-bright max-w-[700px] opacity-0 animate-fade-up animation-delay-200 whitespace-pre-line">
@@ -27,7 +28,7 @@ export default function LandingPage() {
         <div className="mt-12 flex flex-col items-center gap-3 opacity-0 animate-fade-up animation-delay-600">
           <Link
             href="/write"
-            className="font-mono text-[13px] tracking-wider bg-blue text-white px-9 py-3.5 hover:bg-blue/80 transition-all hover:-translate-y-0.5"
+            className="font-mono text-[13px] tracking-wider bg-blue text-white px-9 py-3.5 hover:bg-blue/80 transition-all hover:-translate-y-0.5 active:translate-y-0"
           >
             {t("hero.cta")} &rarr;
           </Link>
@@ -39,30 +40,30 @@ export default function LandingPage() {
         {/* iMessage-style mockup */}
         <div className="max-w-[340px] w-full mt-20 bg-card-bg border border-card-border p-6 opacity-0 animate-fade-up animation-delay-800">
           <div className="font-mono text-[9px] tracking-[2px] text-dim text-center mb-5 uppercase">
-            deadletter &middot; anonymous
+            {t("hero.mockupHeader")}
           </div>
 
           <div className="flex justify-end mb-3">
             <div className="max-w-[240px] bg-blue text-white px-3.5 py-2.5 text-[13px] leading-relaxed rounded-2xl rounded-br-sm">
-              엄마한테 미안하다고 말하고 싶었는데, 결국 못 했어요. 작년 봄에 돌아가셨거든요.
+              {t("hero.mockupMsg1")}
             </div>
           </div>
 
           <div className="flex justify-start mb-3">
             <div className="max-w-[260px] bg-[#1c1c1b] text-accent px-3.5 py-2.5 text-[13px] leading-relaxed rounded-2xl rounded-bl-sm">
-              나는 당신의 엄마가 아니지만, 엄마로서 말해줄게요 &mdash; 그 마음, 분명 이미 닿았을 거예요.
+              {t("hero.mockupReply1")}
             </div>
           </div>
 
           <div className="flex justify-start">
             <div className="max-w-[240px] bg-[#1c1c1b] text-dim px-3.5 py-2.5 text-[12px] leading-relaxed rounded-2xl rounded-bl-sm font-mono tracking-wider">
-              from a stranger who cares.
+              {t("hero.mockupReply2")}
             </div>
           </div>
         </div>
 
         <div className="absolute bottom-10 font-mono text-[10px] tracking-[3px] text-dim opacity-0 animate-fade-in animation-delay-1000 animate-float">
-          &darr; scroll
+          &darr; {t("hero.scroll")}
         </div>
       </section>
 
@@ -96,8 +97,8 @@ export default function LandingPage() {
               title: t("hero.step4title"),
               desc: t("hero.step4desc"),
             },
-          ].map((step) => (
-            <div key={step.num} className="flex gap-8 md:gap-10 py-9">
+          ].map((step, i) => (
+            <div key={step.num} className={`flex gap-8 md:gap-10 py-9 opacity-0 animate-fade-up`} style={{ animationDelay: `${i * 150}ms` }}>
               <div className="font-mono text-xs text-accent min-w-[40px] h-10 flex items-center justify-center border border-card-border bg-bg relative z-10 shrink-0">
                 {step.num}
               </div>
@@ -114,6 +115,11 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Ad: between sections */}
+      <div className="max-w-[640px] mx-auto px-6 md:px-10">
+        <AdBanner slot="landing" format="horizontal" />
+      </div>
+
       {/* Sample Letters */}
       <div className="text-center py-20 relative">
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-card-border" />
@@ -126,35 +132,36 @@ export default function LandingPage() {
         {[
           {
             id: "DL-0042",
-            to: "3년 전 헤어진 너에게",
-            body: "네가 마지막으로 한 말이 '미안해'였는데, 그 말이 진심이었는지 3년째 궁금해. 사실 난 아직도 그 카페 앞을 지나갈 때마다 발걸음이 느려져.",
-            emotion: "그리움",
-            reply: "나는 네 전 연인이 아니지만 — 그 '미안해'는 진심이었을 거야. 진심이 아닌 사람은 그 말을 하지 않거든.",
+            to: t("hero.sample1to"),
+            body: t("hero.sample1body"),
+            emotion: t("hero.sample1emotion"),
+            reply: t("hero.sample1reply"),
             replyCount: 12,
             likes: 891,
           },
           {
             id: "DL-0041",
-            to: "돌아가신 할머니에게",
-            body: "할머니, 나 의사 됐어. 할머니가 아플 때 아무것도 못 해줬던 게 시작이었어. 이제 다른 사람의 할머니는 지킬 수 있어.",
-            emotion: "감사",
-            reply: "할머니로서 말해줄게 — 네가 의사가 됐다는 게 아니라, 그 마음이 있다는 것 자체가 가장 큰 선물이란다.",
+            to: t("hero.sample2to"),
+            body: t("hero.sample2body"),
+            emotion: t("hero.sample2emotion"),
+            reply: t("hero.sample2reply"),
             replyCount: 34,
             likes: 2103,
           },
           {
             id: "DL-0040",
-            to: "To the friend I ghosted",
-            body: "I ghosted you because I was jealous of your life. It's been 2 years and I think about you every single day. I'm sorry.",
-            emotion: "regret",
-            reply: "I'm not your friend, but as someone who was ghosted — I'd forgive you in a heartbeat. The apology you can't send? It's already enough. Just try.",
+            to: t("hero.sample3to"),
+            body: t("hero.sample3body"),
+            emotion: t("hero.sample3emotion"),
+            reply: t("hero.sample3reply"),
             replyCount: 8,
             likes: 567,
           },
-        ].map((letter) => (
+        ].map((letter, i) => (
           <article
             key={letter.id}
-            className="border-t border-card-border py-10"
+            className={`border-t border-card-border py-10 opacity-0 animate-fade-up`}
+            style={{ animationDelay: `${i * 200}ms` }}
           >
             <div className="flex justify-between items-center mb-5">
               <span className="font-mono text-[10px] tracking-[2px] text-dim">
@@ -180,7 +187,7 @@ export default function LandingPage() {
 
             <div className="bg-card-bg border-l-2 border-blue p-4 mb-5">
               <div className="font-mono text-[9px] tracking-[2px] text-blue mb-2 uppercase">
-                a stranger replied
+                {t("hero.strangerReplied")}
               </div>
               <p className="text-sm text-accent leading-relaxed">
                 {letter.reply}
@@ -192,7 +199,7 @@ export default function LandingPage() {
                 &#9829; {letter.likes.toLocaleString()}
               </span>
               <span className="font-mono text-[10px] text-dim">
-                &#9993; {letter.replyCount}개 답장
+                &#9993; {letter.replyCount}{t("letters.replyCount")}
               </span>
             </div>
           </article>
@@ -216,7 +223,7 @@ export default function LandingPage() {
         </p>
         <Link
           href="/write"
-          className="font-mono text-[13px] tracking-wider bg-blue text-white px-9 py-3.5 hover:bg-blue/80 transition-all hover:-translate-y-0.5"
+          className="font-mono text-[13px] tracking-wider bg-blue text-white px-9 py-3.5 hover:bg-blue/80 transition-all hover:-translate-y-0.5 active:translate-y-0"
         >
           {t("hero.cta")} &rarr;
         </Link>

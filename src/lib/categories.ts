@@ -15,6 +15,7 @@ export interface EmotionInfo {
 
 export const CATEGORIES: CategoryInfo[] = [
   { value: "ex_lover", label: "전 연인에게", emoji: "💔", complement: "ex_lover" },
+  { value: "boss", label: "상사에게", emoji: "🏢", complement: "boss" },
   { value: "parent", label: "부모님에게", emoji: "🏠", complement: "child" },
   { value: "child", label: "자녀에게", emoji: "🌱", complement: "parent" },
   { value: "friend", label: "친구에게", emoji: "🤝", complement: "friend" },
@@ -22,6 +23,7 @@ export const CATEGORIES: CategoryInfo[] = [
   { value: "future_self", label: "미래의 나에게", emoji: "🔮", complement: "younger_self" },
   { value: "deceased", label: "떠난 사람에게", emoji: "🕊️", complement: "deceased" },
   { value: "someone_who_hurt", label: "나를 아프게 한 사람에게", emoji: "🩹", complement: "someone_who_hurt" },
+  { value: "society", label: "세상에게", emoji: "🌍", complement: "society" },
   { value: "mentor", label: "은사님에게", emoji: "📚", complement: "mentor" },
   { value: "stranger", label: "모르는 누군가에게", emoji: "🌊", complement: "stranger" },
   { value: "other", label: "그 밖의 누군가에게", emoji: "✉️", complement: "other" },

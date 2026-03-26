@@ -26,14 +26,21 @@ export default function ProxyReplyForm({
   async function handleSubmit() {
     if (body.trim().length < 5) return;
 
-    const harmfulMsg = detectHarmful(body);
-    if (harmfulMsg) {
-      setError(harmfulMsg);
-      return;
-    }
-
     setSending(true);
     setError("");
+
+    const harmfulMsg = detectHarmful(body);
+    if (harmfulMsg) {
+      if (harmfulMsg.includes("욕설") || harmfulMsg.includes("비속어")) {
+        setError(t("filter.harmfulProfanity"));
+      } else if (harmfulMsg.includes("성적")) {
+        setError(t("filter.harmfulSexual"));
+      } else {
+        setError(harmfulMsg);
+      }
+      setSending(false);
+      return;
+    }
 
     const userId = getOrCreateUserId();
 
@@ -44,7 +51,6 @@ export default function ProxyReplyForm({
     });
 
     if (!error) {
-      // reply_count 증가
       try { await supabase.rpc("increment_reply_count", { lid: letterId }); } catch {}
 
       setSent(true);
@@ -56,15 +62,16 @@ export default function ProxyReplyForm({
 
   if (sent) {
     return (
-      <div className="border border-card-border bg-card-bg p-6 text-center">
+      <div className="border border-card-border bg-card-bg p-8 text-center opacity-0 animate-scale-in">
+        <div className="text-2xl mb-3 opacity-40">&#10003;</div>
         <p className="text-accent text-sm">{t("letter.replySent")}</p>
       </div>
     );
   }
 
   return (
-    <div className="border border-card-border bg-card-bg p-6">
-      <div className="font-mono text-[9px] tracking-[3px] uppercase text-blue mb-4">
+    <div className="border border-card-border bg-card-bg p-6 md:p-8">
+      <div className="font-mono text-[9px] tracking-[3px] uppercase text-blue mb-5">
         {t("letter.replyLabel").replace("{name}", recipientLabel)}
       </div>
 
@@ -78,18 +85,18 @@ export default function ProxyReplyForm({
       />
 
       <div className="flex justify-between items-center mt-3">
-        <div>
-          <span className="font-mono text-[10px] text-dim">
+        <div className="flex items-center gap-3">
+          <span className={`font-mono text-[10px] transition-colors ${body.length > 900 ? "text-stamp-red" : "text-dim"}`}>
             {body.length}/1000
           </span>
           {error && (
-            <span className="text-stamp-red text-xs ml-3">{error}</span>
+            <span className="text-stamp-red text-xs">{error}</span>
           )}
         </div>
         <button
           onClick={handleSubmit}
           disabled={body.trim().length < 5 || sending}
-          className="font-mono text-[11px] tracking-wider px-5 py-2 bg-blue text-white disabled:opacity-30 hover:bg-blue/80 transition-colors cursor-pointer disabled:cursor-not-allowed"
+          className="font-mono text-[11px] tracking-wider px-5 py-2.5 bg-blue text-white disabled:opacity-30 hover:bg-blue/80 transition-all hover:-translate-y-0.5 cursor-pointer disabled:cursor-not-allowed"
         >
           {sending ? t("letter.replySending") : t("letter.replySend")}
         </button>
