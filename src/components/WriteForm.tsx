@@ -111,9 +111,16 @@ export default function WriteForm() {
       return;
     }
 
-    await supabase
+    const { error: profileError } = await supabase
       .from("profiles")
       .upsert({ id: userId }, { onConflict: "id" });
+
+    if (profileError) {
+      console.error("Profile upsert error:", profileError);
+      setError(`${t("write.errorSend")} (profile: ${profileError.message})`);
+      setStep("body");
+      return;
+    }
 
     const { data: letter, error: insertError } = await supabase
       .from("letters")
@@ -129,7 +136,8 @@ export default function WriteForm() {
       .single();
 
     if (insertError || !letter) {
-      setError(t("write.errorSend"));
+      console.error("Letter insert error:", insertError);
+      setError(`${t("write.errorSend")} (${insertError?.message || "no data"})`);
       setStep("body");
       return;
     }
