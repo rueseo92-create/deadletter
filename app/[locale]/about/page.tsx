@@ -3,8 +3,8 @@ import { siteConfig } from "@/lib/config";
 import { getAllPosts } from "@/lib/posts";
 
 export const metadata: Metadata = {
-  title: "회사 소개 | SERO AI",
-  description: "세로에이아이(SERO AI) — AI 콘텐츠 자동화 · 디지털 마케팅 · SEO 전문 기업",
+  title: "소개 | 데일리인사이트",
+  description: "데일리인사이트 — 금융, 보험, 건강, IT, 부동산 생활 정보를 매일 쉽게 정리합니다.",
 };
 
 export default function AboutPage() {
@@ -19,64 +19,61 @@ export default function AboutPage() {
         <div className="relative w-full max-w-5xl mx-auto px-6 pb-16 pt-36">
           <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 text-white/60 text-xs font-medium mb-6">
             <span className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse" />
-            About SERO AI
+            About Daily Insight
           </p>
           <h1 className="text-4xl lg:text-6xl font-extrabold text-white font-headline tracking-tight leading-[1.05] mb-5">
-            세로에이아이
+            데일리인사이트
           </h1>
           <p className="text-lg text-white/50 leading-relaxed max-w-xl">
-            AI 기술과 마케팅 전문성을 결합해<br className="hidden lg:block" />
-            콘텐츠 자동화와 디지털 성장 솔루션을 만듭니다.
+            금융, 보험, 건강, IT, 부동산 —<br className="hidden lg:block" />
+            생활 속 핵심 정보를 매일 쉽게 정리합니다.
           </p>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          회사 소개
-          ═══════════════════════════════════════════ */}
+      {/* ── 소개 ── */}
       <section className="py-20 lg:py-24">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-14 items-start">
             <div>
-              <p className="text-xs font-bold tracking-[0.2em] uppercase text-primary mb-3">Company</p>
+              <p className="text-xs font-bold tracking-[0.2em] uppercase text-primary mb-3">About</p>
               <h2 className="text-2xl lg:text-3xl font-bold text-on-surface font-headline mb-6 leading-tight">
-                기술과 도메인 전문성이<br />만나는 곳
+                복잡한 정보를<br />쉽게 정리합니다
               </h2>
               <div className="space-y-4 text-on-surface-variant leading-relaxed">
                 <p>
-                  세로에이아이(SERO AI)는 AI 기술 기반 콘텐츠 자동화와 디지털 마케팅 솔루션을 제공하는 기업입니다.
+                  데일리인사이트는 금융·재테크, 보험, 건강·의료, IT·테크, 부동산, 생활·자기계발 등
+                  실생활에 바로 적용할 수 있는 핵심 정보를 매일 발행합니다.
                 </p>
                 <p>
-                  대표는 스타트업에서 마케팅부터 프로덕트 개발까지 전 과정을 직접 경험한
-                  풀스택 개발자이자 디지털 마케터입니다.
-                  데이터 기반 의사결정과 빠른 실행력을 동시에 갖추었습니다.
+                  검색해도 나오지 않는 핵심만, 전문가 수준의 정확한 정보를
+                  누구나 이해할 수 있는 쉬운 언어로 전달하는 것이 저희의 목표입니다.
                 </p>
                 <p>
-                  AI 기술의 확장성과 스타트업의 빠른 실행력 —
-                  이 조합이 세로에이아이의 핵심입니다.
+                  SEO 최적화된 고품질 콘텐츠를 통해 독자들에게 실질적인 가치를 제공합니다.
                 </p>
               </div>
             </div>
 
-            {/* 회사 정보 카드 */}
+            {/* 사이트 정보 카드 */}
             <div className="rounded-2xl bg-gradient-to-br from-[#0F0B2E] to-[#1a1145] p-6 lg:p-8 text-white">
               <div className="flex items-center gap-3 mb-7">
                 <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white text-primary text-sm font-extrabold">
-                  AI
+                  DI
                 </span>
                 <div>
-                  <p className="font-bold">SERO AI</p>
-                  <p className="text-[11px] text-white/40">세로에이아이</p>
+                  <p className="font-bold">데일리인사이트</p>
+                  <p className="text-[11px] text-white/40">Daily Insight</p>
                 </div>
               </div>
 
               <div className="space-y-5 text-sm">
                 {[
-                  { label: "사업 분야", value: "AI 콘텐츠 자동화 · 디지털 마케팅 · SEO 최적화" },
-                  { label: "주요 서비스", value: "블로그/웹사이트 구축, SEO 최적화, AI 파이프라인 개발, 콘텐츠 대행" },
-                  { label: "기술 스택", value: "Next.js · TypeScript · Python · Claude API · Vercel" },
-                  { label: "웹사이트", value: "seroai.xyz" },
-                  { label: "이메일", value: "contact@seroai.xyz" },
+                  { label: "콘텐츠 분야", value: "금융·재테크 · 보험 · 건강·의료 · IT·테크 · 부동산 · 생활" },
+                  { label: "콘텐츠 특징", value: "고CPC 키워드 기반, SEO 최적화, 실용 정보 중심" },
+                  { label: "발행 주기", value: "매일 발행" },
+                  { label: "웹사이트", value: "deadletter.ink" },
+                  { label: "이메일", value: "contact@deadletter.ink" },
                 ].map((item) => (
                   <div key={item.label}>
                     <p className="text-[10px] font-bold text-white/30 uppercase tracking-wider mb-1">{item.label}</p>
@@ -89,7 +86,7 @@ export default function AboutPage() {
                 <a href="/business" className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-300 hover:text-white transition-colors">
                   서비스 보기 <span className="material-symbols-outlined text-xs">arrow_forward</span>
                 </a>
-                <a href="mailto:contact@seroai.xyz" className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/40 hover:text-white transition-colors">
+                <a href="mailto:contact@deadletter.ink" className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/40 hover:text-white transition-colors">
                   문의하기 <span className="material-symbols-outlined text-xs">mail</span>
                 </a>
               </div>
@@ -98,140 +95,99 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          대표 프로필
-          ═══════════════════════════════════════════ */}
+      {/* ── 핵심 가치 ── */}
       <section className="py-20 bg-slate-50">
         <div className="max-w-5xl mx-auto px-6">
-          <p className="text-xs font-bold tracking-[0.2em] uppercase text-primary mb-3">Founder</p>
+          <p className="text-xs font-bold tracking-[0.2em] uppercase text-primary mb-3">Our Values</p>
           <h2 className="text-2xl lg:text-3xl font-bold text-on-surface font-headline mb-12 leading-tight">
-            대표 소개
+            데일리인사이트의 원칙
           </h2>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* 프로필 요약 */}
-            <div className="lg:col-span-1">
-              <div className="rounded-2xl bg-white ring-1 ring-slate-200/60 p-6 text-center">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 mx-auto mb-4 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white text-3xl">person</span>
-                </div>
-                <h3 className="font-bold text-on-surface text-lg font-headline">Founder & CEO</h3>
-                <p className="text-xs text-slate-400 mt-1 mb-5">세로에이아이 대표</p>
-
-                <div className="space-y-2.5 text-left">
-                  {[
-                    { icon: "code", text: "풀스택 개발 (Next.js · Python)" },
-                    { icon: "trending_up", text: "디지털 마케팅 · SEO 전문가" },
-                    { icon: "rocket_launch", text: "스타트업 창업 · 운영 경험" },
-                    { icon: "smart_toy", text: "AI 파이프라인 설계 · 구축" },
-                  ].map((item) => (
-                    <div key={item.icon} className="flex items-start gap-2.5 text-sm text-on-surface-variant">
-                      <span className="material-symbols-outlined text-primary text-base mt-0.5">{item.icon}</span>
-                      <span>{item.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* 상세 경력 */}
-            <div className="lg:col-span-2 space-y-6">
-              {[
-                {
-                  icon: "analytics",
-                  color: "bg-rose-500",
-                  title: "데이터 기반 마케팅",
-                  subtitle: "SEO · AEO · GEO / 콘텐츠 마케팅 전략",
-                  desc: "검색엔진 최적화부터 AI 검색엔진 대응까지. 데이터 기반 의사결정과 성과 중심 사고가 체질입니다. 복잡한 정보를 정확하게 정리하고 쉽게 전달하는 능력이 핵심 역량입니다.",
-                },
-                {
-                  icon: "trending_up",
-                  color: "bg-amber-500",
-                  title: "스타트업 & 마케팅",
-                  subtitle: "스타트업 창업 · 운영 / 마케팅 전략 · 실행",
-                  desc: "스타트업에서 마케팅 전략 수립부터 콘텐츠 제작, 퍼포먼스 분석, 그로스 해킹까지 직접 실행했습니다. 이론이 아닌, 실제로 성과를 만들어본 경험이 서비스에 반영됩니다.",
-                },
-                {
-                  icon: "terminal",
-                  color: "bg-indigo-500",
-                  title: "개발 & AI 기술",
-                  subtitle: "풀스택 개발 / AI 파이프라인 설계 · 구현",
-                  desc: "Next.js, Python, Claude API를 활용한 콘텐츠 자동화 파이프라인을 직접 설계하고 구축합니다. 기획부터 개발, 배포, 운영까지 전 과정을 한 사람이 커버합니다.",
-                },
-              ].map((item) => (
-                <div key={item.title} className="flex gap-4 p-5 rounded-2xl bg-white ring-1 ring-slate-200/60">
-                  <div className={`w-10 h-10 rounded-xl ${item.color} flex items-center justify-center flex-shrink-0`}>
-                    <span className="material-symbols-outlined text-white text-lg">{item.icon}</span>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-on-surface mb-0.5">{item.title}</h4>
-                    <p className="text-xs text-primary font-medium mb-2">{item.subtitle}</p>
-                    <p className="text-sm text-on-surface-variant leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          핵심 역량
-          ═══════════════════════════════════════════ */}
-      <section className="py-20">
-        <div className="max-w-5xl mx-auto px-6">
-          <p className="text-xs font-bold tracking-[0.2em] uppercase text-primary mb-3">What We Do</p>
-          <h2 className="text-2xl font-bold text-on-surface font-headline mb-10">서비스 영역</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { icon: "edit_note", title: "AI 콘텐츠 자동화", desc: "매일 SEO 최적화된 글을 자동으로 생성·발행" },
-              { icon: "travel_explore", title: "SEO · AEO · GEO", desc: "검색엔진 + AI 검색엔진 동시 최적화" },
-              { icon: "web", title: "웹사이트 구축", desc: "기획부터 디자인, 개발, 배포까지 원스톱" },
-              { icon: "smart_toy", title: "AI 파이프라인", desc: "크롤링 → 생성 → 발행 → 분석 전체 자동화" },
+              {
+                icon: "verified",
+                color: "bg-indigo-500",
+                title: "정확한 정보",
+                desc: "공식 출처와 전문 자료를 기반으로 검증된 정보만을 제공합니다. 추측이나 과장 없이, 독자가 신뢰할 수 있는 콘텐츠를 만듭니다.",
+              },
+              {
+                icon: "translate",
+                color: "bg-emerald-500",
+                title: "쉬운 설명",
+                desc: "전문 용어를 풀어서, 금융·보험·의료 등 어려운 주제도 누구나 이해할 수 있게 정리합니다. 핵심만 골라 담습니다.",
+              },
+              {
+                icon: "tips_and_updates",
+                color: "bg-amber-500",
+                title: "실용적 가치",
+                desc: "읽고 나면 바로 실행할 수 있는 팁과 가이드를 제공합니다. 이론이 아닌, 실생활에 바로 적용 가능한 콘텐츠가 핵심입니다.",
+              },
             ].map((item) => (
-              <div key={item.title} className="rounded-2xl bg-slate-50 border border-slate-200/60 p-6 hover:border-primary/30 hover:shadow-md transition-all">
-                <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                  <span className="material-symbols-outlined text-primary text-xl">{item.icon}</span>
+              <div key={item.title} className="flex gap-4 p-5 rounded-2xl bg-white ring-1 ring-slate-200/60">
+                <div className={`w-10 h-10 rounded-xl ${item.color} flex items-center justify-center flex-shrink-0`}>
+                  <span className="material-symbols-outlined text-white text-lg">{item.icon}</span>
                 </div>
-                <h3 className="font-bold text-on-surface mb-2">{item.title}</h3>
-                <p className="text-xs text-on-surface-variant leading-relaxed">{item.desc}</p>
+                <div>
+                  <h4 className="font-bold text-on-surface mb-0.5">{item.title}</h4>
+                  <p className="text-sm text-on-surface-variant leading-relaxed">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
-          <div className="mt-8 text-center">
-            <a href="/business" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-indigo-700 transition-colors">
-              서비스 상세 보기 <span className="material-symbols-outlined text-sm">arrow_forward</span>
-            </a>
+        </div>
+      </section>
+
+      {/* ── 콘텐츠 카테고리 ── */}
+      <section className="py-20">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-xs font-bold tracking-[0.2em] uppercase text-primary mb-3">Categories</p>
+          <h2 className="text-2xl font-bold text-on-surface font-headline mb-10">다루는 주제</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {siteConfig.categories.map((cat) => (
+              <a
+                key={cat.slug}
+                href={`/categories/${cat.slug}`}
+                className="rounded-2xl bg-slate-50 border border-slate-200/60 p-6 hover:border-primary/30 hover:shadow-md transition-all"
+              >
+                <span className="text-3xl mb-3 block">{cat.emoji}</span>
+                <h3 className="font-bold text-on-surface mb-2">{cat.name}</h3>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  {cat.slug === "finance" && "대출, 적금, 주식, 카드 등 금융·재테크 핵심 정보"}
+                  {cat.slug === "insurance" && "실손보험, 자동차보험, 보험 비교·가입 가이드"}
+                  {cat.slug === "health" && "비타민, 영양제, 다이어트, 건강 관리 실용 정보"}
+                  {cat.slug === "tech" && "노트북, 스마트폰, 앱 리뷰 및 IT 활용 가이드"}
+                  {cat.slug === "realestate" && "청약, 전세, 매매, 인테리어 등 부동산 정보"}
+                  {cat.slug === "lifestyle" && "자격증, 자기계발, 생활 꿀팁 모음"}
+                </p>
+              </a>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════
-          AI 브리핑 — 운영 프로젝트
-          ═══════════════════════════════════════════ */}
+      {/* ── 운영 현황 ── */}
       <section className="py-20 bg-slate-50">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid lg:grid-cols-5 gap-12 items-center">
             <div className="lg:col-span-3">
-              <p className="text-xs font-bold tracking-[0.2em] uppercase text-primary mb-3">Live Project</p>
+              <p className="text-xs font-bold tracking-[0.2em] uppercase text-primary mb-3">Live Status</p>
               <h2 className="text-2xl lg:text-3xl font-bold text-on-surface font-headline mb-5 leading-tight">
-                AI 브리핑
+                매일 업데이트되는 콘텐츠
               </h2>
-              <p className="text-sm text-slate-400 mb-5">세로에이아이의 기술력으로 운영되는 AI 미디어</p>
               <div className="space-y-4 text-on-surface-variant leading-relaxed">
                 <p>
-                  AI 브리핑은 세로에이아이의 콘텐츠 자동화 기술을 100% 적용한 라이브 프로젝트입니다.
-                  AI 뉴스, AI 부업 가이드, 도구 리뷰, 튜토리얼을 매일 자동으로 발행하며,
-                  저희가 제공하는 서비스가 실제로 어떻게 작동하는지 직접 보여드립니다.
+                  데일리인사이트는 금융, 보험, 건강, IT, 부동산, 생활 등
+                  실생활에 필요한 핵심 정보를 매일 새롭게 발행합니다.
                 </p>
                 <p>
-                  크롤링부터 AI 글 생성, SEO 최적화, 자동 발행, 수익화까지 —
-                  모든 파이프라인이 이 블로그에서 실시간으로 돌아가고 있습니다.
+                  각 분야 전문 키워드를 기반으로 SEO 최적화된 콘텐츠를 제공하여,
+                  검색으로 쉽게 찾을 수 있는 유용한 정보를 만들어갑니다.
                 </p>
               </div>
               <div className="mt-6 flex gap-4">
                 <a href="/" className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white font-bold text-sm rounded-full hover:bg-indigo-700 transition-colors shadow-md shadow-primary/20">
-                  블로그 보기 <span className="material-symbols-outlined text-base">arrow_forward</span>
+                  홈으로 <span className="material-symbols-outlined text-base">arrow_forward</span>
                 </a>
                 <a href="/posts" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-on-surface font-bold text-sm rounded-full border border-slate-200 hover:border-primary hover:text-primary transition-all">
                   전체 글 보기
@@ -244,7 +200,7 @@ export default function AboutPage() {
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { num: `${posts.length}+`, label: "발행된 글", icon: "article" },
-                  { num: "24/7", label: "자동 운영", icon: "schedule" },
+                  { num: "Daily", label: "업데이트", icon: "schedule" },
                   { num: `${siteConfig.categories.length}`, label: "카테고리", icon: "category" },
                   { num: "100%", label: "SEO 최적화", icon: "trending_up" },
                 ].map((s) => (
@@ -268,19 +224,18 @@ export default function AboutPage() {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_50%,rgba(99,102,241,0.1),transparent_60%)]" />
             <div className="relative p-10 lg:p-16 text-center">
               <h2 className="text-2xl lg:text-3xl font-bold text-white font-headline mb-4">
-                함께 만들어 볼까요?
+                궁금한 점이 있으신가요?
               </h2>
               <p className="text-sm text-white/40 mb-8 max-w-md mx-auto leading-relaxed">
                 비즈니스 문의, 협업 제안, 또는 궁금한 점이 있으시면 편하게 연락주세요.
               </p>
               <a
-                href="mailto:contact@seroai.xyz"
+                href="mailto:contact@deadletter.ink"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#0F0B2E] font-bold text-sm rounded-full hover:bg-indigo-100 transition-colors shadow-[0_0_40px_rgba(99,102,241,0.15)]"
               >
                 <span className="material-symbols-outlined text-base">mail</span>
-                contact@seroai.xyz
+                contact@deadletter.ink
               </a>
-              <p className="mt-5 text-white/20 text-xs">보통 하루 안에 답장드려요</p>
             </div>
           </div>
 

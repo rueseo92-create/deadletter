@@ -122,12 +122,12 @@ function JsonLd({ locale }: { locale: Locale }) {
 
 const navKeyMap: Record<string, string> = {
   "/": "home",
-  "/categories/side-hustle": "sideHustle",
-  "/categories/ai-tools": "aiTools",
-  "/categories/ai-news": "aiNews",
-  "/categories/marketing": "marketing",
-  "/business": "agency",
-  "/about": "about",
+  "/categories/finance": "finance",
+  "/categories/insurance": "insurance",
+  "/categories/health": "health",
+  "/categories/tech": "tech",
+  "/categories/realestate": "realestate",
+  "/categories/lifestyle": "lifestyle",
 };
 
 export default async function LocaleLayout({
@@ -196,11 +196,11 @@ export default async function LocaleLayout({
               href={localizedHref("/", locale)}
               className="flex items-center gap-2.5 group"
             >
-              <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary-600 text-white text-xs font-extrabold shadow-sm group-hover:shadow-glow transition-shadow duration-300">
-                AI
+              <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary-600 text-white text-[10px] font-extrabold shadow-sm group-hover:shadow-glow transition-shadow duration-300">
+                DI
               </span>
               <span className="text-xl font-extrabold tracking-tight text-slate-900 font-headline">
-                브리핑
+                데일리인사이트
               </span>
             </a>
 
@@ -245,9 +245,9 @@ export default async function LocaleLayout({
               <div className="md:col-span-4">
                 <div className="flex items-center gap-2.5 mb-4">
                   <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary-600 text-white text-[10px] font-extrabold">
-                    AI
+                    DI
                   </span>
-                  <span className="text-lg font-extrabold text-slate-900 font-headline">브리핑</span>
+                  <span className="text-lg font-extrabold text-slate-900 font-headline">데일리인사이트</span>
                 </div>
                 <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
                   {siteConfig.description}

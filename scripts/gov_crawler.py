@@ -1,14 +1,14 @@
 """
-gov_crawler.py - 정부 AI 사업/지원 정보 크롤링
+gov_crawler.py - 정부 정책/지원 정보 크롤링 (데일리인사이트)
 
 크롤링 소스:
   1. IITP (정보통신기획평가원) 공고
   2. NIA (한국지능정보사회진흥원) 공고
   3. MSIT (과학기술정보통신부) 보도자료
   4. K-Startup 공고
-  5. AI Times 뉴스 (AI 전문 매체)
+  5. 뉴스 매체
 
-각 소스에서 최신 AI 관련 공고/뉴스를 수집하여
+각 소스에서 최신 정책/지원사업 관련 공고/뉴스를 수집하여
 Claude API로 쉬운 설명을 생성합니다.
 """
 
@@ -177,23 +177,24 @@ def crawl_nia_projects(max_items: int = 5) -> list[GovProject]:
 
 
 def crawl_ai_news_claude(topic: str = "AI", count: int = 5) -> list[GovProject]:
-    """Claude API로 최신 AI 뉴스/트렌드 토픽 생성"""
-    print(f"  [Claude] 최신 AI 뉴스 토픽 생성... (주제: {topic})")
+    """Claude API로 최신 뉴스/트렌드 토픽 생성"""
+    print(f"  [Claude] 최신 뉴스 토픽 생성... (주제: {topic})")
     try:
         import anthropic
         client = anthropic.Anthropic()
 
-        prompt = f"""당신은 한국 AI 뉴스 전문 에디터입니다.
-2026년 3월 현재 가장 핫한 AI 관련 뉴스/트렌드/정부사업 토픽 {count}개를 생성해주세요.
+        prompt = f"""당신은 한국 생활정보/IT 뉴스 전문 에디터입니다. (데일리인사이트 — deadletter.ink)
+2026년 현재 가장 핫한 금융·보험·건강·IT·부동산·생활 관련 뉴스/트렌드/정책 토픽 {count}개를 생성해주세요.
 
 주제 범위: {topic}
 
 토픽 유형:
-- AI 업계 뉴스 (새 모델 출시, 기업 동향 등)
-- 정부 AI 지원사업/공모전
-- AI 도구/서비스 업데이트
-- AI 정책/규제 변화
-- AI 활용 사례
+- 금융/재테크 뉴스 (금리 변동, 세제 변경, 투자 트렌드 등)
+- 보험 관련 정책/상품 변화
+- 건강/의료 관련 최신 정보
+- IT/테크 업계 뉴스 (AI 도구, 서비스 업데이트 등)
+- 부동산 정책/시장 동향
+- 생활/자기계발 트렌드
 
 반드시 아래 JSON만 출력:
 {{
@@ -201,8 +202,8 @@ def crawl_ai_news_claude(topic: str = "AI", count: int = 5) -> list[GovProject]:
     {{
       "title": "한국어로 된 블로그 제목 (60자 이하)",
       "summary": "핵심 내용 3줄 요약",
-      "category": "ai-news 또는 side-hustle 또는 ai-tools 또는 marketing",
-      "source_name": "출처 이름 (예: OpenAI 공식 블로그)",
+      "category": "finance 또는 insurance 또는 health 또는 tech 또는 realestate 또는 lifestyle",
+      "source_name": "출처 이름 (예: 금융위원회 공식 블로그)",
       "source_url": "실제 출처 URL (알 수 있으면)",
       "source_type": "government 또는 news 또는 official 또는 paper",
       "difficulty": "beginner 또는 intermediate 또는 advanced",
@@ -227,17 +228,17 @@ def crawl_ai_news_claude(topic: str = "AI", count: int = 5) -> list[GovProject]:
             results.append(GovProject(
                 title=t["title"],
                 url=t.get("source_url", ""),
-                source=t.get("source_name", "AI 브리핑"),
+                source=t.get("source_name", "데일리인사이트"),
                 source_type=t.get("source_type", "news"),
                 summary=t.get("summary", ""),
-                category=t.get("category", "ai-news"),
+                category=t.get("category", "tech"),
                 tags=t.get("tags", []),
             ))
 
         print(f"  [Claude] {len(results)}개 토픽 생성")
         return results
     except Exception as e:
-        print(f"  [Claude] 뉴스 토픽 생성 실패: {e}")
+        print(f"  [Claude] 토픽 생성 실패: {e}")
         return []
 
 
@@ -245,7 +246,7 @@ def crawl_ai_news_claude(topic: str = "AI", count: int = 5) -> list[GovProject]:
 
 def crawl_all(max_per_source: int = 3) -> list[GovProject]:
     """모든 소스에서 AI 관련 정보 수집"""
-    print("[크롤링] 정부사업 + AI 뉴스 수집 시작...")
+    print("[크롤링] 정부사업 + 뉴스 수집 시작...")
     all_items = []
 
     # 정부 소스 크롤링

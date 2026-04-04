@@ -14,10 +14,12 @@
   --header-height: 4rem;
 }
 
-[data-category="ai-news"]    { --cat-accent: #4F46E5; --cat-accent-light: #EEF2FF; --cat-accent-rgb: 79, 70, 229; }
-[data-category="side-hustle"] { --cat-accent: #059669; --cat-accent-light: #ECFDF5; --cat-accent-rgb: 5, 150, 105; }
-[data-category="ai-tools"]   { --cat-accent: #0891B2; --cat-accent-light: #ECFEFF; --cat-accent-rgb: 8, 145, 178; }
-[data-category="marketing"]  { --cat-accent: #D97706; --cat-accent-light: #FFFBEB; --cat-accent-rgb: 217, 119, 6; }
+[data-category="finance"]    { --cat-accent: #4F46E5; --cat-accent-light: #EEF2FF; --cat-accent-rgb: 79, 70, 229; }
+[data-category="insurance"]  { --cat-accent: #059669; --cat-accent-light: #ECFDF5; --cat-accent-rgb: 5, 150, 105; }
+[data-category="health"]     { --cat-accent: #0891B2; --cat-accent-light: #ECFEFF; --cat-accent-rgb: 8, 145, 178; }
+[data-category="tech"]       { --cat-accent: #7C3AED; --cat-accent-light: #F5F3FF; --cat-accent-rgb: 124, 58, 237; }
+[data-category="realestate"] { --cat-accent: #D97706; --cat-accent-light: #FFFBEB; --cat-accent-rgb: 217, 119, 6; }
+[data-category="lifestyle"]  { --cat-accent: #DC2626; --cat-accent-light: #FEF2F2; --cat-accent-rgb: 220, 38, 38; }
 
 /* ── Base ── */
 

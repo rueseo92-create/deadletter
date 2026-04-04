@@ -131,7 +131,7 @@ export function getAllPosts(locale?: "ko" | "en"): PostMeta[] {
       const raw = fs.readFileSync(path.join(POSTS_DIR, file), "utf-8");
       const { data } = matter(raw);
 
-      const category = data.category || "ai-news";
+      const category = data.category || "finance";
       return {
         slug,
         title: data.title || "",
@@ -166,7 +166,7 @@ export function getPost(slug: string): Post | null {
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
 
-  const category = data.category || "ai-news";
+  const category = data.category || "finance";
   return {
     meta: {
       slug,

@@ -1,7 +1,7 @@
 {
-  "name": "AI 브리핑",
-  "short_name": "AI브리핑",
-  "description": "AI 뉴스, 정부사업, AI 도구 가이드를 쉽게 정리합니다",
+  "name": "데일리인사이트",
+  "short_name": "데일리인사이트",
+  "description": "금융, 보험, 건강, IT, 부동산 — 생활 속 핵심 정보를 매일 쉽게 정리합니다",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F8FAFC",
@@ -21,7 +21,7 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["news", "education", "technology"],
+  "categories": ["finance", "insurance", "health", "technology", "lifestyle"],
   "lang": "ko",
   "dir": "ltr"
 }

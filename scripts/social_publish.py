@@ -42,7 +42,7 @@ claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 CLAUDE_MODEL = "claude-sonnet-4-20250514"
 
 # 사이트 정보
-SITE_URL = os.environ.get("BLOG_SITE_URL", "https://seroai.xyz")
+SITE_URL = os.environ.get("BLOG_SITE_URL", "https://deadletter.ink")
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_DIR / "content" / "posts"
 HISTORY_FILE = Path(__file__).parent / "social_history.json"

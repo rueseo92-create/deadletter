@@ -1,5 +1,5 @@
 """
-sero_blog.py - AI 브리핑 블로그 자동화 파이프라인 v4 (토큰 최적화)
+sero_blog.py - 데일리인사이트 블로그 자동화 파이프라인 v4 (토큰 최적화)
 
 파이프라인:
   1. 토픽 수집 (크롤링 + Claude)
@@ -55,12 +55,14 @@ BLOG_REPO = Path(os.getenv("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_REPO / "content" / "posts"
 SITE_URL = os.getenv("BLOG_SITE_URL", "")
 
-# AI 브리핑 카테고리 (lib/config.ts 와 동기화)
+# 데일리인사이트 카테고리 (lib/config.ts 와 동기화)
 CATEGORIES = {
-    "ai-news": {"name": "AI 뉴스", "emoji": "🤖"},
-    "side-hustle": {"name": "AI 부업", "emoji": "💰"},
-    "ai-tools": {"name": "AI 도구", "emoji": "🛠️"},
-    "marketing": {"name": "마케팅 자동화", "emoji": "📈"},
+    "finance": {"name": "금융·재테크", "emoji": "💰"},
+    "insurance": {"name": "보험", "emoji": "🛡️"},
+    "health": {"name": "건강·의료", "emoji": "🏥"},
+    "tech": {"name": "IT·테크", "emoji": "💻"},
+    "realestate": {"name": "부동산", "emoji": "🏠"},
+    "lifestyle": {"name": "생활·자기계발", "emoji": "🌱"},
 }
 
 claude = anthropic.Anthropic()
@@ -78,7 +80,7 @@ except Exception:
 try:
     import gov_crawler
     CRAWLER_ENABLED = True
-    print("[크롤러] 정부사업/AI 뉴스 크롤러 활성화")
+    print("[크롤러] 정부사업/뉴스 크롤러 활성화")
 except Exception:
     CRAWLER_ENABLED = False
     print("[경고] gov_crawler 로드 실패")
@@ -100,7 +102,7 @@ except Exception:
 class TopicData:
     """블로그 토픽 정보"""
     title: str
-    category: str = "ai-news"
+    category: str = "finance"
     summary: str = ""
     source_name: str = ""
     source_url: str = ""
@@ -271,7 +273,7 @@ def _generate_english_slug(title: str, fallback: str) -> str:
     _KR_TO_EN = {
         "사용법": "guide", "활용법": "guide", "가이드": "guide", "방법": "how-to",
         "비교": "comparison", "추천": "best", "무료": "free", "최신": "latest",
-        "도구": "tools", "뉴스": "news", "부업": "side-hustle", "자동화": "automation",
+        "도구": "tools", "뉴스": "news", "부업": "side-income", "자동화": "automation",
         "마케팅": "marketing", "수익": "income", "시작": "getting-started",
         "입문": "beginner", "실전": "practical", "완벽": "complete",
         "리뷰": "review", "분석": "analysis", "전략": "strategy", "팁": "tips",
@@ -279,6 +281,9 @@ def _generate_english_slug(title: str, fallback: str) -> str:
         "번역": "translation", "이미지": "image", "영상": "video", "음성": "voice",
         "검색": "search", "최적화": "optimization", "SEO": "seo",
         "노마드": "nomad", "원격": "remote", "프리랜서": "freelance",
+        "금융": "finance", "보험": "insurance", "건강": "health", "부동산": "realestate",
+        "재테크": "investment", "절약": "saving", "대출": "loan", "금리": "interest-rate",
+        "적금": "savings", "세금": "tax", "연말정산": "tax-return", "주식": "stock",
     }
     parts = []
     for kr, en in _KR_TO_EN.items():
@@ -320,7 +325,7 @@ def _programmatic_polish(content: str, category: str) -> str:
     # 5. 내부 링크 부족 시 자동 추가
     internal_links = re.findall(r'\]\(/(?:posts|categories)/', content)
     if len(internal_links) < 2:
-        cats = {"ai-news": "AI 뉴스", "side-hustle": "AI 부업", "ai-tools": "AI 도구", "marketing": "AI 마케팅"}
+        cats = {"finance": "금융·재테크", "insurance": "보험", "health": "건강·의료", "tech": "IT·테크", "realestate": "부동산", "lifestyle": "생활·자기계발"}
         others = [k for k in cats if k != category][:2]
         link_block = "\n\n---\n\n"
         for slug in others:
@@ -336,7 +341,7 @@ def _programmatic_polish(content: str, category: str) -> str:
 # Step 1: 토픽 수집 (크롤링 + Claude)
 # ──────────────────────────────────────────────
 def collect_topics(topic: str = "AI", count: int = 5, source: str = "all", language: str = "ko") -> list[TopicData]:
-    """AI 뉴스/정부사업 토픽 수집
+    """뉴스/정보 토픽 수집
 
     Args:
         topic: 주제
@@ -351,7 +356,7 @@ def collect_topics(topic: str = "AI", count: int = 5, source: str = "all", langu
         topics = _generate_topics_claude_en(topic, min(count + 2, 12))
         for t in topics:
             score = 5.0
-            if t.category == "side-hustle":
+            if t.category in ("finance", "insurance"):
                 score += 3
             if any(kw in t.title.lower() for kw in ["free", "best", "how to", "guide"]):
                 score += 2
@@ -396,7 +401,7 @@ def collect_topics(topic: str = "AI", count: int = 5, source: str = "all", langu
 
                 topics.append(TopicData(
                     title=real_title,
-                    category="side-hustle",
+                    category="finance",
                     summary=summary,
                     source_name="K-Startup",
                     source_url=ann.url,
@@ -414,7 +419,7 @@ def collect_topics(topic: str = "AI", count: int = 5, source: str = "all", langu
             for item in crawled:
                 topics.append(TopicData(
                     title=item.title,
-                    category=item.category if item.category in CATEGORIES else "ai-news",
+                    category=item.category if item.category in CATEGORIES else "tech",
                     summary=item.summary,
                     source_name=item.source,
                     source_url=item.url,
@@ -432,8 +437,8 @@ def collect_topics(topic: str = "AI", count: int = 5, source: str = "all", langu
     # 점수 부여
     for t in topics:
         score = 5.0
-        if t.category == "side-hustle":
-            score += 3  # AI 부업/노마드 콘텐츠 우선
+        if t.category in ("finance", "insurance"):
+            score += 3  # 고CPC 금융/보험 콘텐츠 우선
         if t.source_url:
             score += 2  # 출처가 있는 콘텐츠 우선
         if any(kw in t.title for kw in ["지원", "공모", "무료", "신청"]):
@@ -453,10 +458,11 @@ def _generate_topics_claude(topic: str, count: int) -> list[TopicData]:
     today = datetime.now().strftime("%Y-%m-%d")
     one_week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
 
-    prompt = f"""당신은 한국 AI 블로그 에디터입니다.
+    prompt = f"""당신은 한국 생활정보 블로그 에디터입니다. (데일리인사이트 — deadletter.ink)
 오늘 날짜: {today}
 
 "{topic}" 주제로 블로그 포스팅에 적합한 토픽 {count}개를 생성해주세요.
+구글 애드센스 고CPC 키워드 중심으로 금융, 보험, 건강, IT, 부동산, 생활 분야의 실용적인 정보 콘텐츠를 생성합니다.
 
 핵심 조건:
 - 반드시 2026년 최신 정보만 다룰 것
@@ -467,11 +473,13 @@ def _generate_topics_claude(topic: str, count: int) -> list[TopicData]:
 - 존재하지 않는 정부사업, 지원금, 공모전을 만들어내지 말 것
 - 실제 확인되지 않은 URL을 만들지 말 것
 - 구체적 금액/마감일/선정 규모 등을 지어내지 말 것
-토픽 유형 (골고루 섞어서):
-- ai-news: AI 업계 최신 뉴스, 모델 출시, 기업 동향 (이번 주 뉴스)
-- ai-tools: ChatGPT, Claude, Midjourney 등 AI 도구 최신 업데이트/비교/활용법
-- marketing: AI 기반 마케팅 자동화 전략, 도구, 퍼널, CRM, 이메일/SNS 자동화
-- side-hustle: AI 부업, 디지털노마드, 자동화 수익, 프리랜서 가이드, 패시브 인컴, 원격근무
+토픽 유형 (골고루 섞어서, 고CPC 키워드 중심):
+- finance: 금융·재테크 — 적금, 예금 금리 비교, 주식, ETF, 연말정산, 세금 절약, 대출 금리
+- insurance: 보험 — 실비보험, 자동차보험, 암보험, 보험 비교, 보험료 절약, 보험 추천
+- health: 건강·의료 — 건강검진, 영양제 추천, 다이어트, 운동법, 의료비 절약, 건강보험
+- tech: IT·테크 — AI 도구 활용법, 스마트폰 추천, 앱 추천, IT 트렌드, 생산성 도구
+- realestate: 부동산 — 아파트 시세, 전세 vs 월세, 청약, 부동산 투자, 이사 체크리스트
+- lifestyle: 생활·자기계발 — 자격증 추천, 온라인 강의, 생활 꿀팁, 절약법, 부업 아이디어
 
 제목 작성 (후킹 필수!):
 - 클릭을 유도하는 강력한 후킹 제목 (50자 이내)
@@ -479,12 +487,12 @@ def _generate_topics_claude(topic: str, count: int) -> list[TopicData]:
 - 감정/호기심 유발: "직접 써보니", "1등은 의외", "이것 모르면 손해"
 - 긴급성: "마감 임박", "이번 달까지", "서두르세요"
 - 대화체/구어체: "~해봤습니다", "~할까?", "~라고?"
-- 나쁜 예: "2026년 AI 도구 비교 분석 가이드"
-- 좋은 예: "AI 번역기 7개 직접 비교해봤습니다 (1등은 의외)"
+- 나쁜 예: "2026년 적금 금리 비교 분석 가이드"
+- 좋은 예: "적금 금리 TOP 7 직접 비교해봤습니다 (1등은 의외)"
 
 SEO 기준:
-- 구글 검색에 잘 걸리는 키워드 포함
-- "무료", "사용법", "비교", "추천" 등 검색 의도 키워드 활용
+- 구글 검색에 잘 걸리는 고CPC 키워드 포함
+- "추천", "비교", "방법", "순위", "무료" 등 검색 의도 키워드 활용
 - 한국어 사용자가 실제로 검색할 만한 제목
 
 반드시 아래 JSON만 출력:
@@ -492,7 +500,7 @@ SEO 기준:
   "topics": [
     {{
       "title": "블로그 제목 (60자 이하, SEO 최적화, 2026년 포함)",
-      "category": "ai-news/ai-tools/marketing/side-hustle",
+      "category": "finance/insurance/health/tech/realestate/lifestyle",
       "summary": "핵심 내용 2-3줄 (2026년 기준)",
       "difficulty": "beginner/intermediate/advanced",
       "tags": ["태그1", "태그2", "태그3", "태그4"]
@@ -524,7 +532,7 @@ SEO 기준:
     for t in data.get("topics", []):
         results.append(TopicData(
             title=t["title"],
-            category=t.get("category", "ai-news"),
+            category=t.get("category", "finance"),
             summary=t.get("summary", ""),
             difficulty=t.get("difficulty", "beginner"),
             tags=t.get("tags", []),
@@ -540,22 +548,24 @@ SEO 기준:
 def _generate_topics_claude_en(topic: str, count: int) -> list[TopicData]:
     """Generate English blog topics via Claude"""
     today = datetime.now().strftime("%Y-%m-%d")
-    prompt = f"""You are an English AI blog editor targeting global audiences.
+    prompt = f"""You are an English blog editor for Daily Insight (deadletter.ink), targeting global audiences with high-CPC content.
 Today: {today}
 
-Generate {count} blog post topics about "{topic}" for an AI/tech blog.
+Generate {count} blog post topics about "{topic}" covering finance, insurance, health, IT, real estate, and lifestyle.
 
 Requirements:
 - Only cover 2026 latest information
-- Target high-search-volume English keywords
+- Target high-CPC, high-search-volume English keywords
 - Focus on topics people actually search on Google
 - NEVER fabricate government programs, grants, statistics, or URLs
 
 Categories (distribute evenly):
-- ai-news: Latest AI industry news, model releases, company updates
-- ai-tools: AI tool reviews, comparisons, tutorials (ChatGPT, Claude, Gemini, etc.)
-- marketing: AI-powered marketing automation, strategies, tools
-- side-hustle: AI side hustles, passive income, freelancing with AI
+- finance: Personal finance, investing, tax tips, savings, credit cards
+- insurance: Health insurance, auto insurance, life insurance comparisons
+- health: Health tips, supplements, fitness, medical cost savings
+- tech: AI tools, gadget reviews, productivity apps, tech trends
+- realestate: Real estate investing, mortgage rates, home buying tips
+- lifestyle: Self-improvement, online courses, side hustles, life hacks
 
 Title style:
 - Click-worthy, 60 chars max
@@ -592,7 +602,7 @@ Output JSON only:
     for t in data.get("topics", []):
         results.append(TopicData(
             title=t["title"],
-            category=t.get("category", "ai-news"),
+            category=t.get("category", "finance"),
             summary=t.get("summary", ""),
             difficulty=t.get("difficulty", "beginner"),
             tags=t.get("tags", []),
@@ -602,7 +612,7 @@ Output JSON only:
 
 
 # ── 영문 블로그 프롬프트 ──
-BLOG_PROMPT_EN = """You are an expert English AI blog writer specializing in SEO and GEO (Generative Engine Optimization).
+BLOG_PROMPT_EN = """You are an expert English blog writer for Daily Insight (deadletter.ink), specializing in high-CPC content about finance, insurance, health, IT, real estate, and lifestyle. You excel at SEO and GEO (Generative Engine Optimization).
 Write a visually rich, easy-to-read blog post about the topic below.
 
 Topic: {title}
@@ -666,7 +676,8 @@ Output JSON only:
 }}"""
 
 
-BLOG_PROMPT = """당신은 SEO·GEO(Generative Engine Optimization)에 특화된 한국어 AI 블로그 작가이자 콘텐츠 디자이너입니다.
+BLOG_PROMPT = """당신은 SEO·GEO(Generative Engine Optimization)에 특화된 한국어 생활정보 블로그 작가이자 콘텐츠 디자이너입니다. (데일리인사이트 — deadletter.ink)
+금융, 보험, 건강, IT, 부동산, 생활 분야의 고CPC 실용 정보 콘텐츠를 작성합니다.
 아래 토픽에 대해 시각적으로 풍부하고 읽기 쉬운 블로그 글을 작성해주세요.
 
 토픽: {title}
@@ -801,8 +812,8 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
     """Claude API로 SEO 최적화 블로그 글 생성"""
     # 카테고리 유효성 검증
     if topic.category not in CATEGORIES:
-        print(f"  [경고] 알 수 없는 카테고리 '{topic.category}' → ai-news로 변경")
-        topic.category = "ai-news"
+        print(f"  [경고] 알 수 없는 카테고리 '{topic.category}' → finance로 변경")
+        topic.category = "finance"
 
     lang = getattr(topic, "language", "ko")
     print(f"[2/5] 블로그 글 생성 중... (토픽: {topic.title}, lang={lang})")
@@ -811,7 +822,7 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
     prompt_content = blog_prompt.format(
         title=topic.title,
         category=CATEGORIES.get(topic.category, {}).get("name", topic.category),
-        summary=topic.summary or ("Latest AI trends" if lang == "en" else "최신 AI 트렌드 관련 정보"),
+        summary=topic.summary or ("Latest practical insights" if lang == "en" else "최신 실용 정보"),
         difficulty=topic.difficulty,
         today=datetime.now().strftime("%Y-%m-%d"),
     )
@@ -1143,7 +1154,7 @@ def run_pipeline(
     """
     pipeline_start = time.time()
     print("=" * 60)
-    print(f"AI 브리핑 파이프라인 v4 (토큰 최적화)")
+    print(f"데일리인사이트 파이프라인 v4 (토큰 최적화)")
     print(f"   주제: {topic} | 생성: {count}편 | 발행: {publish}")
     print(f"   소스: {source} | 언어: {language}")
     print(f"   모드: {'Dry-run' if dry_run else 'Full'}")
@@ -1231,7 +1242,7 @@ def run_pipeline(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="AI 브리핑 블로그 자동화 파이프라인 v3")
+    parser = argparse.ArgumentParser(description="데일리인사이트 블로그 자동화 파이프라인 v4")
     parser.add_argument("--topic", type=str, default="AI", help="주제 (예: AI, 정부사업, 모두의 창업)")
     parser.add_argument("--count", type=int, default=1, help="생성할 글 수 (기본: 1)")
     parser.add_argument("--source", type=str, default="all", choices=["all", "kstartup", "gov", "claude"],

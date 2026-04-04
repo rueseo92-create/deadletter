@@ -16,7 +16,7 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 load_dotenv()
-SITE_URL = os.environ.get("BLOG_SITE_URL", "https://seroai.xyz")
+SITE_URL = os.environ.get("BLOG_SITE_URL", "https://deadletter.ink")
 INDEXNOW_KEY = "d5566bb4311e4891bf4f30754b0d87d6"
 
 POSTS_DIR = Path(__file__).parent.parent / "content" / "posts"

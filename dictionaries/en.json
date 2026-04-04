@@ -1,39 +1,41 @@
 {
   "meta": {
-    "siteDescription": "AI news, AI side hustles, and practical AI tool guides — simplified",
-    "defaultTitle": "AI Briefing | AI News, Side Hustles & Guides"
+    "siteDescription": "Finance, insurance, health, tech, real estate — essential daily info simplified",
+    "defaultTitle": "Daily Insight | Finance · Insurance · Health · IT · Lifestyle"
   },
   "nav": {
     "home": "Home",
-    "sideHustle": "AI Side Hustle",
-    "aiTools": "AI Tools",
-    "aiNews": "AI News",
-    "marketing": "AI Marketing",
-    "agency": "AI Marketing Agency",
-    "about": "About Us"
+    "finance": "Finance",
+    "insurance": "Insurance",
+    "health": "Health",
+    "tech": "Tech",
+    "realestate": "Real Estate",
+    "lifestyle": "Lifestyle",
+    "agency": "Consulting",
+    "about": "About"
   },
   "home": {
     "latest": "Latest",
     "all": "All",
     "viewAllPosts": "View All Posts",
     "noPosts": "No posts yet",
-    "noPostsDesc": "Run the pipeline to generate AI-related content",
+    "noPostsDesc": "First post coming soon.",
     "firstPostSoon": "First post coming soon.",
     "popularKeywords": "Popular Keywords",
-    "newsletter": "AI Briefing Newsletter",
-    "newsletterDesc": "Weekly AI trends and side hustle tips, delivered to your inbox.",
+    "newsletter": "Daily Insight Newsletter",
+    "newsletterDesc": "Weekly finance, insurance, health & tech insights delivered to your inbox.",
     "emailPlaceholder": "Enter your email address",
     "subscribe": "Subscribe",
     "noSpam": "No spam. Unsubscribe anytime.",
     "aboutThisBlog": "About this blog",
     "aboutItems": [
-      "AI news explained simply",
-      "AI side hustles & digital nomad guides",
-      "Practical AI tool usage guides",
-      "Google SEO-optimized content"
+      "Finance & investment tips simplified",
+      "Insurance comparison & guides",
+      "Practical health & wellness info",
+      "Tech reviews & how-to guides"
     ],
-    "coupangTitle": "Popular gear among AI bloggers",
-    "coupangDevTitle": "Must-have gear for devs & bloggers"
+    "coupangTitle": "Products our readers love",
+    "coupangDevTitle": "Everyday essentials"
   },
   "post": {
     "readingTime": "min read",
@@ -45,13 +47,13 @@
     "advanced": "Advanced",
     "home": "Home",
     "coupangReaderTitle": "Products readers of this article often search",
-    "coupangDevTitle": "Must-have gear for devs & bloggers",
+    "coupangDevTitle": "Everyday essentials",
     "koreanContentNotice": "This article is written in Korean."
   },
   "search": {
     "title": "Search",
     "description": "Search articles by keyword or tag",
-    "placeholder": "Search (e.g., ChatGPT, AI side hustle, automation)",
+    "placeholder": "Search (e.g., loans, insurance, vitamins)",
     "button": "Search",
     "popularKeywords": "Popular Keywords",
     "results": "{n} results",

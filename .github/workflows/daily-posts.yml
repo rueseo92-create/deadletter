@@ -3,10 +3,10 @@ name: Daily Blog Posts + Social
 on:
   schedule:
     # 하루 4회 시간대별 발행 (한국시간 기준)
-    - cron: '0 22 * * *'    # 07:00 KST - 오전 슬롯 (ai-news, marketing)
-    - cron: '30 3 * * *'    # 12:30 KST - 점심 슬롯 (ai-tools, tutorials)
-    - cron: '0 9 * * *'     # 18:00 KST - 저녁 슬롯 (marketing, tutorials, ai-tools)
-    - cron: '30 12 * * *'   # 21:30 KST - 야간 슬롯 (gov-projects)
+    - cron: '0 22 * * *'    # 07:00 KST - 오전 슬롯 (finance, insurance)
+    - cron: '30 3 * * *'    # 12:30 KST - 점심 슬롯 (health, tech)
+    - cron: '0 9 * * *'     # 18:00 KST - 저녁 슬롯 (realestate, lifestyle)
+    - cron: '30 12 * * *'   # 21:30 KST - 야간 슬롯 (mixed)
   workflow_dispatch:
     inputs:
       slot:
@@ -57,7 +57,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_REPO_PATH: ${{ github.workspace }}
-          BLOG_SITE_URL: https://seroai.xyz
+          BLOG_SITE_URL: https://deadletter.ink
         run: |
           cd scripts
           SLOT="${{ github.event.inputs.slot || 'auto' }}"
@@ -88,7 +88,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_REPO_PATH: ${{ github.workspace }}
-          BLOG_SITE_URL: https://seroai.xyz
+          BLOG_SITE_URL: https://deadletter.ink
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}

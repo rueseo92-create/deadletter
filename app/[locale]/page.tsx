@@ -6,10 +6,12 @@ import NewsletterForm from "@/components/NewsletterForm";
 import { getDictionary, localizedHref, defaultLocale, type Locale } from "@/lib/i18n";
 
 const catColors: Record<string, { bg: string; gradient: string; icon: string }> = {
-  "ai-news":      { bg: "from-indigo-500 to-indigo-600", gradient: "from-indigo-500/10 to-indigo-500/5", icon: "neurology" },
-  "side-hustle":  { bg: "from-emerald-500 to-emerald-600", gradient: "from-emerald-500/10 to-emerald-500/5", icon: "trending_up" },
-  "ai-tools":     { bg: "from-cyan-500 to-cyan-600", gradient: "from-cyan-500/10 to-cyan-500/5", icon: "construction" },
-  marketing:      { bg: "from-amber-500 to-amber-600", gradient: "from-amber-500/10 to-amber-500/5", icon: "campaign" },
+  finance:    { bg: "from-indigo-500 to-indigo-600", gradient: "from-indigo-500/10 to-indigo-500/5", icon: "account_balance" },
+  insurance:  { bg: "from-emerald-500 to-emerald-600", gradient: "from-emerald-500/10 to-emerald-500/5", icon: "shield" },
+  health:     { bg: "from-cyan-500 to-cyan-600", gradient: "from-cyan-500/10 to-cyan-500/5", icon: "favorite" },
+  tech:       { bg: "from-violet-500 to-violet-600", gradient: "from-violet-500/10 to-violet-500/5", icon: "devices" },
+  realestate: { bg: "from-amber-500 to-amber-600", gradient: "from-amber-500/10 to-amber-500/5", icon: "home_work" },
+  lifestyle:  { bg: "from-rose-500 to-rose-600", gradient: "from-rose-500/10 to-rose-500/5", icon: "self_improvement" },
 };
 
 export default async function Home({ params }: { params: { locale: string } }) {
@@ -44,14 +46,14 @@ export default async function Home({ params }: { params: { locale: string } }) {
             <div className="lg:col-span-3">
               <div className="flex items-center gap-3 mb-10">
                 <div className="w-10 h-px bg-gradient-to-r from-indigo-400/60 to-transparent" />
-                <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-indigo-400/70">AI Briefing</span>
+                <span className="text-[11px] font-bold tracking-[0.3em] uppercase text-indigo-400/70">Daily Insight</span>
               </div>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-extrabold text-white leading-[0.92] tracking-[-0.02em] font-headline mb-8">
-                AI의 오늘을
+                생활 속 핵심,
                 <br />
                 <span className="bg-gradient-to-r from-white via-indigo-200 to-indigo-300 bg-clip-text text-transparent animate-gradient">
-                  한눈에.
+                  매일 쉽게.
                 </span>
               </h1>
 
@@ -81,7 +83,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
                 href="#latest"
                 className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-[#0c0a20] font-bold text-sm rounded-full hover:shadow-glow-lg transition-all duration-500 hover:scale-[1.02] active:scale-[0.98]"
               >
-                브리핑 시작하기
+                둘러보기
                 <span className="material-symbols-outlined text-base group-hover:translate-y-0.5 transition-transform duration-300">arrow_downward</span>
               </a>
             </div>
@@ -191,7 +193,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
           <div className="flex items-end justify-between mb-12">
             <div>
               <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-primary/70 mb-2">Latest Articles</p>
-              <h2 className="text-2xl lg:text-3xl font-extrabold text-slate-900 font-headline">최신 브리핑</h2>
+              <h2 className="text-2xl lg:text-3xl font-extrabold text-slate-900 font-headline">최신 인사이트</h2>
             </div>
             <a href={lh("/posts")} className="group text-sm font-semibold text-primary hover:text-primary-700 transition-colors flex items-center gap-1">
               {dict.home.viewAllPosts}
@@ -299,7 +301,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
             {siteConfig.categories.map((cat) => {
               const catPosts = posts.filter((p) => p.category === cat.slug);
-              const colors = catColors[cat.slug] || catColors["ai-news"];
+              const colors = catColors[cat.slug] || catColors["finance"];
               return (
                 <a
                   key={cat.slug}
@@ -361,12 +363,12 @@ export default async function Home({ params }: { params: { locale: string } }) {
             <div>
               <p className="text-[11px] font-bold tracking-[0.25em] uppercase text-primary/70 mb-4">For Business</p>
               <h2 className="text-3xl lg:text-[2.75rem] font-extrabold text-slate-900 font-headline mb-6 leading-[1.1] tracking-tight">
-                직접 하기
-                <br />어려우시다면
+                콘텐츠 제작,
+                <br />대행해드립니다
               </h2>
               <p className="text-slate-500 leading-relaxed max-w-md mb-10">
-                AI 블로그 구축, SEO 최적화, 콘텐츠 자동화 — 이 블로그에서 방법을 다 알려드리지만,
-                바쁘시면 저희가 대신 해드립니다.
+                고품질 콘텐츠 제작, SEO 최적화, 블로그 운영 대행 —
+                전문가가 직접 관리해드립니다.
               </p>
               <div className="flex flex-wrap items-center gap-4">
                 <a
@@ -377,10 +379,10 @@ export default async function Home({ params }: { params: { locale: string } }) {
                   <span className="material-symbols-outlined text-base group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                 </a>
                 <a
-                  href="mailto:contact@seroai.xyz"
+                  href="mailto:contact@deadletter.ink"
                   className="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-700 transition-colors"
                 >
-                  또는 바로 문의하기
+                  문의하기
                   <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                 </a>
               </div>
@@ -390,10 +392,10 @@ export default async function Home({ params }: { params: { locale: string } }) {
             <div className="rounded-3xl bg-white ring-1 ring-slate-200/60 p-8 lg:p-10 shadow-card">
               <div className="space-y-6">
                 {[
-                  { icon: "edit_note", title: "AI 블로그 자동화", desc: "매일 SEO 최적화된 글 자동 발행" },
+                  { icon: "edit_note", title: "콘텐츠 제작 대행", desc: "SEO 최적화된 전문 콘텐츠 발행" },
                   { icon: "travel_explore", title: "SEO 최적화", desc: "기술적 SEO 분석 및 전면 적용" },
-                  { icon: "web", title: "웹사이트 구축", desc: "기획부터 배포까지 원스톱" },
-                  { icon: "smart_toy", title: "AI 파이프라인", desc: "크롤링 → 생성 → 발행 전체 자동화" },
+                  { icon: "web", title: "블로그/웹사이트 구축", desc: "기획부터 배포까지 원스톱" },
+                  { icon: "monetization_on", title: "수익화 컨설팅", desc: "애드센스 · 제휴마케팅 최적 세팅" },
                 ].map((item) => (
                   <div key={item.title} className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center flex-shrink-0">

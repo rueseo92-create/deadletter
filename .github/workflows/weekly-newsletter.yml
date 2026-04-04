@@ -47,7 +47,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_REPO_PATH: ${{ github.workspace }}
-          BLOG_SITE_URL: https://seroai.xyz
+          BLOG_SITE_URL: https://deadletter.ink
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
           cd scripts
@@ -63,7 +63,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_REPO_PATH: ${{ github.workspace }}
-          BLOG_SITE_URL: https://seroai.xyz
+          BLOG_SITE_URL: https://deadletter.ink
         run: |
           cd scripts
           python community_seed.py --count 3 --platform all

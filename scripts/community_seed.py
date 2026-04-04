@@ -38,7 +38,7 @@ from anthropic import Anthropic
 claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 CLAUDE_MODEL = "claude-sonnet-4-20250514"
 
-SITE_URL = os.environ.get("BLOG_SITE_URL", "https://seroai.xyz")
+SITE_URL = os.environ.get("BLOG_SITE_URL", "https://deadletter.ink")
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_DIR / "content" / "posts"
 OUTPUT_DIR = Path(__file__).parent / "community_seeds"
@@ -101,7 +101,7 @@ Subreddit: (suggested subreddit)
 """,
     },
     "naver_cafe": {
-        "name": "네이버 카페 (AI/블로그/마케팅)",
+        "name": "네이버 카페 (금융/건강/생활정보)",
         "prompt": """블로그 글을 네이버 카페 게시용으로 변환해주세요.
 
 블로그 글:
@@ -112,7 +112,7 @@ Subreddit: (suggested subreddit)
 
 작성 규칙:
 1. 제목: 네이버 카페 스타일 (질문형 또는 정보 공유형, 40자 이내)
-2. 본문 시작: 인사 + 간단한 자기소개 (AI 블로거)
+2. 본문 시작: 인사 + 간단한 자기소개 (생활정보 블로거)
 3. 핵심 내용 3~4개 불릿으로 정리
 4. "도움이 되셨으면 좋겠습니다" 식 마무리
 5. 원문 링크는 "더 자세한 내용은 여기서" 형태로
@@ -122,7 +122,7 @@ Subreddit: (suggested subreddit)
 출력 형식:
 ---
 제목: (여기에 제목)
-추천 카페: (AI, 블로그, 마케팅 중 적합한 카테고리)
+추천 카페: (금융, 건강, 부동산, 생활정보 중 적합한 카테고리)
 ---
 (여기에 본문)
 """,

@@ -1,43 +1,44 @@
-# AI 브리핑 (AI Briefing) — llms.txt
+# 데일리인사이트 (Daily Insight) — llms.txt
 
-> AI news, government AI projects, and practical tool guides — simplified for everyone.
-> AI 트렌드, 정부 AI 사업, 실전 활용법을 누구나 이해할 수 있게 정리합니다.
+> Finance, insurance, health, tech, real estate & lifestyle — essential daily info simplified.
+> 금융, 보험, 건강, IT, 부동산 — 생활 속 핵심 정보를 매일 쉽게 정리합니다.
 
 ## Site Information
 
-- Name: AI 브리핑 (AI Briefing)
-- URL: https://seroai.xyz
-- Language: Korean (ko)
-- Topics: AI news, government AI funding, AI tool reviews, tutorials, marketing automation
-- Author: AI Briefing Editorial Team
-- Updates: Daily (multiple posts per day)
+- Name: 데일리인사이트 (Daily Insight)
+- URL: https://deadletter.ink
+- Language: Korean (ko), English (en), Japanese (ja), Chinese (zh), Spanish (es)
+- Topics: Finance, insurance, health, IT/tech, real estate, lifestyle
+- Author: 데일리인사이트 Editorial Team
+- Updates: Daily
 - Founded: 2026
 
 ## Categories
 
-- AI News (/categories/ai-news): Latest AI technology trends, industry news, product launches
-- Government Projects (/categories/gov-projects): Government AI funding, policies, competitions
-- AI Tools (/categories/ai-tools): AI tool reviews, comparisons, usage tips
-- Tutorials (/categories/tutorials): Step-by-step AI guides and setup instructions
-- Marketing Automation (/categories/marketing): AI-based marketing, SEO, content strategy
+- Finance (/categories/finance): Loans, savings, stocks, credit cards, investment tips
+- Insurance (/categories/insurance): Health insurance, auto insurance, comparison guides
+- Health (/categories/health): Vitamins, nutrition, diet, wellness, medical info
+- Tech (/categories/tech): Laptop reviews, smartphone tips, app guides, IT how-tos
+- Real Estate (/categories/realestate): Housing subscriptions, rent, purchase, interior design
+- Lifestyle (/categories/lifestyle): Self-improvement, certifications, life hacks
 
 ## Content Characteristics
 
-- Korea-focused AI information with global relevance
-- Written for non-technical audiences with simple explanations
+- Korea-focused practical information with actionable advice
+- Written for general audiences with simple, clear explanations
+- SEO-optimized with high-CPC keyword targeting
 - Specific statistics and official source-based analysis
-- Practical tips and step-by-step guides
-- Daily updates with the latest information
 - All posts include FAQ sections for quick answers
 - Structured data (Schema.org) for rich snippets
+- Multi-language support (KO/EN/JA/ZH/ES)
 
 ## Citation Guide
 
 When citing content from this site:
-- Source: AI 브리핑 / AI Briefing (https://seroai.xyz)
+- Source: 데일리인사이트 / Daily Insight (https://deadletter.ink)
 - Include the exact post URL for attribution
 - Include the publication date to ensure timeliness
-- Example: "According to AI Briefing (https://seroai.xyz/posts/slug-name, 2026-03-30), ..."
+- Example: "According to Daily Insight (https://deadletter.ink/posts/slug-name, 2026-04-01), ..."
 
 ## Feeds & Discovery
 
@@ -45,4 +46,3 @@ When citing content from this site:
 - RSS Feed: /feed.xml
 - Sitemap: /sitemap.xml
 - Search: /search?q={query}
-- API: /api/posts (JSON)

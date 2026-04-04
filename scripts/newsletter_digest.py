@@ -16,7 +16,7 @@ newsletter_digest.py - 주간 뉴스레터 다이제스트 자동 생성
 필요한 환경변수:
   ANTHROPIC_API_KEY   - Claude API
   RESEND_API_KEY      - Resend API (발송 시)
-  NEWSLETTER_FROM     - 발신 이메일 (기본: newsletter@seroai.xyz)
+  NEWSLETTER_FROM     - 발신 이메일 (기본: newsletter@deadletter.ink)
 """
 
 import os
@@ -41,7 +41,7 @@ from anthropic import Anthropic
 claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 CLAUDE_MODEL = "claude-sonnet-4-20250514"
 
-SITE_URL = os.environ.get("BLOG_SITE_URL", "https://seroai.xyz")
+SITE_URL = os.environ.get("BLOG_SITE_URL", "https://deadletter.ink")
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_DIR / "content" / "posts"
 SUBSCRIBERS_FILE = BLOG_DIR / "data" / "subscribers.json"
@@ -49,14 +49,15 @@ OUTPUT_DIR = Path(__file__).parent / "newsletters"
 KST = timezone(timedelta(hours=9))
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
-NEWSLETTER_FROM = os.environ.get("NEWSLETTER_FROM", "AI Briefing <newsletter@seroai.xyz>")
+NEWSLETTER_FROM = os.environ.get("NEWSLETTER_FROM", "데일리인사이트 <newsletter@deadletter.ink>")
 
 CATEGORY_LABELS = {
-    "ai-news": "AI 뉴스",
-    "side-hustle": "AI 부업",
-    "ai-tools": "AI 도구",
-    "marketing": "마케팅",
-    "business": "비즈니스",
+    "finance": "금융·재테크",
+    "insurance": "보험",
+    "health": "건강·의료",
+    "tech": "IT·테크",
+    "realestate": "부동산",
+    "lifestyle": "생활·자기계발",
 }
 
 
@@ -111,7 +112,7 @@ def generate_digest_content(posts: list[dict]) -> dict:
         for p in posts
     )
 
-    prompt = f"""이번 주 AI 브리핑 블로그에 발행된 글 목록입니다. 뉴스레터 콘텐츠를 작성해주세요.
+    prompt = f"""이번 주 데일리인사이트 블로그에 발행된 글 목록입니다. 뉴스레터 콘텐츠를 작성해주세요.
 
 발행된 글:
 {posts_summary}
@@ -145,8 +146,8 @@ def generate_digest_content(posts: list[dict]) -> dict:
         return json.loads(json_match.group())
 
     return {
-        "subject": f"AI 브리핑 주간 다이제스트 — {len(posts)}개 새 글",
-        "preview_text": "이번 주 AI 뉴스와 가이드를 확인하세요",
+        "subject": f"데일리인사이트 주간 다이제스트 — {len(posts)}개 새 글",
+        "preview_text": "이번 주 금융·건강·생활 인사이트를 확인하세요",
         "body": text,
     }
 
@@ -186,7 +187,7 @@ def build_html_email(digest: dict, posts: list[dict]) -> str:
   <div style="max-width:600px;margin:0 auto;background:#fff">
     <!-- Header -->
     <div style="background:linear-gradient(135deg,#1e293b,#334155);padding:32px 24px;text-align:center">
-      <h1 style="color:#fff;margin:0;font-size:24px">AI Briefing</h1>
+      <h1 style="color:#fff;margin:0;font-size:24px">데일리인사이트</h1>
       <p style="color:#94a3b8;margin:8px 0 0;font-size:14px">주간 다이제스트 · {week_label}</p>
     </div>
 
@@ -210,7 +211,7 @@ def build_html_email(digest: dict, posts: list[dict]) -> str:
 
     <!-- Footer -->
     <div style="background:#f8fafc;padding:24px;text-align:center;font-size:12px;color:#94a3b8">
-      <p>AI 브리핑 뉴스레터 · <a href="{SITE_URL}" style="color:#64748b">seroai.xyz</a></p>
+      <p>데일리인사이트 뉴스레터 · <a href="{SITE_URL}" style="color:#64748b">deadletter.ink</a></p>
       <p>더 이상 받고 싶지 않으시면 <a href="{SITE_URL}/unsubscribe" style="color:#64748b">구독 해지</a></p>
     </div>
   </div>

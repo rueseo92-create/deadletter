@@ -10,10 +10,12 @@ import { siteConfig } from "@/lib/config";
 export const runtime = "edge";
 
 const categoryColors: Record<string, string> = {
-  "ai-news": "#6366F1",
-  "side-hustle": "#059669",
-  "ai-tools": "#0891B2",
-  marketing: "#D97706",
+  finance: "#4F46E5",
+  insurance: "#059669",
+  health: "#0891B2",
+  tech: "#7C3AED",
+  realestate: "#D97706",
+  lifestyle: "#DC2626",
 };
 
 export async function GET(req: NextRequest) {
@@ -91,7 +93,7 @@ export async function GET(req: NextRequest) {
               color: "white",
             }}
           >
-            AI
+            DI
           </div>
           <span style={{ fontSize: 20, fontWeight: 700, color: "rgba(255,255,255,0.5)" }}>
             {siteConfig.name}

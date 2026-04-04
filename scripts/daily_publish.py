@@ -40,29 +40,29 @@ SLOT_CONFIG = {
     "morning": {
         "hours": (0, 11),       # 00:00~10:59 KST (GitHub Actions 지연 대비 여유)
         "count": 3,
-        "distribution": {"ai-news": 2, "marketing": 1},
-        "seo_angle": "최신 뉴스, 트렌드, 속보",
+        "distribution": {"finance": 2, "insurance": 1},
+        "seo_angle": "최신 금융 뉴스, 금리, 보험 트렌드",
         "label": "오전 (07:00)",
     },
     "lunch": {
         "hours": (11, 17),      # 11:00~16:59 KST
         "count": 2,
-        "distribution": {"ai-tools": 1, "side-hustle": 1},
-        "seo_angle": "사용법, 활용 가이드, 추천",
+        "distribution": {"health": 1, "tech": 1},
+        "seo_angle": "건강 가이드, IT 활용법, 추천",
         "label": "점심 (12:30)",
     },
     "evening": {
         "hours": (17, 20),      # 17:00~19:59 KST
         "count": 3,
-        "distribution": {"marketing": 1, "side-hustle": 1, "ai-tools": 1},
-        "seo_angle": "비교 분석, 리뷰, 실전 팁",
+        "distribution": {"realestate": 1, "lifestyle": 1, "finance": 1},
+        "seo_angle": "부동산 분석, 생활 팁, 재테크 전략",
         "label": "저녁 (18:00)",
     },
     "night": {
         "hours": (20, 24),      # 20:00~23:59 KST
         "count": 2,
-        "distribution": {"side-hustle": 2},
-        "seo_angle": "심층 분석, 부업 가이드, 수익화 전략",
+        "distribution": {"insurance": 1, "lifestyle": 1},
+        "seo_angle": "보험 비교, 자기계발, 절약 전략",
         "label": "야간 (21:30)",
     },
 }
@@ -71,53 +71,77 @@ SLOT_CONFIG = {
 # 토픽 풀: 카테고리별 주제 템플릿
 # ──────────────────────────────────────────────
 TOPIC_POOL = {
-    "ai-news": [
-        "이번 주 AI 업계 뉴스",
-        "최신 AI 모델 출시 소식",
-        "빅테크 AI 전략 변화",
-        "AI 규제 정책 동향",
-        "AI 스타트업 투자 트렌드",
-        "생성형 AI 시장 전망",
-        "AI 반도체 경쟁 현황",
-        "오픈소스 AI 모델 동향",
-        "AI 윤리와 안전성 논의",
-        "국내 AI 기업 동향",
+    "finance": [
+        "2026년 적금 금리 비교 TOP 10",
+        "연말정산 환급 많이 받는 방법",
+        "ETF 초보자 입문 가이드",
+        "신용점수 올리는 5가지 방법",
+        "대출 금리 비교 꿀팁",
+        "주식 배당금 투자 전략",
+        "세금 절약하는 재테크 방법",
+        "청년 우대 적금 추천",
+        "카드 혜택 비교 분석",
+        "ISA 계좌 활용법",
     ],
-    "side-hustle": [
-        "AI 부업으로 월 100만원 만들기",
-        "ChatGPT로 수익 내는 방법",
-        "AI 자동화 부업 아이디어",
-        "디지털 노마드 수입원 만들기",
-        "AI 콘텐츠 판매 부업",
-        "프리랜서 AI 활용 수익화",
-        "AI 번역 부업 시작하기",
-        "자동화 수익 파이프라인 구축",
-        "AI 이미지 판매 부업",
-        "패시브 인컴 AI 활용법",
+    "insurance": [
+        "실비보험 비교 추천",
+        "자동차보험 저렴하게 가입하는 법",
+        "암보험 가입 시 주의사항",
+        "보험료 아끼는 5가지 꿀팁",
+        "어린이보험 추천 비교",
+        "운전자보험 필요할까?",
+        "보험 리모델링 방법",
+        "종신보험 vs 정기보험 비교",
+        "실손보험 청구 방법 총정리",
+        "치아보험 추천 TOP 5",
     ],
-    "ai-tools": [
-        "ChatGPT 활용법",
-        "Claude AI 사용 가이드",
-        "Midjourney 이미지 생성",
+    "health": [
+        "건강검진 항목 총정리",
+        "영양제 추천 조합 가이드",
+        "다이어트 식단 추천",
+        "홈트레이닝 루틴 초보자용",
+        "수면 질 높이는 방법",
+        "면역력 높이는 생활습관",
+        "건강보험료 절약하는 법",
+        "눈 건강 관리법",
+        "허리 통증 예방 운동",
+        "건강기능식품 고르는 법",
+    ],
+    "tech": [
+        "ChatGPT 활용법 2026",
+        "스마트폰 추천 비교",
+        "생산성 앱 TOP 10",
         "AI 코딩 도구 비교",
-        "AI 영상 편집 도구",
-        "AI 번역 도구 추천",
-        "AI 문서 요약 도구",
-        "AI 마케팅 자동화 도구",
-        "AI 데이터 분석 도구",
         "무료 AI 도구 모음",
+        "클라우드 스토리지 비교",
+        "VPN 추천 비교",
+        "노트북 추천 가성비",
+        "AI 영상 편집 도구",
+        "스마트홈 기기 추천",
     ],
-    "marketing": [
-        "이메일 마케팅 자동화 전략",
-        "SNS 마케팅 자동화 도구 비교",
-        "AI 마케팅 자동화 플랫폼 추천",
-        "퍼포먼스 마케팅 자동화 가이드",
-        "CRM 마케팅 자동화 도입법",
-        "콘텐츠 마케팅 자동화 워크플로우",
-        "리타겟팅 광고 자동화 설정법",
-        "AI 챗봇 마케팅 자동화",
-        "마케팅 퍼널 자동화 구축",
-        "SEO 자동화 도구 활용법",
+    "realestate": [
+        "아파트 청약 준비 가이드",
+        "전세 vs 월세 비교 분석",
+        "부동산 투자 초보자 가이드",
+        "이사 체크리스트 총정리",
+        "신혼부부 주택 지원제도",
+        "부동산 세금 절약 방법",
+        "오피스텔 투자 주의사항",
+        "전세 사기 예방법",
+        "주택담보대출 비교",
+        "재건축 투자 전략",
+    ],
+    "lifestyle": [
+        "자격증 추천 취업에 도움되는",
+        "온라인 강의 추천 무료",
+        "생활비 절약하는 10가지 방법",
+        "부업 아이디어 현실적인 추천",
+        "시간 관리 방법 직장인",
+        "독서 습관 만드는 법",
+        "미니멀 라이프 시작하기",
+        "스트레스 관리법",
+        "자기계발 루틴 만들기",
+        "재택근무 생산성 높이는 법",
     ],
 }
 
@@ -125,10 +149,12 @@ TOPIC_POOL = {
 # SEO 트래픽 부스트: 검색량 높은 키워드 수식어
 # ──────────────────────────────────────────────
 SEO_MODIFIERS = {
-    "ai-news": ["속보", "이번 주", "최신", "긴급", "단독"],
-    "side-hustle": ["월 100만원", "무자본", "초보자", "수익 인증", "자동화"],
-    "ai-tools": ["무료", "추천 TOP", "직접 써보니", "비교", "초보자용"],
-    "marketing": ["ROI 200%", "자동화 비법", "매출 2배", "실전 사례", "무료 도구"],
+    "finance": ["금리 비교", "절세 꿀팁", "무료 상담", "초보자 필독", "2026년 최신"],
+    "insurance": ["보험료 절약", "비교 추천", "가입 전 필독", "직접 비교", "무료 견적"],
+    "health": ["전문가 추천", "직접 써보니", "무료 검진", "초보자용", "효과 검증"],
+    "tech": ["무료", "추천 TOP", "직접 써보니", "비교", "초보자용"],
+    "realestate": ["시세 분석", "투자 전략", "초보자 가이드", "2026년 전망", "세금 절약"],
+    "lifestyle": ["생활 꿀팁", "무료 강의", "직장인 필독", "절약 비법", "실전 후기"],
 }
 
 # 발행 이력 추적 (중복 방지)
@@ -186,10 +212,12 @@ def select_daily_topics(count: int = 10, slot: str = None) -> list[dict]:
         distribution = dict(SLOT_CONFIG[slot]["distribution"])
     else:
         distribution = {
-            "ai-news": 3,
-            "side-hustle": 3,
-            "ai-tools": 2,
-            "marketing": 2,
+            "finance": 2,
+            "insurance": 2,
+            "health": 2,
+            "tech": 2,
+            "realestate": 1,
+            "lifestyle": 1,
         }
         # count에 맞게 비례 배분 조정
         if count != 10:
@@ -419,7 +447,7 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
         mod = f" [{t.get('seo_modifier', '')}]" if t.get("seo_modifier") else ""
         print(f"  {i+1}. [{t['category']}] {t['topic']}{mod}")
 
-    # K-Startup 최신 공고 크롤링 (side-hustle 카테고리에 사용)
+    # K-Startup 최신 공고 크롤링 (finance 카테고리에 사용)
     kstartup_topics = []
     if sero_blog.KSTARTUP_ENABLED:
         try:
@@ -428,7 +456,7 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
             for ann in anns:
                 kstartup_topics.append(sero_blog.TopicData(
                     title=ann.title,
-                    category="side-hustle",
+                    category="finance",
                     summary=f"마감: {ann.deadline} (D-{ann.d_day})",
                     source_name="K-Startup",
                     source_url=ann.url,
@@ -447,8 +475,8 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
         print(f"{'─' * 50}")
 
         try:
-            # side-hustle + K-Startup 실제 데이터 우선
-            if topic_info["category"] == "side-hustle" and kstartup_idx < len(kstartup_topics):
+            # finance + K-Startup 실제 데이터 우선
+            if topic_info["category"] == "finance" and kstartup_idx < len(kstartup_topics):
                 topic_data = kstartup_topics[kstartup_idx]
                 kstartup_idx += 1
                 print(f"  -> K-Startup 실제 데이터 사용: {topic_data.title}")

@@ -1,39 +1,41 @@
 {
   "meta": {
-    "siteDescription": "AI 뉴스, AI 부업·자동화 수익, AI 도구 가이드를 쉽게 정리합니다",
-    "defaultTitle": "AI 브리핑 | AI 뉴스, AI 부업, 활용 가이드"
+    "siteDescription": "금융, 보험, 건강, IT, 부동산 — 생활 속 핵심 정보를 매일 쉽게 정리합니다",
+    "defaultTitle": "데일리인사이트 | 금융 · 보험 · 건강 · IT · 생활 정보"
   },
   "nav": {
     "home": "홈",
-    "sideHustle": "AI 부업",
-    "aiTools": "AI 도구",
-    "aiNews": "AI 뉴스",
-    "marketing": "AI 마케팅",
-    "agency": "AI 마케팅대행",
-    "about": "회사소개"
+    "finance": "금융",
+    "insurance": "보험",
+    "health": "건강",
+    "tech": "IT",
+    "realestate": "부동산",
+    "lifestyle": "생활",
+    "agency": "컨설팅",
+    "about": "소개"
   },
   "home": {
     "latest": "Latest",
     "all": "전체",
     "viewAllPosts": "전체 글 보기",
     "noPosts": "아직 글이 없습니다",
-    "noPostsDesc": "파이프라인을 실행해서 AI 관련 콘텐츠를 생성해보세요",
+    "noPostsDesc": "곧 첫 번째 글이 올라옵니다.",
     "firstPostSoon": "곧 첫 번째 글이 올라옵니다.",
     "popularKeywords": "인기 키워드",
-    "newsletter": "AI 브리핑 뉴스레터",
-    "newsletterDesc": "매주 AI 트렌드와 부업·자동화 수익 정보를 정리해서 보내드립니다.",
+    "newsletter": "데일리인사이트 뉴스레터",
+    "newsletterDesc": "매주 금융·보험·건강·IT 핵심 정보를 이메일로 보내드립니다.",
     "emailPlaceholder": "이메일 주소를 입력하세요",
     "subscribe": "구독하기",
     "noSpam": "스팸 걱정 없이 언제든 해지 가능합니다.",
     "aboutThisBlog": "이 블로그는",
     "aboutItems": [
-      "AI 뉴스를 쉬운 한국어로 정리",
-      "AI 부업·디지털노마드·자동화 수익 가이드",
-      "실전 AI 도구 사용법 가이드",
-      "Google 검색 최적화(SEO) 콘텐츠"
+      "금융·재테크 핵심 정보를 쉽게 정리",
+      "보험 비교·가입 가이드",
+      "건강·의료 실용 정보",
+      "IT·테크 리뷰 및 활용법"
     ],
-    "coupangTitle": "AI 블로거들이 많이 쓰는 장비",
-    "coupangDevTitle": "개발자·블로거 필수 장비 모음"
+    "coupangTitle": "독자들이 많이 찾는 상품",
+    "coupangDevTitle": "생활 필수 아이템 모음"
   },
   "post": {
     "readingTime": "분 읽기",
@@ -45,13 +47,13 @@
     "advanced": "심화",
     "home": "홈",
     "coupangReaderTitle": "이 글을 읽는 분들이 많이 찾는 상품",
-    "coupangDevTitle": "개발자·블로거 필수 장비 모음",
+    "coupangDevTitle": "생활 필수 아이템 모음",
     "koreanContentNotice": ""
   },
   "search": {
     "title": "검색",
     "description": "키워드 또는 태그로 글을 찾아보세요",
-    "placeholder": "검색어를 입력하세요 (예: ChatGPT, AI 부업, 자동화)",
+    "placeholder": "검색어를 입력하세요 (예: 대출, 보험, 비타민)",
     "button": "검색",
     "popularKeywords": "인기 키워드",
     "results": "검색 결과 {n}건",

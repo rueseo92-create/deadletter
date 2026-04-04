@@ -227,7 +227,7 @@ export default async function PostPage({ params }: { params: { locale: string; s
               keywords={(() => {
                 const tagMap = siteConfig.coupang.tagProductMap;
                 const matched = meta.tags.map((tag) => { const key = Object.keys(tagMap).find((k) => tag.includes(k) || k.includes(tag)); return key ? tagMap[key] : null; }).filter((v): v is string => v !== null);
-                const catDefaults = siteConfig.coupang.productKeywords[meta.category] || siteConfig.coupang.productKeywords["ai-news"];
+                const catDefaults = siteConfig.coupang.productKeywords[meta.category] || siteConfig.coupang.productKeywords["finance"];
                 return Array.from(new Set([...matched, ...catDefaults])).slice(0, 4);
               })()}
               title={dict.post.coupangReaderTitle}
