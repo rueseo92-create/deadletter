@@ -7,7 +7,7 @@ export const siteConfig = {
   name: "AI 브리핑",
   description:
     "AI 트렌드, AI 부업·자동화 수익, 실전 활용법을 누구나 이해할 수 있게 정리합니다",
-  url: "https://seroai.xyz",
+  url: "https://deadletter.ink",
   author: "AI 브리핑",
   locale: "ko_KR",
 

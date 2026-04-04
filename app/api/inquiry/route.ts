@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { getDb } from "@/lib/firebase-admin";
 
-const INQUIRIES_FILE = path.join(process.cwd(), "data/inquiries.json");
+export const dynamic = "force-dynamic";
+
+const COLLECTION = "inquiries";
+
+const VALID_SERVICES = ["blog", "seo", "website", "pipeline", "monetize"];
+const VALID_BUDGETS = ["starter", "pro", "enterprise"];
 
 interface Inquiry {
   services: string[];
@@ -10,25 +14,8 @@ interface Inquiry {
   email: string;
   company?: string;
   createdAt: string;
+  status: "new" | "contacted" | "closed";
 }
-
-function readInquiries(): Inquiry[] {
-  try {
-    if (!fs.existsSync(INQUIRIES_FILE)) return [];
-    return JSON.parse(fs.readFileSync(INQUIRIES_FILE, "utf-8"));
-  } catch {
-    return [];
-  }
-}
-
-function writeInquiries(data: Inquiry[]) {
-  const dir = path.dirname(INQUIRIES_FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(INQUIRIES_FILE, JSON.stringify(data, null, 2), "utf-8");
-}
-
-const VALID_SERVICES = ["blog", "seo", "website", "pipeline", "monetize"];
-const VALID_BUDGETS = ["starter", "pro", "enterprise"];
 
 export async function POST(req: NextRequest) {
   try {
@@ -50,26 +37,50 @@ export async function POST(req: NextRequest) {
       email: email.trim().toLowerCase(),
       company: company?.trim() || undefined,
       createdAt: new Date().toISOString(),
+      status: "new",
     };
 
-    // 외부 웹훅 설정 시 전달
+    // Firestore에 저장
+    await getDb().collection(COLLECTION).add(inquiry);
+
+    // 외부 웹훅
     const webhookUrl = process.env.INQUIRY_WEBHOOK_URL;
     if (webhookUrl) {
-      await fetch(webhookUrl, {
+      fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(inquiry),
-      });
-      return NextResponse.json({ ok: true });
+      }).catch(() => {});
     }
 
-    // 로컬 JSON 저장
-    const inquiries = readInquiries();
-    inquiries.push(inquiry);
-    writeInquiries(inquiries);
-
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (error) {
+    console.error("Inquiry API error:", error);
     return NextResponse.json({ error: "서버 오류가 발생했습니다." }, { status: 500 });
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    const key = req.headers.get("authorization")?.replace("Bearer ", "");
+    if (key !== process.env.ADMIN_TOKEN) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const snapshot = await getDb()
+      .collection(COLLECTION)
+      .orderBy("createdAt", "desc")
+      .limit(100)
+      .get();
+
+    const inquiries = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return NextResponse.json({ count: inquiries.length, inquiries });
+  } catch (error) {
+    console.error("Inquiry GET error:", error);
+    return NextResponse.json({ error: "서버 오류" }, { status: 500 });
   }
 }

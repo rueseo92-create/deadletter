@@ -1,23 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import { getDb } from "@/lib/firebase-admin";
 
-const SUBSCRIBERS_FILE = path.join(process.cwd(), "data/subscribers.json");
+export const dynamic = "force-dynamic";
 
-function readSubscribers(): { email: string; subscribedAt: string }[] {
-  try {
-    if (!fs.existsSync(SUBSCRIBERS_FILE)) return [];
-    return JSON.parse(fs.readFileSync(SUBSCRIBERS_FILE, "utf-8"));
-  } catch {
-    return [];
-  }
-}
-
-function writeSubscribers(data: { email: string; subscribedAt: string }[]) {
-  const dir = path.dirname(SUBSCRIBERS_FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(SUBSCRIBERS_FILE, JSON.stringify(data, null, 2), "utf-8");
-}
+const COLLECTION = "subscribers";
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,32 +18,40 @@ export async function POST(req: NextRequest) {
 
     const normalized = email.trim().toLowerCase();
 
-    // 외부 웹훅이 설정된 경우 (Google Sheets, Zapier 등)
-    const webhookUrl = process.env.NEWSLETTER_WEBHOOK_URL;
-    if (webhookUrl) {
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: normalized, subscribedAt: new Date().toISOString() }),
-      });
-      return NextResponse.json({ ok: true });
-    }
+    // 중복 체크
+    const existing = await getDb()
+      .collection(COLLECTION)
+      .where("email", "==", normalized)
+      .limit(1)
+      .get();
 
-    // 로컬 JSON 파일 저장
-    const subscribers = readSubscribers();
-
-    if (subscribers.some((s) => s.email === normalized)) {
+    if (!existing.empty) {
       return NextResponse.json(
         { error: "이미 구독 중인 이메일입니다." },
         { status: 409 }
       );
     }
 
-    subscribers.push({ email: normalized, subscribedAt: new Date().toISOString() });
-    writeSubscribers(subscribers);
+    // Firestore에 저장
+    await getDb().collection(COLLECTION).add({
+      email: normalized,
+      subscribedAt: new Date().toISOString(),
+      active: true,
+    });
+
+    // 외부 웹훅 (Google Sheets, Zapier 등)
+    const webhookUrl = process.env.NEWSLETTER_WEBHOOK_URL;
+    if (webhookUrl) {
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: normalized, subscribedAt: new Date().toISOString() }),
+      }).catch(() => {});
+    }
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (error) {
+    console.error("Newsletter API error:", error);
     return NextResponse.json(
       { error: "서버 오류가 발생했습니다." },
       { status: 500 }
@@ -65,11 +59,27 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
-  const key = process.env.NEWSLETTER_ADMIN_KEY;
-  if (!key) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+export async function GET(req: NextRequest) {
+  try {
+    const key = req.headers.get("authorization")?.replace("Bearer ", "");
+    if (key !== process.env.NEWSLETTER_ADMIN_KEY) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const snapshot = await getDb()
+      .collection(COLLECTION)
+      .where("active", "==", true)
+      .orderBy("subscribedAt", "desc")
+      .get();
+
+    const subscribers = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return NextResponse.json({ count: subscribers.length, subscribers });
+  } catch (error) {
+    console.error("Newsletter GET error:", error);
+    return NextResponse.json({ error: "서버 오류" }, { status: 500 });
   }
-  const subscribers = readSubscribers();
-  return NextResponse.json({ count: subscribers.length, subscribers });
 }

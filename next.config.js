@@ -9,7 +9,8 @@ const nextConfig = {
     ],
   },
 
-  output: "standalone",
+  // Vercel handles deployment natively — no standalone needed
+  // output: "standalone",
 
   async headers() {
     return [

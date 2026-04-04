@@ -17,8 +17,24 @@ Thumbs.db
 # env
 .env
 .env.local
+.env.production
 .env.production.local
 .env.development.local
+
+# Firebase
+firebase-service-account*.json
+*-firebase-adminsdk-*.json
+
+# Data (now in Firestore)
+data/inquiries.json
+data/subscribers.json
+
+# Python
+__pycache__/
+*.pyc
+scripts/.env
+scripts/publish_history.json
+scripts/social_history.json
 
 # debug
 npm-debug.log*

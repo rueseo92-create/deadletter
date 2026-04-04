@@ -98,7 +98,7 @@ export async function GET(req: NextRequest) {
           </span>
           <div style={{ flex: 1 }} />
           <span style={{ fontSize: 14, color: "rgba(255,255,255,0.2)" }}>
-            seroai.xyz
+            deadletter.ink
           </span>
         </div>
 
