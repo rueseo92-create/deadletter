@@ -1,0 +1,115 @@
+name: Daily Blog Posts + Social
+
+on:
+  schedule:
+    # 하루 4회 시간대별 발행 (한국시간 기준)
+    - cron: '0 22 * * *'    # 07:00 KST - 오전 슬롯 (ai-news, marketing)
+    - cron: '30 3 * * *'    # 12:30 KST - 점심 슬롯 (ai-tools, tutorials)
+    - cron: '0 9 * * *'     # 18:00 KST - 저녁 슬롯 (marketing, tutorials, ai-tools)
+    - cron: '30 12 * * *'   # 21:30 KST - 야간 슬롯 (gov-projects)
+  workflow_dispatch:
+    inputs:
+      slot:
+        description: '발행 슬롯'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - morning
+          - lunch
+          - evening
+          - night
+          - all
+      count:
+        description: '글 수 (슬롯 설정 덮어씀, 비워두면 슬롯 기본값)'
+        required: false
+        default: ''
+      social_only:
+        description: '소셜 미디어만 발행 (블로그 스킵)'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic python-dotenv
+
+      # ── 블로그 글 발행 ──
+      - name: Generate and publish blog posts
+        if: ${{ github.event.inputs.social_only != 'true' }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BLOG_REPO_PATH: ${{ github.workspace }}
+          BLOG_SITE_URL: https://seroai.xyz
+        run: |
+          cd scripts
+          SLOT="${{ github.event.inputs.slot || 'auto' }}"
+          COUNT="${{ github.event.inputs.count || '' }}"
+          CMD="python daily_publish.py --slot $SLOT"
+          if [ -n "$COUNT" ]; then CMD="$CMD --count $COUNT"; fi
+          $CMD
+
+      - name: Commit and push blog posts
+        if: ${{ github.event.inputs.social_only != 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add content/posts/*.mdx scripts/publish_history.json
+          SLOT_LABEL=$(TZ=Asia/Seoul date +%H:%M)
+          git diff --staged --quiet || git commit -m "feat: 자동 발행 $(date +%Y-%m-%d) ${SLOT_LABEL}"
+          git push
+
+      - name: Submit URLs to search engines (IndexNow)
+        if: ${{ github.event.inputs.social_only != 'true' }}
+        continue-on-error: true
+        run: |
+          cd scripts
+          python submit_urls.py --new-only
+
+      # ── 소셜 미디어 발행 (쓰레드 + 인스타그램) ──
+      - name: Publish to Threads & Instagram
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BLOG_REPO_PATH: ${{ github.workspace }}
+          BLOG_SITE_URL: https://seroai.xyz
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+        run: |
+          cd scripts
+          COUNT="${{ github.event.inputs.count || '3' }}"
+          python social_publish.py --count $COUNT
+
+      - name: Commit social history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add scripts/social_history.json
+          git diff --staged --quiet || git commit -m "chore: 소셜 발행 이력 업데이트 $(date +%Y-%m-%d)"
+          git push
+
+      # ── QC ──
+      - name: QC - 최근 포스트 품질 검사
+        if: ${{ github.event.inputs.social_only != 'true' }}
+        continue-on-error: true
+        run: |
+          cd scripts
+          python daily_publish.py --qc --qc-days 3

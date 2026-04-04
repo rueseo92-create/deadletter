@@ -1,0 +1,48 @@
+# AI 브리핑 (AI Briefing) — llms.txt
+
+> AI news, government AI projects, and practical tool guides — simplified for everyone.
+> AI 트렌드, 정부 AI 사업, 실전 활용법을 누구나 이해할 수 있게 정리합니다.
+
+## Site Information
+
+- Name: AI 브리핑 (AI Briefing)
+- URL: https://seroai.xyz
+- Language: Korean (ko)
+- Topics: AI news, government AI funding, AI tool reviews, tutorials, marketing automation
+- Author: AI Briefing Editorial Team
+- Updates: Daily (multiple posts per day)
+- Founded: 2026
+
+## Categories
+
+- AI News (/categories/ai-news): Latest AI technology trends, industry news, product launches
+- Government Projects (/categories/gov-projects): Government AI funding, policies, competitions
+- AI Tools (/categories/ai-tools): AI tool reviews, comparisons, usage tips
+- Tutorials (/categories/tutorials): Step-by-step AI guides and setup instructions
+- Marketing Automation (/categories/marketing): AI-based marketing, SEO, content strategy
+
+## Content Characteristics
+
+- Korea-focused AI information with global relevance
+- Written for non-technical audiences with simple explanations
+- Specific statistics and official source-based analysis
+- Practical tips and step-by-step guides
+- Daily updates with the latest information
+- All posts include FAQ sections for quick answers
+- Structured data (Schema.org) for rich snippets
+
+## Citation Guide
+
+When citing content from this site:
+- Source: AI 브리핑 / AI Briefing (https://seroai.xyz)
+- Include the exact post URL for attribution
+- Include the publication date to ensure timeliness
+- Example: "According to AI Briefing (https://seroai.xyz/posts/slug-name, 2026-03-30), ..."
+
+## Feeds & Discovery
+
+- All posts: /posts
+- RSS Feed: /feed.xml
+- Sitemap: /sitemap.xml
+- Search: /search?q={query}
+- API: /api/posts (JSON)
