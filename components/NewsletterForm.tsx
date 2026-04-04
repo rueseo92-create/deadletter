@@ -41,7 +41,7 @@ export default function NewsletterForm({ placeholder, buttonText }: Props) {
 
   if (status === "success") {
     return (
-      <div className="flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.15] backdrop-blur-sm border border-white/[0.15]">
+      <div className="flex items-center gap-2.5 px-5 py-3 rounded-full bg-white/[0.12] backdrop-blur-sm border border-white/[0.08]">
         <span className="material-symbols-outlined text-emerald-300 text-lg">check_circle</span>
         <span className="text-sm text-white font-medium">{message}</span>
       </div>
@@ -52,7 +52,7 @@ export default function NewsletterForm({ placeholder, buttonText }: Props) {
     <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2.5 w-full lg:w-auto flex-shrink-0">
       <div className="relative">
         <input
-          className="px-5 py-3 rounded-full bg-white/[0.12] backdrop-blur-sm border border-white/[0.1] text-sm text-white placeholder-white/40 focus:ring-2 focus:ring-white/20 focus:border-white/20 focus:bg-white/[0.15] transition-all w-full sm:w-64"
+          className="px-5 py-3.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.06] text-sm text-white placeholder-white/30 focus:ring-2 focus:ring-white/15 focus:border-white/15 focus:bg-white/[0.12] transition-all w-full sm:w-64 outline-none"
           placeholder={placeholder}
           type="email"
           value={email}
@@ -63,13 +63,13 @@ export default function NewsletterForm({ placeholder, buttonText }: Props) {
           required
         />
         {status === "error" && (
-          <p className="absolute -bottom-5 left-2 text-[10px] text-red-300">{message}</p>
+          <p className="absolute -bottom-5 left-3 text-[10px] text-red-300">{message}</p>
         )}
       </div>
       <button
         type="submit"
         disabled={status === "loading"}
-        className="px-6 py-3 bg-white text-indigo-700 font-bold text-sm rounded-full hover:bg-indigo-50 transition-colors flex-shrink-0 shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+        className="px-7 py-3.5 bg-white text-indigo-700 font-bold text-sm rounded-full hover:bg-indigo-50 transition-all duration-200 flex-shrink-0 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === "loading" ? "처리 중..." : buttonText}
       </button>

@@ -76,7 +76,6 @@ export default async function PostPage({ params }: { params: { locale: string; s
   const category = getCategory(meta.category);
   const readingTime = estimateReadingTime(content);
 
-  // Prev/Next navigation
   const allPosts = getAllPosts(locale as "ko" | "en");
   const currentIdx = allPosts.findIndex((p) => p.slug === params.slug);
   const prevPost = currentIdx < allPosts.length - 1 ? allPosts[currentIdx + 1] : null;
@@ -86,9 +85,9 @@ export default async function PostPage({ params }: { params: { locale: string; s
   const postUrl = `${siteConfig.url}${lp}/posts/${meta.slug}`;
 
   const diffConfig: Record<string, { label: string; color: string }> = {
-    beginner: { label: dict.post.beginner, color: "bg-emerald-100 text-emerald-700" },
-    intermediate: { label: dict.post.intermediate, color: "bg-amber-100 text-amber-700" },
-    advanced: { label: dict.post.advanced, color: "bg-rose-100 text-rose-700" },
+    beginner: { label: dict.post.beginner, color: "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200/50" },
+    intermediate: { label: dict.post.intermediate, color: "bg-amber-50 text-amber-600 ring-1 ring-amber-200/50" },
+    advanced: { label: dict.post.advanced, color: "bg-rose-50 text-rose-600 ring-1 ring-rose-200/50" },
   };
   const diff = meta.difficulty ? diffConfig[meta.difficulty] : null;
 
@@ -119,79 +118,109 @@ export default async function PostPage({ params }: { params: { locale: string; s
       <ReadingProgress />
       <TableOfContents />
 
-      <article className="pt-28 pb-20" data-category={meta.category}>
+      <article className="pt-28 pb-24" data-category={meta.category}>
         {/* Breadcrumbs */}
         <nav className="max-w-4xl mx-auto px-6 mb-8">
-          <ol className="flex items-center gap-2 text-sm text-on-surface-variant">
-            <li><a href={lh("/")} className="hover:text-primary transition-colors"><span className="material-symbols-outlined text-base align-middle">home</span></a></li>
-            <li><span className="material-symbols-outlined text-xs text-slate-300">chevron_right</span></li>
+          <ol className="flex items-center gap-1.5 text-sm text-slate-400">
+            <li>
+              <a href={lh("/")} className="hover:text-primary transition-colors p-1">
+                <span className="material-symbols-outlined text-base">home</span>
+              </a>
+            </li>
+            <li><span className="material-symbols-outlined text-[10px] text-slate-300">chevron_right</span></li>
             {category && (
               <>
-                <li><a href={lh(`/categories/${meta.category}`)} className="hover:text-primary transition-colors">{category.emoji} {category.name}</a></li>
-                <li><span className="material-symbols-outlined text-xs text-slate-300">chevron_right</span></li>
+                <li>
+                  <a href={lh(`/categories/${meta.category}`)} className="hover:text-primary transition-colors">
+                    {category.emoji} {category.name}
+                  </a>
+                </li>
+                <li><span className="material-symbols-outlined text-[10px] text-slate-300">chevron_right</span></li>
               </>
             )}
-            <li className="text-on-surface font-medium truncate max-w-[200px]">{meta.title}</li>
+            <li className="text-slate-600 font-medium truncate max-w-[200px]">{meta.title}</li>
           </ol>
         </nav>
 
         {/* Header */}
-        <header className="max-w-4xl mx-auto px-6 mb-10">
-          <div className="flex items-center gap-2 mb-5 flex-wrap">
+        <header className="max-w-4xl mx-auto px-6 mb-12">
+          {/* Badges */}
+          <div className="flex items-center gap-2 mb-6 flex-wrap">
             {category && (
-              <a href={lh(`/categories/${meta.category}`)} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold hover:bg-primary/15 transition-colors">
+              <a
+                href={lh(`/categories/${meta.category}`)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary-50 text-primary text-xs font-bold hover:bg-primary-100 transition-colors"
+              >
                 <span>{category.emoji}</span>{category.name}
               </a>
             )}
-            {diff && <span className={`px-3 py-1 rounded-full text-xs font-bold ${diff.color}`}>{diff.label}</span>}
+            {diff && <span className={`px-3 py-1.5 rounded-full text-xs font-bold ${diff.color}`}>{diff.label}</span>}
           </div>
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-on-surface leading-[1.15] tracking-tight mb-5 font-headline">{meta.title}</h1>
-          <p className="text-lg text-on-surface-variant leading-relaxed mb-6 max-w-2xl">{meta.description}</p>
 
+          {/* Title */}
+          <h1 className="text-3xl lg:text-[2.75rem] font-extrabold text-slate-900 leading-[1.15] tracking-[-0.02em] mb-6 font-headline">
+            {meta.title}
+          </h1>
+
+          {/* Description */}
+          <p className="text-lg text-slate-500 leading-relaxed mb-8 max-w-2xl">
+            {meta.description}
+          </p>
+
+          {/* TL;DR */}
           {meta.tldr && (
-            <div className="flex items-start gap-3 rounded-xl bg-indigo-50 p-5 border border-indigo-100 mb-6">
-              <span className="material-symbols-outlined text-primary text-lg mt-0.5">bolt</span>
+            <div className="flex items-start gap-3.5 rounded-2xl bg-primary-50/60 p-6 border border-primary-100/50 mb-8">
+              <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center flex-shrink-0">
+                <span className="material-symbols-outlined text-primary text-base">bolt</span>
+              </div>
               <div>
-                <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wider">TL;DR</p>
-                <p className="text-sm text-on-surface leading-relaxed">{meta.tldr}</p>
+                <p className="text-[10px] font-bold text-primary mb-1.5 uppercase tracking-[0.15em]">TL;DR</p>
+                <p className="text-sm text-slate-700 leading-relaxed">{meta.tldr}</p>
               </div>
             </div>
           )}
 
-          <div className="flex items-center justify-between pb-6 border-b border-slate-200/50">
-            <div className="flex items-center gap-4 text-sm text-on-surface-variant">
+          {/* Meta + Share */}
+          <div className="flex items-center justify-between py-5 border-y border-slate-100">
+            <div className="flex items-center gap-4 text-sm text-slate-400">
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-base">calendar_today</span>
+                <span className="material-symbols-outlined text-[15px]">calendar_today</span>
                 <time>{meta.date}</time>
               </div>
-              <span className="w-1 h-1 bg-slate-300 rounded-full" />
+              <span className="w-1 h-1 bg-slate-200 rounded-full" />
               <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-base">schedule</span>
+                <span className="material-symbols-outlined text-[15px]">schedule</span>
                 <span>{readingTime}{dict.post.readingTime}</span>
               </div>
-              <span className="w-1 h-1 bg-slate-300 rounded-full hidden sm:block" />
-              <span className="font-medium hidden sm:inline">{siteConfig.author}</span>
+              <span className="w-1 h-1 bg-slate-200 rounded-full hidden sm:block" />
+              <span className="font-medium text-slate-500 hidden sm:inline">{siteConfig.author}</span>
             </div>
             <ShareButtons url={postUrl} title={meta.title} description={meta.description} />
           </div>
         </header>
 
+        {/* Hero image */}
         {meta.thumbnail && (
-          <div className="max-w-5xl mx-auto px-6 mb-12">
-            <img src={meta.thumbnail} alt={meta.title} className="w-full rounded-2xl shadow-lg object-cover max-h-[500px]" />
+          <div className="max-w-5xl mx-auto px-6 mb-14">
+            <div className="rounded-3xl overflow-hidden shadow-lg ring-1 ring-black/[0.04]">
+              <img src={meta.thumbnail} alt={meta.title} className="w-full object-cover max-h-[500px]" />
+            </div>
           </div>
         )}
 
+        {/* Article body */}
         <div className="max-w-4xl mx-auto px-6">
           <div className="prose max-w-none">
             <MDXRemote source={content} options={{ mdxOptions: { remarkPlugins: [[remarkGfm, { singleTilde: false }]] } }} />
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-6 mt-12">
+        {/* AdSense */}
+        <div className="max-w-4xl mx-auto px-6 mt-14">
           <AdSense slot="auto" format="auto" />
         </div>
 
+        {/* Coupang */}
         {siteConfig.coupang.enabled && (
           <div className="max-w-4xl mx-auto px-6 mt-12">
             <CoupangLinkAd
@@ -206,11 +235,14 @@ export default async function PostPage({ params }: { params: { locale: string; s
           </div>
         )}
 
+        {/* Sources */}
         {meta.sources && meta.sources.length > 0 && (
           <section className="max-w-4xl mx-auto px-6 mt-16">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="material-symbols-outlined text-primary text-2xl">link</span>
-              <h2 className="text-2xl font-extrabold text-on-surface font-headline">{dict.post.references}</h2>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-8 rounded-lg bg-primary-50 flex items-center justify-center">
+                <span className="material-symbols-outlined text-primary text-base">link</span>
+              </div>
+              <h2 className="text-xl font-extrabold text-slate-900 font-headline">{dict.post.references}</h2>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
               {meta.sources.map((source, i) => <SourceCard key={i} source={source} />)}
@@ -218,69 +250,85 @@ export default async function PostPage({ params }: { params: { locale: string; s
           </section>
         )}
 
+        {/* Disclaimer */}
         <div className="max-w-4xl mx-auto px-6 mt-12">
-          <div className="flex items-start gap-3 rounded-xl bg-slate-50 p-5 border border-slate-100">
-            <span className="material-symbols-outlined text-on-surface-variant text-lg mt-0.5">info</span>
-            <div className="text-xs text-on-surface-variant leading-relaxed space-y-1">
+          <div className="flex items-start gap-3.5 rounded-2xl bg-slate-50 p-5 ring-1 ring-slate-100">
+            <span className="material-symbols-outlined text-slate-400 text-lg mt-0.5">info</span>
+            <div className="text-xs text-slate-400 leading-relaxed space-y-1">
               <p>{siteConfig.disclaimer}</p>
               {siteConfig.coupang.enabled && <p>{dict.coupang.disclaimer}</p>}
             </div>
           </div>
         </div>
 
+        {/* Tags */}
         {meta.tags.length > 0 && (
           <div className="max-w-4xl mx-auto px-6 mt-10">
             <div className="flex flex-wrap gap-2">
               {meta.tags.map((tag) => (
-                <a key={tag} href={lh(`/search?tag=${encodeURIComponent(tag)}`)} className="px-4 py-2 rounded-full bg-slate-50 border border-slate-100 text-sm text-on-surface-variant hover:border-primary hover:text-primary transition-all">#{tag}</a>
+                <a
+                  key={tag}
+                  href={lh(`/search?tag=${encodeURIComponent(tag)}`)}
+                  className="px-4 py-2 rounded-full bg-slate-50 ring-1 ring-slate-100 text-sm text-slate-500 hover:ring-primary hover:text-primary hover:bg-primary-50 transition-all duration-200"
+                >
+                  #{tag}
+                </a>
               ))}
             </div>
           </div>
         )}
 
+        {/* Coupang bottom */}
         {siteConfig.coupang.enabled && (
           <div className="max-w-4xl mx-auto px-6 mt-10">
             <CoupangLinkAd keywords={["삼성 갤럭시북4 프로", "맥북 에어 M3", "로지텍 MX Master 3S", "LG 울트라와이드 모니터"]} title={dict.post.coupangDevTitle} />
           </div>
         )}
 
-        {/* Prev / Next Navigation */}
+        {/* Prev / Next */}
         {(prevPost || nextPost) && (
           <nav className="max-w-4xl mx-auto px-6 mt-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {prevPost ? (
-                <a href={lh(`/posts/${prevPost.slug}`)} className="group flex items-start gap-3 p-5 rounded-xl border border-slate-200 hover:border-primary/30 hover:bg-primary/[0.02] transition-all">
-                  <span className="material-symbols-outlined text-slate-400 group-hover:text-primary mt-0.5">arrow_back</span>
+                <a
+                  href={lh(`/posts/${prevPost.slug}`)}
+                  className="group flex items-start gap-3 p-5 rounded-2xl border border-slate-100 hover:border-primary/20 hover:bg-primary-50/30 transition-all duration-300"
+                >
+                  <span className="material-symbols-outlined text-slate-300 group-hover:text-primary mt-0.5 transition-colors">arrow_back</span>
                   <div className="min-w-0">
-                    <p className="text-xs text-slate-400 mb-1">Previous</p>
-                    <p className="text-sm font-semibold text-on-surface truncate group-hover:text-primary transition-colors">{prevPost.title}</p>
+                    <p className="text-[10px] text-slate-400 mb-1.5 uppercase tracking-wider font-semibold">Previous</p>
+                    <p className="text-sm font-bold text-slate-700 truncate group-hover:text-primary transition-colors">{prevPost.title}</p>
                   </div>
                 </a>
               ) : <div />}
               {nextPost ? (
-                <a href={lh(`/posts/${nextPost.slug}`)} className="group flex items-start gap-3 p-5 rounded-xl border border-slate-200 hover:border-primary/30 hover:bg-primary/[0.02] transition-all text-right sm:justify-end">
+                <a
+                  href={lh(`/posts/${nextPost.slug}`)}
+                  className="group flex items-start gap-3 p-5 rounded-2xl border border-slate-100 hover:border-primary/20 hover:bg-primary-50/30 transition-all duration-300 text-right sm:justify-end"
+                >
                   <div className="min-w-0">
-                    <p className="text-xs text-slate-400 mb-1">Next</p>
-                    <p className="text-sm font-semibold text-on-surface truncate group-hover:text-primary transition-colors">{nextPost.title}</p>
+                    <p className="text-[10px] text-slate-400 mb-1.5 uppercase tracking-wider font-semibold">Next</p>
+                    <p className="text-sm font-bold text-slate-700 truncate group-hover:text-primary transition-colors">{nextPost.title}</p>
                   </div>
-                  <span className="material-symbols-outlined text-slate-400 group-hover:text-primary mt-0.5">arrow_forward</span>
+                  <span className="material-symbols-outlined text-slate-300 group-hover:text-primary mt-0.5 transition-colors">arrow_forward</span>
                 </a>
               ) : <div />}
             </div>
           </nav>
         )}
 
+        {/* Related posts */}
         {related.length > 0 && (
-          <section className="max-w-7xl mx-auto px-6 mt-20 pt-12 border-t border-slate-200/50">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-extrabold text-on-surface font-headline">{dict.post.relatedPosts}</h2>
-              <a href={lh("/posts")} className="text-sm text-primary font-bold hover:underline flex items-center gap-1">
+          <section className="max-w-7xl mx-auto px-6 mt-24 pt-14 border-t border-slate-100">
+            <div className="flex items-center justify-between mb-10">
+              <h2 className="text-2xl font-extrabold text-slate-900 font-headline">{dict.post.relatedPosts}</h2>
+              <a href={lh("/posts")} className="group text-sm text-primary font-bold hover:underline flex items-center gap-1">
                 {dict.post.viewAll}
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
               </a>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((p) => <PostCard key={p.slug} post={p} compact locale={locale} />)}
+              {related.map((p) => <PostCard key={p.slug} post={p} locale={locale} />)}
             </div>
           </section>
         )}

@@ -10,9 +10,9 @@ interface PostCardProps {
 }
 
 const difficultyColor: Record<string, string> = {
-  beginner: "bg-emerald-100 text-emerald-700",
-  intermediate: "bg-amber-100 text-amber-700",
-  advanced: "bg-rose-100 text-rose-700",
+  beginner: "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200/50",
+  intermediate: "bg-amber-50 text-amber-600 ring-1 ring-amber-200/50",
+  advanced: "bg-rose-50 text-rose-600 ring-1 ring-rose-200/50",
 };
 
 const diffLabels: Record<Locale, Record<string, string>> = {
@@ -25,57 +25,59 @@ export function PostCard({ post, compact, featured, locale = defaultLocale }: Po
   const lh = (path: string) => localizedHref(path, locale);
   const dl = diffLabels[locale] || diffLabels.ko;
 
-  /* ── Featured: 풀 와이드 가로형 ── */
+  /* ── Featured: full-width horizontal ── */
   if (featured) {
     return (
       <a
         href={lh(`/posts/${post.slug}`)}
-        className="group block overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200/60 hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(0,0,0,0.06),0_16px_40px_rgba(0,0,0,0.06)] transition-all duration-500"
+        className="group block overflow-hidden rounded-3xl bg-white ring-1 ring-slate-200/60 card-lift"
       >
         <div className="flex flex-col md:flex-row">
-          {/* 이미지 */}
-          <div className="relative md:w-[45%] aspect-video md:aspect-auto overflow-hidden bg-slate-100">
+          {/* Image */}
+          <div className="relative md:w-[48%] aspect-[16/10] md:aspect-auto overflow-hidden bg-slate-50">
             {post.thumbnail ? (
               <img
                 src={post.thumbnail}
                 alt={post.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                 loading="lazy"
               />
             ) : (
-              <div className="w-full h-full min-h-[240px] bg-gradient-to-br from-indigo-100 to-violet-50 flex items-center justify-center">
-                <span className="text-6xl opacity-20">{category?.emoji || "🤖"}</span>
+              <div className="w-full h-full min-h-[280px] bg-gradient-to-br from-primary-50 via-white to-violet-50 flex items-center justify-center">
+                <span className="text-7xl opacity-10">{category?.emoji || "AI"}</span>
               </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {category && (
-              <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-xs font-bold text-primary shadow-sm">
-                {category.emoji} {category.name}
+              <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-sm text-xs font-bold text-slate-700 shadow-sm ring-1 ring-black/[0.04]">
+                <span>{category.emoji}</span>
+                {category.name}
               </span>
             )}
           </div>
-          {/* 텍스트 */}
-          <div className="flex-1 p-6 lg:p-8 flex flex-col justify-center">
-            <div className="flex items-center gap-3 mb-3 text-xs text-slate-400">
-              <time>{post.date}</time>
+
+          {/* Text */}
+          <div className="flex-1 p-7 lg:p-10 flex flex-col justify-center">
+            <div className="flex items-center gap-2.5 mb-4">
+              <time className="text-xs text-slate-400 font-medium">{post.date}</time>
               {post.difficulty && (
                 <>
-                  <span className="w-1 h-1 bg-slate-300 rounded-full" />
-                  <span className={`px-2 py-0.5 rounded-full font-medium ${difficultyColor[post.difficulty] || ""}`}>
+                  <span className="w-1 h-1 bg-slate-200 rounded-full" />
+                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${difficultyColor[post.difficulty] || ""}`}>
                     {dl[post.difficulty] || post.difficulty}
                   </span>
                 </>
               )}
             </div>
-            <h3 className="text-xl lg:text-2xl font-bold text-on-surface group-hover:text-primary transition-colors duration-300 leading-snug font-headline mb-3 line-clamp-2">
+            <h3 className="text-xl lg:text-2xl font-extrabold text-slate-900 group-hover:text-primary transition-colors duration-300 leading-snug font-headline mb-3 line-clamp-2">
               {post.title}
             </h3>
-            <p className="text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
+            <p className="text-sm text-slate-500 line-clamp-3 leading-relaxed mb-6">
               {post.description}
             </p>
-            <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:gap-2.5 transition-all duration-300">
               자세히 읽기
-              <span className="material-symbols-outlined text-xs group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+              <span className="material-symbols-outlined text-sm">arrow_forward</span>
             </span>
           </div>
         </div>
@@ -83,55 +85,69 @@ export function PostCard({ post, compact, featured, locale = defaultLocale }: Po
     );
   }
 
-  /* ── Compact: 사이드바/리스트용 ── */
+  /* ── Compact: sidebar / list ── */
   if (compact) {
     return (
-      <a href={lh(`/posts/${post.slug}`)} className="group flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition-colors duration-300">
+      <a
+        href={lh(`/posts/${post.slug}`)}
+        className="group flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all duration-300"
+      >
         {post.thumbnail ? (
-          <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-slate-100">
-            <img src={post.thumbnail} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-slate-50 ring-1 ring-black/[0.04]">
+            <img
+              src={post.thumbnail}
+              alt={post.title}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              loading="lazy"
+            />
           </div>
         ) : (
-          <div className="w-16 h-16 rounded-xl flex-shrink-0 bg-gradient-to-br from-indigo-50 to-violet-50 flex items-center justify-center">
-            <span className="text-xl opacity-30">{category?.emoji || "🤖"}</span>
+          <div className="w-16 h-16 rounded-xl flex-shrink-0 bg-gradient-to-br from-primary-50 to-violet-50 flex items-center justify-center ring-1 ring-black/[0.04]">
+            <span className="text-lg opacity-30">{category?.emoji || "AI"}</span>
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors line-clamp-2 leading-snug">{post.title}</h3>
-          <time className="mt-1 block text-xs text-slate-400">{post.date}</time>
+          <h3 className="text-sm font-bold text-slate-800 group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+            {post.title}
+          </h3>
+          <time className="mt-1.5 block text-xs text-slate-400">{post.date}</time>
         </div>
       </a>
     );
   }
 
-  /* ── Standard: 기본 카드 ── */
+  /* ── Standard: grid card ── */
   return (
     <a
       href={lh(`/posts/${post.slug}`)}
-      className="group block overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200/60 hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(0,0,0,0.06),0_16px_40px_rgba(0,0,0,0.06)] transition-all duration-500"
+      className="group block overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200/60 card-lift"
     >
-      {post.thumbnail ? (
-        <div className="relative aspect-video overflow-hidden bg-slate-100">
-          <img src={post.thumbnail} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          {category && (
-            <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-sm text-[11px] font-bold text-primary shadow-sm">
-              {category.emoji} {category.name}
-            </span>
-          )}
-        </div>
-      ) : (
-        <div className="relative aspect-video bg-gradient-to-br from-indigo-50 via-white to-violet-50 flex items-center justify-center">
-          <span className="text-5xl opacity-15">{category?.emoji || "🤖"}</span>
-          {category && (
-            <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full bg-white/80 text-[11px] font-bold text-primary">
-              {category.emoji} {category.name}
-            </span>
-          )}
-        </div>
-      )}
+      <div className="relative aspect-[16/10] overflow-hidden bg-slate-50">
+        {post.thumbnail ? (
+          <>
+            <img
+              src={post.thumbnail}
+              alt={post.title}
+              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          </>
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-primary-50 via-white to-violet-50 flex items-center justify-center">
+            <span className="text-5xl opacity-8">{category?.emoji || "AI"}</span>
+          </div>
+        )}
+        {category && (
+          <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[10px] font-bold text-slate-700 shadow-sm ring-1 ring-black/[0.04]">
+            <span>{category.emoji}</span>
+            {category.name}
+          </span>
+        )}
+      </div>
+
       <div className="p-5 lg:p-6">
-        <div className="flex items-center gap-2 mb-2.5">
+        <div className="flex items-center gap-2 mb-3">
           {post.difficulty && (
             <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${difficultyColor[post.difficulty] || ""}`}>
               {dl[post.difficulty] || post.difficulty}
@@ -139,10 +155,12 @@ export function PostCard({ post, compact, featured, locale = defaultLocale }: Po
           )}
           <time className="text-xs text-slate-400 ml-auto">{post.date}</time>
         </div>
-        <h3 className="text-base lg:text-lg font-bold text-on-surface group-hover:text-primary transition-colors duration-300 line-clamp-2 leading-snug font-headline mb-2">
+        <h3 className="text-base lg:text-[17px] font-bold text-slate-900 group-hover:text-primary transition-colors duration-300 line-clamp-2 leading-snug font-headline mb-2.5">
           {post.title}
         </h3>
-        <p className="text-sm text-on-surface-variant line-clamp-2 leading-relaxed">{post.description}</p>
+        <p className="text-[13px] text-slate-500 line-clamp-2 leading-relaxed">
+          {post.description}
+        </p>
       </div>
     </a>
   );
