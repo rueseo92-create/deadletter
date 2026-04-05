@@ -13,18 +13,18 @@ export default function AboutPage() {
   return (
     <div>
       {/* ── Hero ── */}
-      <section className="relative min-h-[400px] flex items-end overflow-hidden grain">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0F0B2E] via-[#1a1145] to-[#0c1a3a]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,rgba(99,102,241,0.12),transparent_60%)]" />
+      <section className="relative min-h-[400px] flex items-end overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-amber-50/40 to-pink-50" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,rgba(59,130,246,0.08),transparent_60%)]" />
         <div className="relative w-full max-w-5xl mx-auto px-6 pb-16 pt-36">
-          <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 text-white/60 text-xs font-medium mb-6">
-            <span className="w-2 h-2 bg-indigo-400 rounded-full animate-pulse" />
+          <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-stone-200/60 text-stone-500 text-xs font-medium mb-6 shadow-sm">
+            <span className="text-base">📖</span>
             About Daily Insight
           </p>
-          <h1 className="text-4xl lg:text-6xl font-extrabold text-white font-headline tracking-tight leading-[1.05] mb-5">
+          <h1 className="text-4xl lg:text-6xl font-extrabold text-stone-800 font-headline tracking-tight leading-[1.05] mb-5">
             데일리인사이트
           </h1>
-          <p className="text-lg text-white/50 leading-relaxed max-w-xl">
+          <p className="text-lg text-stone-500 leading-relaxed max-w-xl">
             금융, 보험, 건강, IT, 부동산 —<br className="hidden lg:block" />
             생활 속 핵심 정보를 매일 쉽게 정리합니다.
           </p>
@@ -56,14 +56,14 @@ export default function AboutPage() {
             </div>
 
             {/* 사이트 정보 카드 */}
-            <div className="rounded-2xl bg-gradient-to-br from-[#0F0B2E] to-[#1a1145] p-6 lg:p-8 text-white">
+            <div className="rounded-2xl bg-gradient-to-br from-blue-50 to-amber-50/60 border border-stone-200/60 p-6 lg:p-8">
               <div className="flex items-center gap-3 mb-7">
-                <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white text-primary text-sm font-extrabold">
+                <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white text-sm font-extrabold shadow-sm">
                   DI
                 </span>
                 <div>
-                  <p className="font-bold">데일리인사이트</p>
-                  <p className="text-[11px] text-white/40">Daily Insight</p>
+                  <p className="font-bold text-stone-800">데일리인사이트</p>
+                  <p className="text-[11px] text-stone-400">Daily Insight</p>
                 </div>
               </div>
 
@@ -76,17 +76,17 @@ export default function AboutPage() {
                   { label: "이메일", value: "contact@deadletter.ink" },
                 ].map((item) => (
                   <div key={item.label}>
-                    <p className="text-[10px] font-bold text-white/30 uppercase tracking-wider mb-1">{item.label}</p>
-                    <p className="text-white/80">{item.value}</p>
+                    <p className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">{item.label}</p>
+                    <p className="text-stone-700">{item.value}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-7 pt-6 border-t border-white/10 flex gap-4">
-                <a href="/business" className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-300 hover:text-white transition-colors">
+              <div className="mt-7 pt-6 border-t border-stone-200/60 flex gap-4">
+                <a href="/business" className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-blue-700 transition-colors">
                   서비스 보기 <span className="material-symbols-outlined text-xs">arrow_forward</span>
                 </a>
-                <a href="mailto:contact@deadletter.ink" className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/40 hover:text-white transition-colors">
+                <a href="mailto:contact@deadletter.ink" className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-400 hover:text-stone-600 transition-colors">
                   문의하기 <span className="material-symbols-outlined text-xs">mail</span>
                 </a>
               </div>
@@ -96,7 +96,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── 핵심 가치 ── */}
-      <section className="py-20 bg-slate-50">
+      <section className="py-20 bg-stone-50/50">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-xs font-bold tracking-[0.2em] uppercase text-primary mb-3">Our Values</p>
           <h2 className="text-2xl lg:text-3xl font-bold text-on-surface font-headline mb-12 leading-tight">
@@ -106,27 +106,27 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-3 gap-8">
             {[
               {
-                icon: "verified",
-                color: "bg-indigo-500",
+                emoji: "✅",
+                color: "bg-blue-100",
                 title: "정확한 정보",
                 desc: "공식 출처와 전문 자료를 기반으로 검증된 정보만을 제공합니다. 추측이나 과장 없이, 독자가 신뢰할 수 있는 콘텐츠를 만듭니다.",
               },
               {
-                icon: "translate",
-                color: "bg-emerald-500",
+                emoji: "💬",
+                color: "bg-emerald-100",
                 title: "쉬운 설명",
                 desc: "전문 용어를 풀어서, 금융·보험·의료 등 어려운 주제도 누구나 이해할 수 있게 정리합니다. 핵심만 골라 담습니다.",
               },
               {
-                icon: "tips_and_updates",
-                color: "bg-amber-500",
+                emoji: "💡",
+                color: "bg-amber-100",
                 title: "실용적 가치",
                 desc: "읽고 나면 바로 실행할 수 있는 팁과 가이드를 제공합니다. 이론이 아닌, 실생활에 바로 적용 가능한 콘텐츠가 핵심입니다.",
               },
             ].map((item) => (
-              <div key={item.title} className="flex gap-4 p-5 rounded-2xl bg-white ring-1 ring-slate-200/60">
+              <div key={item.title} className="flex gap-4 p-5 rounded-2xl bg-white ring-1 ring-stone-200/60">
                 <div className={`w-10 h-10 rounded-xl ${item.color} flex items-center justify-center flex-shrink-0`}>
-                  <span className="material-symbols-outlined text-white text-lg">{item.icon}</span>
+                  <span className="text-lg">{item.emoji}</span>
                 </div>
                 <div>
                   <h4 className="font-bold text-on-surface mb-0.5">{item.title}</h4>
@@ -148,9 +148,9 @@ export default function AboutPage() {
               <a
                 key={cat.slug}
                 href={`/categories/${cat.slug}`}
-                className="rounded-2xl bg-slate-50 border border-slate-200/60 p-6 hover:border-primary/30 hover:shadow-md transition-all"
+                className="rounded-2xl bg-white border border-stone-200/60 p-6 hover:border-primary/30 hover:shadow-md transition-all group"
               >
-                <span className="text-3xl mb-3 block">{cat.emoji}</span>
+                <span className="text-3xl mb-3 block emoji-pop">{cat.emoji}</span>
                 <h3 className="font-bold text-on-surface mb-2">{cat.name}</h3>
                 <p className="text-xs text-on-surface-variant leading-relaxed">
                   {cat.slug === "finance" && "대출, 적금, 주식, 카드 등 금융·재테크 핵심 정보"}
@@ -167,7 +167,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── 운영 현황 ── */}
-      <section className="py-20 bg-slate-50">
+      <section className="py-20 bg-stone-50/50">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid lg:grid-cols-5 gap-12 items-center">
             <div className="lg:col-span-3">
@@ -186,10 +186,10 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className="mt-6 flex gap-4">
-                <a href="/" className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white font-bold text-sm rounded-full hover:bg-indigo-700 transition-colors shadow-md shadow-primary/20">
+                <a href="/" className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-white font-bold text-sm rounded-full hover:bg-blue-700 transition-colors shadow-md shadow-primary/20">
                   홈으로 <span className="material-symbols-outlined text-base">arrow_forward</span>
                 </a>
-                <a href="/posts" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-on-surface font-bold text-sm rounded-full border border-slate-200 hover:border-primary hover:text-primary transition-all">
+                <a href="/posts" className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-on-surface font-bold text-sm rounded-full border border-stone-200 hover:border-primary hover:text-primary transition-all">
                   전체 글 보기
                 </a>
               </div>
@@ -199,15 +199,15 @@ export default function AboutPage() {
             <div className="lg:col-span-2">
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { num: `${posts.length}+`, label: "발행된 글", icon: "article" },
-                  { num: "Daily", label: "업데이트", icon: "schedule" },
-                  { num: `${siteConfig.categories.length}`, label: "카테고리", icon: "category" },
-                  { num: "100%", label: "SEO 최적화", icon: "trending_up" },
+                  { num: `${posts.length}+`, label: "발행된 글", emoji: "📝" },
+                  { num: "Daily", label: "업데이트", emoji: "🕐" },
+                  { num: `${siteConfig.categories.length}`, label: "카테고리", emoji: "🗂️" },
+                  { num: "100%", label: "SEO 최적화", emoji: "📈" },
                 ].map((s) => (
-                  <div key={s.label} className="rounded-2xl bg-white ring-1 ring-slate-200/60 p-5 text-center">
-                    <span className="material-symbols-outlined text-primary text-lg mb-2 block">{s.icon}</span>
+                  <div key={s.label} className="rounded-2xl bg-white ring-1 ring-stone-200/60 p-5 text-center">
+                    <span className="text-xl mb-2 block">{s.emoji}</span>
                     <p className="text-2xl font-extrabold text-on-surface font-headline">{s.num}</p>
-                    <p className="text-[10px] text-slate-400 mt-1">{s.label}</p>
+                    <p className="text-[10px] text-stone-400 mt-1">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -219,19 +219,20 @@ export default function AboutPage() {
       {/* ── CTA ── */}
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="relative rounded-2xl overflow-hidden grain">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#0F0B2E] via-[#1a1145] to-[#0c1a3a]" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_50%,rgba(99,102,241,0.1),transparent_60%)]" />
+          <div className="relative rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-amber-50/60 to-pink-50" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_50%,rgba(59,130,246,0.06),transparent_60%)]" />
             <div className="relative p-10 lg:p-16 text-center">
-              <h2 className="text-2xl lg:text-3xl font-bold text-white font-headline mb-4">
+              <span className="text-4xl mb-4 block">💌</span>
+              <h2 className="text-2xl lg:text-3xl font-bold text-stone-800 font-headline mb-4">
                 궁금한 점이 있으신가요?
               </h2>
-              <p className="text-sm text-white/40 mb-8 max-w-md mx-auto leading-relaxed">
+              <p className="text-sm text-stone-500 mb-8 max-w-md mx-auto leading-relaxed">
                 비즈니스 문의, 협업 제안, 또는 궁금한 점이 있으시면 편하게 연락주세요.
               </p>
               <a
                 href="mailto:contact@deadletter.ink"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#0F0B2E] font-bold text-sm rounded-full hover:bg-indigo-100 transition-colors shadow-[0_0_40px_rgba(99,102,241,0.15)]"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold text-sm rounded-full hover:bg-blue-700 transition-colors shadow-md shadow-primary/20"
               >
                 <span className="material-symbols-outlined text-base">mail</span>
                 contact@deadletter.ink
@@ -239,7 +240,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <p className="mt-10 text-xs text-slate-400 text-center leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-10 text-xs text-stone-400 text-center leading-relaxed max-w-2xl mx-auto">
             {siteConfig.disclaimer}
           </p>
         </div>

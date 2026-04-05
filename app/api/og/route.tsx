@@ -1,7 +1,7 @@
 /**
  * /api/og - 동적 Open Graph 이미지 생성
  *
- * 사용: <meta property="og:image" content="/api/og?title=제목&category=AI뉴스" />
+ * 사용: <meta property="og:image" content="/api/og?title=제목&category=finance" />
  */
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
@@ -10,19 +10,19 @@ import { siteConfig } from "@/lib/config";
 export const runtime = "edge";
 
 const categoryColors: Record<string, string> = {
-  finance: "#4F46E5",
-  insurance: "#059669",
-  health: "#0891B2",
-  tech: "#7C3AED",
-  realestate: "#D97706",
-  lifestyle: "#DC2626",
+  finance: "#3B82F6",
+  insurance: "#10B981",
+  health: "#F472B6",
+  tech: "#8B5CF6",
+  realestate: "#F59E0B",
+  lifestyle: "#F97316",
 };
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const title = searchParams.get("title") || siteConfig.defaultTitle;
   const category = searchParams.get("category") || "";
-  const accent = categoryColors[category] || "#6366F1";
+  const accent = categoryColors[category] || "#3B82F6";
 
   return new ImageResponse(
     (
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "60px 72px",
-          background: "linear-gradient(145deg, #0F0B2E 0%, #1a1145 40%, #0c1a3a 100%)",
+          background: "linear-gradient(145deg, #FFFCF5 0%, #FFF8F0 40%, #EFF6FF 100%)",
           fontFamily: "sans-serif",
         }}
       >
@@ -64,7 +64,7 @@ export async function GET(req: NextRequest) {
           style={{
             fontSize: 56,
             fontWeight: 800,
-            color: "#ffffff",
+            color: "#1C1917",
             lineHeight: 1.2,
             letterSpacing: "-0.02em",
             display: "-webkit-box",
@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
               width: 40,
               height: 40,
               borderRadius: 10,
-              background: "linear-gradient(135deg, #4F46E5, #7C3AED)",
+              background: "linear-gradient(135deg, #3B82F6, #2563EB)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -95,11 +95,11 @@ export async function GET(req: NextRequest) {
           >
             DI
           </div>
-          <span style={{ fontSize: 20, fontWeight: 700, color: "rgba(255,255,255,0.5)" }}>
+          <span style={{ fontSize: 20, fontWeight: 700, color: "#78716C" }}>
             {siteConfig.name}
           </span>
           <div style={{ flex: 1 }} />
-          <span style={{ fontSize: 14, color: "rgba(255,255,255,0.2)" }}>
+          <span style={{ fontSize: 14, color: "#A8A29E" }}>
             deadletter.ink
           </span>
         </div>

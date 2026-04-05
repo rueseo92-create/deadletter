@@ -46,10 +46,10 @@ export function TableOfContents() {
 
   return (
     <nav className="hidden xl:block fixed right-[max(1rem,calc((100vw-1280px)/2-16rem))] top-28 w-56 max-h-[calc(100vh-8rem)] overflow-y-auto text-xs">
-      <p className="font-bold text-slate-400 uppercase tracking-widest mb-3 text-[10px]">
+      <p className="font-bold text-stone-400 uppercase tracking-widest mb-3 text-[10px]">
         On this page
       </p>
-      <ul className="space-y-1.5 border-l border-slate-200">
+      <ul className="space-y-1.5 border-l border-stone-200">
         {headings.map((h) => (
           <li key={h.id}>
             <a
@@ -63,7 +63,7 @@ export function TableOfContents() {
               } py-0.5 border-l-2 -ml-[1px] ${
                 activeId === h.id
                   ? "border-primary text-primary font-semibold"
-                  : "border-transparent text-slate-400 hover:text-slate-600 hover:border-slate-300"
+                  : "border-transparent text-stone-400 hover:text-stone-600 hover:border-stone-300"
               }`}
             >
               {h.text}

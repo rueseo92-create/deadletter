@@ -41,8 +41,8 @@ export default async function SearchPage({
       <form action={lh("/search")} method="GET" className="mb-8">
         <div className="flex gap-3">
           <div className="flex-1 relative">
-            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
-            <input name="q" type="text" defaultValue={query} placeholder={dict.search.placeholder} className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 bg-white text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary shadow-sm" />
+            <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 text-xl">search</span>
+            <input name="q" type="text" defaultValue={query} placeholder={dict.search.placeholder} className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-stone-200 bg-white text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary shadow-sm" />
           </div>
           <button type="submit" className="px-6 py-3.5 bg-primary text-on-primary font-bold rounded-xl hover:bg-primary-container transition-colors shadow-lg shadow-primary/20 text-sm">{dict.search.button}</button>
         </div>
@@ -55,7 +55,7 @@ export default async function SearchPage({
         </h4>
         <div className="flex flex-wrap gap-2">
           {popularTags.map((t) => (
-            <a key={t} href={lh(`/search?tag=${encodeURIComponent(t)}`)} className={`px-3 py-1.5 rounded-md text-xs transition-all ${tag === t ? "bg-primary text-on-primary font-bold shadow-md shadow-primary/20" : "bg-white border border-slate-200 text-on-surface-variant hover:border-primary hover:text-primary"}`}>
+            <a key={t} href={lh(`/search?tag=${encodeURIComponent(t)}`)} className={`px-3 py-1.5 rounded-md text-xs transition-all ${tag === t ? "bg-primary text-on-primary font-bold shadow-md shadow-primary/20" : "bg-white border border-stone-200 text-on-surface-variant hover:border-primary hover:text-primary"}`}>
               #{t}
               <span className="ml-1 text-[10px] opacity-60">({tagCounts[t]})</span>
             </a>
@@ -72,7 +72,7 @@ export default async function SearchPage({
               {tag && <span>{dict.search.tag}: <strong className="text-primary">#{tag}</strong></span>}
               <span className="ml-1">{dict.search.results.replace("{n}", String(results.length))}</span>
             </p>
-            {(query || tag) && <a href={lh("/search")} className="text-xs text-slate-400 hover:text-primary transition-colors">{dict.search.reset}</a>}
+            {(query || tag) && <a href={lh("/search")} className="text-xs text-stone-400 hover:text-primary transition-colors">{dict.search.reset}</a>}
           </div>
           {results.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -80,7 +80,7 @@ export default async function SearchPage({
             </div>
           ) : (
             <div className="py-16 text-center">
-              <span className="material-symbols-outlined text-5xl text-slate-300 mb-4 block">search_off</span>
+              <span className="material-symbols-outlined text-5xl text-stone-300 mb-4 block">search_off</span>
               <h2 className="text-lg font-bold text-on-surface mb-2 font-headline">{dict.search.noResults}</h2>
               <p className="text-on-surface-variant text-sm">{dict.search.noResultsDesc}</p>
             </div>
@@ -90,7 +90,7 @@ export default async function SearchPage({
 
       {!hasSearch && (
         <div className="py-16 text-center">
-          <span className="material-symbols-outlined text-5xl text-slate-300 mb-4 block">manage_search</span>
+          <span className="material-symbols-outlined text-5xl text-stone-300 mb-4 block">manage_search</span>
           <h2 className="text-lg font-bold text-on-surface mb-2 font-headline">{dict.search.initialTitle}</h2>
           <p className="text-on-surface-variant text-sm">{dict.search.initialDesc.replace("{n}", String(allPosts.length))}</p>
         </div>

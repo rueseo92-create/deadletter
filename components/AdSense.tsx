@@ -32,7 +32,7 @@ export function AdSense({
 
   return (
     <div className={`adsense-container my-8 ${className}`}>
-      <p className="text-[10px] text-slate-400 text-center mb-2 tracking-wider">
+      <p className="text-[10px] text-stone-400 text-center mb-2 tracking-wider">
         SPONSORED
       </p>
       <div ref={adRef} className="flex justify-center">

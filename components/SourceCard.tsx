@@ -27,7 +27,7 @@ export function SourceCard({ source }: SourceCardProps) {
       href={source.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center gap-4 p-4 rounded-xl bg-white border border-slate-200/80 hover:border-primary/30 hover:shadow-md transition-all"
+      className="group flex items-center gap-4 p-4 rounded-xl bg-white border border-stone-200/80 hover:border-primary/30 hover:shadow-md transition-all"
     >
       <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
         <span className="material-symbols-outlined text-primary text-xl">{icon}</span>
@@ -38,7 +38,7 @@ export function SourceCard({ source }: SourceCardProps) {
         </p>
         <p className="text-xs text-on-surface-variant mt-0.5">{label}</p>
       </div>
-      <span className="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors text-lg">
+      <span className="material-symbols-outlined text-stone-400 group-hover:text-primary transition-colors text-lg">
         open_in_new
       </span>
     </a>

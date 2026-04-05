@@ -96,7 +96,7 @@ export default function InquiryForm() {
         <div className="flex items-center gap-3 mb-5">
           <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">1</span>
           <h3 className="text-lg font-bold text-on-surface font-headline">어떤 서비스가 필요하세요?</h3>
-          <span className="text-xs text-slate-400">복수 선택 가능</span>
+          <span className="text-xs text-stone-400">복수 선택 가능</span>
         </div>
         <div className="grid sm:grid-cols-2 gap-3">
           {SERVICES.map((s) => {
@@ -108,11 +108,11 @@ export default function InquiryForm() {
                 onClick={() => { toggleService(s.id); setStatus("idle"); }}
                 className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all text-left ${
                   selected
-                    ? "border-primary bg-indigo-50 shadow-sm"
-                    : "border-slate-200 bg-white hover:border-slate-300"
+                    ? "border-primary bg-blue-50 shadow-sm"
+                    : "border-stone-200 bg-white hover:border-stone-300"
                 }`}
               >
-                <span className={`material-symbols-outlined text-xl ${selected ? "text-primary" : "text-slate-400"}`}>
+                <span className={`material-symbols-outlined text-xl ${selected ? "text-primary" : "text-stone-400"}`}>
                   {s.icon}
                 </span>
                 <span className={`text-sm font-semibold ${selected ? "text-primary" : "text-on-surface"}`}>
@@ -143,14 +143,14 @@ export default function InquiryForm() {
                 onClick={() => { setBudget(b.id); setStatus("idle"); }}
                 className={`p-4 rounded-xl border-2 transition-all text-center ${
                   selected
-                    ? "border-primary bg-indigo-50 shadow-sm"
-                    : "border-slate-200 bg-white hover:border-slate-300"
+                    ? "border-primary bg-blue-50 shadow-sm"
+                    : "border-stone-200 bg-white hover:border-stone-300"
                 }`}
               >
                 <p className={`text-lg font-extrabold font-headline ${selected ? "text-primary" : "text-on-surface"}`}>
                   {b.label}
                 </p>
-                <p className="text-[11px] text-slate-400 mt-1">{b.desc}</p>
+                <p className="text-[11px] text-stone-400 mt-1">{b.desc}</p>
               </button>
             );
           })}
@@ -170,14 +170,14 @@ export default function InquiryForm() {
             onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }}
             placeholder="name@company.com"
             required
-            className="px-4 py-3 rounded-xl border-2 border-slate-200 text-sm focus:border-primary focus:ring-0 outline-none transition-colors"
+            className="px-4 py-3 rounded-xl border-2 border-stone-200 text-sm focus:border-primary focus:ring-0 outline-none transition-colors"
           />
           <input
             type="text"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
             placeholder="회사/팀명 (선택)"
-            className="px-4 py-3 rounded-xl border-2 border-slate-200 text-sm focus:border-primary focus:ring-0 outline-none transition-colors"
+            className="px-4 py-3 rounded-xl border-2 border-stone-200 text-sm focus:border-primary focus:ring-0 outline-none transition-colors"
           />
         </div>
       </div>
@@ -194,11 +194,11 @@ export default function InquiryForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full py-4 bg-primary text-white font-bold rounded-xl hover:bg-indigo-700 transition-colors text-sm disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-indigo-200"
+        className="w-full py-4 bg-primary text-white font-bold rounded-xl hover:bg-blue-700 transition-colors text-sm disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-blue-200"
       >
         {status === "loading" ? "접수 중..." : "맞춤 견적 요청하기"}
       </button>
-      <p className="text-center text-xs text-slate-400 mt-4">
+      <p className="text-center text-xs text-stone-400 mt-4">
         보통 하루 안에 이메일로 견적을 보내드려요
       </p>
     </form>

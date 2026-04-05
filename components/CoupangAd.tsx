@@ -77,13 +77,13 @@ export function CoupangLinkAd({
   className = "",
 }: CoupangLinkAdProps) {
   return (
-    <div className={`rounded-xl border border-slate-200 bg-white overflow-hidden ${className}`}>
-      <div className="flex items-center gap-2 px-5 py-3 bg-slate-50 border-b border-slate-100">
+    <div className={`rounded-xl border border-stone-200 bg-white overflow-hidden ${className}`}>
+      <div className="flex items-center gap-2 px-5 py-3 bg-stone-50 border-b border-stone-100">
         <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
           <rect width="24" height="24" rx="6" fill="#E31937" />
           <path d="M7 8.5h10M7 12h10M7 15.5h6" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
         </svg>
-        <span className="text-sm font-bold text-slate-700">{title}</span>
+        <span className="text-sm font-bold text-stone-700">{title}</span>
       </div>
       <div className="p-4 grid gap-2">
         {keywords.map((kw) => (
@@ -92,12 +92,12 @@ export function CoupangLinkAd({
             href={buildAffiliateLink(kw)}
             target="_blank"
             rel="noopener noreferrer sponsored"
-            className="flex items-center justify-between px-4 py-3 rounded-lg bg-slate-50 hover:bg-red-50 border border-slate-100 hover:border-red-200 transition-all group"
+            className="flex items-center justify-between px-4 py-3 rounded-lg bg-stone-50 hover:bg-red-50 border border-stone-100 hover:border-red-200 transition-all group"
           >
-            <span className="text-sm text-slate-700 group-hover:text-red-600 font-medium">
+            <span className="text-sm text-stone-700 group-hover:text-red-600 font-medium">
               🔍 {kw}
             </span>
-            <span className="text-xs text-slate-400 group-hover:text-red-500 font-bold flex items-center gap-1">
+            <span className="text-xs text-stone-400 group-hover:text-red-500 font-bold flex items-center gap-1">
               쿠팡에서 보기
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -106,7 +106,7 @@ export function CoupangLinkAd({
           </a>
         ))}
       </div>
-      <p className="px-5 py-2 text-[10px] text-slate-400 bg-slate-50 border-t border-slate-100">
+      <p className="px-5 py-2 text-[10px] text-stone-400 bg-stone-50 border-t border-stone-100">
         {siteConfig.coupang.disclaimer}
       </p>
     </div>
@@ -125,13 +125,13 @@ export function CoupangSidebarAd({
   className = "",
 }: CoupangSidebarAdProps) {
   return (
-    <div className={`rounded-xl border border-slate-200 bg-white ${className}`}>
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100">
+    <div className={`rounded-xl border border-stone-200 bg-white ${className}`}>
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100">
         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
           <rect width="24" height="24" rx="6" fill="#E31937" />
           <path d="M7 8.5h10M7 12h10M7 15.5h6" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
         </svg>
-        <span className="text-xs font-bold text-slate-600">쿠팡 추천</span>
+        <span className="text-xs font-bold text-stone-600">쿠팡 추천</span>
       </div>
       <div className="p-3 space-y-1.5">
         {keywords.map((kw) => (
@@ -142,14 +142,14 @@ export function CoupangSidebarAd({
             rel="noopener noreferrer sponsored"
             className="flex items-center gap-2 px-3 py-2.5 rounded-lg hover:bg-red-50 transition-colors group"
           >
-            <span className="text-xs text-slate-500 group-hover:text-red-600">🔍</span>
-            <span className="text-xs text-slate-600 group-hover:text-red-600 font-medium truncate">
+            <span className="text-xs text-stone-500 group-hover:text-red-600">🔍</span>
+            <span className="text-xs text-stone-600 group-hover:text-red-600 font-medium truncate">
               {kw}
             </span>
           </a>
         ))}
       </div>
-      <p className="px-4 py-2 text-[9px] text-slate-400 border-t border-slate-50">
+      <p className="px-4 py-2 text-[9px] text-stone-400 border-t border-stone-50">
         쿠팡 파트너스 활동으로 수수료를 받을 수 있습니다.
       </p>
     </div>
@@ -170,7 +170,7 @@ export function AdSlot({
   return (
     <div className={`my-8 ${className}`}>
       {label && (
-        <p className="text-[10px] text-slate-400 text-center mb-2 tracking-wider">
+        <p className="text-[10px] text-stone-400 text-center mb-2 tracking-wider">
           SPONSORED
         </p>
       )}

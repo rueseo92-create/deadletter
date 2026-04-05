@@ -153,7 +153,7 @@ export default async function LocaleLayout({
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#4F46E5" />
+        <meta name="theme-color" content="#3B82F6" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -196,10 +196,10 @@ export default async function LocaleLayout({
               href={localizedHref("/", locale)}
               className="flex items-center gap-2.5 group"
             >
-              <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-primary-600 text-white text-[10px] font-extrabold shadow-sm group-hover:shadow-glow transition-shadow duration-300">
+              <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white text-[10px] font-extrabold shadow-sm group-hover:shadow-soft transition-shadow duration-300">
                 DI
               </span>
-              <span className="text-xl font-extrabold tracking-tight text-slate-900 font-headline">
+              <span className="text-lg font-extrabold tracking-tight text-stone-800 font-headline">
                 데일리인사이트
               </span>
             </a>
@@ -209,7 +209,7 @@ export default async function LocaleLayout({
                 <a
                   key={item.href}
                   href={item.href}
-                  className="relative px-4 py-2 text-[13px] font-medium text-slate-500 hover:text-primary transition-colors duration-200 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-primary after:rounded-full hover:after:w-5 after:transition-all after:duration-300"
+                  className="relative px-4 py-2 text-[13px] font-medium text-stone-500 hover:text-primary transition-colors duration-200 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-primary after:rounded-full hover:after:w-5 after:transition-all after:duration-300"
                 >
                   {item.label}
                 </a>
@@ -219,7 +219,7 @@ export default async function LocaleLayout({
             <div className="flex items-center gap-1">
               <a
                 href={localizedHref("/search", locale)}
-                className="p-2.5 rounded-xl text-slate-500 hover:text-primary hover:bg-primary-50 transition-all duration-200"
+                className="p-2.5 rounded-xl text-stone-500 hover:text-primary hover:bg-blue-50 transition-all duration-200"
                 aria-label="Search"
               >
                 <span className="material-symbols-outlined text-[22px]">search</span>
@@ -237,32 +237,32 @@ export default async function LocaleLayout({
         <ScrollToTop />
 
         {/* Footer */}
-        <footer className="relative mt-24 border-t border-slate-100">
+        <footer className="relative mt-24 border-t border-stone-100">
           <div className="max-w-7xl mx-auto px-6 lg:px-12">
             {/* Main footer content */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-16">
               {/* Brand */}
               <div className="md:col-span-4">
                 <div className="flex items-center gap-2.5 mb-4">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary-600 text-white text-[10px] font-extrabold">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white text-[10px] font-extrabold">
                     DI
                   </span>
-                  <span className="text-lg font-extrabold text-slate-900 font-headline">데일리인사이트</span>
+                  <span className="text-lg font-extrabold text-stone-800 font-headline">데일리인사이트</span>
                 </div>
-                <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
+                <p className="text-sm text-stone-500 leading-relaxed max-w-xs">
                   {siteConfig.description}
                 </p>
               </div>
 
               {/* Quick Links */}
               <div className="md:col-span-2">
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">카테고리</h4>
+                <h4 className="text-xs font-bold text-stone-800 uppercase tracking-wider mb-4">카테고리</h4>
                 <ul className="space-y-2.5">
                   {siteConfig.categories.map((cat) => (
                     <li key={cat.slug}>
                       <a
                         href={localizedHref(`/categories/${cat.slug}`, locale)}
-                        className="text-sm text-slate-500 hover:text-primary transition-colors duration-200"
+                        className="text-sm text-stone-500 hover:text-primary transition-colors duration-200"
                       >
                         {cat.emoji} {cat.name}
                       </a>
@@ -273,20 +273,20 @@ export default async function LocaleLayout({
 
               {/* Resources */}
               <div className="md:col-span-2">
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">리소스</h4>
+                <h4 className="text-xs font-bold text-stone-800 uppercase tracking-wider mb-4">리소스</h4>
                 <ul className="space-y-2.5">
                   <li>
-                    <a href={localizedHref("/posts", locale)} className="text-sm text-slate-500 hover:text-primary transition-colors duration-200">
+                    <a href={localizedHref("/posts", locale)} className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
                       {dict.category?.allPosts || "전체 글"}
                     </a>
                   </li>
                   <li>
-                    <a href={localizedHref("/about", locale)} className="text-sm text-slate-500 hover:text-primary transition-colors duration-200">
+                    <a href={localizedHref("/about", locale)} className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
                       {dict.nav?.about || "소개"}
                     </a>
                   </li>
                   <li>
-                    <a href={localizedHref("/business", locale)} className="text-sm text-slate-500 hover:text-primary transition-colors duration-200">
+                    <a href={localizedHref("/business", locale)} className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
                       {dict.nav?.agency || "대행 서비스"}
                     </a>
                   </li>
@@ -295,20 +295,20 @@ export default async function LocaleLayout({
 
               {/* Legal */}
               <div className="md:col-span-2">
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">정보</h4>
+                <h4 className="text-xs font-bold text-stone-800 uppercase tracking-wider mb-4">정보</h4>
                 <ul className="space-y-2.5">
                   <li>
-                    <a href={localizedHref("/privacy", locale)} className="text-sm text-slate-500 hover:text-primary transition-colors duration-200">
+                    <a href={localizedHref("/privacy", locale)} className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
                       {dict.footer.privacyPolicy}
                     </a>
                   </li>
                   <li>
-                    <a href="/sitemap.xml" className="text-sm text-slate-500 hover:text-primary transition-colors duration-200">
+                    <a href="/sitemap.xml" className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
                       {dict.footer.sitemap}
                     </a>
                   </li>
                   <li>
-                    <a href="/feed.xml" className="text-sm text-slate-500 hover:text-primary transition-colors duration-200">
+                    <a href="/feed.xml" className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
                       {dict.footer.rss}
                     </a>
                   </li>
@@ -317,9 +317,9 @@ export default async function LocaleLayout({
 
               {/* Newsletter mini */}
               <div className="md:col-span-2">
-                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">구독</h4>
-                <p className="text-sm text-slate-500 mb-3 leading-relaxed">
-                  매주 AI 트렌드를 이메일로 받아보세요.
+                <h4 className="text-xs font-bold text-stone-800 uppercase tracking-wider mb-4">구독</h4>
+                <p className="text-sm text-stone-500 mb-3 leading-relaxed">
+                  매주 생활 핵심 정보를 이메일로 받아보세요.
                 </p>
                 <a
                   href="#newsletter"
@@ -332,11 +332,11 @@ export default async function LocaleLayout({
             </div>
 
             {/* Bottom bar */}
-            <div className="border-t border-slate-100 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-xs text-slate-400">
+            <div className="border-t border-stone-100 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-xs text-stone-400">
                 &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
               </p>
-              <p className="text-[11px] text-slate-400 text-center sm:text-right max-w-xl leading-relaxed">
+              <p className="text-[11px] text-stone-400 text-center sm:text-right max-w-xl leading-relaxed">
                 {siteConfig.disclaimer}
                 {siteConfig.coupang.enabled && (
                   <> &middot; {dict.coupang.disclaimer}</>

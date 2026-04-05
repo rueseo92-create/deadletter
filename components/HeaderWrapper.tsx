@@ -18,7 +18,7 @@ export function HeaderWrapper({ children }: { children: React.ReactNode }) {
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "glass-header scrolled border-b border-slate-200/40"
+          ? "glass-header scrolled border-b border-stone-200/40"
           : "glass-header border-b border-transparent"
       }`}
     >

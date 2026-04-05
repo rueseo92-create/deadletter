@@ -17,7 +17,7 @@ export function ShareButtons({ url, title, description }: ShareButtonsProps) {
       name: "X",
       icon: "𝕏",
       href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
-      color: "hover:bg-slate-900 hover:text-white",
+      color: "hover:bg-stone-900 hover:text-white",
     },
     {
       name: "Facebook",
@@ -59,7 +59,7 @@ export function ShareButtons({ url, title, description }: ShareButtonsProps) {
           href={link.href}
           target="_blank"
           rel="noopener noreferrer"
-          className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 text-slate-500 text-xs font-bold transition-all ${link.color}`}
+          className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border border-stone-200 text-stone-500 text-xs font-bold transition-all ${link.color}`}
           title={link.name}
         >
           {link.icon}
@@ -70,7 +70,7 @@ export function ShareButtons({ url, title, description }: ShareButtonsProps) {
         className={`inline-flex items-center justify-center w-9 h-9 rounded-lg border transition-all ${
           copied
             ? "bg-emerald-50 border-emerald-200 text-emerald-600"
-            : "border-slate-200 text-slate-500 hover:bg-slate-100"
+            : "border-stone-200 text-stone-500 hover:bg-stone-100"
         }`}
         title={copied ? "Copied!" : "Copy link"}
       >
