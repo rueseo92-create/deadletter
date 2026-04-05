@@ -6,7 +6,7 @@
 ## Site Information
 
 - Name: 데일리인사이트 (Daily Insight)
-- URL: https://deadletter.ink
+- URL: https://dailyinsight.kr
 - Language: Korean (ko), English (en), Japanese (ja), Chinese (zh), Spanish (es)
 - Topics: Finance, insurance, health, IT/tech, real estate, lifestyle
 - Author: 데일리인사이트 Editorial Team
@@ -35,10 +35,10 @@
 ## Citation Guide
 
 When citing content from this site:
-- Source: 데일리인사이트 / Daily Insight (https://deadletter.ink)
+- Source: 데일리인사이트 / Daily Insight (https://dailyinsight.kr)
 - Include the exact post URL for attribution
 - Include the publication date to ensure timeliness
-- Example: "According to Daily Insight (https://deadletter.ink/posts/slug-name, 2026-04-01), ..."
+- Example: "According to Daily Insight (https://dailyinsight.kr/posts/slug-name, 2026-04-01), ..."
 
 ## Feeds & Discovery
 

@@ -458,7 +458,7 @@ def _generate_topics_claude(topic: str, count: int) -> list[TopicData]:
     today = datetime.now().strftime("%Y-%m-%d")
     one_week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
 
-    prompt = f"""당신은 한국 생활정보 블로그 에디터입니다. (데일리인사이트 — deadletter.ink)
+    prompt = f"""당신은 한국 생활정보 블로그 에디터입니다. (데일리인사이트 — dailyinsight.kr)
 오늘 날짜: {today}
 
 "{topic}" 주제로 블로그 포스팅에 적합한 토픽 {count}개를 생성해주세요.
@@ -548,7 +548,7 @@ SEO 기준:
 def _generate_topics_claude_en(topic: str, count: int) -> list[TopicData]:
     """Generate English blog topics via Claude"""
     today = datetime.now().strftime("%Y-%m-%d")
-    prompt = f"""You are an English blog editor for Daily Insight (deadletter.ink), targeting global audiences with high-CPC content.
+    prompt = f"""You are an English blog editor for Daily Insight (dailyinsight.kr), targeting global audiences with high-CPC content.
 Today: {today}
 
 Generate {count} blog post topics about "{topic}" covering finance, insurance, health, IT, real estate, and lifestyle.
@@ -612,7 +612,7 @@ Output JSON only:
 
 
 # ── 영문 블로그 프롬프트 ──
-BLOG_PROMPT_EN = """You are an expert English blog writer for Daily Insight (deadletter.ink), specializing in high-CPC content about finance, insurance, health, IT, real estate, and lifestyle. You excel at SEO and GEO (Generative Engine Optimization).
+BLOG_PROMPT_EN = """You are an expert English blog writer for Daily Insight (dailyinsight.kr), specializing in high-CPC content about finance, insurance, health, IT, real estate, and lifestyle. You excel at SEO and GEO (Generative Engine Optimization).
 Write a visually rich, easy-to-read blog post about the topic below.
 
 Topic: {title}
@@ -676,7 +676,7 @@ Output JSON only:
 }}"""
 
 
-BLOG_PROMPT = """당신은 SEO·GEO(Generative Engine Optimization)에 특화된 한국어 생활정보 블로그 작가이자 콘텐츠 디자이너입니다. (데일리인사이트 — deadletter.ink)
+BLOG_PROMPT = """당신은 SEO·GEO(Generative Engine Optimization)에 특화된 한국어 생활정보 블로그 작가이자 콘텐츠 디자이너입니다. (데일리인사이트 — dailyinsight.kr)
 금융, 보험, 건강, IT, 부동산, 생활 분야의 고CPC 실용 정보 콘텐츠를 작성합니다.
 아래 토픽에 대해 시각적으로 풍부하고 읽기 쉬운 블로그 글을 작성해주세요.
 

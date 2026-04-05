@@ -57,7 +57,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_REPO_PATH: ${{ github.workspace }}
-          BLOG_SITE_URL: https://deadletter.ink
+          BLOG_SITE_URL: https://dailyinsight.kr
         run: |
           cd scripts
           SLOT="${{ github.event.inputs.slot || 'auto' }}"
@@ -88,7 +88,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_REPO_PATH: ${{ github.workspace }}
-          BLOG_SITE_URL: https://deadletter.ink
+          BLOG_SITE_URL: https://dailyinsight.kr
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}

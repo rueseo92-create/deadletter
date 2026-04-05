@@ -362,7 +362,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
                   <span className="material-symbols-outlined text-base group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                 </a>
                 <a
-                  href="mailto:contact@deadletter.ink"
+                  href="mailto:contact@dailyinsight.kr"
                   className="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-700 transition-colors"
                 >
                   문의하기

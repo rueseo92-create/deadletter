@@ -38,7 +38,7 @@ from anthropic import Anthropic
 claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 CLAUDE_MODEL = "claude-sonnet-4-20250514"
 
-SITE_URL = os.environ.get("BLOG_SITE_URL", "https://deadletter.ink")
+SITE_URL = os.environ.get("BLOG_SITE_URL", "https://dailyinsight.kr")
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_DIR / "content" / "posts"
 OUTPUT_DIR = Path(__file__).parent / "community_seeds"

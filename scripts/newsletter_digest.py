@@ -16,7 +16,7 @@ newsletter_digest.py - 주간 뉴스레터 다이제스트 자동 생성
 필요한 환경변수:
   ANTHROPIC_API_KEY   - Claude API
   RESEND_API_KEY      - Resend API (발송 시)
-  NEWSLETTER_FROM     - 발신 이메일 (기본: newsletter@deadletter.ink)
+  NEWSLETTER_FROM     - 발신 이메일 (기본: newsletter@dailyinsight.kr)
 """
 
 import os
@@ -41,7 +41,7 @@ from anthropic import Anthropic
 claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 CLAUDE_MODEL = "claude-sonnet-4-20250514"
 
-SITE_URL = os.environ.get("BLOG_SITE_URL", "https://deadletter.ink")
+SITE_URL = os.environ.get("BLOG_SITE_URL", "https://dailyinsight.kr")
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_DIR / "content" / "posts"
 SUBSCRIBERS_FILE = BLOG_DIR / "data" / "subscribers.json"
@@ -49,7 +49,7 @@ OUTPUT_DIR = Path(__file__).parent / "newsletters"
 KST = timezone(timedelta(hours=9))
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
-NEWSLETTER_FROM = os.environ.get("NEWSLETTER_FROM", "데일리인사이트 <newsletter@deadletter.ink>")
+NEWSLETTER_FROM = os.environ.get("NEWSLETTER_FROM", "데일리인사이트 <newsletter@dailyinsight.kr>")
 
 CATEGORY_LABELS = {
     "finance": "금융·재테크",
@@ -211,7 +211,7 @@ def build_html_email(digest: dict, posts: list[dict]) -> str:
 
     <!-- Footer -->
     <div style="background:#f8fafc;padding:24px;text-align:center;font-size:12px;color:#94a3b8">
-      <p>데일리인사이트 뉴스레터 · <a href="{SITE_URL}" style="color:#64748b">deadletter.ink</a></p>
+      <p>데일리인사이트 뉴스레터 · <a href="{SITE_URL}" style="color:#64748b">dailyinsight.kr</a></p>
       <p>더 이상 받고 싶지 않으시면 <a href="{SITE_URL}/unsubscribe" style="color:#64748b">구독 해지</a></p>
     </div>
   </div>

@@ -72,8 +72,8 @@ export default function AboutPage() {
                   { label: "콘텐츠 분야", value: "금융·재테크 · 보험 · 건강·의료 · IT·테크 · 부동산 · 생활" },
                   { label: "콘텐츠 특징", value: "고CPC 키워드 기반, SEO 최적화, 실용 정보 중심" },
                   { label: "발행 주기", value: "매일 발행" },
-                  { label: "웹사이트", value: "deadletter.ink" },
-                  { label: "이메일", value: "contact@deadletter.ink" },
+                  { label: "웹사이트", value: "dailyinsight.kr" },
+                  { label: "이메일", value: "contact@dailyinsight.kr" },
                 ].map((item) => (
                   <div key={item.label}>
                     <p className="text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">{item.label}</p>
@@ -86,7 +86,7 @@ export default function AboutPage() {
                 <a href="/business" className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-blue-700 transition-colors">
                   서비스 보기 <span className="material-symbols-outlined text-xs">arrow_forward</span>
                 </a>
-                <a href="mailto:contact@deadletter.ink" className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-400 hover:text-stone-600 transition-colors">
+                <a href="mailto:contact@dailyinsight.kr" className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-400 hover:text-stone-600 transition-colors">
                   문의하기 <span className="material-symbols-outlined text-xs">mail</span>
                 </a>
               </div>
@@ -231,11 +231,11 @@ export default function AboutPage() {
                 비즈니스 문의, 협업 제안, 또는 궁금한 점이 있으시면 편하게 연락주세요.
               </p>
               <a
-                href="mailto:contact@deadletter.ink"
+                href="mailto:contact@dailyinsight.kr"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold text-sm rounded-full hover:bg-blue-700 transition-colors shadow-md shadow-primary/20"
               >
                 <span className="material-symbols-outlined text-base">mail</span>
-                contact@deadletter.ink
+                contact@dailyinsight.kr
               </a>
             </div>
           </div>

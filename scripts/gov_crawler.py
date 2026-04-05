@@ -183,7 +183,7 @@ def crawl_ai_news_claude(topic: str = "AI", count: int = 5) -> list[GovProject]:
         import anthropic
         client = anthropic.Anthropic()
 
-        prompt = f"""당신은 한국 생활정보/IT 뉴스 전문 에디터입니다. (데일리인사이트 — deadletter.ink)
+        prompt = f"""당신은 한국 생활정보/IT 뉴스 전문 에디터입니다. (데일리인사이트 — dailyinsight.kr)
 2026년 현재 가장 핫한 금융·보험·건강·IT·부동산·생활 관련 뉴스/트렌드/정책 토픽 {count}개를 생성해주세요.
 
 주제 범위: {topic}
