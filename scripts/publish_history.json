@@ -1,0 +1,19 @@
+{
+  "published": [
+    {
+      "title": "ETF 초보자 입문 가이드",
+      "category": "finance",
+      "date": "2026-04-06",
+      "slot": "morning",
+      "slug": "2026-04-06-etf-1-5"
+    },
+    {
+      "title": "암보험 가입 시 주의사항",
+      "category": "insurance",
+      "date": "2026-04-06",
+      "slot": "morning",
+      "slug": "2026-04-06-insurance"
+    }
+  ],
+  "last_run": "2026-04-06 [morning] (2/2 성공, 176초)"
+}
