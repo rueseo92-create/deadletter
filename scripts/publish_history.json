@@ -97,7 +97,28 @@
       "date": "2026-04-07",
       "slot": "lunch",
       "slug": "2026-04-07-2026-ai-top-5-1"
+    },
+    {
+      "title": "부동산 투자 초보자 가이드",
+      "category": "realestate",
+      "date": "2026-04-07",
+      "slot": "evening",
+      "slug": "2026-04-07-guide-realestate"
+    },
+    {
+      "title": "대출 금리 비교 꿀팁",
+      "category": "finance",
+      "date": "2026-04-07",
+      "slot": "evening",
+      "slug": "2026-04-07-7-0-5-p"
+    },
+    {
+      "title": "독서 습관 만드는 법",
+      "category": "lifestyle",
+      "date": "2026-04-07",
+      "slot": "evening",
+      "slug": "2026-04-07-how-to-practical"
     }
   ],
-  "last_run": "2026-04-07 [lunch] (2/2 성공, 198초)"
+  "last_run": "2026-04-07 [evening] (3/3 성공, 189초)"
 }
