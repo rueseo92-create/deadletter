@@ -118,7 +118,21 @@
       "date": "2026-04-07",
       "slot": "evening",
       "slug": "2026-04-07-how-to-practical"
+    },
+    {
+      "title": "실비보험 비교 추천",
+      "category": "insurance",
+      "date": "2026-04-07",
+      "slot": "night",
+      "slug": "2026-04-07-1-2026-top5"
+    },
+    {
+      "title": "자기계발 루틴 만들기",
+      "category": "lifestyle",
+      "date": "2026-04-07",
+      "slot": "night",
+      "slug": "2026-04-07-post-4750"
     }
   ],
-  "last_run": "2026-04-07 [evening] (3/3 성공, 189초)"
+  "last_run": "2026-04-07 [night] (2/2 성공, 203초)"
 }
