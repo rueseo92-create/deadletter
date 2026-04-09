@@ -272,7 +272,28 @@
       "date": "2026-04-09",
       "slot": "night",
       "slug": "2026-04-09-2026-8"
+    },
+    {
+      "title": "2026년 적금 금리 비교 TOP 10",
+      "category": "finance",
+      "date": "2026-04-10",
+      "slot": "morning",
+      "slug": "2026-04-09-2026-top-10"
+    },
+    {
+      "title": "치아보험 추천 TOP 5",
+      "category": "insurance",
+      "date": "2026-04-10",
+      "slot": "morning",
+      "slug": "2026-04-09-2026-top-5"
+    },
+    {
+      "title": "카드 혜택 비교 분석",
+      "category": "finance",
+      "date": "2026-04-10",
+      "slot": "morning",
+      "slug": "2026-04-09-guide-comparison-free-latest"
     }
   ],
-  "last_run": "2026-04-09 [night] (2/2 성공, 199초)"
+  "last_run": "2026-04-10 [morning] (3/3 성공, 363초)"
 }
