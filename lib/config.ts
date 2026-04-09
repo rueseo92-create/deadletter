@@ -6,7 +6,7 @@ export const siteConfig = {
   name: "데일리인사이트",
   description:
     "금융, 보험, 건강, IT, 부동산 — 생활 속 핵심 정보를 매일 쉽게 정리합니다",
-  url: "https://dailyinsight.kr",
+  url: "https://deadletter.vercel.app",
   author: "데일리인사이트",
   locale: "ko_KR",
 
