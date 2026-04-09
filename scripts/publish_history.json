@@ -237,7 +237,28 @@
       "date": "2026-04-09",
       "slot": "lunch",
       "slug": "2026-04-09-chatgpt-2026-12"
+    },
+    {
+      "title": "ISA 계좌 활용법",
+      "category": "finance",
+      "date": "2026-04-09",
+      "slot": "evening",
+      "slug": "2026-04-09-isa-3-300"
+    },
+    {
+      "title": "아파트 청약 준비 가이드",
+      "category": "realestate",
+      "date": "2026-04-09",
+      "slot": "evening",
+      "slug": "2026-04-09-guide-complete-analysis"
+    },
+    {
+      "title": "미니멀 라이프 시작하기",
+      "category": "lifestyle",
+      "date": "2026-04-09",
+      "slot": "evening",
+      "slug": "2026-04-09-1-300"
     }
   ],
-  "last_run": "2026-04-09 [lunch] (2/2 성공, 219초)"
+  "last_run": "2026-04-09 [evening] (3/3 성공, 347초)"
 }
