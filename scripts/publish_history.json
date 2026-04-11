@@ -363,7 +363,21 @@
       "date": "2026-04-11",
       "slot": "morning",
       "slug": "2026-04-10-2026-3"
+    },
+    {
+      "title": "허리 통증 예방 운동",
+      "category": "health",
+      "date": "2026-04-11",
+      "slot": "lunch",
+      "slug": "2026-04-11-95-6-10"
+    },
+    {
+      "title": "생산성 앱 TOP 10",
+      "category": "tech",
+      "date": "2026-04-11",
+      "slot": "lunch",
+      "slug": "2026-04-11-top-10-2026-1"
     }
   ],
-  "last_run": "2026-04-11 [morning] (3/3 성공, 302초)"
+  "last_run": "2026-04-11 [lunch] (2/2 성공, 141초)"
 }
