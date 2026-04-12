@@ -482,7 +482,28 @@
       "date": "2026-04-12",
       "slot": "night",
       "slug": "2026-04-12-how-to-insurance"
+    },
+    {
+      "title": "치아보험 추천 TOP 5",
+      "category": "insurance",
+      "date": "2026-04-13",
+      "slot": "morning",
+      "slug": "2026-04-12-top-5-1-2026"
+    },
+    {
+      "title": "대출 금리 비교 꿀팁",
+      "category": "finance",
+      "date": "2026-04-13",
+      "slot": "morning",
+      "slug": "2026-04-12-comparison-tips-loan-interest-rate"
+    },
+    {
+      "title": "ETF 초보자 입문 가이드",
+      "category": "finance",
+      "date": "2026-04-13",
+      "slot": "morning",
+      "slug": "2026-04-12-etf-5"
     }
   ],
-  "last_run": "2026-04-12 [night] (2/2 성공, 221초)"
+  "last_run": "2026-04-13 [morning] (3/3 성공, 201초)"
 }
