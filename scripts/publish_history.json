@@ -552,7 +552,28 @@
       "date": "2026-04-13",
       "slot": "night",
       "slug": "2026-04-13-top-5-1-2026"
+    },
+    {
+      "title": "실비보험 비교 추천",
+      "category": "insurance",
+      "date": "2026-04-14",
+      "slot": "morning",
+      "slug": "2026-04-13-comparison-best-free-insurance"
+    },
+    {
+      "title": "세금 절약하는 재테크 방법",
+      "category": "finance",
+      "date": "2026-04-14",
+      "slot": "morning",
+      "slug": "2026-04-13-7-2026"
+    },
+    {
+      "title": "카드 혜택 비교 분석",
+      "category": "finance",
+      "date": "2026-04-14",
+      "slot": "morning",
+      "slug": "2026-04-13-guide-how-to-comparison-complete"
     }
   ],
-  "last_run": "2026-04-13 [night] (2/2 성공, 191초)"
+  "last_run": "2026-04-14 [morning] (3/3 성공, 201초)"
 }
