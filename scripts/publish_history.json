@@ -678,7 +678,21 @@
       "date": "2026-04-15",
       "slot": "evening",
       "slug": "2026-04-15-5-2026"
+    },
+    {
+      "title": "자격증 추천 취업에 도움되는",
+      "category": "lifestyle",
+      "date": "2026-04-15",
+      "slot": "night",
+      "slug": "2026-04-15-2026-top-10"
+    },
+    {
+      "title": "종신보험 vs 정기보험 비교",
+      "category": "insurance",
+      "date": "2026-04-15",
+      "slot": "night",
+      "slug": "2026-04-15-comparison-complete-insurance"
     }
   ],
-  "last_run": "2026-04-15 [evening] (3/3 성공, 234초)"
+  "last_run": "2026-04-15 [night] (2/2 성공, 215초)"
 }
