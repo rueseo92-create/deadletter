@@ -748,7 +748,21 @@
       "date": "2026-04-16",
       "slot": "evening",
       "slug": "2026-04-16-10-300"
+    },
+    {
+      "title": "스트레스 관리법",
+      "category": "lifestyle",
+      "date": "2026-04-16",
+      "slot": "night",
+      "slug": "2026-04-16-how-to"
+    },
+    {
+      "title": "실손보험 청구 방법 총정리",
+      "category": "insurance",
+      "date": "2026-04-16",
+      "slot": "night",
+      "slug": "2026-04-16-guide-complete-insurance"
     }
   ],
-  "last_run": "2026-04-16 [evening] (3/3 성공, 274초)"
+  "last_run": "2026-04-16 [night] (2/2 성공, 149초)"
 }
