@@ -727,7 +727,28 @@
       "date": "2026-04-16",
       "slot": "lunch",
       "slug": "2026-04-16-how-to-best"
+    },
+    {
+      "title": "재건축 투자 전략",
+      "category": "realestate",
+      "date": "2026-04-16",
+      "slot": "evening",
+      "slug": "2026-04-16-income-strategy"
+    },
+    {
+      "title": "주식 배당금 투자 전략",
+      "category": "finance",
+      "date": "2026-04-16",
+      "slot": "evening",
+      "slug": "2026-04-16-how-to-income-interest-rate"
+    },
+    {
+      "title": "생활비 절약하는 10가지 방법",
+      "category": "lifestyle",
+      "date": "2026-04-16",
+      "slot": "evening",
+      "slug": "2026-04-16-10-300"
     }
   ],
-  "last_run": "2026-04-16 [lunch] (2/2 성공, 225초)"
+  "last_run": "2026-04-16 [evening] (3/3 성공, 274초)"
 }
