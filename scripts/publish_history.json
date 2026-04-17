@@ -797,7 +797,28 @@
       "date": "2026-04-17",
       "slot": "lunch",
       "slug": "2026-04-17-ai-30-300"
+    },
+    {
+      "title": "부업 아이디어 현실적인 추천",
+      "category": "lifestyle",
+      "date": "2026-04-17",
+      "slot": "evening",
+      "slug": "2026-04-17-2026-7-50"
+    },
+    {
+      "title": "청년 우대 적금 추천",
+      "category": "finance",
+      "date": "2026-04-17",
+      "slot": "evening",
+      "slug": "2026-04-17-10-2026-1"
+    },
+    {
+      "title": "신혼부부 주택 지원제도",
+      "category": "realestate",
+      "date": "2026-04-17",
+      "slot": "evening",
+      "slug": "2026-04-17-post-5122"
     }
   ],
-  "last_run": "2026-04-17 [lunch] (2/2 성공, 164초)"
+  "last_run": "2026-04-17 [evening] (3/3 성공, 347초)"
 }
