@@ -853,7 +853,21 @@
       "date": "2026-04-18",
       "slot": "morning",
       "slug": "2026-04-17-etf-6-2026"
+    },
+    {
+      "title": "무료 AI 도구 모음",
+      "category": "tech",
+      "date": "2026-04-18",
+      "slot": "lunch",
+      "slug": "2026-04-18-ai-10-2026"
+    },
+    {
+      "title": "다이어트 식단 추천",
+      "category": "health",
+      "date": "2026-04-18",
+      "slot": "lunch",
+      "slug": "2026-04-18-post-9967"
     }
   ],
-  "last_run": "2026-04-18 [morning] (3/3 성공, 352초)"
+  "last_run": "2026-04-18 [lunch] (2/2 성공, 196초)"
 }
