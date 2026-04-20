@@ -1028,7 +1028,21 @@
       "date": "2026-04-20",
       "slot": "evening",
       "slug": "2026-04-20-1-2026"
+    },
+    {
+      "title": "온라인 강의 추천 무료",
+      "category": "lifestyle",
+      "date": "2026-04-20",
+      "slot": "night",
+      "slug": "2026-04-20-best-7-1"
+    },
+    {
+      "title": "실손보험 청구 방법 총정리",
+      "category": "insurance",
+      "date": "2026-04-20",
+      "slot": "night",
+      "slug": "2026-04-20-guide-latest-complete-insurance"
     }
   ],
-  "last_run": "2026-04-20 [evening] (3/3 성공, 258초)"
+  "last_run": "2026-04-20 [night] (2/2 성공, 177초)"
 }
