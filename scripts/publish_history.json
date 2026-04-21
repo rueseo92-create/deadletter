@@ -1112,7 +1112,28 @@
       "date": "2026-04-21",
       "slot": "night",
       "slug": "2026-04-21-how-to-free-tips"
+    },
+    {
+      "title": "ETF 초보자 입문 가이드",
+      "category": "finance",
+      "date": "2026-04-22",
+      "slot": "morning",
+      "slug": "2026-04-21-etf-10"
+    },
+    {
+      "title": "연말정산 환급 많이 받는 방법",
+      "category": "finance",
+      "date": "2026-04-22",
+      "slot": "morning",
+      "slug": "2026-04-21-7-180"
+    },
+    {
+      "title": "실손보험 청구 방법 총정리",
+      "category": "insurance",
+      "date": "2026-04-22",
+      "slot": "morning",
+      "slug": "2026-04-21-guide-how-to-complete-tips"
     }
   ],
-  "last_run": "2026-04-21 [night] (2/2 성공, 188초)"
+  "last_run": "2026-04-22 [morning] (3/3 성공, 199초)"
 }
