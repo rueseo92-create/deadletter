@@ -1413,7 +1413,21 @@
       "date": "2026-04-26",
       "slot": "morning",
       "slug": "2026-04-25-best-5"
+    },
+    {
+      "title": "무료 AI 도구 모음",
+      "category": "tech",
+      "date": "2026-04-26",
+      "slot": "lunch",
+      "slug": "2026-04-26-ai-20-2026"
+    },
+    {
+      "title": "건강보험료 절약하는 법",
+      "category": "health",
+      "date": "2026-04-26",
+      "slot": "lunch",
+      "slug": "2026-04-26-15-5-2026"
     }
   ],
-  "last_run": "2026-04-26 [morning] (3/3 성공, 357초)"
+  "last_run": "2026-04-26 [lunch] (2/2 성공, 137초)"
 }
