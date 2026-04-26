@@ -1427,7 +1427,21 @@
       "date": "2026-04-26",
       "slot": "lunch",
       "slug": "2026-04-26-15-5-2026"
+    },
+    {
+      "title": "이사 체크리스트 총정리",
+      "category": "realestate",
+      "date": "2026-04-26",
+      "slot": "evening",
+      "slug": "2026-04-26-2026-30"
+    },
+    {
+      "title": "세금 절약하는 재테크 방법",
+      "category": "finance",
+      "date": "2026-04-26",
+      "slot": "evening",
+      "slug": "2026-04-26-investment-tax"
     }
   ],
-  "last_run": "2026-04-26 [lunch] (2/2 성공, 137초)"
+  "last_run": "2026-04-26 [evening] (2/3 성공, 245초)"
 }
