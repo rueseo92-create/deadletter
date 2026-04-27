@@ -1441,7 +1441,21 @@
       "date": "2026-04-26",
       "slot": "evening",
       "slug": "2026-04-26-investment-tax"
+    },
+    {
+      "title": "독서 습관 만드는 법",
+      "category": "lifestyle",
+      "date": "2026-04-27",
+      "slot": "night",
+      "slug": "2026-04-27-post-3084"
+    },
+    {
+      "title": "자동차보험 저렴하게 가입하는 법",
+      "category": "insurance",
+      "date": "2026-04-27",
+      "slot": "night",
+      "slug": "2026-04-27-how-to-insurance"
     }
   ],
-  "last_run": "2026-04-27 [lunch] (0/2 성공, 8초)"
+  "last_run": "2026-04-27 [night] (2/2 성공, 142초)"
 }
