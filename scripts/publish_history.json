@@ -1476,7 +1476,21 @@
       "date": "2026-04-28",
       "slot": "morning",
       "slug": "2026-04-27-top-5-2026"
+    },
+    {
+      "title": "ChatGPT 활용법 2026",
+      "category": "tech",
+      "date": "2026-04-28",
+      "slot": "lunch",
+      "slug": "2026-04-28-chatgpt-2026-vs-10"
+    },
+    {
+      "title": "건강보험료 절약하는 법",
+      "category": "health",
+      "date": "2026-04-28",
+      "slot": "lunch",
+      "slug": "2026-04-28-free-tips-insurance-health"
     }
   ],
-  "last_run": "2026-04-28 [morning] (3/3 성공, 334초)"
+  "last_run": "2026-04-28 [lunch] (2/2 성공, 257초)"
 }
