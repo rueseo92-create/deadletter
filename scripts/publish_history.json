@@ -1490,7 +1490,21 @@
       "date": "2026-04-28",
       "slot": "lunch",
       "slug": "2026-04-28-free-tips-insurance-health"
+    },
+    {
+      "title": "실손보험 청구 방법 총정리",
+      "category": "insurance",
+      "date": "2026-04-28",
+      "slot": "night",
+      "slug": "2026-04-28-how-to-insurance"
+    },
+    {
+      "title": "시간 관리 방법 직장인",
+      "category": "lifestyle",
+      "date": "2026-04-28",
+      "slot": "night",
+      "slug": "2026-04-28-5-300"
     }
   ],
-  "last_run": "2026-04-28 [lunch] (2/2 성공, 257초)"
+  "last_run": "2026-04-28 [night] (2/2 성공, 154초)"
 }
