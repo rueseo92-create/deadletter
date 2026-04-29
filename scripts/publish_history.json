@@ -1525,7 +1525,21 @@
       "date": "2026-04-29",
       "slot": "morning",
       "slug": "2026-04-28-2026-5"
+    },
+    {
+      "title": "다이어트 식단 추천",
+      "category": "health",
+      "date": "2026-04-29",
+      "slot": "lunch",
+      "slug": "2026-04-29-post-5853"
+    },
+    {
+      "title": "생산성 앱 TOP 10",
+      "category": "tech",
+      "date": "2026-04-29",
+      "slot": "lunch",
+      "slug": "2026-04-29-top-10"
     }
   ],
-  "last_run": "2026-04-29 [morning] (3/3 성공, 204초)"
+  "last_run": "2026-04-29 [lunch] (2/2 성공, 167초)"
 }
