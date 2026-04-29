@@ -1539,7 +1539,21 @@
       "date": "2026-04-29",
       "slot": "lunch",
       "slug": "2026-04-29-top-10"
+    },
+    {
+      "title": "재택근무 생산성 높이는 법",
+      "category": "lifestyle",
+      "date": "2026-04-29",
+      "slot": "night",
+      "slug": "2026-04-29-300-1"
+    },
+    {
+      "title": "실비보험 비교 추천",
+      "category": "insurance",
+      "date": "2026-04-29",
+      "slot": "night",
+      "slug": "2026-04-29-2026-3"
     }
   ],
-  "last_run": "2026-04-29 [lunch] (2/2 성공, 167초)"
+  "last_run": "2026-04-29 [night] (2/2 성공, 155초)"
 }
