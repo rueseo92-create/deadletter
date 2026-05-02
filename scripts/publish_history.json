@@ -1728,7 +1728,28 @@
       "date": "2026-05-02",
       "slot": "lunch",
       "slug": "2026-05-02-health"
+    },
+    {
+      "title": "청년 우대 적금 추천",
+      "category": "finance",
+      "date": "2026-05-02",
+      "slot": "evening",
+      "slug": "2026-05-02-2026-1"
+    },
+    {
+      "title": "재택근무 생산성 높이는 법",
+      "category": "lifestyle",
+      "date": "2026-05-02",
+      "slot": "evening",
+      "slug": "2026-05-02-post-9078"
+    },
+    {
+      "title": "아파트 청약 준비 가이드",
+      "category": "realestate",
+      "date": "2026-05-02",
+      "slot": "evening",
+      "slug": "2026-05-02-2026-3"
     }
   ],
-  "last_run": "2026-05-02 [lunch] (2/2 성공, 141초)"
+  "last_run": "2026-05-02 [evening] (3/3 성공, 350초)"
 }
