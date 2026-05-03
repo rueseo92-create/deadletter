@@ -1833,7 +1833,28 @@
       "date": "2026-05-03",
       "slot": "night",
       "slug": "2026-05-03-200-7"
+    },
+    {
+      "title": "대출 금리 비교 꿀팁",
+      "category": "finance",
+      "date": "2026-05-04",
+      "slot": "morning",
+      "slug": "2026-05-03-2026-30"
+    },
+    {
+      "title": "2026년 적금 금리 비교 TOP 10",
+      "category": "finance",
+      "date": "2026-05-04",
+      "slot": "morning",
+      "slug": "2026-05-03-2026-top-10-1"
+    },
+    {
+      "title": "보험 리모델링 방법",
+      "category": "insurance",
+      "date": "2026-05-04",
+      "slot": "morning",
+      "slug": "2026-05-03-100-5"
     }
   ],
-  "last_run": "2026-05-03 [night] (2/2 성공, 148초)"
+  "last_run": "2026-05-04 [morning] (3/3 성공, 215초)"
 }
