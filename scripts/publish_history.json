@@ -2001,7 +2001,28 @@
       "date": "2026-05-06",
       "slot": "night",
       "slug": "2026-05-06-insurance-saving"
+    },
+    {
+      "title": "치아보험 추천 TOP 5",
+      "category": "insurance",
+      "date": "2026-05-07",
+      "slot": "morning",
+      "slug": "2026-05-06-top-5"
+    },
+    {
+      "title": "세금 절약하는 재테크 방법",
+      "category": "finance",
+      "date": "2026-05-07",
+      "slot": "morning",
+      "slug": "2026-05-06-guide-comparison-complete-investment"
+    },
+    {
+      "title": "청년 우대 적금 추천",
+      "category": "finance",
+      "date": "2026-05-07",
+      "slot": "morning",
+      "slug": "2026-05-06-guide-best-complete-savings"
     }
   ],
-  "last_run": "2026-05-06 [night] (2/2 성공, 217초)"
+  "last_run": "2026-05-07 [morning] (3/3 성공, 200초)"
 }
