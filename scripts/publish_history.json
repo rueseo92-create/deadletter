@@ -1847,7 +1847,28 @@
       "date": "2026-05-16",
       "slot": "lunch",
       "slug": "2026-05-16-top-7-3"
+    },
+    {
+      "title": "신용점수 올리는 5가지 방법",
+      "category": "finance",
+      "date": "2026-05-16",
+      "slot": "evening",
+      "slug": "2026-05-16-5-3-100"
+    },
+    {
+      "title": "독서 습관 만드는 법",
+      "category": "lifestyle",
+      "date": "2026-05-16",
+      "slot": "evening",
+      "slug": "2026-05-16-how-to-practical"
+    },
+    {
+      "title": "주택담보대출 비교",
+      "category": "realestate",
+      "date": "2026-05-16",
+      "slot": "evening",
+      "slug": "2026-05-16-1-2-p"
     }
   ],
-  "last_run": "2026-05-16 [lunch] (2/2 성공, 140초)"
+  "last_run": "2026-05-16 [evening] (3/3 성공, 316초)"
 }
