@@ -1868,7 +1868,21 @@
       "date": "2026-05-16",
       "slot": "evening",
       "slug": "2026-05-16-1-2-p"
+    },
+    {
+      "title": "시간 관리 방법 직장인",
+      "category": "lifestyle",
+      "date": "2026-05-16",
+      "slot": "night",
+      "slug": "2026-05-16-how-to-practical-saving"
+    },
+    {
+      "title": "보험료 아끼는 5가지 꿀팁",
+      "category": "insurance",
+      "date": "2026-05-16",
+      "slot": "night",
+      "slug": "2026-05-16-50-5-20-5"
     }
   ],
-  "last_run": "2026-05-16 [evening] (3/3 성공, 316초)"
+  "last_run": "2026-05-16 [night] (2/2 성공, 167초)"
 }
