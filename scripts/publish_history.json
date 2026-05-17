@@ -1868,7 +1868,21 @@
       "date": "2026-05-17",
       "slot": "evening",
       "slug": "2026-05-17-2026-isa-5"
+    },
+    {
+      "title": "자기계발 루틴 만들기",
+      "category": "lifestyle",
+      "date": "2026-05-17",
+      "slot": "night",
+      "slug": "2026-05-17-post-1049"
+    },
+    {
+      "title": "자동차보험 저렴하게 가입하는 법",
+      "category": "insurance",
+      "date": "2026-05-17",
+      "slot": "night",
+      "slug": "2026-05-17-how-to-insurance-saving"
     }
   ],
-  "last_run": "2026-05-17 [evening] (3/3 성공, 409초)"
+  "last_run": "2026-05-17 [night] (2/2 성공, 147초)"
 }
