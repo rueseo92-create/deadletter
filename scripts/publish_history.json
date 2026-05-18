@@ -1847,7 +1847,21 @@
       "date": "2026-05-18",
       "slot": "lunch",
       "slug": "2026-05-18-guide-best"
+    },
+    {
+      "title": "치아보험 추천 TOP 5",
+      "category": "insurance",
+      "date": "2026-05-18",
+      "slot": "night",
+      "slug": "2026-05-18-top-5-1-2026"
+    },
+    {
+      "title": "시간 관리 방법 직장인",
+      "category": "lifestyle",
+      "date": "2026-05-18",
+      "slot": "night",
+      "slug": "2026-05-18-how-to-practical-tips"
     }
   ],
-  "last_run": "2026-05-18 [lunch] (2/2 성공, 300초)"
+  "last_run": "2026-05-18 [night] (2/2 성공, 152초)"
 }
