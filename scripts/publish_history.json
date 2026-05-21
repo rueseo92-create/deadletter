@@ -1798,7 +1798,28 @@
       "date": "2026-05-21",
       "slot": "night",
       "slug": "2026-05-21-how-to-insurance"
+    },
+    {
+      "title": "카드 혜택 비교 분석",
+      "category": "finance",
+      "date": "2026-05-22",
+      "slot": "morning",
+      "slug": "2026-05-21-2026-1"
+    },
+    {
+      "title": "실손보험 청구 방법 총정리",
+      "category": "insurance",
+      "date": "2026-05-22",
+      "slot": "morning",
+      "slug": "2026-05-21-insurance"
+    },
+    {
+      "title": "주식 배당금 투자 전략",
+      "category": "finance",
+      "date": "2026-05-22",
+      "slot": "morning",
+      "slug": "2026-05-21-post-5909"
     }
   ],
-  "last_run": "2026-05-21 [night] (2/2 성공, 311초)"
+  "last_run": "2026-05-22 [morning] (3/3 성공, 287초)"
 }
