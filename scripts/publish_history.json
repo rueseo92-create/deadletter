@@ -1770,7 +1770,28 @@
       "date": "2026-05-23",
       "slot": "night",
       "slug": "2026-05-23-guide-comparison-best-complete"
+    },
+    {
+      "title": "보험 리모델링 방법",
+      "category": "insurance",
+      "date": "2026-05-24",
+      "slot": "morning",
+      "slug": "2026-05-23-insurance-saving"
+    },
+    {
+      "title": "ETF 초보자 입문 가이드",
+      "category": "finance",
+      "date": "2026-05-24",
+      "slot": "morning",
+      "slug": "2026-05-23-etf-2026"
+    },
+    {
+      "title": "카드 혜택 비교 분석",
+      "category": "finance",
+      "date": "2026-05-24",
+      "slot": "morning",
+      "slug": "2026-05-23-2026-100"
     }
   ],
-  "last_run": "2026-05-23 [night] (2/2 성공, 148초)"
+  "last_run": "2026-05-24 [morning] (3/3 성공, 250초)"
 }
