@@ -1770,7 +1770,28 @@
       "date": "2026-05-24",
       "slot": "night",
       "slug": "2026-05-24-vs-1-2026"
+    },
+    {
+      "title": "ETF 초보자 입문 가이드",
+      "category": "finance",
+      "date": "2026-05-25",
+      "slot": "morning",
+      "slug": "2026-05-24-etf-7-200"
+    },
+    {
+      "title": "종신보험 vs 정기보험 비교",
+      "category": "insurance",
+      "date": "2026-05-25",
+      "slot": "morning",
+      "slug": "2026-05-24-vs-50"
+    },
+    {
+      "title": "세금 절약하는 재테크 방법",
+      "category": "finance",
+      "date": "2026-05-25",
+      "slot": "morning",
+      "slug": "2026-05-24-2026-7-200"
     }
   ],
-  "last_run": "2026-05-24 [night] (2/2 성공, 134초)"
+  "last_run": "2026-05-25 [morning] (3/3 성공, 332초)"
 }
