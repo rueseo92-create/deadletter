@@ -1,76 +1,6 @@
 {
   "published": [
     {
-      "title": "세금 절약하는 재테크 방법",
-      "category": "finance",
-      "date": "2026-04-24",
-      "slot": "morning",
-      "slug": "2026-04-23-2026-7-600"
-    },
-    {
-      "title": "보험 리모델링 방법",
-      "category": "insurance",
-      "date": "2026-04-24",
-      "slot": "morning",
-      "slug": "2026-04-23-insurance-saving"
-    },
-    {
-      "title": "연말정산 환급 많이 받는 방법",
-      "category": "finance",
-      "date": "2026-04-24",
-      "slot": "morning",
-      "slug": "2026-04-23-5-137"
-    },
-    {
-      "title": "영양제 추천 조합 가이드",
-      "category": "health",
-      "date": "2026-04-24",
-      "slot": "lunch",
-      "slug": "2026-04-24-guide-best-free-health"
-    },
-    {
-      "title": "스마트폰 추천 비교",
-      "category": "tech",
-      "date": "2026-04-24",
-      "slot": "lunch",
-      "slug": "2026-04-24-best-5-2026"
-    },
-    {
-      "title": "자격증 추천 취업에 도움되는",
-      "category": "lifestyle",
-      "date": "2026-04-24",
-      "slot": "evening",
-      "slug": "2026-04-24-post-5656"
-    },
-    {
-      "title": "ETF 초보자 입문 가이드",
-      "category": "finance",
-      "date": "2026-04-24",
-      "slot": "evening",
-      "slug": "2026-04-24-etf-3-100"
-    },
-    {
-      "title": "부동산 세금 절약 방법",
-      "category": "realestate",
-      "date": "2026-04-24",
-      "slot": "evening",
-      "slug": "2026-04-24-realestate-saving-tax"
-    },
-    {
-      "title": "어린이보험 추천 비교",
-      "category": "insurance",
-      "date": "2026-04-24",
-      "slot": "night",
-      "slug": "2026-04-24-comparison-best-insurance"
-    },
-    {
-      "title": "온라인 강의 추천 무료",
-      "category": "lifestyle",
-      "date": "2026-04-24",
-      "slot": "night",
-      "slug": "2026-04-24-2026-15"
-    },
-    {
       "title": "ETF 초보자 입문 가이드",
       "category": "finance",
       "date": "2026-04-25",
@@ -1791,7 +1721,28 @@
       "date": "2026-05-25",
       "slot": "morning",
       "slug": "2026-05-24-2026-7-200"
+    },
+    {
+      "title": "자격증 추천 취업에 도움되는",
+      "category": "lifestyle",
+      "date": "2026-05-25",
+      "slot": "evening",
+      "slug": "2026-05-25-2026-7"
+    },
+    {
+      "title": "전세 사기 예방법",
+      "category": "realestate",
+      "date": "2026-05-25",
+      "slot": "evening",
+      "slug": "2026-05-25-how-to"
+    },
+    {
+      "title": "대출 금리 비교 꿀팁",
+      "category": "finance",
+      "date": "2026-05-25",
+      "slot": "evening",
+      "slug": "2026-05-25-comparison-tips-loan-interest-rate"
     }
   ],
-  "last_run": "2026-05-25 [morning] (3/3 성공, 332초)"
+  "last_run": "2026-05-25 [evening] (3/3 성공, 204초)"
 }
