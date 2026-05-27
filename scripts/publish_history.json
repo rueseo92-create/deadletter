@@ -1637,7 +1637,21 @@
       "date": "2026-05-27",
       "slot": "lunch",
       "slug": "2026-05-27-how-to"
+    },
+    {
+      "title": "스트레스 관리법",
+      "category": "lifestyle",
+      "date": "2026-05-27",
+      "slot": "night",
+      "slug": "2026-05-27-post-7944"
+    },
+    {
+      "title": "치아보험 추천 TOP 5",
+      "category": "insurance",
+      "date": "2026-05-27",
+      "slot": "night",
+      "slug": "2026-05-27-top-5-1-2026"
     }
   ],
-  "last_run": "2026-05-27 [lunch] (2/2 성공, 129초)"
+  "last_run": "2026-05-27 [night] (2/2 성공, 208초)"
 }
