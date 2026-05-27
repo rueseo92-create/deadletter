@@ -1,55 +1,6 @@
 {
   "published": [
     {
-      "title": "실비보험 비교 추천",
-      "category": "insurance",
-      "date": "2026-04-26",
-      "slot": "morning",
-      "slug": "2026-04-25-comparison-best-insurance"
-    },
-    {
-      "title": "신용점수 올리는 5가지 방법",
-      "category": "finance",
-      "date": "2026-04-26",
-      "slot": "morning",
-      "slug": "2026-04-25-how-to-free"
-    },
-    {
-      "title": "청년 우대 적금 추천",
-      "category": "finance",
-      "date": "2026-04-26",
-      "slot": "morning",
-      "slug": "2026-04-25-best-5"
-    },
-    {
-      "title": "무료 AI 도구 모음",
-      "category": "tech",
-      "date": "2026-04-26",
-      "slot": "lunch",
-      "slug": "2026-04-26-ai-20-2026"
-    },
-    {
-      "title": "건강보험료 절약하는 법",
-      "category": "health",
-      "date": "2026-04-26",
-      "slot": "lunch",
-      "slug": "2026-04-26-15-5-2026"
-    },
-    {
-      "title": "이사 체크리스트 총정리",
-      "category": "realestate",
-      "date": "2026-04-26",
-      "slot": "evening",
-      "slug": "2026-04-26-2026-30"
-    },
-    {
-      "title": "세금 절약하는 재테크 방법",
-      "category": "finance",
-      "date": "2026-04-26",
-      "slot": "evening",
-      "slug": "2026-04-26-investment-tax"
-    },
-    {
       "title": "독서 습관 만드는 법",
       "category": "lifestyle",
       "date": "2026-04-27",
@@ -1672,7 +1623,21 @@
       "date": "2026-05-25",
       "slot": "evening",
       "slug": "2026-05-25-comparison-tips-loan-interest-rate"
+    },
+    {
+      "title": "AI 영상 편집 도구",
+      "category": "tech",
+      "date": "2026-05-27",
+      "slot": "lunch",
+      "slug": "2026-05-27-ai-1-2026"
+    },
+    {
+      "title": "면역력 높이는 생활습관",
+      "category": "health",
+      "date": "2026-05-27",
+      "slot": "lunch",
+      "slug": "2026-05-27-how-to"
     }
   ],
-  "last_run": "2026-05-27 [morning] (0/3 성공, 12초)"
+  "last_run": "2026-05-27 [lunch] (2/2 성공, 129초)"
 }
