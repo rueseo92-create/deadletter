@@ -1,20 +1,6 @@
 {
   "published": [
     {
-      "title": "독서 습관 만드는 법",
-      "category": "lifestyle",
-      "date": "2026-04-27",
-      "slot": "night",
-      "slug": "2026-04-27-post-3084"
-    },
-    {
-      "title": "자동차보험 저렴하게 가입하는 법",
-      "category": "insurance",
-      "date": "2026-04-27",
-      "slot": "night",
-      "slug": "2026-04-27-how-to-insurance"
-    },
-    {
       "title": "세금 절약하는 재테크 방법",
       "category": "finance",
       "date": "2026-04-28",
@@ -1672,7 +1658,21 @@
       "date": "2026-05-28",
       "slot": "morning",
       "slug": "2026-05-27-isa-5"
+    },
+    {
+      "title": "건강검진 항목 총정리",
+      "category": "health",
+      "date": "2026-05-28",
+      "slot": "lunch",
+      "slug": "2026-05-28-health"
+    },
+    {
+      "title": "클라우드 스토리지 비교",
+      "category": "tech",
+      "date": "2026-05-28",
+      "slot": "lunch",
+      "slug": "2026-05-28-top-5-1"
     }
   ],
-  "last_run": "2026-05-28 [morning] (3/3 성공, 269초)"
+  "last_run": "2026-05-28 [lunch] (2/2 성공, 143초)"
 }
