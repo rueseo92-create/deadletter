@@ -1672,7 +1672,21 @@
       "date": "2026-05-28",
       "slot": "lunch",
       "slug": "2026-05-28-top-5-1"
+    },
+    {
+      "title": "보험 리모델링 방법",
+      "category": "insurance",
+      "date": "2026-05-28",
+      "slot": "night",
+      "slug": "2026-05-28-free-latest-insurance"
+    },
+    {
+      "title": "생활비 절약하는 10가지 방법",
+      "category": "lifestyle",
+      "date": "2026-05-28",
+      "slot": "night",
+      "slug": "2026-05-28-10-30"
     }
   ],
-  "last_run": "2026-05-28 [lunch] (2/2 성공, 143초)"
+  "last_run": "2026-05-28 [night] (2/2 성공, 146초)"
 }
