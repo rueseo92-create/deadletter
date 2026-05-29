@@ -1672,7 +1672,14 @@
       "date": "2026-05-29",
       "slot": "lunch",
       "slug": "2026-05-29-top-5"
+    },
+    {
+      "title": "미니멀 라이프 시작하기",
+      "category": "lifestyle",
+      "date": "2026-05-29",
+      "slot": "night",
+      "slug": "2026-05-29-getting-started"
     }
   ],
-  "last_run": "2026-05-29 [lunch] (2/2 성공, 205초)"
+  "last_run": "2026-05-29 [night] (1/2 성공, 238초)"
 }
