@@ -1,55 +1,6 @@
 {
   "published": [
     {
-      "title": "세금 절약하는 재테크 방법",
-      "category": "finance",
-      "date": "2026-04-28",
-      "slot": "morning",
-      "slug": "2026-04-27-how-to-tips-investment-saving"
-    },
-    {
-      "title": "청년 우대 적금 추천",
-      "category": "finance",
-      "date": "2026-04-28",
-      "slot": "morning",
-      "slug": "2026-04-27-top-5-2026"
-    },
-    {
-      "title": "치아보험 추천 TOP 5",
-      "category": "insurance",
-      "date": "2026-04-28",
-      "slot": "morning",
-      "slug": "2026-04-27-top-5-2026"
-    },
-    {
-      "title": "ChatGPT 활용법 2026",
-      "category": "tech",
-      "date": "2026-04-28",
-      "slot": "lunch",
-      "slug": "2026-04-28-chatgpt-2026-vs-10"
-    },
-    {
-      "title": "건강보험료 절약하는 법",
-      "category": "health",
-      "date": "2026-04-28",
-      "slot": "lunch",
-      "slug": "2026-04-28-free-tips-insurance-health"
-    },
-    {
-      "title": "실손보험 청구 방법 총정리",
-      "category": "insurance",
-      "date": "2026-04-28",
-      "slot": "night",
-      "slug": "2026-04-28-how-to-insurance"
-    },
-    {
-      "title": "시간 관리 방법 직장인",
-      "category": "lifestyle",
-      "date": "2026-04-28",
-      "slot": "night",
-      "slug": "2026-04-28-5-300"
-    },
-    {
       "title": "신용점수 올리는 5가지 방법",
       "category": "finance",
       "date": "2026-04-29",
@@ -1707,7 +1658,21 @@
       "date": "2026-05-29",
       "slot": "morning",
       "slug": "2026-05-28-2026-100"
+    },
+    {
+      "title": "영양제 추천 조합 가이드",
+      "category": "health",
+      "date": "2026-05-29",
+      "slot": "lunch",
+      "slug": "2026-05-29-2026-5"
+    },
+    {
+      "title": "스마트홈 기기 추천",
+      "category": "tech",
+      "date": "2026-05-29",
+      "slot": "lunch",
+      "slug": "2026-05-29-top-5"
     }
   ],
-  "last_run": "2026-05-29 [morning] (3/3 성공, 224초)"
+  "last_run": "2026-05-29 [lunch] (2/2 성공, 205초)"
 }
