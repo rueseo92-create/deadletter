@@ -1686,7 +1686,21 @@
       "date": "2026-05-30",
       "slot": "evening",
       "slug": "2026-05-30-complete"
+    },
+    {
+      "title": "자동차보험 저렴하게 가입하는 법",
+      "category": "insurance",
+      "date": "2026-05-30",
+      "slot": "night",
+      "slug": "2026-05-30-30-2026"
+    },
+    {
+      "title": "스트레스 관리법",
+      "category": "lifestyle",
+      "date": "2026-05-30",
+      "slot": "night",
+      "slug": "2026-05-30-post-5029"
     }
   ],
-  "last_run": "2026-05-30 [evening] (3/3 성공, 277초)"
+  "last_run": "2026-05-30 [night] (2/2 성공, 127초)"
 }
