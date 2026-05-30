@@ -1,55 +1,6 @@
 {
   "published": [
     {
-      "title": "신용점수 올리는 5가지 방법",
-      "category": "finance",
-      "date": "2026-04-29",
-      "slot": "morning",
-      "slug": "2026-04-28-700-5-6-200"
-    },
-    {
-      "title": "종신보험 vs 정기보험 비교",
-      "category": "insurance",
-      "date": "2026-04-29",
-      "slot": "morning",
-      "slug": "2026-04-28-insurance"
-    },
-    {
-      "title": "세금 절약하는 재테크 방법",
-      "category": "finance",
-      "date": "2026-04-29",
-      "slot": "morning",
-      "slug": "2026-04-28-2026-5"
-    },
-    {
-      "title": "다이어트 식단 추천",
-      "category": "health",
-      "date": "2026-04-29",
-      "slot": "lunch",
-      "slug": "2026-04-29-post-5853"
-    },
-    {
-      "title": "생산성 앱 TOP 10",
-      "category": "tech",
-      "date": "2026-04-29",
-      "slot": "lunch",
-      "slug": "2026-04-29-top-10"
-    },
-    {
-      "title": "재택근무 생산성 높이는 법",
-      "category": "lifestyle",
-      "date": "2026-04-29",
-      "slot": "night",
-      "slug": "2026-04-29-300-1"
-    },
-    {
-      "title": "실비보험 비교 추천",
-      "category": "insurance",
-      "date": "2026-04-29",
-      "slot": "night",
-      "slug": "2026-04-29-2026-3"
-    },
-    {
       "title": "자동차보험 저렴하게 가입하는 법",
       "category": "insurance",
       "date": "2026-04-30",
@@ -1700,7 +1651,21 @@
       "date": "2026-05-30",
       "slot": "morning",
       "slug": "2026-05-29-2026-7"
+    },
+    {
+      "title": "AI 코딩 도구 비교",
+      "category": "tech",
+      "date": "2026-05-30",
+      "slot": "lunch",
+      "slug": "2026-05-30-guide-comparison-tools-coding"
+    },
+    {
+      "title": "다이어트 식단 추천",
+      "category": "health",
+      "date": "2026-05-30",
+      "slot": "lunch",
+      "slug": "2026-05-30-how-to-best"
     }
   ],
-  "last_run": "2026-05-30 [morning] (3/3 성공, 329초)"
+  "last_run": "2026-05-30 [lunch] (2/2 성공, 230초)"
 }
