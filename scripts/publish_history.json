@@ -1700,7 +1700,28 @@
       "date": "2026-05-30",
       "slot": "night",
       "slug": "2026-05-30-post-5029"
+    },
+    {
+      "title": "보험 리모델링 방법",
+      "category": "insurance",
+      "date": "2026-05-31",
+      "slot": "morning",
+      "slug": "2026-05-30-how-to-insurance"
+    },
+    {
+      "title": "청년 우대 적금 추천",
+      "category": "finance",
+      "date": "2026-05-31",
+      "slot": "morning",
+      "slug": "2026-05-30-2026-1"
+    },
+    {
+      "title": "대출 금리 비교 꿀팁",
+      "category": "finance",
+      "date": "2026-05-31",
+      "slot": "morning",
+      "slug": "2026-05-30-2026-7-30"
     }
   ],
-  "last_run": "2026-05-30 [night] (2/2 성공, 127초)"
+  "last_run": "2026-05-31 [morning] (3/3 성공, 462초)"
 }
