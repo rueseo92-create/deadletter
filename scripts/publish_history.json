@@ -1623,7 +1623,21 @@
       "date": "2026-06-02",
       "slot": "evening",
       "slug": "2026-06-02-tips-stock"
+    },
+    {
+      "title": "생활비 절약하는 10가지 방법",
+      "category": "lifestyle",
+      "date": "2026-06-02",
+      "slot": "night",
+      "slug": "2026-06-02-10-50"
+    },
+    {
+      "title": "종신보험 vs 정기보험 비교",
+      "category": "insurance",
+      "date": "2026-06-02",
+      "slot": "night",
+      "slug": "2026-06-02-comparison-analysis-insurance-saving"
     }
   ],
-  "last_run": "2026-06-02 [evening] (3/3 성공, 225초)"
+  "last_run": "2026-06-02 [night] (2/2 성공, 186초)"
 }
