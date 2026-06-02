@@ -1,76 +1,6 @@
 {
   "published": [
     {
-      "title": "치아보험 추천 TOP 5",
-      "category": "insurance",
-      "date": "2026-05-02",
-      "slot": "morning",
-      "slug": "2026-05-01-top-5-1-2026"
-    },
-    {
-      "title": "대출 금리 비교 꿀팁",
-      "category": "finance",
-      "date": "2026-05-02",
-      "slot": "morning",
-      "slug": "2026-05-01-2026-7"
-    },
-    {
-      "title": "주식 배당금 투자 전략",
-      "category": "finance",
-      "date": "2026-05-02",
-      "slot": "morning",
-      "slug": "2026-05-01-strategy"
-    },
-    {
-      "title": "생산성 앱 TOP 10",
-      "category": "tech",
-      "date": "2026-05-02",
-      "slot": "lunch",
-      "slug": "2026-05-02-2026-top-10-1"
-    },
-    {
-      "title": "건강검진 항목 총정리",
-      "category": "health",
-      "date": "2026-05-02",
-      "slot": "lunch",
-      "slug": "2026-05-02-health"
-    },
-    {
-      "title": "청년 우대 적금 추천",
-      "category": "finance",
-      "date": "2026-05-02",
-      "slot": "evening",
-      "slug": "2026-05-02-2026-1"
-    },
-    {
-      "title": "재택근무 생산성 높이는 법",
-      "category": "lifestyle",
-      "date": "2026-05-02",
-      "slot": "evening",
-      "slug": "2026-05-02-post-9078"
-    },
-    {
-      "title": "아파트 청약 준비 가이드",
-      "category": "realestate",
-      "date": "2026-05-02",
-      "slot": "evening",
-      "slug": "2026-05-02-2026-3"
-    },
-    {
-      "title": "암보험 가입 시 주의사항",
-      "category": "insurance",
-      "date": "2026-05-02",
-      "slot": "night",
-      "slug": "2026-05-02-comparison-insurance"
-    },
-    {
-      "title": "독서 습관 만드는 법",
-      "category": "lifestyle",
-      "date": "2026-05-02",
-      "slot": "night",
-      "slug": "2026-05-02-guide"
-    },
-    {
       "title": "종신보험 vs 정기보험 비교",
       "category": "insurance",
       "date": "2026-05-03",
@@ -1672,7 +1602,28 @@
       "date": "2026-06-02",
       "slot": "morning",
       "slug": "2026-06-01-800-5-1-1000"
+    },
+    {
+      "title": "신혼부부 주택 지원제도",
+      "category": "realestate",
+      "date": "2026-06-02",
+      "slot": "evening",
+      "slug": "2026-06-02-guide-latest-complete-saving"
+    },
+    {
+      "title": "부업 아이디어 현실적인 추천",
+      "category": "lifestyle",
+      "date": "2026-06-02",
+      "slot": "evening",
+      "slug": "2026-06-02-2026-50-15"
+    },
+    {
+      "title": "주식 배당금 투자 전략",
+      "category": "finance",
+      "date": "2026-06-02",
+      "slot": "evening",
+      "slug": "2026-06-02-tips-stock"
     }
   ],
-  "last_run": "2026-06-02 [morning] (3/3 성공, 338초)"
+  "last_run": "2026-06-02 [evening] (3/3 성공, 225초)"
 }
