@@ -1581,7 +1581,21 @@
       "date": "2026-06-09",
       "slot": "lunch",
       "slug": "2026-06-09-how-to-insurance-health-saving"
+    },
+    {
+      "title": "자동차보험 저렴하게 가입하는 법",
+      "category": "insurance",
+      "date": "2026-06-09",
+      "slot": "night",
+      "slug": "2026-06-09-insurance"
+    },
+    {
+      "title": "독서 습관 만드는 법",
+      "category": "lifestyle",
+      "date": "2026-06-09",
+      "slot": "night",
+      "slug": "2026-06-09-post-3907"
     }
   ],
-  "last_run": "2026-06-09 [lunch] (2/2 성공, 222초)"
+  "last_run": "2026-06-09 [night] (2/2 성공, 140초)"
 }
