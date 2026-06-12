@@ -3,55 +3,6 @@
     {
       "title": "ETF 초보자 입문 가이드",
       "category": "finance",
-      "date": "2026-05-12",
-      "slot": "morning",
-      "slug": "2026-05-11-etf-2026"
-    },
-    {
-      "title": "대출 금리 비교 꿀팁",
-      "category": "finance",
-      "date": "2026-05-12",
-      "slot": "morning",
-      "slug": "2026-05-11-2026-5-2"
-    },
-    {
-      "title": "종신보험 vs 정기보험 비교",
-      "category": "insurance",
-      "date": "2026-05-12",
-      "slot": "morning",
-      "slug": "2026-05-11-vs-50"
-    },
-    {
-      "title": "노트북 추천 가성비",
-      "category": "tech",
-      "date": "2026-05-12",
-      "slot": "lunch",
-      "slug": "2026-05-12-1-2026"
-    },
-    {
-      "title": "허리 통증 예방 운동",
-      "category": "health",
-      "date": "2026-05-12",
-      "slot": "lunch",
-      "slug": "2026-05-12-how-to"
-    },
-    {
-      "title": "운전자보험 필요할까?",
-      "category": "insurance",
-      "date": "2026-05-12",
-      "slot": "night",
-      "slug": "2026-05-12-insurance"
-    },
-    {
-      "title": "미니멀 라이프 시작하기",
-      "category": "lifestyle",
-      "date": "2026-05-12",
-      "slot": "night",
-      "slug": "2026-05-12-getting-started-saving"
-    },
-    {
-      "title": "ETF 초보자 입문 가이드",
-      "category": "finance",
       "date": "2026-05-13",
       "slot": "morning",
       "slug": "2026-05-12-etf-30"
@@ -1602,7 +1553,28 @@
       "date": "2026-06-12",
       "slot": "morning",
       "slug": "2026-06-11-7-100"
+    },
+    {
+      "title": "자기계발 루틴 만들기",
+      "category": "lifestyle",
+      "date": "2026-06-12",
+      "slot": "evening",
+      "slug": "2026-06-12-post-2346"
+    },
+    {
+      "title": "부동산 세금 절약 방법",
+      "category": "realestate",
+      "date": "2026-06-12",
+      "slot": "evening",
+      "slug": "2026-06-12-how-to-realestate-saving-tax"
+    },
+    {
+      "title": "세금 절약하는 재테크 방법",
+      "category": "finance",
+      "date": "2026-06-12",
+      "slot": "evening",
+      "slug": "2026-06-12-10-1-200"
     }
   ],
-  "last_run": "2026-06-12 [morning] (3/3 성공, 266초)"
+  "last_run": "2026-06-12 [evening] (3/3 성공, 296초)"
 }
