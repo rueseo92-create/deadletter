@@ -1588,7 +1588,28 @@
       "date": "2026-06-12",
       "slot": "night",
       "slug": "2026-06-12-how-to-practical"
+    },
+    {
+      "title": "세금 절약하는 재테크 방법",
+      "category": "finance",
+      "date": "2026-06-13",
+      "slot": "morning",
+      "slug": "2026-06-12-how-to-investment-saving-tax"
+    },
+    {
+      "title": "ISA 계좌 활용법",
+      "category": "finance",
+      "date": "2026-06-13",
+      "slot": "morning",
+      "slug": "2026-06-12-guide-complete"
+    },
+    {
+      "title": "실손보험 청구 방법 총정리",
+      "category": "insurance",
+      "date": "2026-06-13",
+      "slot": "morning",
+      "slug": "2026-06-12-latest-insurance"
     }
   ],
-  "last_run": "2026-06-12 [night] (2/2 성공, 132초)"
+  "last_run": "2026-06-13 [morning] (3/3 성공, 259초)"
 }
