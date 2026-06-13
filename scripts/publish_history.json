@@ -1588,7 +1588,28 @@
       "date": "2026-06-13",
       "slot": "night",
       "slug": "2026-06-13-free-insurance"
+    },
+    {
+      "title": "주식 배당금 투자 전략",
+      "category": "finance",
+      "date": "2026-06-14",
+      "slot": "morning",
+      "slug": "2026-06-13-2026-30"
+    },
+    {
+      "title": "세금 절약하는 재테크 방법",
+      "category": "finance",
+      "date": "2026-06-14",
+      "slot": "morning",
+      "slug": "2026-06-13-2026-7-300"
+    },
+    {
+      "title": "암보험 가입 시 주의사항",
+      "category": "insurance",
+      "date": "2026-06-14",
+      "slot": "morning",
+      "slug": "2026-06-13-comparison-insurance"
     }
   ],
-  "last_run": "2026-06-13 [night] (2/2 성공, 148초)"
+  "last_run": "2026-06-14 [morning] (3/3 성공, 218초)"
 }
