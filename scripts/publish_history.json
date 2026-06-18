@@ -1,55 +1,6 @@
 {
   "published": [
     {
-      "title": "세금 절약하는 재테크 방법",
-      "category": "finance",
-      "date": "2026-05-18",
-      "slot": "morning",
-      "slug": "2026-05-17-7-2026"
-    },
-    {
-      "title": "주식 배당금 투자 전략",
-      "category": "finance",
-      "date": "2026-05-18",
-      "slot": "morning",
-      "slug": "2026-05-17-how-to"
-    },
-    {
-      "title": "종신보험 vs 정기보험 비교",
-      "category": "insurance",
-      "date": "2026-05-18",
-      "slot": "morning",
-      "slug": "2026-05-17-comparison-insurance"
-    },
-    {
-      "title": "홈트레이닝 루틴 초보자용",
-      "category": "health",
-      "date": "2026-05-18",
-      "slot": "lunch",
-      "slug": "2026-05-18-post-7113"
-    },
-    {
-      "title": "노트북 추천 가성비",
-      "category": "tech",
-      "date": "2026-05-18",
-      "slot": "lunch",
-      "slug": "2026-05-18-guide-best"
-    },
-    {
-      "title": "치아보험 추천 TOP 5",
-      "category": "insurance",
-      "date": "2026-05-18",
-      "slot": "night",
-      "slug": "2026-05-18-top-5-1-2026"
-    },
-    {
-      "title": "시간 관리 방법 직장인",
-      "category": "lifestyle",
-      "date": "2026-05-18",
-      "slot": "night",
-      "slug": "2026-05-18-how-to-practical-tips"
-    },
-    {
       "title": "종신보험 vs 정기보험 비교",
       "category": "insurance",
       "date": "2026-05-19",
@@ -1471,5 +1422,5 @@
       "slug": "2026-06-15-top-5-1-2026"
     }
   ],
-  "last_run": "2026-06-18 [morning] (0/3 성공, 12초)"
+  "last_run": "2026-06-18 [evening] (0/3 성공, 12초)"
 }
