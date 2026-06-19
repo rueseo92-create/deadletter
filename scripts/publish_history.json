@@ -1,55 +1,6 @@
 {
   "published": [
     {
-      "title": "종신보험 vs 정기보험 비교",
-      "category": "insurance",
-      "date": "2026-05-19",
-      "slot": "morning",
-      "slug": "2026-05-18-vs-40"
-    },
-    {
-      "title": "세금 절약하는 재테크 방법",
-      "category": "finance",
-      "date": "2026-05-19",
-      "slot": "morning",
-      "slug": "2026-05-18-2026-9-300"
-    },
-    {
-      "title": "2026년 적금 금리 비교 TOP 10",
-      "category": "finance",
-      "date": "2026-05-19",
-      "slot": "morning",
-      "slug": "2026-05-18-2026-top-10-1"
-    },
-    {
-      "title": "건강검진 항목 총정리",
-      "category": "health",
-      "date": "2026-05-19",
-      "slot": "lunch",
-      "slug": "2026-05-19-7-2026"
-    },
-    {
-      "title": "ChatGPT 활용법 2026",
-      "category": "tech",
-      "date": "2026-05-19",
-      "slot": "lunch",
-      "slug": "2026-05-19-chatgpt-2026"
-    },
-    {
-      "title": "보험 리모델링 방법",
-      "category": "insurance",
-      "date": "2026-05-19",
-      "slot": "night",
-      "slug": "2026-05-19-how-to-insurance-saving"
-    },
-    {
-      "title": "독서 습관 만드는 법",
-      "category": "lifestyle",
-      "date": "2026-05-19",
-      "slot": "night",
-      "slug": "2026-05-19-saving"
-    },
-    {
       "title": "대출 금리 비교 꿀팁",
       "category": "finance",
       "date": "2026-05-20",
@@ -1422,5 +1373,5 @@
       "slug": "2026-06-15-top-5-1-2026"
     }
   ],
-  "last_run": "2026-06-19 [morning] (0/3 성공, 12초)"
+  "last_run": "2026-06-19 [evening] (0/3 성공, 13초)"
 }
