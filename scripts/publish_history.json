@@ -1,34 +1,6 @@
 {
   "published": [
     {
-      "title": "AI 영상 편집 도구",
-      "category": "tech",
-      "date": "2026-05-27",
-      "slot": "lunch",
-      "slug": "2026-05-27-ai-1-2026"
-    },
-    {
-      "title": "면역력 높이는 생활습관",
-      "category": "health",
-      "date": "2026-05-27",
-      "slot": "lunch",
-      "slug": "2026-05-27-how-to"
-    },
-    {
-      "title": "스트레스 관리법",
-      "category": "lifestyle",
-      "date": "2026-05-27",
-      "slot": "night",
-      "slug": "2026-05-27-post-7944"
-    },
-    {
-      "title": "치아보험 추천 TOP 5",
-      "category": "insurance",
-      "date": "2026-05-27",
-      "slot": "night",
-      "slug": "2026-05-27-top-5-1-2026"
-    },
-    {
       "title": "어린이보험 추천 비교",
       "category": "insurance",
       "date": "2026-05-28",
@@ -1051,5 +1023,5 @@
       "slug": "2026-06-15-top-5-1-2026"
     }
   ],
-  "last_run": "2026-06-27 [morning] (0/3 성공, 10초)"
+  "last_run": "2026-06-27 [lunch] (0/2 성공, 8초)"
 }
