@@ -1,62 +1,6 @@
 {
   "published": [
     {
-      "title": "대출 금리 비교 꿀팁",
-      "category": "finance",
-      "date": "2026-06-11",
-      "slot": "morning",
-      "slug": "2026-06-10-2026-30"
-    },
-    {
-      "title": "세금 절약하는 재테크 방법",
-      "category": "finance",
-      "date": "2026-06-11",
-      "slot": "morning",
-      "slug": "2026-06-10-tips-investment-saving-tax"
-    },
-    {
-      "title": "보험료 아끼는 5가지 꿀팁",
-      "category": "insurance",
-      "date": "2026-06-11",
-      "slot": "morning",
-      "slug": "2026-06-10-comparison-tips-insurance-saving"
-    },
-    {
-      "title": "오피스텔 투자 주의사항",
-      "category": "realestate",
-      "date": "2026-06-11",
-      "slot": "evening",
-      "slug": "2026-06-11-5-2026"
-    },
-    {
-      "title": "재택근무 생산성 높이는 법",
-      "category": "lifestyle",
-      "date": "2026-06-11",
-      "slot": "evening",
-      "slug": "2026-06-11-practical"
-    },
-    {
-      "title": "주식 배당금 투자 전략",
-      "category": "finance",
-      "date": "2026-06-11",
-      "slot": "evening",
-      "slug": "2026-06-11-strategy-stock"
-    },
-    {
-      "title": "스트레스 관리법",
-      "category": "lifestyle",
-      "date": "2026-06-11",
-      "slot": "night",
-      "slug": "2026-06-11-how-to"
-    },
-    {
-      "title": "자동차보험 저렴하게 가입하는 법",
-      "category": "insurance",
-      "date": "2026-06-11",
-      "slot": "night",
-      "slug": "2026-06-11-50-100"
-    },
-    {
       "title": "치아보험 추천 TOP 5",
       "category": "insurance",
       "date": "2026-06-12",
@@ -281,5 +225,5 @@
       "slug": "2026-06-15-top-5-1-2026"
     }
   ],
-  "last_run": "2026-07-12 [morning] (0/3 성공, 17초)"
+  "last_run": "2026-07-12 [lunch] (0/2 성공, 9초)"
 }
