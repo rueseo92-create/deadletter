@@ -124,6 +124,8 @@ def _context(plan: dict | None) -> str:
         return "\n".join(f"- [{s['name']}] {s['title']} :: {(s.get('body') or s['summary'])[:2000]}"
                           for s in plan["sources"])
     lines = [f"세부 키워드: {plan.get('keyword')}", f"검색 의도: {plan.get('intent')}"]
+    if (plan.get("research") or {}).get("notes"):
+        lines.append("[웹 조사 결과 - 출처 URL 포함, 근거 자료로 인정]\n" + plan["research"]["notes"][:4000])
     if plan.get("serp_titles"):
         lines.append("상위 노출 글 제목: " + " / ".join(plan["serp_titles"][:6]))
     if plan.get("questions"):

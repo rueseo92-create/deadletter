@@ -53,6 +53,7 @@ load_dotenv()
 sys.path.insert(0, str(Path(__file__).parent))
 import ai_news  # noqa: E402
 import angle  # noqa: E402
+import research  # noqa: E402
 import keyword_research  # noqa: E402
 import title_rules  # noqa: E402
 
@@ -804,6 +805,16 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
     if plan:
         keyword_block = ai_news.prompt_block(plan) if plan.get("news") else keyword_research.prompt_block(plan)
         # 쓰기 전에 각도 설계 + 가능한 건 실제 실행 (실패해도 글은 계속 쓴다)
+        # 웹 조사 (뉴스는 기사 자체가 근거라 생략)
+        if not plan.get("news"):
+            try:
+                r = research.run(topic.title, keyword_block)
+                plan["research"] = r
+                if r["notes"]:
+                    keyword_block += "\n\n" + research.prompt_block(r)
+                print(f"  → 웹 조사: 사실 {r['notes'].count(chr(10) + '- ') + r['notes'].startswith('- ')}건, 출처 {len(r['sources'])}곳")
+            except Exception as e:
+                print(f"  [조사] 웹 조사 실패, 계속 진행: {e}")
         try:
             a = angle.plan(topic.title, CATEGORIES.get(topic.category, {}).get("name", topic.category), keyword_block)
             results = [] if plan.get("news") else angle.run_experiments(a.experiments)
@@ -876,6 +887,10 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
     if plan and plan.get("news"):
         sources = [SourceLink(name=f"{x['name']} - {x['title'][:60]}", url=x["url"], type="news")
                    for x in plan["sources"]]
+    if plan and (plan.get("research") or {}).get("sources"):
+        found = [SourceLink(name=x["name"], url=x["url"], type="official") for x in plan["research"]["sources"]]
+        known = {x.url for x in found}
+        sources = found + [x for x in sources if x.url not in known]
     # 크롤링 원본 출처 추가
     if topic.source_url:
         sources.insert(0, SourceLink(
