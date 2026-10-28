@@ -67,6 +67,14 @@ jobs:
         run: |
           cd scripts
           SLOT="${{ github.event.inputs.slot || 'auto' }}"
+          # 정기 실행은 GitHub 지연으로 몇 시간 늦게 시작될 수 있어, 실행 시각이 아니라 어떤 예약인지로 슬롯을 정한다
+          case "${{ github.event.schedule }}" in
+            "0 22 * * *") SLOT=morning ;;
+            "30 3 * * *") SLOT=lunch ;;
+            "0 9 * * *") SLOT=evening ;;
+            "30 12 * * *") SLOT=night ;;
+          esac
+          echo "슬롯: $SLOT (event=${{ github.event_name }}, schedule='${{ github.event.schedule }}')"
           COUNT="${{ github.event.inputs.count || '' }}"
           CMD="python daily_publish.py --slot $SLOT"
           if [ -n "$COUNT" ]; then CMD="$CMD --count $COUNT"; fi
