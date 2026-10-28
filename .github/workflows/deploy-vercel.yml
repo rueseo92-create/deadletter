@@ -61,18 +61,11 @@ jobs:
         if: steps.token.outputs.ok == 'true'
         run: vercel link --yes --project "$VERCEL_PROJECT"
 
-      - name: Pull settings
-        if: steps.token.outputs.ok == 'true'
-        run: vercel pull --yes --environment=production
-
-      - name: Build
-        if: steps.token.outputs.ok == 'true'
-        run: vercel build --prod
-
-      - name: Deploy
+      - name: Deploy (Vercel 원격 빌드, 소스를 tgz 하나로 업로드)
         if: steps.token.outputs.ok == 'true'
         run: |
-          url=$(vercel deploy --prebuilt --prod)
+          # 무료 플랜은 하루 업로드 파일 수 제한(5000)이 있어 --prebuilt 대신 원격 빌드 + 압축 업로드
+          url=$(vercel deploy --prod --yes --archive=tgz)
           echo "배포 주소: $url"
 
       - name: Attach domain

@@ -1,0 +1,8 @@
+# Vercel 업로드에서 제외 (사이트 빌드에 필요 없음)
+naver_blog/
+shorts_loop/
+scripts/
+sero_blog_engine.py
+admin-server.mjs
+setup.sh
+.github/
