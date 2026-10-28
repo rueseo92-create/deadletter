@@ -19,12 +19,18 @@ SYSTEM = """너는 한국어 AI 실무 매체의 리서처다. 웹 검색으로 
 - 확인된 사실 한 문장 [출처: 페이지 제목 | URL]
 - ...
 확인하지 못한 것: (찾았지만 근거가 없던 항목들)
-사실은 12개 이내로, 출처 URL은 실제로 검색 결과에서 본 것만 쓴다."""
+사실은 12개 이내로, 출처 URL은 실제로 검색·열람한 것만 쓴다.
+
+조사 방법(검색 횟수가 제한돼 있으니 효율적으로):
+1) 먼저 공식 페이지를 겨냥해 검색한다. 예: "zapier pricing site:zapier.com", "perplexity pro limits site:perplexity.ai", 영어 검색이 공식 문서를 더 잘 찾는다.
+2) 공식 페이지 주소를 찾으면 web_fetch 로 그 페이지 본문을 직접 열어 숫자·조건을 확인한다. 검색 요약만 보고 단정하지 않는다.
+3) 같은 내용을 여러 번 검색하지 않는다. 핵심 질문 3-4개에 집중한다."""
 
 
-def run(topic: str, context: str, max_searches: int = 6) -> dict:
+def run(topic: str, context: str, max_searches: int = 8, max_fetches: int = 5) -> dict:
     messages = [{"role": "user", "content": f"주제: {topic}\n\n참고 맥락:\n{context[:3000]}\n\n조사해서 정리해라."}]
-    tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": max_searches}]
+    tools = [{"type": "web_search_20260209", "name": "web_search", "max_uses": max_searches},
+             {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": max_fetches}]
     client = claude_client.client()
     resp = None
     for _ in range(4):  # pause_turn 이면 같은 대화를 다시 보내 이어서 진행
@@ -39,6 +45,14 @@ def run(topic: str, context: str, max_searches: int = 6) -> dict:
         btype = getattr(block, "type", "")
         if btype == "server_tool_use":
             searches += 1
+        if btype == "web_fetch_tool_result":
+            c = block.content
+            url = getattr(c, "url", None)
+            if url:
+                seen.add(url)
+                titles.setdefault(url, getattr(getattr(c, "content", None), "title", None) or url)
+            else:
+                errors.append(getattr(c, "error_code", "fetch_error"))
         if btype == "web_search_tool_result":
             content = block.content
             if isinstance(content, list):
@@ -53,7 +67,8 @@ def run(topic: str, context: str, max_searches: int = 6) -> dict:
             if getattr(c, "url", None):
                 seen.add(c.url)
                 titles.setdefault(c.url, getattr(c, "title", "") or c.url)
-    print(f"  [조사] 검색 {searches}회, 결과 URL {len(seen)}개, 오류 {errors or '없음'}, stop={getattr(resp, 'stop_reason', None)}")
+    fetched = sum(1 for b in (resp.content if resp else []) if getattr(b, "type", "") == "web_fetch_tool_result")
+    print(f"  [조사] 도구 호출 {searches}회(열람 {fetched}), 결과 URL {len(seen)}개, 오류 {errors or '없음'}, stop={getattr(resp, 'stop_reason', None)}")
     if notes:
         print("  [조사] " + notes[:300].replace("\n", " / "))
     # 본문에 적힌 URL 중 실제 검색 결과로 본 것만 출처로 인정
