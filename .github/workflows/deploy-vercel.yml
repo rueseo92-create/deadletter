@@ -1,0 +1,83 @@
+name: Deploy to Vercel
+
+# Vercel 프로젝트를 CLI 로 만들고(없으면) 프로덕션 배포 + seroai.xyz 도메인 연결.
+# 자동 발행 커밋은 GITHUB_TOKEN 으로 푸시돼 push 이벤트가 안 생기므로 workflow_run 으로도 배포한다.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Daily Blog Posts + Social"]
+    types: [completed]
+
+concurrency:
+  group: vercel-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_PROJECT: deadletter
+      SITE_DOMAIN: seroai.xyz
+    steps:
+      - name: Check token
+        id: token
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN 시크릿이 없어 배포를 건너뜁니다."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout (latest main)
+        if: steps.token.outputs.ok == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node
+        if: steps.token.outputs.ok == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Vercel CLI
+        if: steps.token.outputs.ok == 'true'
+        run: npm install --global vercel@latest
+
+      - name: Link project (create if missing)
+        if: steps.token.outputs.ok == 'true'
+        run: vercel link --yes --project "$VERCEL_PROJECT" --token "$VERCEL_TOKEN"
+
+      - name: Pull settings
+        if: steps.token.outputs.ok == 'true'
+        run: vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+
+      - name: Build
+        if: steps.token.outputs.ok == 'true'
+        run: vercel build --prod --token "$VERCEL_TOKEN"
+
+      - name: Deploy
+        if: steps.token.outputs.ok == 'true'
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token "$VERCEL_TOKEN")
+          echo "배포 주소: $url"
+
+      - name: Attach domain
+        if: steps.token.outputs.ok == 'true'
+        continue-on-error: true
+        run: |
+          vercel domains add "$SITE_DOMAIN" "$VERCEL_PROJECT" --token "$VERCEL_TOKEN" || true
+          vercel domains add "www.$SITE_DOMAIN" "$VERCEL_PROJECT" --token "$VERCEL_TOKEN" || true
+          vercel domains inspect "$SITE_DOMAIN" --token "$VERCEL_TOKEN" || true
+
+      - name: Smoke test
+        if: steps.token.outputs.ok == 'true'
+        continue-on-error: true
+        run: |
+          sleep 20
+          curl -sS -o /dev/null -w "https://$SITE_DOMAIN → %{http_code}\n" "https://$SITE_DOMAIN/"
