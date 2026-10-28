@@ -1223,6 +1223,99 @@
      "score": 0.9
     }
    ]
+  },
+  "업무 자동화 AI": {
+   "fetched": "2026-10-28T17:07:27",
+   "candidates": [
+    {
+     "keyword": "업무 자동화 AI 툴",
+     "ac_score": 1.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "업무 자동화 AI 추천",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "업무 자동화 AI 사례",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "업무 자동화 AI agent",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "업무 자동화 AI 교육",
+     "ac_score": 0.7,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    },
+    {
+     "keyword": "구글 업무 자동화 AI",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "ai로 업무 자동화",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    },
+    {
+     "keyword": "간호 행정 업무 자동화 AI",
+     "ac_score": 0.3,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.3
+    }
+   ]
   }
  },
  "seed_used": {
@@ -1235,6 +1328,7 @@
   "AI 부업": "2026-10-28T16:25:34",
   "AI 블로그 수익": "2026-10-28T16:34:45",
   "제미나이 사용법": "2026-10-28T16:49:13",
-  "퍼플렉시티": "2026-10-28T16:58:44"
+  "퍼플렉시티": "2026-10-28T16:58:44",
+  "업무 자동화 AI": "2026-10-28T17:07:28"
  }
 }
