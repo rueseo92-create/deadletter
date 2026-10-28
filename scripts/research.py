@@ -34,16 +34,36 @@ def run(topic: str, context: str, max_searches: int = 6) -> dict:
             break
         messages = messages + [{"role": "assistant", "content": resp.content}]
     notes = claude_client.text_of(resp).strip() if resp else ""
-    seen = set()
+    seen, titles, searches, errors = set(), {}, 0, []
     for block in (resp.content if resp else []):
-        if getattr(block, "type", "") == "web_search_tool_result" and isinstance(block.content, list):
-            for r in block.content:
-                if getattr(r, "url", None):
-                    seen.add(r.url)
+        btype = getattr(block, "type", "")
+        if btype == "server_tool_use":
+            searches += 1
+        if btype == "web_search_tool_result":
+            content = block.content
+            if isinstance(content, list):
+                for r in content:
+                    if getattr(r, "url", None):
+                        seen.add(r.url)
+                        titles[r.url] = getattr(r, "title", "") or r.url
+            else:  # 오류 객체 (예: 계정에서 웹 검색이 꺼져 있음)
+                errors.append(getattr(content, "error_code", str(content))[:80])
+        # 인용(citations)에 달린 출처도 모은다
+        for c in getattr(block, "citations", None) or []:
+            if getattr(c, "url", None):
+                seen.add(c.url)
+                titles.setdefault(c.url, getattr(c, "title", "") or c.url)
+    print(f"  [조사] 검색 {searches}회, 결과 URL {len(seen)}개, 오류 {errors or '없음'}, stop={getattr(resp, 'stop_reason', None)}")
+    if notes:
+        print("  [조사] " + notes[:300].replace("\n", " / "))
+    # 본문에 적힌 URL 중 실제 검색 결과로 본 것만 출처로 인정
     sources = []
-    for title, url in re.findall(r"\[출처:\s*(.+?)\s*\|\s*(https?://[^\]\s]+)\s*\]", notes):
-        if url not in [s["url"] for s in sources]:
-            sources.append({"name": title[:80], "url": url, "verified": url in seen or not seen})
+    for url in re.findall(r"https?://[^\s\]\)|>\"']+", notes):
+        url = url.rstrip(".,")
+        if url in seen and url not in [s["url"] for s in sources]:
+            sources.append({"name": titles.get(url, url)[:80], "url": url})
+    if not seen:  # 검색이 아예 안 됐으면 기억에서 나온 '사실'은 쓰지 않는다
+        return {"notes": "", "sources": [], "error": errors or ["no_search"]}
     return {"notes": notes[:5000], "sources": sources[:10]}
 
 
