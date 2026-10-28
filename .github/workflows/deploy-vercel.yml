@@ -26,12 +26,18 @@ jobs:
       - name: Check token
         id: token
         run: |
-          if [ -z "$VERCEL_TOKEN" ]; then
+          # 붙여 넣을 때 섞인 공백·줄바꿈·따옴표 제거
+          T=$(printf '%s' "$VERCEL_TOKEN" | tr -d '[:space:]"'"'"'')
+          if [ -z "$T" ]; then
             echo "VERCEL_TOKEN 시크릿이 없어 배포를 건너뜁니다."
             echo "ok=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "ok=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          echo "::add-mask::$T"
+          # 토큰 값은 출력하지 않고 형식만 진단
+          echo "토큰 길이: ${#T}, '-' 포함: $(case "$T" in *-*) echo 예;; *) echo 아니오;; esac), sk-로 시작: $(case "$T" in sk-*) echo 예;; *) echo 아니오;; esac)"
+          echo "VERCEL_TOKEN=$T" >> "$GITHUB_ENV"
+          echo "ok=true" >> "$GITHUB_OUTPUT"
 
       - name: Checkout (latest main)
         if: steps.token.outputs.ok == 'true'
