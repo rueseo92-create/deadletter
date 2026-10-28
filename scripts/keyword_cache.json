@@ -767,6 +767,125 @@
      "score": 0.4
     }
    ]
+  },
+  "AI 부업": {
+   "fetched": "2026-10-28T16:25:33",
+   "candidates": [
+    {
+     "keyword": "AI 부업 후기",
+     "ac_score": 3.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.4
+    },
+    {
+     "keyword": "AI 부업 추천",
+     "ac_score": 3.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.4
+    },
+    {
+     "keyword": "AI 부업 종류",
+     "ac_score": 2.6,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.6
+    },
+    {
+     "keyword": "AI 부업 수익",
+     "ac_score": 1.4,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.4
+    },
+    {
+     "keyword": "AI 부업 강의",
+     "ac_score": 1.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.4
+    },
+    {
+     "keyword": "AI 부업 현실",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "outlier AI 부업 후기",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "AI 부업 더쿠",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "AI 질문 답변 부업 추천",
+     "ac_score": 0.54,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.54
+    },
+    {
+     "keyword": "AI 부업 알바",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    }
+   ]
   }
  },
  "seed_used": {
@@ -775,6 +894,7 @@
   "영양제": "2026-10-28T14:23:29",
   "AI 도구": "2026-10-28T14:23:34",
   "챗GPT 사용법": "2026-10-28T15:42:48",
-  "클로드 사용법": "2026-10-28T15:51:15"
+  "클로드 사용법": "2026-10-28T15:51:15",
+  "AI 부업": "2026-10-28T16:25:34"
  }
 }
