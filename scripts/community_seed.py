@@ -41,7 +41,7 @@ import claude_client  # noqa: E402
 claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 CLAUDE_MODEL = claude_client.MODEL
 
-SITE_URL = os.environ.get("BLOG_SITE_URL", "https://dailyinsight.kr")
+SITE_URL = os.environ.get("BLOG_SITE_URL", "https://seroai.xyz")
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_DIR / "content" / "posts"
 OUTPUT_DIR = Path(__file__).parent / "community_seeds"

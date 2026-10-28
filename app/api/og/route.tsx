@@ -100,7 +100,7 @@ export async function GET(req: NextRequest) {
           </span>
           <div style={{ flex: 1 }} />
           <span style={{ fontSize: 14, color: "#A8A29E" }}>
-            dailyinsight.kr
+            seroai.xyz
           </span>
         </div>
 

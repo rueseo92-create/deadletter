@@ -45,7 +45,7 @@ claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 CLAUDE_MODEL = claude_client.MODEL
 
 # 사이트 정보
-SITE_URL = os.environ.get("BLOG_SITE_URL", "https://dailyinsight.kr")
+SITE_URL = os.environ.get("BLOG_SITE_URL", "https://seroai.xyz")
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_DIR / "content" / "posts"
 HISTORY_FILE = Path(__file__).parent / "social_history.json"

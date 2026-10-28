@@ -72,7 +72,7 @@ export default function AboutPage() {
                   { label: "콘텐츠 분야", value: "금융·재테크 · 보험 · 건강·의료 · IT·테크 · 부동산 · 생활" },
                   { label: "콘텐츠 특징", value: "고CPC 키워드 기반, SEO 최적화, 실용 정보 중심" },
                   { label: "발행 주기", value: "매일 발행" },
-                  { label: "웹사이트", value: "dailyinsight.kr" },
+                  { label: "웹사이트", value: "seroai.xyz" },
                   { label: "이메일", value: "contact@dailyinsight.kr" },
                 ].map((item) => (
                   <div key={item.label}>

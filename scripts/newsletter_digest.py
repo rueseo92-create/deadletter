@@ -44,7 +44,7 @@ import claude_client  # noqa: E402
 claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 CLAUDE_MODEL = claude_client.MODEL
 
-SITE_URL = os.environ.get("BLOG_SITE_URL", "https://dailyinsight.kr")
+SITE_URL = os.environ.get("BLOG_SITE_URL", "https://seroai.xyz")
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_DIR / "content" / "posts"
 SUBSCRIBERS_FILE = BLOG_DIR / "data" / "subscribers.json"
@@ -215,7 +215,7 @@ def build_html_email(digest: dict, posts: list[dict]) -> str:
 
     <!-- Footer -->
     <div style="background:#f8fafc;padding:24px;text-align:center;font-size:12px;color:#94a3b8">
-      <p>데일리인사이트 뉴스레터 · <a href="{SITE_URL}" style="color:#64748b">dailyinsight.kr</a></p>
+      <p>데일리인사이트 뉴스레터 · <a href="{SITE_URL}" style="color:#64748b">seroai.xyz</a></p>
       <p>더 이상 받고 싶지 않으시면 <a href="{SITE_URL}/unsubscribe" style="color:#64748b">구독 해지</a></p>
     </div>
   </div>
