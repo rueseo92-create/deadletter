@@ -48,3 +48,6 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# Claude 작업용 임시 worktree
+.claude/worktrees/
