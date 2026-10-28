@@ -43,6 +43,9 @@ if sys.stdout.encoding != "utf-8":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 import anthropic
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import claude_client  # noqa: E402
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -54,7 +57,7 @@ import title_rules  # noqa: E402
 # ──────────────────────────────────────────────
 # Config
 # ──────────────────────────────────────────────
-CLAUDE_MODEL = "claude-sonnet-4-20250514"
+CLAUDE_MODEL = claude_client.MODEL
 BLOG_REPO = Path(os.getenv("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_REPO / "content" / "posts"
 SITE_URL = os.getenv("BLOG_SITE_URL", "")
@@ -520,10 +523,11 @@ SEO 기준:
         try:
             response = claude.messages.create(
                 model=CLAUDE_MODEL,
+                output_config={"effort": "medium"},
                 max_tokens=2048,
                 messages=[{"role": "user", "content": prompt}],
             )
-            text = response.content[0].text.strip()
+            text = claude_client.text_of(response).strip()
             data = _safe_json_parse(text)
             if data and "topics" in data:
                 break
@@ -591,10 +595,11 @@ Output JSON only:
         try:
             resp = claude.messages.create(
                 model=CLAUDE_MODEL,
+                output_config={"effort": "medium"},
                 max_tokens=2048,
                 messages=[{"role": "user", "content": prompt}],
             )
-            text = re.sub(r"```json\s*|```", "", resp.content[0].text.strip())
+            text = re.sub(r"```json\s*|```", "", claude_client.text_of(resp).strip())
             data = _safe_json_parse(text)
             if data and "topics" in data:
                 break
@@ -852,10 +857,11 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
     for attempt in range(2):
         response = claude.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=8192,
+            output_config={"effort": "medium"},
+            max_tokens=16000,  # adaptive thinking 포함
             messages=[{"role": "user", "content": prompt_content}],
         )
-        text = response.content[0].text.strip()
+        text = claude_client.text_of(response).strip()
         stop_reason = response.stop_reason
 
         # 잘림 감지: end_turn이 아닌 경우 (max_tokens 등)

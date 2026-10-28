@@ -400,6 +400,9 @@ def run_qc(days: int = 7) -> list[dict]:
 # ──────────────────────────────────────────────
 # 메인 발행 로직
 # ──────────────────────────────────────────────
+LAST_RUN = {"attempted": 0}
+
+
 def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
     """슬롯 기반 자동 발행"""
     start = time.time()
@@ -474,6 +477,7 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
 
     results = []
     kstartup_idx = 0
+    LAST_RUN["attempted"] += len(daily_topics)
 
     for i, topic_info in enumerate(daily_topics):
         print(f"\n{'─' * 50}")
@@ -574,4 +578,8 @@ if __name__ == "__main__":
     if args.qc:
         run_qc(days=args.qc_days)
     else:
-        run_daily(slot=args.slot, count=args.count, dry_run=args.dry_run)
+        results = run_daily(slot=args.slot, count=args.count, dry_run=args.dry_run)
+        # 생성 대상이 있었는데 한 편도 못 만들었으면 실패로 종료 (조용한 실패 방지)
+        if results is not None and len(results) == 0 and LAST_RUN.get("attempted", 0) > 0:
+            print("\n[실패] 글을 한 편도 생성하지 못했습니다. 위 오류(API 크레딧·모델·키)를 확인하세요.")
+            sys.exit(1)

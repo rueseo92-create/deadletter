@@ -27,8 +27,11 @@ load_dotenv()
 
 from anthropic import Anthropic
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import claude_client  # noqa: E402
+
 claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
-CLAUDE_MODEL = "claude-sonnet-4-20250514"
+CLAUDE_MODEL = claude_client.MODEL
 
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
 POSTS_DIR = BLOG_DIR / "content" / "posts"
@@ -134,11 +137,12 @@ def complete_post(filepath: Path, lang: str = "ko") -> str:
     for attempt in range(2):
         response = claude.messages.create(
             model=CLAUDE_MODEL,
+            output_config={"effort": "medium"},
             max_tokens=8192,
             messages=[{"role": "user", "content": prompt}],
         )
 
-        continuation = response.content[0].text.strip()
+        continuation = claude_client.text_of(response).strip()
         stop_reason = response.stop_reason
 
         if stop_reason != "end_turn":

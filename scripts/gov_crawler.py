@@ -181,6 +181,7 @@ def crawl_ai_news_claude(topic: str = "AI", count: int = 5) -> list[GovProject]:
     print(f"  [Claude] 최신 뉴스 토픽 생성... (주제: {topic})")
     try:
         import anthropic
+        import claude_client
         client = anthropic.Anthropic()
 
         prompt = f"""당신은 한국 생활정보/IT 뉴스 전문 에디터입니다. (데일리인사이트 — dailyinsight.kr)
@@ -213,12 +214,13 @@ def crawl_ai_news_claude(topic: str = "AI", count: int = 5) -> list[GovProject]:
 }}"""
 
         response = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=claude_client.MODEL,
+            output_config={"effort": "medium"},
             max_tokens=2048,
             messages=[{"role": "user", "content": prompt}],
         )
 
-        text = response.content[0].text.strip()
+        text = claude_client.text_of(response).strip()
         text = re.sub(r"```json\s*|```", "", text).strip()
         data = json.loads(text)
         topics = data.get("topics", [])

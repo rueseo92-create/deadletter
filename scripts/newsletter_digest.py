@@ -38,8 +38,11 @@ load_dotenv()
 
 from anthropic import Anthropic
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import claude_client  # noqa: E402
+
 claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
-CLAUDE_MODEL = "claude-sonnet-4-20250514"
+CLAUDE_MODEL = claude_client.MODEL
 
 SITE_URL = os.environ.get("BLOG_SITE_URL", "https://dailyinsight.kr")
 BLOG_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent)))
@@ -135,11 +138,12 @@ def generate_digest_content(posts: list[dict]) -> dict:
 
     response = claude.messages.create(
         model=CLAUDE_MODEL,
+        output_config={"effort": "medium"},
         max_tokens=2000,
         messages=[{"role": "user", "content": prompt}],
     )
 
-    text = response.content[0].text.strip()
+    text = claude_client.text_of(response).strip()
     # JSON 추출
     json_match = re.search(r'\{[\s\S]*\}', text)
     if json_match:

@@ -25,7 +25,10 @@ load_dotenv(Path(__file__).parent / ".env")
 
 import anthropic
 
-CLAUDE_MODEL = "claude-sonnet-4-20250514"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import claude_client  # noqa: E402
+
+CLAUDE_MODEL = claude_client.MODEL
 POSTS_DIR = Path(os.environ.get("BLOG_REPO_PATH", str(Path(__file__).parent.parent))) / "content" / "posts"
 LANGUAGES = {
     "en": "English",
@@ -67,10 +70,11 @@ Korean MDX:
 
     response = client.messages.create(
         model=CLAUDE_MODEL,
+        output_config={"effort": "medium"},
         max_tokens=16384,
         messages=[{"role": "user", "content": prompt}],
     )
-    return response.content[0].text.strip()
+    return claude_client.text_of(response).strip()
 
 
 def main():

@@ -108,14 +108,18 @@ async function generateWithAI(title, category) {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 2048,
+        model: "claude-sonnet-5-5",
+        max_tokens: 4096,
+        output_config: { effort: "medium" },
         messages: [{ role: "user", content: prompt }],
       }),
     });
 
     const data = await res.json();
-    return data.content?.[0]?.text || null;
+    // thinking 블록이 앞에 올 수 있어 text 블록만 모은다
+    const text = (data.content || []).filter((b) => b.type === "text").map((b) => b.text).join("");
+    if (!text) console.error("AI 응답 오류:", data.error?.message || data.stop_reason);
+    return text || null;
   } catch (e) {
     console.error("AI 생성 실패:", e.message);
     return null;

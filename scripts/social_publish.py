@@ -38,8 +38,11 @@ load_dotenv()
 
 # Anthropic
 from anthropic import Anthropic
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import claude_client  # noqa: E402
 claude = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
-CLAUDE_MODEL = "claude-sonnet-4-20250514"
+CLAUDE_MODEL = claude_client.MODEL
 
 # 사이트 정보
 SITE_URL = os.environ.get("BLOG_SITE_URL", "https://dailyinsight.kr")
@@ -166,26 +169,28 @@ def generate_threads_post(post: dict) -> str:
     """Claude로 쓰레드 포스트 생성"""
     response = claude.messages.create(
         model=CLAUDE_MODEL,
+        output_config={"effort": "medium"},
         max_tokens=1024,
         messages=[{
             "role": "user",
             "content": THREADS_PROMPT.format(**post),
         }],
     )
-    return response.content[0].text.strip()
+    return claude_client.text_of(response).strip()
 
 
 def generate_instagram_caption(post: dict) -> str:
     """Claude로 인스타그램 캡션 생성"""
     response = claude.messages.create(
         model=CLAUDE_MODEL,
+        output_config={"effort": "medium"},
         max_tokens=1024,
         messages=[{
             "role": "user",
             "content": INSTAGRAM_PROMPT.format(**post),
         }],
     )
-    return response.content[0].text.strip()
+    return claude_client.text_of(response).strip()
 
 
 # ──────────────────────────────────────────────
