@@ -255,7 +255,8 @@ def _subject(group: list[dict]) -> str:
                 continue
             counts[t] = counts.get(t, 0) + 1
     generic = {"서비스", "기업", "정부", "시장", "기술", "사용", "활용", "개발", "공개", "출시", "도입", "기반", "전략",
-               "강화", "확대", "지원", "검토", "직원", "사업", "프로젝트", "플랫폼", "솔루션", "업계", "국내", "글로벌"}
+               "강화", "확대", "지원", "검토", "직원", "사업", "프로젝트", "플랫폼", "솔루션", "업계", "국내", "글로벌",
+               "마케팅", "금융", "보안", "교육", "의료", "산업", "데이터", "에이전트", "모델", "기반", "출시", "발표"}
     particle = re.compile(r"(까지|에서|으로|에게|부터|보다|처럼|이며|하고|했다|한다|된다|는|를|을|은|이|가|의|도|에|와|과|로)$")
     ranked = sorted(((k, v) for k, v in counts.items()
                      if k.lower() not in AI_WORDS and k != "AI" and k not in generic and not particle.search(k)),

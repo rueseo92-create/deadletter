@@ -1,6 +1,7 @@
 """공용 Claude 설정. 모델을 바꿀 때는 여기 한 곳만 고친다."""
 
-MODEL = "claude-sonnet-5-5"
+MODEL = "claude-sonnet-5-5"          # 심사·각도 설계·소셜 등 일반 작업
+WRITER_MODEL = "claude-opus-5-5"     # 블로그 본문 작성·고쳐 쓰기 (품질이 가장 중요한 단계)
 
 
 def text_of(response) -> str:

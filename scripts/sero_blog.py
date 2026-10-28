@@ -732,7 +732,11 @@ AI 자동화, AI 부업, AI 뉴스, AI 도구를 직장인·1인 사업자·부�
    - 짧고 직설적인 해요체. 한 문단 1-3문장. 리듬 있게 짧은 문장과 긴 문장을 섞는다
    - 의견은 분명하게: "이건 비추예요", "여기서 대부분 막혀요", "솔직히 이 부분은 과대평가됐어요" (근거와 함께)
    - 소제목은 질문이나 결론으로 ("월 30만 원이 현실적인 이유", "3번째 단계에서 다들 막힌다")
-   - 각 H2 끝에 "바로 해볼 것:" 한 줄로 행동을 준다
+   - "바로 해볼 것:" 같은 행동 제안은 글 전체에서 1-2번, 꼭 필요한 곳에만 (매 섹션 반복 금지)
+   - 같은 내용을 목록과 표로 두 번 보여 주지 않는다
+   - 숫자 계산은 식을 그대로 보여 준다 (예: 5,000원 × 20건 - 수수료 15% = 85,000원). 쓰고 나서 직접 검산한다
+   - 제목·소제목에 쓴 숫자와 주장은 본문 내용과 정확히 일치해야 한다
+   - 참고 자료에 없는 숫자·사실은 쓰지 않는다. 그럴듯해 보여도 확인 안 된 건 빼는 게 낫다
    - 편집 방향에 세로AI 테스트 결과가 있으면 반드시 별도 H2로 보여 준다
    - 금지 표현: "결론적으로", "다양한", "중요합니다", "게임 체인저", "혁신적인", "알아보겠습니다", "놓치지 마세요", 이모지
    - 마크다운 볼드(**), 취소선, 물결표(~) 금지. 범위는 하이픈(2-4주)
@@ -819,12 +823,14 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
 
     data = None
     for attempt in range(2):
-        response = claude.messages.create(
-            model=CLAUDE_MODEL,
-            output_config={"effort": "medium"},
-            max_tokens=16000,  # adaptive thinking 포함
+        # 본문은 가장 강한 모델로, 길어질 수 있어 스트리밍
+        with claude.messages.stream(
+            model=claude_client.WRITER_MODEL if lang == "ko" else CLAUDE_MODEL,
+            output_config={"effort": "high"},
+            max_tokens=32000,
             messages=[{"role": "user", "content": prompt_content}],
-        )
+        ) as st:
+            response = st.get_final_message()
         text = claude_client.text_of(response).strip()
         stop_reason = response.stop_reason
 
@@ -833,7 +839,9 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
             print(f"  [경고] 응답이 잘렸습니다 (stop_reason={stop_reason}), 재시도...")
             continue
 
-        text = re.sub(r"```json\s*|```", "", text).strip()
+        # 바깥 코드펜스만 벗긴다 (본문 안의 코드블록은 살린다)
+        text = re.sub(r"^```(?:json)?\s*", "", text)
+        text = re.sub(r"\s*```$", "", text).strip()
         data = _safe_json_parse(text)
         if data and "content" in data:
             # 본문 잘림 추가 검증: 마지막 문자가 문장 종결인지 확인

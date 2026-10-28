@@ -117,10 +117,10 @@ def _context(plan: dict | None) -> str:
         return "(제공된 자료 없음)"
     tests = ""
     for i, t in enumerate(plan.get("experiments") or [], 1):
-        tests += (f"\n[세로AI 테스트 {i} - 실제 실행됨, 사실로 인정] 목적: {t['purpose']}\n프롬프트: {t['prompt'][:600]}"
+        tests += (f"\n[세로AI 테스트 {i} - {t.get('model', '')}로 실제 실행됨, 사실로 인정] 목적: {t['purpose']}\n프롬프트: {t['prompt'][:600]}"
                   f"\n결과: {t['output'][:900]}")
     if plan.get("news"):
-        return "\n".join(f"- [{s['name']}] {s['title']} :: {(s.get('body') or s['summary'])[:700]}"
+        return "\n".join(f"- [{s['name']}] {s['title']} :: {(s.get('body') or s['summary'])[:2000]}"
                           for s in plan["sources"])
     lines = [f"세부 키워드: {plan.get('keyword')}", f"검색 의도: {plan.get('intent')}"]
     if plan.get("serp_titles"):
@@ -171,45 +171,54 @@ def _revise(post, plan: dict | None, results: list[dict]) -> Revision:
         for i in r["issues"]:
             if i["severity"] != "minor" or not r["passed"]:
                 problems.append(f"- [{r['name']}/{i['severity']}] \"{i['quote'][:80]}\" → {i['problem']} / 수정: {i['fix']}")
-    system = ("너는 한국어 AI 정보 블로그 편집장이다. 심사위원 지적을 모두 반영해 글을 고친다. "
+    system = ("너는 한국어 AI 실무 매체 '세로AI' 편집장이다. 심사위원 지적을 모두 반영해 글을 고친다. "
               "근거 없는 수치·사실은 삭제하거나 '확인되지 않음'으로 바꾸고, 새 사실을 지어내지 않는다. "
+              "모든 계산을 처음부터 다시 검산하고 식을 보여 준다. 제목 후보·소제목의 숫자와 주장이 본문과 일치하게 맞춘다. "
+              "같은 내용을 목록과 표로 반복하지 않는다. 글의 재미(짧은 문장, 분명한 의견, 구체적 장면)는 살린다. "
               "마크다운 구조(H2/H3, 표, 인용블록, FAQ, 내부 링크)는 유지한다. 굵은 글씨(**)와 물결표(~)는 쓰지 않는다.")
     user = (f"[현재 제목]\n{post.title}\n\n[참고 자료]\n{_context(plan)}\n\n[심사 지적]\n" + "\n".join(problems[:60])
             + f"\n\n[본문]\n{post.content}")
     with claude_client.client().messages.stream(
-            model=claude_client.MODEL, max_tokens=32000, system=system,
+            model=claude_client.WRITER_MODEL, max_tokens=32000, system=system,
             messages=[{"role": "user", "content": user}],
-            output_format=Revision, output_config={"effort": "medium"}) as st:
+            output_format=Revision, output_config={"effort": "high"}) as st:
         msg = st.get_final_message()
     return Revision.model_validate_json(claude_client.text_of(msg))
 
 
+MAX_REVISIONS = 2
+
+
 def gate(post, plan: dict | None):
-    """심사 → 필요하면 1회 수정 → 재심사. 통과하면 post.review 를 채워 돌려준다."""
-    print(f"  [슬롭 킬러] 10명 심사 중...")
+    """심사 → 미달이면 지적 반영해 고쳐 쓰고 탈락자만 재심사 (최대 2회). 통과하면 post.review 를 채운다."""
+    print("  [슬롭 킬러] 10명 심사 중...")
     results = review(post.title, post.content, plan)
     s = _summary(results)
     _print(results, s)
-    if not s["ok"]:
-        print("  [슬롭 킬러] 기준 미달 → 지적 반영해 고쳐 쓰기")
+    for n in range(1, MAX_REVISIONS + 1):
+        if s["ok"]:
+            break
+        print(f"  [슬롭 킬러] 기준 미달 → 고쳐 쓰기 {n}/{MAX_REVISIONS}")
         rev = _revise(post, plan, results)
         post.content = rev.content
         post.tldr = rev.tldr or post.tldr
         post.description = (rev.description or post.description)[:155]
         kw = (plan or {}).get("keyword", "")
-        title, _, _ = title_rules.choose_title([post.title, *rev.title_candidates], kw, post.category, post.content,
-                                               (plan or {}).get("serp_titles", []), (plan or {}).get("intent", "info"))
+        title, _, _ = title_rules.choose_title(
+            [*rev.title_candidates, post.title], kw, post.category, post.content,
+            (plan or {}).get("serp_titles", []), (plan or {}).get("intent", "info"),
+            allow_experience=bool((plan or {}).get("experiments")))
         post.title = title
-        failed = {r["id"] for r in results if not r["passed"]} | {r["id"] for r in results
-                                                                   if any(i["severity"] == "critical" for i in r["issues"])}
-        again = review(post.title, post.content, plan, only=failed)
+        again_ids = {r["id"] for r in results if not r["passed"]} | {
+            r["id"] for r in results if any(i["severity"] == "critical" for i in r["issues"])}
+        again = review(post.title, post.content, plan, only=again_ids)
         merged = {r["id"]: r for r in results}
         merged.update({r["id"]: r for r in again})
         results = list(merged.values())
         s = _summary(results)
         _print(again, s)
-        if not s["ok"]:
-            raise SlopRejected(f"슬롭 킬러 재심사 탈락: {s['passed']}/{s['panel']} 통과, 치명적 지적 {s['critical']}건")
+    if not s["ok"]:
+        raise SlopRejected(f"슬롭 킬러 최종 탈락: {s['passed']}/{s['panel']} 통과, 치명적 지적 {s['critical']}건")
     post.review = {"panel": s["panel"], "passed": s["passed"], "score": s["score"]}
     return post
 
