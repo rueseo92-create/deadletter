@@ -1,27 +1,21 @@
 {
-  "name": "데일리인사이트",
-  "short_name": "데일리인사이트",
-  "description": "금융, 보험, 건강, IT, 부동산 — 생활 속 핵심 정보를 매일 쉽게 정리합니다",
+  "name": "세로AI — AI 자동화 · AI 부업 · AI 뉴스",
+  "short_name": "세로AI",
+  "description": "AI 자동화, AI 부업, AI 뉴스, AI 도구 — 쏟아지는 AI 정보 중 실제로 쓸 수 있는 것만 검증해서 정리합니다.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F8FAFC",
-  "theme_color": "#4F46E5",
+  "background_color": "#FCFCFB",
+  "theme_color": "#111113",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
-  "categories": ["finance", "insurance", "health", "technology", "lifestyle"],
+  "categories": ["technology", "news", "productivity", "business"],
   "lang": "ko",
   "dir": "ltr"
 }

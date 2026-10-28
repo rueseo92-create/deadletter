@@ -92,8 +92,92 @@ const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
   en: () => import("@/dictionaries/en.json").then((m) => m.default),
 };
 
+// 세로AI 리브랜딩 문구 — dictionaries/*.json 에 남아 있는 이전 브랜드 문구를 덮어쓴다.
+type DeepPartial<T> = { [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K] };
+
+const overrides: Record<Locale, DeepPartial<Dictionary>> = {
+  ko: {
+    meta: {
+      defaultTitle: "세로AI | AI 자동화 · AI 부업 · AI 뉴스 · AI 도구",
+      siteDescription:
+        "AI 자동화, AI 부업, AI 뉴스, AI 도구 — 쏟아지는 AI 정보 중 실제로 쓸 수 있는 것만 검증해서 정리합니다.",
+    },
+    nav: { home: "홈", about: "소개" },
+    home: {
+      latest: "최신",
+      newsletter: "주간 AI 브리핑",
+      newsletterDesc:
+        "한 주의 AI 소식과 바로 써먹을 수 있는 자동화·부업 아이디어를 매주 한 번 보내드립니다.",
+      noPosts: "첫 글을 준비 중입니다",
+      noPostsDesc: "검수 패널을 통과한 첫 글이 곧 올라옵니다.",
+      firstPostSoon: "검수 패널을 통과한 첫 글이 곧 올라옵니다.",
+      coupangTitle: "AI 작업 환경 추천",
+      coupangDevTitle: "AI 작업 환경 추천",
+      aboutItems: [
+        "AI 자동화 워크플로를 단계별로 정리",
+        "AI 부업의 실제 수익 구조와 비용",
+        "꼭 알아야 할 AI 뉴스만 선별",
+        "직접 써보고 비교한 AI 도구",
+      ],
+    },
+    post: {
+      coupangReaderTitle: "이 글과 함께 보면 좋은 상품",
+      coupangDevTitle: "AI 작업 환경 추천",
+    },
+    search: {
+      description: "키워드나 태그로 세로AI의 글을 찾아보세요",
+      placeholder: "검색어를 입력하세요 (예: 자동화, 챗GPT, 부업)",
+    },
+    category: {
+      noPostsDesc: "검수 패널을 통과한 첫 글을 준비하고 있습니다.",
+    },
+  },
+  en: {
+    meta: {
+      defaultTitle: "SERO AI | AI Automation · Side Hustles · News · Tools",
+      siteDescription:
+        "AI automation, AI side hustles, AI news and AI tools — verified and organized.",
+    },
+    nav: { home: "Home", about: "About" },
+    home: {
+      latest: "Latest",
+      newsletter: "Weekly AI Briefing",
+      newsletterDesc: "One email a week: the AI news that matters and ideas you can use.",
+      noPosts: "Our first story is on the way",
+      noPostsDesc: "The first reviewed post will be published soon.",
+      firstPostSoon: "The first reviewed post will be published soon.",
+      coupangTitle: "Recommended gear",
+      coupangDevTitle: "Recommended gear",
+      aboutItems: [
+        "Step-by-step AI automation workflows",
+        "Real economics of AI side hustles",
+        "Curated AI news",
+        "Hands-on AI tool comparisons",
+      ],
+    },
+    post: {
+      coupangReaderTitle: "Related products",
+      coupangDevTitle: "Recommended gear",
+    },
+  },
+};
+
+function merge<T>(base: T, patch: DeepPartial<T> | undefined): T {
+  if (!patch) return base;
+  const out: any = Array.isArray(base) ? [...(base as any)] : { ...(base as any) };
+  for (const [k, v] of Object.entries(patch)) {
+    if (v && typeof v === "object" && !Array.isArray(v) && out[k] && typeof out[k] === "object") {
+      out[k] = merge(out[k], v as any);
+    } else if (v !== undefined) {
+      out[k] = v;
+    }
+  }
+  return out;
+}
+
 export async function getDictionary(locale: Locale): Promise<Dictionary> {
-  return dictionaries[locale]();
+  const base = await (dictionaries[locale] || dictionaries[defaultLocale])();
+  return merge(base, overrides[locale]);
 }
 
 // 로케일 기반 href 생성

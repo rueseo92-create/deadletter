@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Icon } from "@/components/Icon";
 
 export function ScrollToTop() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     function onScroll() {
-      setShow(window.scrollY > 500);
+      setShow(window.scrollY > 800);
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -17,11 +18,12 @@ export function ScrollToTop() {
 
   return (
     <button
+      type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-2xl bg-white/90 backdrop-blur-sm ring-1 ring-stone-200/60 shadow-card flex items-center justify-center text-stone-400 hover:text-primary hover:ring-primary/30 hover:shadow-card-hover transition-all duration-300"
-      aria-label="Scroll to top"
+      className="fixed bottom-5 right-4 z-40 inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface/95 text-ink-2 backdrop-blur transition-colors hover:border-line-strong hover:text-ink sm:right-6"
+      aria-label="맨 위로"
     >
-      <span className="material-symbols-outlined text-lg">keyboard_arrow_up</span>
+      <Icon name="arrowUp" className="h-4 w-4" />
     </button>
   );
 }

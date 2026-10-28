@@ -8,6 +8,7 @@ import { getAllPosts } from "@/lib/posts";
 import { siteConfig } from "@/lib/config";
 
 export async function GET() {
+  // 운영 중인 4개 AI 카테고리 글만 (보관 글 제외)
   const posts = getAllPosts();
 
   const items = posts

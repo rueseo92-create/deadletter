@@ -1,20 +1,20 @@
 import { Metadata } from "next";
 import Script from "next/script";
-import { siteConfig } from "@/lib/config";
+import { siteConfig, categoryName, categoryDescription } from "@/lib/config";
 import {
   getDictionary,
   localizedHref,
   htmlLangs,
   ogLocales,
   locales,
-  localeNames,
   defaultLocale,
   type Locale,
-  type Dictionary,
 } from "@/lib/i18n";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { MobileNav } from "@/components/MobileNav";
 import { HeaderWrapper } from "@/components/HeaderWrapper";
+import { Wordmark } from "@/components/Wordmark";
+import { Icon } from "@/components/Icon";
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -60,9 +60,6 @@ export async function generateMetadata({
       languages: {
         ko: siteConfig.url,
         en: `${siteConfig.url}/en`,
-        zh: `${siteConfig.url}/zh`,
-        ja: `${siteConfig.url}/ja`,
-        es: `${siteConfig.url}/es`,
         "x-default": siteConfig.url,
       },
       types: {
@@ -120,16 +117,6 @@ function JsonLd({ locale }: { locale: Locale }) {
   );
 }
 
-const navKeyMap: Record<string, string> = {
-  "/": "home",
-  "/categories/finance": "finance",
-  "/categories/insurance": "insurance",
-  "/categories/health": "health",
-  "/categories/tech": "tech",
-  "/categories/realestate": "realestate",
-  "/categories/lifestyle": "lifestyle",
-};
-
 export default async function LocaleLayout({
   children,
   params,
@@ -139,32 +126,28 @@ export default async function LocaleLayout({
 }) {
   const locale = (params.locale || defaultLocale) as Locale;
   const dict = await getDictionary(locale);
+  const lh = (path: string) => localizedHref(path, locale);
+  const en = locale === "en";
 
-  const navItems = siteConfig.nav.map((item) => {
-    const key = navKeyMap[item.href] || "home";
-    return {
-      href: localizedHref(item.href, locale),
-      label: (dict.nav as Record<string, string>)[key] || item.label,
-    };
-  });
+  const navItems = siteConfig.categories.map((cat) => ({
+    href: lh(`/categories/${cat.slug}`),
+    label: categoryName(cat, locale),
+    icon: cat.icon,
+    description: categoryDescription(cat, locale),
+  }));
 
   return (
     <html lang={htmlLangs[locale]} suppressHydrationWarning>
       <head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#3B82F6" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FCFCFB" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0C0C0E" />
+        <meta name="color-scheme" content="light dark" />
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
         <meta name="google-adsense-account" content="ca-pub-1902054355965964" />
         <JsonLd locale={locale} />
@@ -182,165 +165,106 @@ export default async function LocaleLayout({
           </>
         )}
       </head>
-      <body className="bg-background text-on-surface antialiased font-body">
+      <body className="min-h-screen bg-bg text-ink antialiased">
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1902054355965964"
           strategy="afterInteractive"
           crossOrigin="anonymous"
         />
 
-        {/* Header */}
+        <a href="#main" className="skip-link">
+          {en ? "Skip to content" : "본문으로 건너뛰기"}
+        </a>
+
         <HeaderWrapper>
-          <div className="flex justify-between items-center h-16 px-6 lg:px-12 max-w-7xl mx-auto">
-            <a
-              href={localizedHref("/", locale)}
-              className="flex items-center gap-2.5 group"
-            >
-              <span className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 text-white text-[10px] font-extrabold shadow-sm group-hover:shadow-soft transition-shadow duration-300">
-                DI
-              </span>
-              <span className="text-lg font-extrabold tracking-tight text-stone-800 font-headline">
-                데일리인사이트
-              </span>
+          <div className="mx-auto flex h-[var(--header-h)] max-w-page items-center justify-between gap-4 px-4 sm:px-6">
+            <a href={lh("/")} className="-ml-1 rounded px-1 py-1" aria-label={`${siteConfig.name} ${en ? "home" : "홈"}`}>
+              <Wordmark />
             </a>
 
-            <nav className="hidden lg:flex items-center">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="relative px-4 py-2 text-[13px] font-medium text-stone-500 hover:text-primary transition-colors duration-200 after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-primary after:rounded-full hover:after:w-5 after:transition-all after:duration-300"
-                >
-                  {item.label}
-                </a>
-              ))}
+            <nav aria-label={en ? "Categories" : "카테고리"} className="hidden md:block">
+              <ul className="flex items-center gap-1">
+                {navItems.map((item) => (
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      className="rounded-md px-3 py-2 text-[14px] font-medium text-ink-2 transition-colors hover:bg-subtle hover:text-ink"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </nav>
 
             <div className="flex items-center gap-1">
               <a
-                href={localizedHref("/search", locale)}
-                className="p-2.5 rounded-xl text-stone-500 hover:text-primary hover:bg-blue-50 transition-all duration-200"
-                aria-label="Search"
+                href={lh("/search")}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-subtle hover:text-ink"
+                aria-label={en ? "Search" : "검색"}
               >
-                <span className="material-symbols-outlined text-[22px]">search</span>
+                <Icon name="search" className="h-[18px] w-[18px]" />
               </a>
               <MobileNav
                 items={navItems}
-                searchHref={localizedHref("/search", locale)}
+                extraItems={[
+                  { href: lh("/posts"), label: en ? "All posts" : "전체 글" },
+                  { href: lh("/about"), label: dict.nav?.about || "소개" },
+                ]}
+                searchHref={lh("/search")}
+                searchLabel={en ? "Search" : "검색어를 입력하세요"}
               />
             </div>
           </div>
         </HeaderWrapper>
 
-        <main className="min-h-screen">{children}</main>
+        <main id="main" className="min-h-[60vh]">
+          {children}
+        </main>
 
         <ScrollToTop />
 
-        {/* Footer */}
-        <footer className="relative mt-24 border-t border-stone-100">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
-            {/* Main footer content */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-16">
-              {/* Brand */}
-              <div className="md:col-span-4">
-                <div className="flex items-center gap-2.5 mb-4">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white text-[10px] font-extrabold">
-                    DI
-                  </span>
-                  <span className="text-lg font-extrabold text-stone-800 font-headline">데일리인사이트</span>
-                </div>
-                <p className="text-sm text-stone-500 leading-relaxed max-w-xs">
-                  {siteConfig.description}
+        <footer className="mt-24 border-t border-line">
+          <div className="mx-auto max-w-page px-4 py-12 sm:px-6">
+            <div className="grid gap-10 md:grid-cols-12">
+              <div className="md:col-span-5">
+                <Wordmark />
+                <p className="mt-3 max-w-sm text-[14px] leading-relaxed text-ink-3">
+                  {en ? dict.meta.siteDescription : siteConfig.tagline}
                 </p>
               </div>
-
-              {/* Quick Links */}
-              <div className="md:col-span-2">
-                <h4 className="text-xs font-bold text-stone-800 uppercase tracking-wider mb-4">카테고리</h4>
-                <ul className="space-y-2.5">
-                  {siteConfig.categories.map((cat) => (
-                    <li key={cat.slug}>
-                      <a
-                        href={localizedHref(`/categories/${cat.slug}`, locale)}
-                        className="text-sm text-stone-500 hover:text-primary transition-colors duration-200"
-                      >
-                        {cat.emoji} {cat.name}
+              <nav aria-label={en ? "Categories" : "카테고리"} className="md:col-span-3">
+                <p className="eyebrow mb-3">{en ? "Topics" : "주제"}</p>
+                <ul className="space-y-2 text-[14px]">
+                  {navItems.map((item) => (
+                    <li key={item.href}>
+                      <a href={item.href} className="text-ink-2 hover:text-ink">
+                        {item.label}
                       </a>
                     </li>
                   ))}
                 </ul>
-              </div>
-
-              {/* Resources */}
-              <div className="md:col-span-2">
-                <h4 className="text-xs font-bold text-stone-800 uppercase tracking-wider mb-4">리소스</h4>
-                <ul className="space-y-2.5">
+              </nav>
+              <nav aria-label={en ? "Site" : "사이트"} className="md:col-span-4">
+                <p className="eyebrow mb-3">{en ? "Site" : "사이트"}</p>
+                <ul className="space-y-2 text-[14px]">
+                  <li><a href={lh("/posts")} className="text-ink-2 hover:text-ink">{en ? "All posts" : "전체 글"}</a></li>
+                  <li><a href={lh("/about")} className="text-ink-2 hover:text-ink">{dict.nav?.about || "소개"}</a></li>
+                  <li><a href={lh("/privacy")} className="text-ink-2 hover:text-ink">{dict.footer.privacyPolicy}</a></li>
                   <li>
-                    <a href={localizedHref("/posts", locale)} className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
-                      {dict.category?.allPosts || "전체 글"}
-                    </a>
-                  </li>
-                  <li>
-                    <a href={localizedHref("/about", locale)} className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
-                      {dict.nav?.about || "소개"}
-                    </a>
-                  </li>
-                  <li>
-                    <a href={localizedHref("/business", locale)} className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
-                      {dict.nav?.agency || "대행 서비스"}
+                    <a href="/feed.xml" className="inline-flex items-center gap-1.5 text-ink-2 hover:text-ink">
+                      <Icon name="rss" className="h-3.5 w-3.5" /> {dict.footer.rss}
                     </a>
                   </li>
                 </ul>
-              </div>
-
-              {/* Legal */}
-              <div className="md:col-span-2">
-                <h4 className="text-xs font-bold text-stone-800 uppercase tracking-wider mb-4">정보</h4>
-                <ul className="space-y-2.5">
-                  <li>
-                    <a href={localizedHref("/privacy", locale)} className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
-                      {dict.footer.privacyPolicy}
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/sitemap.xml" className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
-                      {dict.footer.sitemap}
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/feed.xml" className="text-sm text-stone-500 hover:text-primary transition-colors duration-200">
-                      {dict.footer.rss}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Newsletter mini */}
-              <div className="md:col-span-2">
-                <h4 className="text-xs font-bold text-stone-800 uppercase tracking-wider mb-4">구독</h4>
-                <p className="text-sm text-stone-500 mb-3 leading-relaxed">
-                  매주 생활 핵심 정보를 이메일로 받아보세요.
-                </p>
-                <a
-                  href="#newsletter"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-700 transition-colors"
-                >
-                  구독하기
-                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                </a>
-              </div>
+              </nav>
             </div>
 
-            {/* Bottom bar */}
-            <div className="border-t border-stone-100 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-xs text-stone-400">
-                &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
-              </p>
-              <p className="text-[11px] text-stone-400 text-center sm:text-right max-w-xl leading-relaxed">
-                {siteConfig.disclaimer}
-                {siteConfig.coupang.enabled && (
-                  <> &middot; {dict.coupang.disclaimer}</>
-                )}
+            <div className="mt-12 space-y-2 border-t border-line pt-6 text-[12px] leading-relaxed text-ink-3">
+              <p>{siteConfig.disclaimer}</p>
+              {siteConfig.coupang.enabled && <p>{siteConfig.coupang.disclaimer}</p>}
+              <p className="pt-2">
+                &copy; {new Date().getFullYear()} {siteConfig.name} ({siteConfig.nameEn})
               </p>
             </div>
           </div>

@@ -1,7 +1,7 @@
 /**
  * /api/posts - 포스트 관리 API
  *
- * GET    /api/posts           → 전체 목록
+ * GET    /api/posts           → 전체 목록 (보관 글 제외, ?includeArchived=1 이면 포함)
  * GET    /api/posts?slug=xxx  → 개별 조회
  * POST   /api/posts           → 새 글 생성
  * PUT    /api/posts           → 글 수정
@@ -11,6 +11,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { isActiveCategory } from "@/lib/config";
 
 const POSTS_DIR = path.join(process.cwd(), "content/posts");
 const AUTH_TOKEN = process.env.ADMIN_TOKEN || "sero-admin-2026"; // .env에서 설정
@@ -24,6 +25,7 @@ function checkAuth(req: NextRequest): boolean {
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get("slug");
+  const includeArchived = searchParams.get("includeArchived") === "1";
 
   if (slug) {
     const filePath = path.join(POSTS_DIR, `${slug}.mdx`);
@@ -53,8 +55,11 @@ export async function GET(req: NextRequest) {
         category: data.category || "",
         tags: data.tags || [],
         published: data.published !== false,
+        archived: !isActiveCategory(data.category),
       };
     })
+    // 이전 주제(보관) 글은 목록에서 제외
+    .filter((p) => includeArchived || !p.archived)
     .sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );

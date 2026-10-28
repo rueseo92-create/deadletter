@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
+import { Icon } from "@/components/Icon";
 
 interface Props {
   placeholder: string;
@@ -11,6 +12,7 @@ export default function NewsletterForm({ placeholder, buttonText }: Props) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const inputId = useId();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -27,7 +29,7 @@ export default function NewsletterForm({ placeholder, buttonText }: Props) {
 
       if (res.ok) {
         setStatus("success");
-        setMessage("구독 완료! 감사합니다.");
+        setMessage("구독 완료! 다음 브리핑부터 보내드릴게요.");
         setEmail("");
       } else {
         setStatus("error");
@@ -41,38 +43,49 @@ export default function NewsletterForm({ placeholder, buttonText }: Props) {
 
   if (status === "success") {
     return (
-      <div className="flex items-center gap-2.5 px-5 py-3 rounded-full bg-white/[0.12] backdrop-blur-sm border border-white/[0.08]">
-        <span className="material-symbols-outlined text-emerald-300 text-lg">check_circle</span>
-        <span className="text-sm text-white font-medium">{message}</span>
-      </div>
+      <p role="status" className="flex items-center gap-2 text-[15px] font-medium text-ink">
+        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-accent text-accent-fg">
+          <Icon name="check" className="h-3.5 w-3.5" strokeWidth={2.4} />
+        </span>
+        {message}
+      </p>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2.5 w-full lg:w-auto flex-shrink-0">
-      <div className="relative">
+    <form onSubmit={handleSubmit} className="w-full" noValidate={false}>
+      <div className="flex flex-col gap-2 sm:flex-row">
+        <label htmlFor={inputId} className="sr-only">
+          이메일 주소
+        </label>
         <input
-          className="px-5 py-3.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.06] text-sm text-white placeholder-white/30 focus:ring-2 focus:ring-white/15 focus:border-white/15 focus:bg-white/[0.12] transition-all w-full sm:w-64 outline-none"
+          id={inputId}
+          className="h-11 w-full min-w-0 flex-1 rounded-lg border border-line bg-surface px-4 text-[15px] text-ink placeholder:text-ink-3 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
           placeholder={placeholder}
           type="email"
+          autoComplete="email"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
             if (status === "error") setStatus("idle");
           }}
+          aria-invalid={status === "error"}
+          aria-describedby={status === "error" ? `${inputId}-err` : undefined}
           required
         />
-        {status === "error" && (
-          <p className="absolute -bottom-5 left-3 text-[10px] text-red-300">{message}</p>
-        )}
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="h-11 flex-shrink-0 rounded-lg bg-ink px-5 text-[15px] font-semibold text-bg transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {status === "loading" ? "처리 중…" : buttonText}
+        </button>
       </div>
-      <button
-        type="submit"
-        disabled={status === "loading"}
-        className="px-7 py-3.5 bg-white text-indigo-700 font-bold text-sm rounded-full hover:bg-indigo-50 transition-all duration-200 flex-shrink-0 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {status === "loading" ? "처리 중..." : buttonText}
-      </button>
+      {status === "error" && (
+        <p id={`${inputId}-err`} role="alert" className="mt-2 text-[13px] text-red-600 dark:text-red-400">
+          {message}
+        </p>
+      )}
     </form>
   );
 }

@@ -77,39 +77,35 @@ export function CoupangLinkAd({
   className = "",
 }: CoupangLinkAdProps) {
   return (
-    <div className={`rounded-xl border border-stone-200 bg-white overflow-hidden ${className}`}>
-      <div className="flex items-center gap-2 px-5 py-3 bg-stone-50 border-b border-stone-100">
-        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-          <rect width="24" height="24" rx="6" fill="#E31937" />
-          <path d="M7 8.5h10M7 12h10M7 15.5h6" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-        </svg>
-        <span className="text-sm font-bold text-stone-700">{title}</span>
+    <aside aria-label="쿠팡 파트너스 광고" className={`rounded-xl border border-line bg-surface ${className}`}>
+      <div className="flex items-baseline justify-between gap-3 px-4 pb-1 pt-3.5 sm:px-5">
+        <p className="text-[14px] font-semibold text-ink">{title}</p>
+        <span className="text-[11px] text-ink-3">광고 · 쿠팡 파트너스</span>
       </div>
-      <div className="p-4 grid gap-2">
+      <ul className="grid gap-px px-2 pb-2 sm:grid-cols-2 sm:px-3">
         {keywords.map((kw) => (
-          <a
-            key={kw}
-            href={buildAffiliateLink(kw)}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="flex items-center justify-between px-4 py-3 rounded-lg bg-stone-50 hover:bg-red-50 border border-stone-100 hover:border-red-200 transition-all group"
-          >
-            <span className="text-sm text-stone-700 group-hover:text-red-600 font-medium">
-              🔍 {kw}
-            </span>
-            <span className="text-xs text-stone-400 group-hover:text-red-500 font-bold flex items-center gap-1">
-              쿠팡에서 보기
-              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </span>
-          </a>
+          <li key={kw}>
+            <a
+              href={buildAffiliateLink(kw)}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              className="group flex items-center justify-between gap-3 rounded-lg px-2 py-2.5 text-[14px] text-ink-2 transition-colors hover:bg-subtle hover:text-ink"
+            >
+              <span className="truncate">{kw}</span>
+              <span className="flex flex-shrink-0 items-center gap-1 text-[12px] text-ink-3 group-hover:text-ink-2">
+                쿠팡에서 보기
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </a>
+          </li>
         ))}
-      </div>
-      <p className="px-5 py-2 text-[10px] text-stone-400 bg-stone-50 border-t border-stone-100">
+      </ul>
+      <p className="border-t border-line px-4 py-2.5 text-[11px] leading-relaxed text-ink-3 sm:px-5">
         {siteConfig.coupang.disclaimer}
       </p>
-    </div>
+    </aside>
   );
 }
 
@@ -125,34 +121,26 @@ export function CoupangSidebarAd({
   className = "",
 }: CoupangSidebarAdProps) {
   return (
-    <div className={`rounded-xl border border-stone-200 bg-white ${className}`}>
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-stone-100">
-        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
-          <rect width="24" height="24" rx="6" fill="#E31937" />
-          <path d="M7 8.5h10M7 12h10M7 15.5h6" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
-        </svg>
-        <span className="text-xs font-bold text-stone-600">쿠팡 추천</span>
-      </div>
-      <div className="p-3 space-y-1.5">
+    <aside aria-label="쿠팡 파트너스 광고" className={`rounded-xl border border-line bg-surface ${className}`}>
+      <p className="border-b border-line px-4 py-3 text-[12px] font-semibold text-ink-2">쿠팡 추천 · 광고</p>
+      <ul className="space-y-px p-2">
         {keywords.map((kw) => (
-          <a
-            key={kw}
-            href={buildAffiliateLink(kw)}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="flex items-center gap-2 px-3 py-2.5 rounded-lg hover:bg-red-50 transition-colors group"
-          >
-            <span className="text-xs text-stone-500 group-hover:text-red-600">🔍</span>
-            <span className="text-xs text-stone-600 group-hover:text-red-600 font-medium truncate">
+          <li key={kw}>
+            <a
+              href={buildAffiliateLink(kw)}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              className="block truncate rounded-md px-2.5 py-2 text-[13px] text-ink-2 transition-colors hover:bg-subtle hover:text-ink"
+            >
               {kw}
-            </span>
-          </a>
+            </a>
+          </li>
         ))}
-      </div>
-      <p className="px-4 py-2 text-[9px] text-stone-400 border-t border-stone-50">
+      </ul>
+      <p className="border-t border-line px-4 py-2 text-[10px] text-ink-3">
         쿠팡 파트너스 활동으로 수수료를 받을 수 있습니다.
       </p>
-    </div>
+    </aside>
   );
 }
 
@@ -169,11 +157,7 @@ export function AdSlot({
 }) {
   return (
     <div className={`my-8 ${className}`}>
-      {label && (
-        <p className="text-[10px] text-stone-400 text-center mb-2 tracking-wider">
-          SPONSORED
-        </p>
-      )}
+      {label && <p className="mb-2 text-center text-[11px] tracking-wider text-ink-3">광고</p>}
       <div className="flex justify-center">{children}</div>
     </div>
   );

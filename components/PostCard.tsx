@@ -1,167 +1,114 @@
 import type { PostMeta } from "@/lib/posts";
-import { getCategory } from "@/lib/config";
+import { formatDate, isoDate } from "@/lib/posts";
+import { getCategory, categoryName } from "@/lib/config";
 import { localizedHref, defaultLocale, type Locale } from "@/lib/i18n";
+
+type Variant = "card" | "feature" | "row";
 
 interface PostCardProps {
   post: PostMeta;
-  compact?: boolean;
+  variant?: Variant;
+  /** @deprecated variant="feature" 사용 */
   featured?: boolean;
+  /** @deprecated variant="row" 사용 */
+  compact?: boolean;
   locale?: Locale;
+  showCategory?: boolean;
+  /** 제목 태그 레벨 (섹션 구조에 맞춤) */
+  as?: "h2" | "h3" | "h4";
 }
 
-const difficultyColor: Record<string, string> = {
-  beginner: "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200/50",
-  intermediate: "bg-amber-50 text-amber-600 ring-1 ring-amber-200/50",
-  advanced: "bg-rose-50 text-rose-600 ring-1 ring-rose-200/50",
-};
-
-const diffLabels: Record<Locale, Record<string, string>> = {
-  ko: { beginner: "입문", intermediate: "중급", advanced: "심화" },
-  en: { beginner: "Beginner", intermediate: "Intermediate", advanced: "Advanced" },
-};
-
-export function PostCard({ post, compact, featured, locale = defaultLocale }: PostCardProps) {
+function Meta({ post, locale, showCategory }: { post: PostMeta; locale: Locale; showCategory: boolean }) {
   const category = getCategory(post.category);
-  const lh = (path: string) => localizedHref(path, locale);
-  const dl = diffLabels[locale] || diffLabels.ko;
-
-  /* ── Featured: full-width horizontal ── */
-  if (featured) {
-    return (
-      <a
-        href={lh(`/posts/${post.slug}`)}
-        className="group block overflow-hidden rounded-3xl bg-white ring-1 ring-stone-200/60 card-lift"
-      >
-        <div className="flex flex-col md:flex-row">
-          {/* Image */}
-          <div className="relative md:w-[48%] aspect-[16/10] md:aspect-auto overflow-hidden bg-stone-50">
-            {post.thumbnail ? (
-              <img
-                src={post.thumbnail}
-                alt={post.title}
-                className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-                loading="lazy"
-              />
-            ) : (
-              <div className="w-full h-full min-h-[280px] bg-gradient-to-br from-blue-50 via-white to-amber-50 flex items-center justify-center">
-                <span className="text-7xl opacity-20">{category?.emoji || "📝"}</span>
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            {category && (
-              <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-sm text-xs font-bold text-stone-700 shadow-sm ring-1 ring-black/[0.04]">
-                <span>{category.emoji}</span>
-                {category.name}
-              </span>
-            )}
-          </div>
-
-          {/* Text */}
-          <div className="flex-1 p-7 lg:p-10 flex flex-col justify-center">
-            <div className="flex items-center gap-2.5 mb-4">
-              <time className="text-xs text-stone-400 font-medium">{post.date}</time>
-              {post.difficulty && (
-                <>
-                  <span className="w-1 h-1 bg-stone-200 rounded-full" />
-                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${difficultyColor[post.difficulty] || ""}`}>
-                    {dl[post.difficulty] || post.difficulty}
-                  </span>
-                </>
-              )}
-            </div>
-            <h3 className="text-xl lg:text-2xl font-extrabold text-stone-800 group-hover:text-primary transition-colors duration-300 leading-snug font-headline mb-3 line-clamp-2">
-              {post.title}
-            </h3>
-            <p className="text-sm text-stone-500 line-clamp-3 leading-relaxed mb-6">
-              {post.description}
-            </p>
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold text-primary group-hover:gap-2.5 transition-all duration-300">
-              자세히 읽기
-              <span className="material-symbols-outlined text-sm">arrow_forward</span>
-            </span>
-          </div>
-        </div>
-      </a>
-    );
-  }
-
-  /* ── Compact: sidebar / list ── */
-  if (compact) {
-    return (
-      <a
-        href={lh(`/posts/${post.slug}`)}
-        className="group flex items-center gap-4 p-3 rounded-2xl hover:bg-stone-50 transition-all duration-300"
-      >
-        {post.thumbnail ? (
-          <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-stone-50 ring-1 ring-black/[0.04]">
-            <img
-              src={post.thumbnail}
-              alt={post.title}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              loading="lazy"
-            />
-          </div>
-        ) : (
-          <div className="w-16 h-16 rounded-xl flex-shrink-0 bg-gradient-to-br from-blue-50 to-amber-50 flex items-center justify-center ring-1 ring-black/[0.04]">
-            <span className="text-lg opacity-40">{category?.emoji || "📝"}</span>
-          </div>
-        )}
-        <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-bold text-stone-700 group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-            {post.title}
-          </h3>
-          <time className="mt-1.5 block text-xs text-stone-400">{post.date}</time>
-        </div>
-      </a>
-    );
-  }
-
-  /* ── Standard: grid card ── */
   return (
-    <a
-      href={lh(`/posts/${post.slug}`)}
-      className="group block overflow-hidden rounded-2xl bg-white ring-1 ring-stone-200/60 card-lift"
-    >
-      <div className="relative aspect-[16/10] overflow-hidden bg-stone-50">
-        {post.thumbnail ? (
-          <>
+    <p className="flex flex-wrap items-center gap-x-2 text-[12.5px] text-ink-3">
+      {showCategory && category && (
+        <>
+          <span className="font-semibold text-accent">{categoryName(category, locale)}</span>
+          <span aria-hidden="true">·</span>
+        </>
+      )}
+      <time dateTime={isoDate(post.date)}>{formatDate(post.date)}</time>
+    </p>
+  );
+}
+
+export function PostCard({
+  post,
+  variant,
+  featured,
+  compact,
+  locale = defaultLocale,
+  showCategory = true,
+  as: Heading = "h3",
+}: PostCardProps) {
+  const v: Variant = variant || (featured ? "feature" : compact ? "row" : "card");
+  const href = localizedHref(`/posts/${post.slug}`, locale);
+
+  if (v === "feature") {
+    return (
+      <a href={href} className="group grid gap-5 md:grid-cols-12 md:items-center md:gap-8">
+        {post.thumbnail && (
+          <div className="overflow-hidden rounded-xl border border-line bg-subtle md:col-span-7">
             <img
               src={post.thumbnail}
-              alt={post.title}
-              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-              loading="lazy"
+              alt=""
+              className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </>
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-blue-50 via-white to-amber-50 flex items-center justify-center">
-            <span className="text-5xl opacity-15">{category?.emoji || "📝"}</span>
           </div>
         )}
-        {category && (
-          <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-sm text-[10px] font-bold text-stone-700 shadow-sm ring-1 ring-black/[0.04]">
-            <span>{category.emoji}</span>
-            {category.name}
-          </span>
-        )}
-      </div>
-
-      <div className="p-5 lg:p-6">
-        <div className="flex items-center gap-2 mb-3">
-          {post.difficulty && (
-            <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${difficultyColor[post.difficulty] || ""}`}>
-              {dl[post.difficulty] || post.difficulty}
-            </span>
+        <div className={post.thumbnail ? "md:col-span-5" : "md:col-span-12"}>
+          <Meta post={post} locale={locale} showCategory={showCategory} />
+          <Heading className="card-title mt-2.5 text-[1.55rem] font-bold leading-[1.32] tracking-[-0.025em] text-ink sm:text-[1.85rem]">
+            {post.title}
+          </Heading>
+          {post.description && (
+            <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-ink-2">{post.description}</p>
           )}
-          <time className="text-xs text-stone-400 ml-auto">{post.date}</time>
         </div>
-        <h3 className="text-base lg:text-[17px] font-bold text-stone-800 group-hover:text-primary transition-colors duration-300 line-clamp-2 leading-snug font-headline mb-2.5">
-          {post.title}
-        </h3>
-        <p className="text-[13px] text-stone-500 line-clamp-2 leading-relaxed">
-          {post.description}
-        </p>
-      </div>
+      </a>
+    );
+  }
+
+  if (v === "row") {
+    return (
+      <a href={href} className="group flex items-start gap-4 py-4">
+        <div className="min-w-0 flex-1">
+          <Heading className="card-title line-clamp-2 text-[15.5px] font-semibold leading-snug text-ink">
+            {post.title}
+          </Heading>
+          <div className="mt-1.5">
+            <Meta post={post} locale={locale} showCategory={showCategory} />
+          </div>
+        </div>
+        {post.thumbnail && (
+          <div className="hidden h-[60px] w-[90px] flex-shrink-0 overflow-hidden rounded-md border border-line bg-subtle sm:block">
+            <img src={post.thumbnail} alt="" loading="lazy" className="h-full w-full object-cover" />
+          </div>
+        )}
+      </a>
+    );
+  }
+
+  return (
+    <a href={href} className="group block">
+      {post.thumbnail && (
+        <div className="mb-3.5 overflow-hidden rounded-lg border border-line bg-subtle">
+          <img
+            src={post.thumbnail}
+            alt=""
+            loading="lazy"
+            className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        </div>
+      )}
+      <Meta post={post} locale={locale} showCategory={showCategory} />
+      <Heading className="card-title mt-1.5 line-clamp-2 text-[17px] font-semibold leading-[1.45] tracking-[-0.015em] text-ink">
+        {post.title}
+      </Heading>
+      {post.description && (
+        <p className="mt-1.5 line-clamp-2 text-[14px] leading-relaxed text-ink-3">{post.description}</p>
+      )}
     </a>
   );
 }

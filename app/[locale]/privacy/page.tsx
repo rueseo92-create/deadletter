@@ -8,17 +8,17 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="pt-28 pb-20 max-w-3xl mx-auto px-6">
-      <header className="mb-12">
-        <h1 className="text-3xl lg:text-4xl font-extrabold text-on-surface font-headline">
+    <div className="mx-auto max-w-[42.5rem] px-4 pb-10 pt-10 sm:px-6 sm:pt-14">
+      <header className="mb-10 border-b border-line pb-8">
+        <h1 className="text-[1.9rem] font-bold tracking-[-0.03em] text-ink sm:text-[2.3rem]">
           개인정보처리방침
         </h1>
-        <p className="mt-2 text-on-surface-variant text-sm">
+        <p className="mt-2 text-[14px] text-ink-3">
           최종 수정일: {new Date().toISOString().split("T")[0]}
         </p>
       </header>
 
-      <div className="prose max-w-none">
+      <div className="prose">
         <h2>1. 개인정보의 수집 및 이용 목적</h2>
         <p>
           {siteConfig.name}(이하 &quot;사이트&quot;)는 다음 목적을 위해 개인정보를 수집 및 이용합니다.
@@ -54,7 +54,9 @@ export default function PrivacyPage() {
 
         <h2>6. 개인정보 보호책임자</h2>
         <p>
-          개인정보 관련 문의사항은 사이트 운영자에게 연락해주세요.
+          개인정보 관련 문의사항은{" "}
+          {/* TODO: 실제 이메일 확인 */}
+          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>로 연락해 주세요.
         </p>
       </div>
     </div>

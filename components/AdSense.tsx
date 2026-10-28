@@ -31,10 +31,8 @@ export function AdSense({
   }, []);
 
   return (
-    <div className={`adsense-container my-8 ${className}`}>
-      <p className="text-[10px] text-stone-400 text-center mb-2 tracking-wider">
-        SPONSORED
-      </p>
+    <aside aria-label="광고" className={`adsense-container my-10 ${className}`}>
+      <p className="mb-2 text-center text-[11px] tracking-wider text-ink-3">광고</p>
       <div ref={adRef} className="flex justify-center">
         <ins
           className="adsbygoogle"
@@ -46,7 +44,7 @@ export function AdSense({
           data-full-width-responsive="true"
         />
       </div>
-    </div>
+    </aside>
   );
 }
 
