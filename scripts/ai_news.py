@@ -13,6 +13,7 @@ import html
 import json
 import re
 import time
+import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
@@ -118,6 +119,59 @@ def collect(hours: int = WINDOW_HOURS) -> list[dict]:
     return items
 
 
+def resolve_google(url: str) -> str:
+    """구글뉴스 중계 링크 → 원문 기사 주소. 실패하면 원래 주소."""
+    if "news.google.com" not in url:
+        return url
+    try:
+        page = _get(url).decode("utf-8", errors="ignore")
+        gid = re.search(r'data-n-a-id="([^"]+)"', page).group(1)
+        ts = re.search(r'data-n-a-ts="(\d+)"', page).group(1)
+        sg = re.search(r'data-n-a-sg="([^"]+)"', page).group(1)
+        inner = json.dumps(["garturlreq", [["X", "X", ["X", "X"], None, None, 1, 1, "US:en", None, 1, None, None,
+                                            None, None, None, 0, 1], "X", "X", 1, [1, 1, 1], 1, 1, None, 0, 0, None, 0],
+                            gid, int(ts), sg])
+        data = urllib.parse.urlencode({"f.req": json.dumps([[["Fbv4je", inner, None, "generic"]]])}).encode()
+        req = urllib.request.Request("https://news.google.com/_/DotsSplashUi/data/batchexecute", data=data,
+                                     headers={"User-Agent": UA,
+                                              "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            raw = r.read().decode("utf-8", errors="ignore")
+        for line in raw.splitlines():
+            if line.startswith('[["wrb.fr"'):
+                res = json.loads(json.loads(line)[0][2])
+                if res and res[0] == "garturlres" and str(res[1]).startswith("http"):
+                    return res[1]
+        return url
+    except Exception:
+        return url
+
+
+def article_text(url: str, limit: int = 2500) -> str:
+    """기사 페이지에서 본문 문장만 뽑는다. 메뉴·댓글·추천 기사 같은 짧은 줄은 버리고
+    문장으로 끝나는 긴 줄만 남긴다. 구글뉴스 중계 링크는 먼저 resolve_google 로 풀어야 한다."""
+    if "news.google.com" in url:
+        return ""
+    try:
+        page = _get(url).decode("utf-8", errors="ignore")
+    except Exception:
+        return ""
+    page = re.sub(r"<(script|style|noscript|nav|header|footer|aside|form)[^>]*>.*?</\1>", " ", page, flags=re.S | re.I)
+    page = re.sub(r"<(br|/p|/div|/li|/h\d|/article|/section)[^>]*>", "\n", page, flags=re.I)
+    lines = [html.unescape(re.sub(r"<[^>]+>", " ", x)) for x in page.split("\n")]
+    lines = [re.sub(r"\s+", " ", x).strip() for x in lines]
+    keep, seen = [], set()
+    for x in lines:
+        if len(x) < 50 or x in seen:
+            continue
+        sentence = re.search(r"(다|요|음|함)\.[\"'”’)]?$|다\. |[a-z0-9][.!?][\"'”’)]?$", x)
+        junk = any(w in x for w in ("©", "무단", "Copyright", "저작권자", "기자 =", "최신글", "구독", "댓글", "Subscribe", "Sign up"))
+        if sentence and not junk:
+            keep.append(x)
+            seen.add(x)
+    return "\n".join(keep)[:limit]
+
+
 def _tokens(s: str) -> set[str]:
     toks = re.findall(r"[A-Za-z][A-Za-z0-9.\-]+|[가-힣]{2,}", s.lower())
     return {t for t in toks if t not in STOP and len(t) >= 2}
@@ -187,8 +241,9 @@ def _score(group: list[dict]) -> float:
     useful = sum(1 for w in USEFUL if w in blob)
     local = any(w in blob for w in LOCAL)
     specialist = any(i["source"] in ("AI타임스", "GeekNews", "OpenAI", "The Verge AI", "TechCrunch AI") for i in group)
+    readable = any("news.google.com" not in i["url"] for i in group)
     return (sources * 1.5 + min(major, 3) * 1.5 + min(useful, 3) * 0.7 + (1 if specialist else 0)
-            + max(0, 24 - hours) / 12 - (4 if local else 0))
+            + max(0, 24 - hours) / 12 - (4 if local else 0) + (1.5 if readable else 0))
 
 
 def _subject(group: list[dict]) -> str:
@@ -230,8 +285,14 @@ def pick_plans(n: int = 1, exclude: set = None) -> list[dict]:
             "risk": {"level": "green", "fields": [], "guides": [], "notes": []},
             "sources": [{"name": i["source"], "url": i["url"], "title": i["title"],
                          "published": i["published"].strftime("%Y-%m-%d %H:%M UTC") if i["published"] else "",
-                         "summary": i["summary"]} for i in g],
+                         "summary": i["summary"], "body": ""} for i in g],
         })
+        got = 0
+        for src in plans[-1]["sources"][:5]:
+            src["url"] = resolve_google(src["url"])  # 출처도 원문 언론사 주소로
+            if got < 3:
+                src["body"] = article_text(src["url"])
+                got += bool(src["body"])
     return plans
 
 
@@ -241,6 +302,8 @@ def prompt_block(plan: dict) -> str:
         lines.append(f"핵심 대상(제목 앞부분에 넣을 것): {plan['keyword']}")
     for i, s in enumerate(plan["sources"], 1):
         lines.append(f"{i}. [{s['name']}] {s['title']} ({s['published']})\n   요약: {s['summary'] or '(요약 없음)'}")
+        if s.get("body"):
+            lines.append(f"   본문 발췌:\n   {s['body'][:2000]}")
     lines.append(
         "작성 규칙:\n"
         "   - 위 기사에 있는 사실만 쓴다. 기사에 없는 수치·날짜·인용·출시 일정은 쓰지 않는다.\n"
@@ -255,4 +318,4 @@ if __name__ == "__main__":
     for p in pick_plans(3):
         print(f"\n▶ 키워드: {p['keyword'] or '(없음)'}  기사 {len(p['sources'])}건")
         for s in p["sources"]:
-            print(f"   - [{s['name']}] {s['title'][:70]}")
+            print(f"   - [{s['name']}] {s['title'][:60]}  본문 {len(s.get('body',''))}자")

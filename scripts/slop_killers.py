@@ -44,9 +44,12 @@ REVIEWERS = [
      "focus": "수익 보장·과장('월 300 버는', '누구나', '하루 10분으로'), 비용·시간·실패 위험·플랫폼 정책(수익화 제한, 저작권, AI 생성물 표시) 누락, "
               "낚시성 표현. AI 부업 글은 현실적인 기대치와 리스크가 반드시 있어야 함.",
      "critical": True},
-    {"id": "reader", "name": "독자 대변인",
-     "focus": "제목이 약속한 것을 본문이 주는가, 첫 3~4줄 안에 검색한 사람이 원하는 답이 나오는가, 핵심이 늦게 나오지 않는가.",
-     "critical": False},
+    {"id": "hook", "name": "후킹·재미 편집장",
+     "focus": "바쁜 독자가 첫 3줄을 읽고 계속 읽을까? 제목이 클릭할 이유(구체적 숫자·비교·반전·결과)를 과장 없이 주는가, "
+              "제목이 약속한 것을 본문이 주는가, 문장이 살아 있는가(교과서식 나열·무난한 일반론이면 탈락), "
+              "읽고 나서 남에게 말하고 싶은 한 가지가 있는가, 직접 실행한 테스트가 있으면 잘 살렸는가. "
+              "지루함은 major, 제목과 본문 불일치는 critical.",
+     "critical": True},
     {"id": "fresh", "name": "최신성 검사관",
      "focus": f"지금은 {datetime.now():%Y년 %m월}이다. 오래된 모델·요금·기능을 최신인 것처럼 쓴 곳, 지난 연도 정보, 이미 바뀐 UI 설명. "
               "확실하지 않으면 '작성 시점 기준'이라고 밝혔는지.",
@@ -112,14 +115,19 @@ def lint(content: str) -> list[str]:
 def _context(plan: dict | None) -> str:
     if not plan:
         return "(제공된 자료 없음)"
+    tests = ""
+    for i, t in enumerate(plan.get("experiments") or [], 1):
+        tests += (f"\n[세로AI 테스트 {i} - 실제 실행됨, 사실로 인정] 목적: {t['purpose']}\n프롬프트: {t['prompt'][:600]}"
+                  f"\n결과: {t['output'][:900]}")
     if plan.get("news"):
-        return "\n".join(f"- [{s['name']}] {s['title']} :: {s['summary'][:200]}" for s in plan["sources"])
+        return "\n".join(f"- [{s['name']}] {s['title']} :: {(s.get('body') or s['summary'])[:700]}"
+                          for s in plan["sources"])
     lines = [f"세부 키워드: {plan.get('keyword')}", f"검색 의도: {plan.get('intent')}"]
     if plan.get("serp_titles"):
         lines.append("상위 노출 글 제목: " + " / ".join(plan["serp_titles"][:6]))
     if plan.get("questions"):
         lines.append("독자 질문: " + " / ".join(plan["questions"][:6]))
-    return "\n".join(lines)
+    return "\n".join(lines) + tests
 
 
 def _review_one(rv: dict, title: str, content: str, plan: dict | None, lint_notes: list[str]) -> dict:

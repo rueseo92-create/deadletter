@@ -52,6 +52,7 @@ load_dotenv()
 
 sys.path.insert(0, str(Path(__file__).parent))
 import ai_news  # noqa: E402
+import angle  # noqa: E402
 import keyword_research  # noqa: E402
 import title_rules  # noqa: E402
 
@@ -709,7 +710,9 @@ AI 자동화, AI 부업, AI 뉴스, AI 도구를 직장인·1인 사업자·부�
    - 금지: 없는 경험("직접 써보니", "써본 후기"), 과장("무조건", "100%", "월 300", "역대급"), 본문에 없는 숫자, 지난 연도
    - title_candidates 에 서로 다른 수식어의 후보 2개를 더 낸다
 
-2. 첫 단락: 3문장 이내로 검색한 사람이 원하는 답을 바로 준다. "혹시 ~하신 적 있나요?" 같은 질문형 도입 금지.
+2. 첫 단락(가장 중요): 편집 방향의 첫 문단 초안을 살려 2-3문장으로 독자를 붙잡는다.
+   손해·시간·돈·의외의 사실로 시작하고, 이 글을 끝까지 읽으면 무엇을 얻는지 약속한다.
+   "혹시 ~하신 적 있나요?", "~에 대해 알아보겠습니다" 같은 도입 금지.
    바로 아래에 > 핵심 답변: (40-60자 한 줄 결론) 을 둔다.
 
 3. 본문: 3-5개 H2, 필요한 곳에 H3. 검색 의도별 권장 구조가 주어지면 따른다.
@@ -725,8 +728,12 @@ AI 자동화, AI 부업, AI 뉴스, AI 도구를 직장인·1인 사업자·부�
    - 존재하지 않는 기능, 메뉴, 요금제, 정책을 만들지 않는다. 확실하지 않으면 "확인 필요"라고 쓴다
    - 직접 써 본 것처럼 쓰지 않는다 (1인칭 체험담 금지)
 
-5. 문체
-   - 담백한 존댓말. 짧은 문장. 한 문단 2-4문장
+5. 문체 - '대신 삽질해 주는 친구' 톤
+   - 짧고 직설적인 해요체. 한 문단 1-3문장. 리듬 있게 짧은 문장과 긴 문장을 섞는다
+   - 의견은 분명하게: "이건 비추예요", "여기서 대부분 막혀요", "솔직히 이 부분은 과대평가됐어요" (근거와 함께)
+   - 소제목은 질문이나 결론으로 ("월 30만 원이 현실적인 이유", "3번째 단계에서 다들 막힌다")
+   - 각 H2 끝에 "바로 해볼 것:" 한 줄로 행동을 준다
+   - 편집 방향에 세로AI 테스트 결과가 있으면 반드시 별도 H2로 보여 준다
    - 금지 표현: "결론적으로", "다양한", "중요합니다", "게임 체인저", "혁신적인", "알아보겠습니다", "놓치지 마세요", 이모지
    - 마크다운 볼드(**), 취소선, 물결표(~) 금지. 범위는 하이픈(2-4주)
    - 핵심 정보는 인용블록(>)으로 1-3개만
@@ -787,14 +794,27 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
         print(f"  → 키워드: {plan['main']} > {plan['keyword']} (의도: {plan['intent']})")
 
     blog_prompt = BLOG_PROMPT_EN if lang == "en" else BLOG_PROMPT
+    keyword_block = ""
+    angle_titles = []
+    if plan:
+        keyword_block = ai_news.prompt_block(plan) if plan.get("news") else keyword_research.prompt_block(plan)
+        # 쓰기 전에 각도 설계 + 가능한 건 실제 실행 (실패해도 글은 계속 쓴다)
+        try:
+            a = angle.plan(topic.title, CATEGORIES.get(topic.category, {}).get("name", topic.category), keyword_block)
+            results = [] if plan.get("news") else angle.run_experiments(a.experiments)
+            plan["experiments"] = results
+            angle_titles = a.title_ideas
+            keyword_block += "\n\n" + angle.prompt_block(a, results)
+            print(f"  → 각도: [{a.hook_type}] {a.angle} (테스트 {len(results)}건 실행)")
+        except Exception as e:
+            print(f"  [각도] 설계 실패, 기본 방식으로 작성: {e}")
     prompt_content = blog_prompt.format(
         title=topic.title,
         category=CATEGORIES.get(topic.category, {}).get("name", topic.category),
         summary=topic.summary or ("Latest practical insights" if lang == "en" else "최신 실용 정보"),
         difficulty=topic.difficulty,
         today=datetime.now().strftime("%Y-%m-%d"),
-        keyword_block=(ai_news.prompt_block(plan) if plan and plan.get("news")
-                       else keyword_research.prompt_block(plan) if plan else ""),
+        keyword_block=keyword_block,
     )
 
     data = None
@@ -860,10 +880,11 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
     quality_issues = []
     if plan:
         # 제목 4단계 공식 검사: 오류 없는 첫 후보 사용 (뉴스는 핵심 대상이 없으면 키워드 조건 생략)
-        candidates = [data.get("title", "")] + list(data.get("title_candidates") or [])
+        candidates = [data.get("title", "")] + list(data.get("title_candidates") or []) + angle_titles
+        tested = bool(plan.get("experiments"))  # 실제로 실행해 본 글만 '해 봤더니' 류 표현 허용
         title, title_issues, checked = title_rules.choose_title(
             candidates, plan["keyword"], topic.category, data["content"], plan.get("serp_titles", []),
-            plan.get("intent", "info"))
+            plan.get("intent", "info"), allow_experience=tested)
         for t, iss in checked:
             if t != title and iss:
                 print(f"  [제목 탈락] {t} → " + ", ".join(i["issue"] for i in iss if i["severity"] == "error"))
@@ -1067,7 +1088,12 @@ def create_mdx_file(post: BlogPost) -> Path:
         sources_yaml += f'\n  - name: "{_yq(s.name)}"\n    url: "{_yq(s.url)}"\n    type: "{_yq(s.type)}"'
 
     # 카테고리별 Unsplash 썸네일 자동 할당
-    thumbnail = _pick_thumbnail(post.slug, post.category)
+    # 글마다 제목이 들어간 브랜드 썸네일 (카테고리별 색). 무관한 스톡 사진 대신.
+    if post.category in CATEGORIES:
+        base = (SITE_URL or "https://seroai.xyz").rstrip("/")
+        thumbnail = f"{base}/api/og?title={urllib.parse.quote(post.title)}&category={post.category}"
+    else:
+        thumbnail = _pick_thumbnail(post.slug, post.category)
 
     lang_field = f'\nlanguage: "{post.language}"' if post.language == "en" else ""
     if post.keyword or post.intent:
