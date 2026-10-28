@@ -1,0 +1,300 @@
+{
+ "seeds": {
+  "건강검진": {
+   "fetched": "2026-10-28T14:12:51",
+   "candidates": [
+    {
+     "keyword": "종합건강검진",
+     "ac_score": 2.14,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.14
+    },
+    {
+     "keyword": "종합건강검진 비용",
+     "ac_score": 2.0,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.0
+    },
+    {
+     "keyword": "종합건강검진 예약",
+     "ac_score": 1.64,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.64
+    },
+    {
+     "keyword": "종합건강검진 항목",
+     "ac_score": 1.58,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.58
+    },
+    {
+     "keyword": "건강검진후식사",
+     "ac_score": 1.5,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.5
+    },
+    {
+     "keyword": "종합건강검진 병원",
+     "ac_score": 1.46,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.46
+    },
+    {
+     "keyword": "건강검진전금식",
+     "ac_score": 1.3,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.3
+    },
+    {
+     "keyword": "종합건강검진 시간",
+     "ac_score": 1.28,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.28
+    },
+    {
+     "keyword": "생애주기별건강검진",
+     "ac_score": 1.2,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "건강검진 예약",
+     "ac_score": 1.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "건강검진 대상자",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "건강검진 비용",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    }
+   ]
+  },
+  "챗GPT": {
+   "fetched": "2026-10-28T14:12:55",
+   "candidates": [
+    {
+     "keyword": "챗 GPT 유료 가격",
+     "ac_score": 4.28,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 4.28
+    },
+    {
+     "keyword": "챗 GPT 무료",
+     "ac_score": 3.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.7
+    },
+    {
+     "keyword": "챗gpt 할인",
+     "ac_score": 3.2,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.2
+    },
+    {
+     "keyword": "챗 GPT 유료",
+     "ac_score": 2.88,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.88
+    },
+    {
+     "keyword": "챗gpt 아스트라",
+     "ac_score": 2.2,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.2
+    },
+    {
+     "keyword": "챗gpt 할인 방법",
+     "ac_score": 1.76,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.76
+    },
+    {
+     "keyword": "챗gpt 할인 카드",
+     "ac_score": 1.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.7
+    },
+    {
+     "keyword": "챗gpt 유료 가격 차이",
+     "ac_score": 1.64,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.64
+    },
+    {
+     "keyword": "챗gpt 요금제",
+     "ac_score": 1.6,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.6
+    },
+    {
+     "keyword": "챗gpt 할인 이벤트",
+     "ac_score": 1.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.4
+    },
+    {
+     "keyword": "챗gpt 할인코드",
+     "ac_score": 1.34,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.34
+    },
+    {
+     "keyword": "챗gpt 할인 skt",
+     "ac_score": 1.16,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.16
+    }
+   ]
+  }
+ },
+ "seed_used": {
+  "건강검진": "2026-10-28T14:12:52",
+  "챗GPT": "2026-10-28T14:12:56"
+ }
+}
