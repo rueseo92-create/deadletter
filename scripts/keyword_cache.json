@@ -580,12 +580,106 @@
      "score": 0.8
     }
    ]
+  },
+  "챗GPT 사용법": {
+   "fetched": "2026-10-28T15:42:47",
+   "candidates": [
+    {
+     "keyword": "챗GPT 사용법 PDF",
+     "ac_score": 1.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "챗GPT 사용법 무료",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "챗GPT 사용법 강의",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "카카오톡 챗GPT 사용법",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "애플 인텔리전스 챗GPT 사용법",
+     "ac_score": 0.7,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    },
+    {
+     "keyword": "아이폰 챗GPT 사용법",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "구글 챗GPT 사용법",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "모바일 챗GPT 사용법",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    }
+   ]
   }
  },
  "seed_used": {
   "건강검진": "2026-10-28T14:12:52",
   "챗GPT": "2026-10-28T14:12:56",
   "영양제": "2026-10-28T14:23:29",
-  "AI 도구": "2026-10-28T14:23:34"
+  "AI 도구": "2026-10-28T14:23:34",
+  "챗GPT 사용법": "2026-10-28T15:42:48"
  }
 }
