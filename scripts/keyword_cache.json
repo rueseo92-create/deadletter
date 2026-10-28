@@ -936,6 +936,145 @@
      "score": 0.6
     }
    ]
+  },
+  "제미나이 사용법": {
+   "fetched": "2026-10-28T16:49:12",
+   "candidates": [
+    {
+     "keyword": "구글 제미나이 사용법",
+     "ac_score": 3.3,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.3
+    },
+    {
+     "keyword": "갤럭시 제미나이 사용법",
+     "ac_score": 2.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.8
+    },
+    {
+     "keyword": "제미나이 사용법 PDF",
+     "ac_score": 1.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "제미나이 사용법 강의",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "구글 제미나이 무료 사용법",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "갤럭시 워치 제미나이 사용법",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "제미나이 사용법 갤럭시",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "갤럭시 워치8 제미나이 사용법",
+     "ac_score": 0.78,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.78
+    },
+    {
+     "keyword": "구글 AI 제미나이 사용법",
+     "ac_score": 0.72,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.72
+    },
+    {
+     "keyword": "갤럭시 s25 제미나이 사용법",
+     "ac_score": 0.72,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.72
+    },
+    {
+     "keyword": "구글 제미나이 API 사용법",
+     "ac_score": 0.66,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.66
+    },
+    {
+     "keyword": "갤럭시 s24 제미나이 사용법",
+     "ac_score": 0.66,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.66
+    }
+   ]
   }
  },
  "seed_used": {
@@ -946,6 +1085,7 @@
   "챗GPT 사용법": "2026-10-28T15:42:48",
   "클로드 사용법": "2026-10-28T15:51:15",
   "AI 부업": "2026-10-28T16:25:34",
-  "AI 블로그 수익": "2026-10-28T16:34:45"
+  "AI 블로그 수익": "2026-10-28T16:34:45",
+  "제미나이 사용법": "2026-10-28T16:49:13"
  }
 }
