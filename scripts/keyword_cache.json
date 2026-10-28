@@ -1075,6 +1075,154 @@
      "score": 0.66
     }
    ]
+  },
+  "퍼플렉시티": {
+   "fetched": "2026-10-28T16:58:43",
+   "candidates": [
+    {
+     "keyword": "퍼플렉시티 AI",
+     "ac_score": 3.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.7
+    },
+    {
+     "keyword": "퍼플렉시티 무료",
+     "ac_score": 3.5,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.5
+    },
+    {
+     "keyword": "퍼플렉시티 1년 무료",
+     "ac_score": 3.0,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.0
+    },
+    {
+     "keyword": "퍼플렉시티 가격",
+     "ac_score": 2.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.8
+    },
+    {
+     "keyword": "퍼플렉시티 무료 이벤트",
+     "ac_score": 1.88,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.88
+    },
+    {
+     "keyword": "퍼플렉시티 AI 무료",
+     "ac_score": 1.82,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.82
+    },
+    {
+     "keyword": "퍼플렉시티 프로",
+     "ac_score": 1.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.8
+    },
+    {
+     "keyword": "퍼플렉시티 요금제",
+     "ac_score": 1.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.4
+    },
+    {
+     "keyword": "퍼플렉시티 AI 모델",
+     "ac_score": 1.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.4
+    },
+    {
+     "keyword": "퍼플렉시티 무료 유료 차이",
+     "ac_score": 1.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.4
+    },
+    {
+     "keyword": "퍼플렉시티 무료 버전",
+     "ac_score": 1.22,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.22
+    },
+    {
+     "keyword": "퍼플렉시티 대학생",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    }
+   ]
   }
  },
  "seed_used": {
@@ -1086,6 +1234,7 @@
   "클로드 사용법": "2026-10-28T15:51:15",
   "AI 부업": "2026-10-28T16:25:34",
   "AI 블로그 수익": "2026-10-28T16:34:45",
-  "제미나이 사용법": "2026-10-28T16:49:13"
+  "제미나이 사용법": "2026-10-28T16:49:13",
+  "퍼플렉시티": "2026-10-28T16:58:44"
  }
 }
