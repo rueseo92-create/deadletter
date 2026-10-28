@@ -2,7 +2,7 @@
 slop_killers.py - AI 슬롭 킬러 10명: 발행 전 품질 심사위원단
 
 각 심사위원은 한 가지 관점만 엄격하게 본다. 10명이 동시에 읽고 판정한 뒤
-  - 8명 이상 통과 + 치명적(critical) 지적 없음 → 발행
+  - 7명 이상 통과 + 팩트체커·출처 감시관·과장 단속반 통과 + 치명적(critical) 지적 없음 → 발행
   - 아니면 모든 지적을 모아 1회 고쳐 쓰고, 탈락했던 심사위원만 다시 심사
   - 그래도 기준 미달이면 발행하지 않는다 (SlopRejected)
 
@@ -21,7 +21,8 @@ import claude_client
 import title_rules
 
 PANEL_SIZE = 10
-PASS_NEEDED = 8
+PASS_NEEDED = 7
+MUST_PASS = {"fact", "source", "hype"}  # 사실·출처·과장은 반드시 통과
 
 REVIEWERS = [
     {"id": "fact", "name": "팩트체커",
@@ -161,8 +162,9 @@ def _summary(results: list[dict]) -> dict:
     passed = sum(r["passed"] for r in results)
     critical = [i for r in results for i in r["issues"] if i["severity"] == "critical"]
     score = round(sum(r["score"] for r in results) / max(len(results), 1) * 10)
+    must = all(r["passed"] for r in results if r["id"] in MUST_PASS)
     return {"panel": len(results), "passed": passed, "score": score, "critical": len(critical),
-            "ok": passed >= PASS_NEEDED and not critical}
+            "ok": passed >= PASS_NEEDED and not critical and must}
 
 
 def _revise(post, plan: dict | None, results: list[dict]) -> Revision:
