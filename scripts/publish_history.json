@@ -44,7 +44,16 @@
       "date": "2026-10-29",
       "slot": "night",
       "slug": "2026-10-28-perplexity-ai-pricing-checklist"
+    },
+    {
+      "title": "업무 자동화 AI 툴",
+      "keyword": "업무 자동화 AI 툴",
+      "intent": "info",
+      "category": "ai-automation",
+      "date": "2026-10-29",
+      "slot": "lunch",
+      "slug": "2026-10-28-ai-automation-tool-task-calculation"
     }
   ],
-  "last_run": "2026-10-29 [night] (1/1 성공, 399초)"
+  "last_run": "2026-10-29 [lunch] (1/1 성공, 159초)"
 }
