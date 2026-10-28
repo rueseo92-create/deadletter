@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      RAW_VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_PROJECT: deadletter
       SITE_DOMAIN: seroai.xyz
     steps:
@@ -27,7 +27,7 @@ jobs:
         id: token
         run: |
           # 붙여 넣을 때 섞인 공백·줄바꿈·따옴표 제거
-          T=$(printf '%s' "$VERCEL_TOKEN" | tr -d '[:space:]"'"'"'')
+          T=$(printf '%s' "$RAW_VERCEL_TOKEN" | tr -d '[:space:]"'"'"'')
           if [ -z "$T" ]; then
             echo "VERCEL_TOKEN 시크릿이 없어 배포를 건너뜁니다."
             echo "ok=false" >> "$GITHUB_OUTPUT"
@@ -35,8 +35,10 @@ jobs:
           fi
           echo "::add-mask::$T"
           # 토큰 값은 출력하지 않고 형식만 진단
-          echo "토큰 길이: ${#T}, '-' 포함: $(case "$T" in *-*) echo 예;; *) echo 아니오;; esac), sk-로 시작: $(case "$T" in sk-*) echo 예;; *) echo 아니오;; esac)"
-          echo "VC_TOKEN=$T" >> "$GITHUB_ENV"
+          dashes=$(printf '%s' "$T" | tr -cd '-' | wc -c); unders=$(printf '%s' "$T" | tr -cd '_' | wc -c)
+          uuid=$(printf '%s' "$T" | grep -Eqi '^[0-9a-f]{8}-[0-9a-f]{4}-' && echo 예 || echo 아니오)
+          echo "토큰 형식: 길이 ${#T}, '-' ${dashes}개, '_' ${unders}개, UUID 형태: ${uuid}"
+          echo "VERCEL_TOKEN=$T" >> "$GITHUB_ENV"
           echo "ok=true" >> "$GITHUB_OUTPUT"
 
       - name: Checkout (latest main)
@@ -57,29 +59,29 @@ jobs:
 
       - name: Link project (create if missing)
         if: steps.token.outputs.ok == 'true'
-        run: vercel link --yes --project "$VERCEL_PROJECT" --token "$VC_TOKEN"
+        run: vercel link --yes --project "$VERCEL_PROJECT"
 
       - name: Pull settings
         if: steps.token.outputs.ok == 'true'
-        run: vercel pull --yes --environment=production --token "$VC_TOKEN"
+        run: vercel pull --yes --environment=production
 
       - name: Build
         if: steps.token.outputs.ok == 'true'
-        run: vercel build --prod --token "$VC_TOKEN"
+        run: vercel build --prod
 
       - name: Deploy
         if: steps.token.outputs.ok == 'true'
         run: |
-          url=$(vercel deploy --prebuilt --prod --token "$VC_TOKEN")
+          url=$(vercel deploy --prebuilt --prod)
           echo "배포 주소: $url"
 
       - name: Attach domain
         if: steps.token.outputs.ok == 'true'
         continue-on-error: true
         run: |
-          vercel domains add "$SITE_DOMAIN" "$VERCEL_PROJECT" --token "$VC_TOKEN" || true
-          vercel domains add "www.$SITE_DOMAIN" "$VERCEL_PROJECT" --token "$VC_TOKEN" || true
-          vercel domains inspect "$SITE_DOMAIN" --token "$VC_TOKEN" || true
+          vercel domains add "$SITE_DOMAIN" "$VERCEL_PROJECT" || true
+          vercel domains add "www.$SITE_DOMAIN" "$VERCEL_PROJECT" || true
+          vercel domains inspect "$SITE_DOMAIN" || true
 
       - name: Smoke test
         if: steps.token.outputs.ok == 'true'
