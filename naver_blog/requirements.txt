@@ -1,0 +1,5 @@
+anthropic>=1.12
+pydantic>=2
+Pillow>=10
+python-dotenv>=1.0
+# 아이폰 HEIC 사진을 쓰면: pillow-heif

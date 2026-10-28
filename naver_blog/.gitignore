@@ -1,0 +1,6 @@
+inbox/*
+!inbox/_template/
+out/
+data/
+config.json
+.env

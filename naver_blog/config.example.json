@@ -1,0 +1,10 @@
+{
+  "blog_id": "lovuysy",
+  "model": "claude-opus-5-5",
+  "publish_slots": ["화 19:00", "금 19:00", "일 11:00"],
+  "photo_long_edge": 1600,
+  "photo_quality": 88,
+  "max_photos": 25,
+  "tags_max": 15,
+  "body_chars": [1200, 2200]
+}

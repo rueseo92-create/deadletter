@@ -29,7 +29,7 @@ HYPE_ERROR = [
     r"무조건", r"100\s*%", r"모르면\s*손해", r"충격", r"역대급", r"대박", r"기적",
     r"단\s*하루", r"이것만\s*하면", r"누구나\s*(승인|가능|합격)", r"무료\s*상담",
 ]
-HYPE_WARN = [r"완벽", r"최고의?", r"필독", r"꿀팁\s*대방출", r"끝판왕", r"1\s*위"]
+HYPE_WARN = [r"완벽", r"인생\s*맛집", r"최고의?", r"필독", r"꿀팁\s*대방출", r"끝판왕", r"1\s*위"]
 
 # 위험 분야 (돈나나 위험 키워드표 기준). keyword/카테고리로 분야를 판정하고 표현을 점검한다.
 RISK_FIELDS = {
@@ -120,7 +120,8 @@ def contains_keyword(text: str, keyword: str) -> bool:
 
 
 def check_title(title: str, keyword: str, category: str, content: str = "",
-                serp_titles: list[str] = ()) -> list[dict]:
+                serp_titles: list[str] = (), allow_experience: bool = False) -> list[dict]:
+    """allow_experience: 실제 방문·사용 메모로 쓰는 글(네이버 블로그 반자동)은 경험 표현을 허용한다."""
     issues = []
 
     def add(sev, msg):
@@ -147,7 +148,7 @@ def check_title(title: str, keyword: str, category: str, content: str = "",
             if _norm(num) not in body:
                 add("error", f"본문에 없는 숫자 '{num}'")
 
-    for hit in _find(FAKE_EXPERIENCE, title):
+    for hit in ([] if allow_experience else _find(FAKE_EXPERIENCE, title)):
         add("error", f"없는 경험 표현 '{hit}'")
     for hit in _find(HYPE_ERROR, title):
         add("error", f"과장 표현 '{hit}'")
@@ -169,11 +170,13 @@ FALLBACK_MODIFIER = {
     "compare": "비교하고 고르는 기준",
     "review": "후기에서 많이 나온 장단점",
     "problem": "원인별 해결 방법",
+    "visit": "메뉴와 가격, 다녀온 후기",
 }
 
 
 def choose_title(candidates: list[str], keyword: str, category: str, content: str,
-                 serp_titles: list[str] = (), intent: str = "info") -> tuple[str, list[dict], list[tuple[str, list]]]:
+                 serp_titles: list[str] = (), intent: str = "info",
+                 allow_experience: bool = False) -> tuple[str, list[dict], list[tuple[str, list]]]:
     """오류 없는 첫 후보를 고른다. 모두 오류면 키워드 보정 → 기본 수식어 제목 순으로 대체한다."""
     seen, checked = set(), []
     for t in candidates:
@@ -181,7 +184,7 @@ def choose_title(candidates: list[str], keyword: str, category: str, content: st
         if not t or t in seen:
             continue
         seen.add(t)
-        iss = check_title(t, keyword, category, content, serp_titles)
+        iss = check_title(t, keyword, category, content, serp_titles, allow_experience)
         checked.append((t, iss))
         if not any(i["severity"] == "error" for i in iss):
             return t, iss, checked
@@ -190,12 +193,12 @@ def choose_title(candidates: list[str], keyword: str, category: str, content: st
         best, _ = min(checked, key=lambda x: sum(i["severity"] == "error" for i in x[1]))
         if keyword and not contains_keyword(best, keyword):
             fixed = f"{keyword}, {best}"
-            iss = check_title(fixed, keyword, category, content, serp_titles)
+            iss = check_title(fixed, keyword, category, content, serp_titles, allow_experience)
             if not any(i["severity"] == "error" for i in iss):
                 return fixed, iss, checked
     # 2차 보정: 과장 없는 기본 수식어
     fallback = f"{keyword} {FALLBACK_MODIFIER.get(intent, '핵심 정리')}"
-    iss = check_title(fallback, keyword, category, content, serp_titles)
+    iss = check_title(fallback, keyword, category, content, serp_titles, allow_experience)
     iss.append({"severity": "warn", "issue": "후보 모두 탈락 - 기본 수식어 제목 사용"})
     return fallback, iss, checked
 
