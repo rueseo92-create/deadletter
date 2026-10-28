@@ -36,7 +36,7 @@ jobs:
           echo "::add-mask::$T"
           # 토큰 값은 출력하지 않고 형식만 진단
           echo "토큰 길이: ${#T}, '-' 포함: $(case "$T" in *-*) echo 예;; *) echo 아니오;; esac), sk-로 시작: $(case "$T" in sk-*) echo 예;; *) echo 아니오;; esac)"
-          echo "VERCEL_TOKEN=$T" >> "$GITHUB_ENV"
+          echo "VC_TOKEN=$T" >> "$GITHUB_ENV"
           echo "ok=true" >> "$GITHUB_OUTPUT"
 
       - name: Checkout (latest main)
@@ -57,29 +57,29 @@ jobs:
 
       - name: Link project (create if missing)
         if: steps.token.outputs.ok == 'true'
-        run: vercel link --yes --project "$VERCEL_PROJECT" --token "$VERCEL_TOKEN"
+        run: vercel link --yes --project "$VERCEL_PROJECT" --token "$VC_TOKEN"
 
       - name: Pull settings
         if: steps.token.outputs.ok == 'true'
-        run: vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+        run: vercel pull --yes --environment=production --token "$VC_TOKEN"
 
       - name: Build
         if: steps.token.outputs.ok == 'true'
-        run: vercel build --prod --token "$VERCEL_TOKEN"
+        run: vercel build --prod --token "$VC_TOKEN"
 
       - name: Deploy
         if: steps.token.outputs.ok == 'true'
         run: |
-          url=$(vercel deploy --prebuilt --prod --token "$VERCEL_TOKEN")
+          url=$(vercel deploy --prebuilt --prod --token "$VC_TOKEN")
           echo "배포 주소: $url"
 
       - name: Attach domain
         if: steps.token.outputs.ok == 'true'
         continue-on-error: true
         run: |
-          vercel domains add "$SITE_DOMAIN" "$VERCEL_PROJECT" --token "$VERCEL_TOKEN" || true
-          vercel domains add "www.$SITE_DOMAIN" "$VERCEL_PROJECT" --token "$VERCEL_TOKEN" || true
-          vercel domains inspect "$SITE_DOMAIN" --token "$VERCEL_TOKEN" || true
+          vercel domains add "$SITE_DOMAIN" "$VERCEL_PROJECT" --token "$VC_TOKEN" || true
+          vercel domains add "www.$SITE_DOMAIN" "$VERCEL_PROJECT" --token "$VC_TOKEN" || true
+          vercel domains inspect "$SITE_DOMAIN" --token "$VC_TOKEN" || true
 
       - name: Smoke test
         if: steps.token.outputs.ok == 'true'
