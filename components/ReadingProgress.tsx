@@ -11,8 +11,8 @@ export function ReadingProgress() {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const total = el.scrollHeight - window.innerHeight;
-      const current = -rect.top;
-      setProgress(Math.min(100, Math.max(0, (current / total) * 100)));
+      if (total <= 0) return;
+      setProgress(Math.min(100, Math.max(0, (-rect.top / total) * 100)));
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -21,11 +21,8 @@ export function ReadingProgress() {
   if (progress <= 0) return null;
 
   return (
-    <div className="fixed top-16 left-0 w-full h-[2px] z-50 bg-stone-100/50">
-      <div
-        className="h-full bg-gradient-to-r from-primary via-primary-400 to-secondary transition-[width] duration-100 ease-linear"
-        style={{ width: `${progress}%` }}
-      />
+    <div className="fixed left-0 top-0 z-[60] h-[2px] w-full" aria-hidden="true">
+      <div className="h-full bg-accent" style={{ width: `${progress}%` }} />
     </div>
   );
 }

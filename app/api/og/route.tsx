@@ -9,20 +9,21 @@ import { siteConfig } from "@/lib/config";
 
 export const runtime = "edge";
 
-const categoryColors: Record<string, string> = {
-  finance: "#3B82F6",
-  insurance: "#10B981",
-  health: "#F472B6",
-  tech: "#8B5CF6",
-  realestate: "#F59E0B",
-  lifestyle: "#F97316",
+// 단일 액센트 — 사이트 디자인 토큰(--accent)과 동일
+const ACCENT = "#4F46E5";
+const categoryLabels: Record<string, string> = {
+  "ai-automation": "AI AUTOMATION",
+  "ai-side-hustle": "AI SIDE HUSTLE",
+  "ai-news": "AI NEWS",
+  "ai-tools": "AI TOOLS",
 };
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const title = searchParams.get("title") || siteConfig.defaultTitle;
   const category = searchParams.get("category") || "";
-  const accent = categoryColors[category] || "#3B82F6";
+  const accent = ACCENT;
+  const label = categoryLabels[category] || "";
 
   return new ImageResponse(
     (
@@ -34,13 +35,13 @@ export async function GET(req: NextRequest) {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "60px 72px",
-          background: "linear-gradient(145deg, #FFFCF5 0%, #FFF8F0 40%, #EFF6FF 100%)",
+          background: "#FCFCFB",
           fontFamily: "sans-serif",
         }}
       >
         {/* 상단: 카테고리 + 장식 */}
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          {category && (
+          {label && (
             <span
               style={{
                 fontSize: 16,
@@ -54,7 +55,7 @@ export async function GET(req: NextRequest) {
                 textTransform: "uppercase",
               }}
             >
-              {category}
+              {label}
             </span>
           )}
         </div>
@@ -64,7 +65,7 @@ export async function GET(req: NextRequest) {
           style={{
             fontSize: 56,
             fontWeight: 800,
-            color: "#1C1917",
+            color: "#111113",
             lineHeight: 1.2,
             letterSpacing: "-0.02em",
             display: "-webkit-box",
@@ -79,24 +80,9 @@ export async function GET(req: NextRequest) {
 
         {/* 하단: 브랜드 */}
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 10,
-              background: "linear-gradient(135deg, #3B82F6, #2563EB)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 16,
-              fontWeight: 800,
-              color: "white",
-            }}
-          >
-            DI
-          </div>
-          <span style={{ fontSize: 20, fontWeight: 700, color: "#78716C" }}>
-            {siteConfig.name}
+          <div style={{ width: 6, height: 30, borderRadius: 3, background: accent }} />
+          <span style={{ fontSize: 22, fontWeight: 800, color: "#111113", letterSpacing: "-0.02em" }}>
+            {siteConfig.nameEn}
           </span>
           <div style={{ flex: 1 }} />
           <span style={{ fontSize: 14, color: "#A8A29E" }}>
@@ -104,17 +90,6 @@ export async function GET(req: NextRequest) {
           </span>
         </div>
 
-        {/* 장식 글로우 */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "50%",
-            height: "100%",
-            background: `radial-gradient(ellipse at 80% 30%, ${accent}15, transparent 60%)`,
-          }}
-        />
       </div>
     ),
     { width: 1200, height: 630 }

@@ -1,134 +1,72 @@
 /** @type {import('tailwindcss').Config} */
+
+// 모든 색상은 app/globals.css 의 CSS 변수(RGB 채널)에서 온다.
+// 라이트/다크 전환은 prefers-color-scheme 으로 변수만 바뀌므로 dark: 변형이 거의 필요 없다.
+const v = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "class",
+  darkMode: "media",
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: "#3B82F6",
-          50: "#EFF6FF",
-          100: "#DBEAFE",
-          200: "#BFDBFE",
-          300: "#93C5FD",
-          400: "#60A5FA",
-          500: "#3B82F6",
-          600: "#2563EB",
-          700: "#1D4ED8",
-          800: "#1E40AF",
-          900: "#1E3A5F",
-          container: "#60A5FA",
-          fixed: "#DBEAFE",
-          "fixed-dim": "#93C5FD",
-        },
+        bg: v("bg"),
+        surface: v("surface"),
+        subtle: v("subtle"),
+        line: { DEFAULT: v("line"), strong: v("line-strong") },
+        ink: { DEFAULT: v("ink"), 2: v("ink-2"), 3: v("ink-3") },
         accent: {
-          DEFAULT: "#F59E0B",
-          50: "#FFFBEB",
-          100: "#FEF3C7",
-          200: "#FDE68A",
-          300: "#FCD34D",
-          400: "#FBBF24",
-          500: "#F59E0B",
-          600: "#D97706",
+          DEFAULT: v("accent"),
+          strong: v("accent-strong"),
+          soft: v("accent-soft"),
+          fg: v("accent-fg"),
         },
-        secondary: {
-          DEFAULT: "#10B981",
-          50: "#ECFDF5",
-          container: "#34D399",
-          fixed: "#D1FAE5",
-          "fixed-dim": "#6EE7B7",
-        },
-        tertiary: {
-          DEFAULT: "#8B5CF6",
-          container: "#A78BFA",
-          fixed: "#EDE9FE",
-          "fixed-dim": "#C4B5FD",
-        },
-        error: { DEFAULT: "#EF4444", container: "#FEE2E2" },
-        surface: {
-          DEFAULT: "#FFFCF5",
-          dim: "#F3EDE4",
-          bright: "#FFFCF5",
-          "container-lowest": "#ffffff",
-          "container-low": "#FFF8F0",
-          container: "#F3EDE4",
-          "container-high": "#E8DFD3",
-          "container-highest": "#B8AFA3",
-        },
-        outline: { DEFAULT: "#78716C", variant: "#D6D3D1" },
-        "on-surface": { DEFAULT: "#1C1917", variant: "#57534E" },
-        "on-primary": { DEFAULT: "#ffffff", fixed: "#1E3A5F", "fixed-variant": "#1D4ED8" },
-        "on-secondary": { DEFAULT: "#ffffff", fixed: "#064E3B", "fixed-variant": "#047857", container: "#10B981" },
-        "on-error": "#ffffff",
-        background: "#FFFCF5",
       },
       fontFamily: {
-        headline: ["Manrope", "system-ui", "sans-serif"],
-        body: ["Inter", "system-ui", "sans-serif"],
-        label: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        sans: [
+          '"Pretendard Variable"',
+          "Pretendard",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "system-ui",
+          '"Apple SD Gothic Neo"',
+          '"Noto Sans KR"',
+          '"Malgun Gothic"',
+          "sans-serif",
+        ],
+        mono: [
+          "ui-monospace",
+          "SFMono-Regular",
+          '"JetBrains Mono"',
+          "Menlo",
+          "Consolas",
+          "monospace",
+        ],
       },
-      borderRadius: {
-        DEFAULT: "0.375rem",
-        lg: "0.625rem",
-        xl: "0.875rem",
-        "2xl": "1.125rem",
-        "3xl": "1.5rem",
-        "4xl": "2rem",
-        full: "9999px",
+      maxWidth: {
+        measure: "68ch",
+        page: "72rem",
       },
-      boxShadow: {
-        "card": "0 1px 3px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.04)",
-        "card-hover": "0 4px 12px rgba(0,0,0,0.05), 0 16px 40px rgba(0,0,0,0.06)",
-        "soft": "0 2px 16px rgba(59,130,246,0.08)",
-        "soft-lg": "0 4px 32px rgba(59,130,246,0.12)",
-        "warm": "0 4px 24px rgba(245,158,11,0.10)",
-        "inner-ring": "inset 0 0 0 1px rgba(0,0,0,0.03)",
+      letterSpacing: {
+        tightish: "-0.012em",
+        tighter2: "-0.028em",
       },
       keyframes: {
-        "fade-in-up": {
-          "0%": { opacity: "0", transform: "translateY(16px)" },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "slide-down": {
+          "0%": { opacity: "0", transform: "translateY(-6px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "slide-in-right": {
-          "0%": { transform: "translateX(100%)" },
-          "100%": { transform: "translateX(0)" },
-        },
-        "slide-out-right": {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(100%)" },
-        },
-        "scale-in": {
-          "0%": { opacity: "0", transform: "scale(0.95)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
-        },
-        "bounce-gentle": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-4px)" },
-        },
-        "wiggle": {
-          "0%, 100%": { transform: "rotate(0deg)" },
-          "25%": { transform: "rotate(-3deg)" },
-          "75%": { transform: "rotate(3deg)" },
         },
       },
       animation: {
-        "fade-in-up": "fade-in-up 0.5s ease-out forwards",
-        "slide-in-right": "slide-in-right 0.3s cubic-bezier(0.16,1,0.3,1)",
-        "slide-out-right": "slide-out-right 0.25s cubic-bezier(0.16,1,0.3,1)",
-        "scale-in": "scale-in 0.3s ease-out forwards",
-        "bounce-gentle": "bounce-gentle 2s ease-in-out infinite",
-        "wiggle": "wiggle 0.5s ease-in-out",
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: "none",
-          },
-        },
+        "fade-in": "fade-in 0.15s ease-out",
+        "slide-down": "slide-down 0.18s ease-out",
       },
     },
   },

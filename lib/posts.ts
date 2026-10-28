@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { isActiveCategory } from "./config";
 
 const POSTS_DIR = path.join(process.cwd(), "content/posts");
 
@@ -78,19 +79,38 @@ const THUMBNAIL_POOL: string[] = [
   "https://images.unsplash.com/photo-1512756290469-ec264b7fbf87?w=800&q=80",
 ];
 
+// 프로덕션 빌드/런타임에서는 콘텐츠가 배포물과 함께 고정되므로 메모이즈한다.
+// (개발 모드에서는 새 글이 바로 보이도록 매번 읽는다)
+const SHOULD_CACHE = process.env.NODE_ENV === "production";
+
+let sortedSlugCache: string[] | null = null;
+function sortedSlugs(): string[] {
+  if (SHOULD_CACHE && sortedSlugCache) return sortedSlugCache;
+  const slugs = fs.existsSync(POSTS_DIR)
+    ? fs
+        .readdirSync(POSTS_DIR)
+        .filter((f) => f.endsWith(".mdx"))
+        .map((f) => f.replace(/\.mdx$/, ""))
+        .sort()
+    : [];
+  if (SHOULD_CACHE) sortedSlugCache = slugs;
+  return slugs;
+}
+
 /**
  * 포스트별 고유 썸네일 할당 (중복 절대 없음)
  * 전체 슬러그를 알파벳순 정렬 → 인덱스 기반 1:1 매핑
  */
 function autoThumbnail(slug: string): string {
-  const slugs = fs.existsSync(POSTS_DIR)
-    ? fs.readdirSync(POSTS_DIR)
-        .filter((f) => f.endsWith(".mdx"))
-        .map((f) => f.replace(/\.mdx$/, ""))
-        .sort()
-    : [];
-  const idx = slugs.indexOf(slug);
+  const idx = sortedSlugs().indexOf(slug);
   return THUMBNAIL_POOL[(idx >= 0 ? idx : 0) % THUMBNAIL_POOL.length];
+}
+
+/** 슬롭 킬러(10인 검수 패널) 결과 — 새 파이프라인 글에만 존재 */
+export interface ReviewMeta {
+  panel: number;
+  passed: number;
+  score?: number;
 }
 
 export interface PostMeta {
@@ -106,6 +126,9 @@ export interface PostMeta {
   tldr?: string;
   published: boolean;
   language?: "ko" | "en";
+  review?: ReviewMeta;
+  /** 현재 운영 카테고리(ai-*)가 아닌 이전 주제 글 — 목록/피드/사이트맵에서 제외 */
+  archived: boolean;
 }
 
 export interface SourceLink {
@@ -119,78 +142,97 @@ export interface Post {
   content: string;
 }
 
-// 전체 포스트 목록 (정렬: 최신순, locale 필터 지원)
-export function getAllPosts(locale?: "ko" | "en"): PostMeta[] {
+function parseReview(raw: unknown): ReviewMeta | undefined {
+  if (!raw || typeof raw !== "object") return undefined;
+  const r = raw as Record<string, unknown>;
+  const panel = Number(r.panel);
+  const passed = Number(r.passed);
+  if (!Number.isFinite(panel) || !Number.isFinite(passed) || panel <= 0) return undefined;
+  const score = r.score !== undefined ? Number(r.score) : undefined;
+  return { panel, passed, ...(Number.isFinite(score) ? { score } : {}) };
+}
+
+function toMeta(slug: string, data: Record<string, any>): PostMeta {
+  const category = data.category || "";
+  return {
+    slug,
+    title: data.title || "",
+    description: data.description || "",
+    date:
+      data.date instanceof Date
+        ? data.date.toISOString().slice(0, 19)
+        : data.date
+        ? String(data.date)
+        : "",
+    category,
+    tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
+    thumbnail: data.thumbnail || autoThumbnail(slug),
+    sources: Array.isArray(data.sources) ? data.sources : [],
+    difficulty: data.difficulty || undefined,
+    tldr: data.tldr || undefined,
+    published: data.published !== false,
+    language: data.language || "ko",
+    review: parseReview(data.review),
+    archived: !isActiveCategory(category),
+  };
+}
+
+let allMetaCache: PostMeta[] | null = null;
+
+/** 보관 글 포함, 발행된 전체 글 (최신순) */
+function readAllMeta(): PostMeta[] {
+  if (SHOULD_CACHE && allMetaCache) return allMetaCache;
   if (!fs.existsSync(POSTS_DIR)) return [];
 
-  const files = fs.readdirSync(POSTS_DIR).filter((f) => f.endsWith(".mdx"));
-
-  const posts = files
+  const metas = fs
+    .readdirSync(POSTS_DIR)
+    .filter((f) => f.endsWith(".mdx"))
     .map((file) => {
       const slug = file.replace(/\.mdx$/, "");
       const raw = fs.readFileSync(path.join(POSTS_DIR, file), "utf-8");
-      const { data } = matter(raw);
-
-      const category = data.category || "finance";
-      return {
-        slug,
-        title: data.title || "",
-        description: data.description || "",
-        date: data.date || "",
-        category,
-        tags: data.tags || [],
-        thumbnail: data.thumbnail || autoThumbnail(slug),
-        sources: data.sources || [],
-        difficulty: data.difficulty || null,
-        tldr: data.tldr || null,
-        published: data.published !== false,
-        language: data.language || "ko",
-      } as PostMeta;
+      return toMeta(slug, matter(raw).data);
     })
     .filter((p) => p.published)
-    .filter((p) => !locale || (p.language || "ko") === locale)
     .sort((a, b) => {
       const dateDiff = new Date(b.date).getTime() - new Date(a.date).getTime();
-      if (dateDiff !== 0) return dateDiff;
+      if (dateDiff !== 0 && !Number.isNaN(dateDiff)) return dateDiff;
       return b.slug.localeCompare(a.slug);
     });
 
-  return posts;
+  if (SHOULD_CACHE) allMetaCache = metas;
+  return metas;
 }
 
-// 개별 포스트
+/**
+ * 현재 운영 중인 글 목록 (최신순, locale 필터 지원)
+ * 보관 글(이전 주제)은 제외된다. 보관 글까지 필요하면 includeArchived 사용.
+ */
+export function getAllPosts(
+  locale?: "ko" | "en",
+  opts: { includeArchived?: boolean } = {}
+): PostMeta[] {
+  return readAllMeta()
+    .filter((p) => opts.includeArchived || !p.archived)
+    .filter((p) => !locale || (p.language || "ko") === locale);
+}
+
+// 개별 포스트 (보관 글도 반환 — URL은 계속 살아 있어야 함)
 export function getPost(slug: string): Post | null {
   const filePath = path.join(POSTS_DIR, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return null;
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
-
-  const category = data.category || "finance";
-  return {
-    meta: {
-      slug,
-      title: data.title || "",
-      description: data.description || "",
-      date: data.date || "",
-      category,
-      tags: data.tags || [],
-      thumbnail: data.thumbnail || autoThumbnail(slug),
-      sources: data.sources || [],
-      difficulty: data.difficulty || null,
-      tldr: data.tldr || null,
-      published: data.published !== false,
-    },
-    content,
-  };
+  return { meta: toMeta(slug, data), content };
 }
 
 // 카테고리별 포스트 (locale 필터 지원)
 export function getPostsByCategory(category: string, locale?: "ko" | "en"): PostMeta[] {
+  if (!isActiveCategory(category)) return [];
   return getAllPosts(locale).filter((p) => p.category === category);
 }
 
-// 관련 포스트 (같은 카테고리 + 태그 겹치는 것)
+// 관련 포스트 (같은 카테고리 + 태그 겹치는 것, 보관 글 제외)
 export function getRelatedPosts(slug: string, limit = 3): PostMeta[] {
   const current = getPost(slug);
   if (!current) return [];
@@ -202,17 +244,33 @@ export function getRelatedPosts(slug: string, limit = 3): PostMeta[] {
       let score = 0;
       if (p.category === current.meta.category) score += 2;
       score += p.tags.filter((t) => current.meta.tags.includes(t)).length;
-      return { ...p, score };
+      return { post: p, score };
     })
     .sort((a, b) => b.score - a.score)
-    .slice(0, limit);
+    .slice(0, limit)
+    .map((x) => x.post);
 }
 
-// 전체 슬러그 목록 (정적 생성용)
+// 전체 슬러그 목록 (정적 생성용 — 보관 글 포함)
 export function getAllSlugs(): string[] {
-  if (!fs.existsSync(POSTS_DIR)) return [];
-  return fs
-    .readdirSync(POSTS_DIR)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((f) => f.replace(/\.mdx$/, ""));
+  return sortedSlugs();
+}
+
+/** "2026-10-28T14:24:11" → "2026.10.28" */
+export function formatDate(date: string): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(date || "");
+  return m ? `${m[1]}.${m[2]}.${m[3]}` : date;
+}
+
+/** 날짜 부분만 (ISO) — <time dateTime> 용 */
+export function isoDate(date: string): string {
+  const m = /^(\d{4}-\d{2}-\d{2})/.exec(date || "");
+  return m ? m[1] : date;
+}
+
+export function estimateReadingTime(content: string): number {
+  const text = content.replace(/<[^>]*>/g, "").replace(/\s+/g, " ");
+  const koreanChars = (text.match(/[\uAC00-\uD7AF]/g) || []).length;
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil((koreanChars / 500 + words / 200) / 2));
 }

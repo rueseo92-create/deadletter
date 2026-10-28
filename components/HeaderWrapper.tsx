@@ -7,7 +7,7 @@ export function HeaderWrapper({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     function onScroll() {
-      setScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 4);
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -16,10 +16,8 @@ export function HeaderWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "glass-header scrolled border-b border-stone-200/40"
-          : "glass-header border-b border-transparent"
+      className={`site-header sticky top-0 z-50 w-full border-b transition-colors duration-200 ${
+        scrolled ? "border-line" : "border-transparent"
       }`}
     >
       {children}

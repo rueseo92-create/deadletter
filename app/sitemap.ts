@@ -36,7 +36,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/posts", freq: "daily" as const, priority: 0.9 },
     { path: "/search", freq: "weekly" as const, priority: 0.6 },
     { path: "/about", freq: "monthly" as const, priority: 0.5 },
-    { path: "/business", freq: "monthly" as const, priority: 0.6 },
     { path: "/privacy", freq: "yearly" as const, priority: 0.3 },
   ];
 
@@ -66,7 +65,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
-  // 포스트 페이지 (해당 언어 포스트가 있는 로케일만)
+  // 포스트 페이지 (해당 언어 포스트가 있는 로케일만, 보관 글은 getAllPosts 에서 제외됨)
   const postsByLocale = Object.fromEntries(
     LOCALES.map((l) => [l, new Set(getAllPosts(l as "ko" | "en").map((p) => p.slug))])
   );

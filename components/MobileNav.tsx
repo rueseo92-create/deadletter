@@ -1,88 +1,104 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Icon } from "@/components/Icon";
+import type { CategoryIcon } from "@/lib/config";
 
 interface MobileNavProps {
-  items: { href: string; label: string }[];
+  items: { href: string; label: string; icon?: CategoryIcon; description?: string }[];
+  extraItems?: { href: string; label: string }[];
   searchHref: string;
+  searchLabel?: string;
 }
 
-export function MobileNav({ items, searchHref }: MobileNavProps) {
+export function MobileNav({ items, extraItems = [], searchHref, searchLabel = "검색" }: MobileNavProps) {
   const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+        buttonRef.current?.focus();
+      }
     }
-    return () => { document.body.style.overflow = ""; };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
   }, [open]);
 
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
-        className="p-2.5 rounded-xl text-stone-500 hover:text-primary hover:bg-blue-50 transition-all duration-200 lg:hidden"
-        aria-label="Open menu"
+        ref={buttonRef}
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-subtle hover:text-ink md:hidden"
+        aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
+        aria-expanded={open}
+        aria-controls="mobile-menu"
       >
-        <span className="material-symbols-outlined text-[22px]">menu</span>
+        <Icon name={open ? "close" : "menu"} className="h-5 w-5" />
       </button>
 
       {open && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[60] lg:hidden animate-fade-in"
-            onClick={() => setOpen(false)}
-          />
-          {/* Drawer */}
-          <div className="fixed top-0 right-0 w-80 max-w-[85vw] h-full bg-white z-[70] shadow-2xl lg:hidden flex flex-col animate-slide-in-right">
-            {/* Header */}
-            <div className="flex items-center justify-between px-6 h-16 border-b border-stone-100">
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white text-[9px] font-extrabold">
-                  DI
-                </span>
-                <span className="text-sm font-bold text-stone-800 font-headline">데일리인사이트</span>
-              </div>
-              <button
-                onClick={() => setOpen(false)}
-                className="p-2 rounded-xl text-stone-400 hover:text-stone-600 hover:bg-stone-50 transition-all"
-                aria-label="Close menu"
-              >
-                <span className="material-symbols-outlined text-xl">close</span>
-              </button>
-            </div>
-
-            {/* Navigation */}
-            <nav className="flex-1 overflow-y-auto py-4 px-3">
-              {items.map((item, index) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium text-stone-600 hover:bg-blue-50 hover:text-primary transition-all duration-200"
-                  onClick={() => setOpen(false)}
-                  style={{ animationDelay: `${index * 30}ms` }}
-                >
-                  {item.label}
-                </a>
+        <div
+          id="mobile-menu"
+          className="fixed inset-x-0 bottom-0 top-[var(--header-h)] z-40 animate-fade-in bg-bg md:hidden"
+        >
+          <nav
+            aria-label="모바일 메뉴"
+            className="mx-auto flex h-full max-w-page flex-col overflow-y-auto px-4 pb-8 pt-2"
+          >
+            <ul className="divide-y divide-line border-b border-line">
+              {items.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-3 py-4 text-ink"
+                  >
+                    {item.icon && (
+                      <span className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent">
+                        <Icon name={item.icon} className="h-4 w-4" />
+                      </span>
+                    )}
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[16px] font-semibold">{item.label}</span>
+                      {item.description && (
+                        <span className="mt-0.5 block text-[13px] text-ink-3">{item.description}</span>
+                      )}
+                    </span>
+                    <Icon name="chevronRight" className="h-4 w-4 flex-shrink-0 text-ink-3" />
+                  </a>
+                </li>
               ))}
-            </nav>
-
-            {/* Footer */}
-            <div className="p-4 border-t border-stone-100">
-              <a
-                href={searchHref}
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-stone-50 text-sm font-medium text-stone-600 hover:bg-blue-50 hover:text-primary transition-all duration-200"
-                onClick={() => setOpen(false)}
-              >
-                <span className="material-symbols-outlined text-lg">search</span>
-                검색
-              </a>
-            </div>
-          </div>
-        </>
+            </ul>
+            {extraItems.length > 0 && (
+              <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[14px] text-ink-2">
+                {extraItems.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href} onClick={() => setOpen(false)} className="hover:text-ink">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <a
+              href={searchHref}
+              onClick={() => setOpen(false)}
+              className="mt-6 flex items-center gap-2 rounded-lg border border-line bg-surface px-4 py-3 text-[14px] text-ink-3"
+            >
+              <Icon name="search" className="h-4 w-4" />
+              {searchLabel}
+            </a>
+          </nav>
+        </div>
       )}
     </>
   );

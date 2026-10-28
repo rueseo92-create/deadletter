@@ -1,66 +1,79 @@
+import { Metadata } from "next";
 import { getAllPosts } from "@/lib/posts";
-import { siteConfig } from "@/lib/config";
+import { siteConfig, categoryName } from "@/lib/config";
 import { PostCard } from "@/components/PostCard";
+import { CategoryOverview } from "@/components/CategoryOverview";
+import { Icon } from "@/components/Icon";
 import { getDictionary, localizedHref, defaultLocale, type Locale } from "@/lib/i18n";
+
+export const metadata: Metadata = {
+  title: "전체 글",
+  description: `${siteConfig.name}의 AI 자동화 · AI 부업 · AI 뉴스 · AI 도구 글 전체 목록`,
+};
 
 export default async function PostsPage({ params }: { params: { locale: string } }) {
   const locale = (params.locale || defaultLocale) as Locale;
   const dict = await getDictionary(locale);
   const lh = (path: string) => localizedHref(path, locale);
+  const en = locale === "en";
   const posts = getAllPosts(locale as "ko" | "en");
 
   return (
-    <div className="pt-28 pb-24 max-w-7xl mx-auto px-6 lg:px-12">
-      {/* Header */}
-      <header className="mb-12">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center">
-            <span className="material-symbols-outlined text-primary text-xl">library_books</span>
-          </div>
-          <div>
-            <h1 className="text-2xl lg:text-3xl font-extrabold text-stone-900 font-headline">{dict.category.allPosts}</h1>
-            <p className="text-sm text-stone-500 mt-0.5">{dict.category.postsCount.replace("{n}", String(posts.length))}</p>
-          </div>
+    <div>
+      <header className="border-b border-line">
+        <div className="mx-auto max-w-page px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-14">
+          <p className="eyebrow">{siteConfig.nameEn}</p>
+          <h1 className="mt-3 text-[1.9rem] font-bold tracking-[-0.03em] text-ink sm:text-[2.3rem]">
+            {dict.category.allPosts}
+          </h1>
+          <p className="mt-2 text-[14px] text-ink-3">
+            {posts.length > 0
+              ? dict.category.postsCount.replace("{n}", String(posts.length))
+              : en
+              ? "No posts yet"
+              : "첫 글 준비 중"}
+          </p>
+          <nav aria-label={en ? "Topics" : "주제"} className="-mx-4 mt-7 overflow-x-auto px-4 no-scrollbar sm:mx-0 sm:px-0">
+            <ul className="flex gap-2">
+              <li>
+                <a href={lh("/posts")} className="chip" aria-current="page">
+                  {dict.category.all}
+                </a>
+              </li>
+              {siteConfig.categories.map((cat) => (
+                <li key={cat.slug}>
+                  <a href={lh(`/categories/${cat.slug}`)} className="chip">
+                    {categoryName(cat, locale)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </header>
 
-      {/* Category filter pills */}
-      <section className="mb-10">
-        <div className="flex items-center gap-2.5 overflow-x-auto pb-4 no-scrollbar">
-          <a
-            href={lh("/posts")}
-            className="px-5 py-2.5 rounded-full bg-primary text-white font-semibold text-sm shadow-md shadow-primary/15 whitespace-nowrap transition-all"
-          >
-            {dict.category.all}
-          </a>
-          {siteConfig.categories.map((cat) => (
-            <a
-              key={cat.slug}
-              href={lh(`/categories/${cat.slug}`)}
-              className="px-5 py-2.5 rounded-full bg-white border border-stone-200/80 text-sm font-medium text-stone-500 hover:bg-primary hover:text-white hover:border-primary hover:shadow-md hover:shadow-primary/15 transition-all duration-200 whitespace-nowrap"
-            >
-              {cat.emoji} {cat.name}
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* Posts grid */}
-      {posts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} locale={locale} />
-          ))}
-        </div>
-      ) : (
-        <div className="py-24 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-primary-50 flex items-center justify-center mx-auto mb-5">
-            <span className="material-symbols-outlined text-primary text-3xl">article</span>
+      <div className="mx-auto max-w-page px-4 py-10 sm:px-6 sm:py-12">
+        {posts.length > 0 ? (
+          <div className="grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} locale={locale} as="h2" />
+            ))}
           </div>
-          <h2 className="text-xl font-bold text-stone-900 mb-2 font-headline">{dict.home.noPosts}</h2>
-          <p className="text-sm text-stone-500">아직 작성된 글이 없습니다.</p>
-        </div>
-      )}
+        ) : (
+          <>
+            <div className="rounded-2xl border border-dashed border-line-strong px-5 py-12 text-center sm:py-16">
+              <span className="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent-soft text-accent">
+                <Icon name="sparkle" className="h-5 w-5" />
+              </span>
+              <h2 className="mt-5 text-[1.2rem] font-bold tracking-[-0.02em] text-ink">{dict.home.noPosts}</h2>
+              <p className="mx-auto mt-2 max-w-md text-[15px] leading-relaxed text-ink-3">{dict.home.noPostsDesc}</p>
+            </div>
+            <div className="mt-12">
+              <CategoryOverview locale={locale} />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

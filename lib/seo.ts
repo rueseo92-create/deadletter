@@ -37,7 +37,7 @@ export function organizationSchema() {
     "@type": "Organization",
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/logo.png`,
+    logo: `${siteConfig.url}/favicon.svg`,
   };
 }
 

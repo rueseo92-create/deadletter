@@ -1,7 +1,15 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getPost, getAllPosts, getAllSlugs, getRelatedPosts } from "@/lib/posts";
-import { siteConfig, getCategory } from "@/lib/config";
+import {
+  getPost,
+  getAllPosts,
+  getAllSlugs,
+  getRelatedPosts,
+  formatDate,
+  isoDate,
+  estimateReadingTime,
+} from "@/lib/posts";
+import { siteConfig, getCategory, categoryName } from "@/lib/config";
 import { breadcrumbSchema, articleSchema, faqSchema, ogImageUrl } from "@/lib/seo";
 import { PostCard } from "@/components/PostCard";
 import { SourceCard } from "@/components/SourceCard";
@@ -10,6 +18,8 @@ import { AdSense } from "@/components/AdSense";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { TableOfContents } from "@/components/TableOfContents";
 import { ShareButtons } from "@/components/ShareButtons";
+import { mdxComponents } from "@/components/MdxComponents";
+import { Icon } from "@/components/Icon";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getDictionary, localizedHref, locales, defaultLocale, type Locale } from "@/lib/i18n";
@@ -43,53 +53,43 @@ export function generateMetadata({ params }: { params: { locale: string; slug: s
       images: [{ url: meta.thumbnail || ogImageUrl(meta.title, meta.category), width: 1200, height: 630, alt: meta.title }],
     },
     twitter: { card: "summary_large_image", title: meta.title, description: meta.description },
+    // 이전 주제(보관) 글은 URL은 유지하되 검색 색인에서 제외
+    ...(meta.archived
+      ? { robots: { index: false, follow: true, googleBot: { index: false, follow: true } } }
+      : {}),
     alternates: {
       canonical: url,
       languages: {
         ko: `${siteConfig.url}/posts/${meta.slug}`,
         en: `${siteConfig.url}/en/posts/${meta.slug}`,
-        zh: `${siteConfig.url}/zh/posts/${meta.slug}`,
-        ja: `${siteConfig.url}/ja/posts/${meta.slug}`,
-        es: `${siteConfig.url}/es/posts/${meta.slug}`,
       },
     },
   };
-}
-
-function estimateReadingTime(content: string): number {
-  const text = content.replace(/<[^>]*>/g, "").replace(/\s+/g, " ");
-  const koreanChars = (text.match(/[\uAC00-\uD7AF]/g) || []).length;
-  const words = text.split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil((koreanChars / 500 + words / 200) / 2));
 }
 
 export default async function PostPage({ params }: { params: { locale: string; slug: string } }) {
   const locale = (params.locale || defaultLocale) as Locale;
   const dict = await getDictionary(locale);
   const lh = (path: string) => localizedHref(path, locale);
+  const en = locale === "en";
 
   const post = getPost(params.slug);
   if (!post) notFound();
 
   const { meta, content } = post;
+  const archived = meta.archived;
   const related = getRelatedPosts(params.slug);
   const category = getCategory(meta.category);
   const readingTime = estimateReadingTime(content);
 
-  const allPosts = getAllPosts(locale as "ko" | "en");
+  // 이전/다음 글 — 운영 중인 글끼리만
+  const allPosts = archived ? [] : getAllPosts(locale as "ko" | "en");
   const currentIdx = allPosts.findIndex((p) => p.slug === params.slug);
-  const prevPost = currentIdx < allPosts.length - 1 ? allPosts[currentIdx + 1] : null;
+  const prevPost = currentIdx >= 0 && currentIdx < allPosts.length - 1 ? allPosts[currentIdx + 1] : null;
   const nextPost = currentIdx > 0 ? allPosts[currentIdx - 1] : null;
 
   const lp = locale === defaultLocale ? "" : `/${locale}`;
   const postUrl = `${siteConfig.url}${lp}/posts/${meta.slug}`;
-
-  const diffConfig: Record<string, { label: string; color: string }> = {
-    beginner: { label: dict.post.beginner, color: "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-200/50" },
-    intermediate: { label: dict.post.intermediate, color: "bg-amber-50 text-amber-600 ring-1 ring-amber-200/50" },
-    advanced: { label: dict.post.advanced, color: "bg-rose-50 text-rose-600 ring-1 ring-rose-200/50" },
-  };
-  const diff = meta.difficulty ? diffConfig[meta.difficulty] : null;
 
   const articleJsonLd = articleSchema(meta);
   const breadcrumbJsonLd = breadcrumbSchema([
@@ -109,6 +109,21 @@ export default async function PostPage({ params }: { params: { locale: string; s
   }
   const faqJsonLd = faqs.length > 0 ? faqSchema(faqs) : null;
 
+  const coupangKeywords = (() => {
+    const tagMap = siteConfig.coupang.tagProductMap;
+    const matched = meta.tags
+      .map((tag) => {
+        const key = Object.keys(tagMap).find((k) => tag.includes(k) || k.includes(tag));
+        return key ? tagMap[key] : null;
+      })
+      .filter((v): v is string => v !== null);
+    const catDefaults =
+      siteConfig.coupang.productKeywords[meta.category] || siteConfig.coupang.productKeywords["ai-tools"];
+    return Array.from(new Set([...matched, ...catDefaults])).slice(0, 4);
+  })();
+
+  const review = meta.review;
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
@@ -116,223 +131,242 @@ export default async function PostPage({ params }: { params: { locale: string; s
       {faqJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />}
 
       <ReadingProgress />
-      <TableOfContents />
 
-      <article className="pt-28 pb-24" data-category={meta.category}>
-        {/* Breadcrumbs */}
-        <nav className="max-w-4xl mx-auto px-6 mb-8">
-          <ol className="flex items-center gap-1.5 text-sm text-stone-400">
-            <li>
-              <a href={lh("/")} className="hover:text-primary transition-colors p-1">
-                <span className="material-symbols-outlined text-base">home</span>
-              </a>
-            </li>
-            <li><span className="material-symbols-outlined text-[10px] text-stone-300">chevron_right</span></li>
-            {category && (
-              <>
-                <li>
-                  <a href={lh(`/categories/${meta.category}`)} className="hover:text-primary transition-colors">
-                    {category.emoji} {category.name}
-                  </a>
-                </li>
-                <li><span className="material-symbols-outlined text-[10px] text-stone-300">chevron_right</span></li>
-              </>
-            )}
-            <li className="text-stone-600 font-medium truncate max-w-[200px]">{meta.title}</li>
-          </ol>
-        </nav>
+      <div className="mx-auto max-w-page px-4 pt-6 sm:px-6 sm:pt-10 xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(0,42.5rem)_minmax(0,1fr)] xl:gap-12">
+        <div aria-hidden="true" className="hidden xl:block" />
 
-        {/* Header */}
-        <header className="max-w-4xl mx-auto px-6 mb-12">
-          {/* Badges */}
-          <div className="flex items-center gap-2 mb-6 flex-wrap">
-            {category && (
-              <a
-                href={lh(`/categories/${meta.category}`)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary-50 text-primary text-xs font-bold hover:bg-primary-100 transition-colors"
-              >
-                <span>{category.emoji}</span>{category.name}
-              </a>
-            )}
-            {diff && <span className={`px-3 py-1.5 rounded-full text-xs font-bold ${diff.color}`}>{diff.label}</span>}
-          </div>
-
-          {/* Title */}
-          <h1 className="text-3xl lg:text-[2.75rem] font-extrabold text-stone-900 leading-[1.15] tracking-[-0.02em] mb-6 font-headline">
-            {meta.title}
-          </h1>
-
-          {/* Description */}
-          <p className="text-lg text-stone-500 leading-relaxed mb-8 max-w-2xl">
-            {meta.description}
-          </p>
-
-          {/* TL;DR */}
-          {meta.tldr && (
-            <div className="flex items-start gap-3.5 rounded-2xl bg-primary-50/60 p-6 border border-primary-100/50 mb-8">
-              <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center flex-shrink-0">
-                <span className="material-symbols-outlined text-primary text-base">bolt</span>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-primary mb-1.5 uppercase tracking-[0.15em]">TL;DR</p>
-                <p className="text-sm text-stone-700 leading-relaxed">{meta.tldr}</p>
-              </div>
+        <article className="mx-auto w-full min-w-0 max-w-[42.5rem]" data-category={meta.category}>
+          {archived && (
+            <div
+              role="note"
+              className="mb-8 flex items-start gap-3 rounded-lg border border-line bg-subtle px-4 py-3.5 text-[14px] leading-relaxed text-ink-2"
+            >
+              <Icon name="archive" className="mt-[3px] h-4 w-4 flex-shrink-0 text-ink-3" />
+              <p>
+                <strong className="font-semibold text-ink">이전 주제의 보관 글입니다.</strong>{" "}
+                세로AI는 현재 AI 자동화·부업·뉴스·도구를 다루며, 이 글의 정보는 최신이 아닐 수 있습니다.{" "}
+                <a href={lh("/")} className="whitespace-nowrap font-medium text-accent underline underline-offset-2">
+                  최신 AI 글 보기
+                </a>
+              </p>
             </div>
           )}
 
-          {/* Meta + Share */}
-          <div className="flex items-center justify-between py-5 border-y border-stone-100">
-            <div className="flex items-center gap-4 text-sm text-stone-400">
-              <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[15px]">calendar_today</span>
-                <time>{meta.date}</time>
+          {/* Breadcrumbs */}
+          <nav aria-label={en ? "Breadcrumb" : "현재 위치"} className="mb-6">
+            <ol className="flex flex-wrap items-center gap-1.5 text-[13px] text-ink-3">
+              <li>
+                <a href={lh("/")} className="hover:text-ink">
+                  {dict.post.home}
+                </a>
+              </li>
+              <li aria-hidden="true">
+                <Icon name="chevronRight" className="h-3 w-3" />
+              </li>
+              {category ? (
+                <li>
+                  <a href={lh(`/categories/${meta.category}`)} className="hover:text-ink">
+                    {categoryName(category, locale)}
+                  </a>
+                </li>
+              ) : (
+                <li>{en ? "Archive" : "보관 글"}</li>
+              )}
+            </ol>
+          </nav>
+
+          {/* Header */}
+          <header>
+            {category && (
+              <a
+                href={lh(`/categories/${meta.category}`)}
+                className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-accent hover:underline"
+              >
+                <Icon name={category.icon} className="h-3.5 w-3.5" />
+                {categoryName(category, locale)}
+              </a>
+            )}
+            <h1 className="mt-3 text-[1.8rem] font-bold leading-[1.32] tracking-[-0.032em] text-ink sm:text-[2.35rem] sm:leading-[1.28]">
+              {meta.title}
+            </h1>
+            {meta.description && (
+              <p className="mt-4 text-[17px] leading-[1.7] text-ink-2">{meta.description}</p>
+            )}
+
+            <div className="mt-7 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-y border-line py-3.5">
+              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[13px] text-ink-3">
+                <span className="font-medium text-ink-2">{siteConfig.author}</span>
+                <span aria-hidden="true">·</span>
+                <time dateTime={isoDate(meta.date)}>{formatDate(meta.date)}</time>
+                <span aria-hidden="true">·</span>
+                <span className="inline-flex items-center gap-1">
+                  <Icon name="clock" className="h-3.5 w-3.5" />
+                  {readingTime}
+                  {dict.post.readingTime}
+                </span>
+                {review && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span
+                      className="inline-flex items-center gap-1 text-ink-2"
+                      title={review.score !== undefined ? `품질 점수 ${review.score}점` : undefined}
+                    >
+                      <Icon name="shield" className="h-3.5 w-3.5 text-accent" />
+                      슬롭 킬러 검수 {review.passed}/{review.panel} 통과
+                    </span>
+                  </>
+                )}
               </div>
-              <span className="w-1 h-1 bg-stone-200 rounded-full" />
-              <div className="flex items-center gap-1.5">
-                <span className="material-symbols-outlined text-[15px]">schedule</span>
-                <span>{readingTime}{dict.post.readingTime}</span>
-              </div>
-              <span className="w-1 h-1 bg-stone-200 rounded-full hidden sm:block" />
-              <span className="font-medium text-stone-500 hidden sm:inline">{siteConfig.author}</span>
+              <ShareButtons url={postUrl} title={meta.title} description={meta.description} />
             </div>
-            <ShareButtons url={postUrl} title={meta.title} description={meta.description} />
+          </header>
+
+          {meta.thumbnail && (
+            <figure className="mt-8 overflow-hidden rounded-xl border border-line bg-subtle">
+              <img
+                src={meta.thumbnail}
+                alt={`${meta.title} 대표 이미지`}
+                className="aspect-[16/9] w-full object-cover"
+              />
+            </figure>
+          )}
+
+          {meta.tldr && (
+            <section aria-label="핵심 요약" className="mt-8 rounded-xl border border-line bg-surface p-5 sm:p-6">
+              <p className="flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.08em] text-accent">
+                <Icon name="sparkle" className="h-3.5 w-3.5" />
+                {en ? "TL;DR" : "핵심 요약"}
+              </p>
+              <p className="mt-2.5 text-[15.5px] leading-[1.75] text-ink">{meta.tldr}</p>
+            </section>
+          )}
+
+          <div className="mt-8">
+            <TableOfContents variant="inline" title={en ? "Contents" : "목차"} />
           </div>
-        </header>
 
-        {/* Hero image */}
-        {meta.thumbnail && (
-          <div className="max-w-5xl mx-auto px-6 mb-14">
-            <div className="rounded-3xl overflow-hidden shadow-lg ring-1 ring-black/[0.04]">
-              <img src={meta.thumbnail} alt={meta.title} className="w-full object-cover max-h-[500px]" />
-            </div>
-          </div>
-        )}
-
-        {/* Article body */}
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="prose max-w-none">
-            <MDXRemote source={content} options={{ mdxOptions: { remarkPlugins: [[remarkGfm, { singleTilde: false }]] } }} />
-          </div>
-        </div>
-
-        {/* AdSense */}
-        <div className="max-w-4xl mx-auto px-6 mt-14">
-          <AdSense slot="auto" format="auto" />
-        </div>
-
-        {/* Coupang */}
-        {siteConfig.coupang.enabled && (
-          <div className="max-w-4xl mx-auto px-6 mt-12">
-            <CoupangLinkAd
-              keywords={(() => {
-                const tagMap = siteConfig.coupang.tagProductMap;
-                const matched = meta.tags.map((tag) => { const key = Object.keys(tagMap).find((k) => tag.includes(k) || k.includes(tag)); return key ? tagMap[key] : null; }).filter((v): v is string => v !== null);
-                const catDefaults = siteConfig.coupang.productKeywords[meta.category] || siteConfig.coupang.productKeywords["finance"];
-                return Array.from(new Set([...matched, ...catDefaults])).slice(0, 4);
-              })()}
-              title={dict.post.coupangReaderTitle}
+          {/* Body */}
+          <div id="article-body" className="prose mt-2">
+            <MDXRemote
+              source={content}
+              components={mdxComponents}
+              options={{ mdxOptions: { remarkPlugins: [[remarkGfm, { singleTilde: false }]] } }}
             />
           </div>
-        )}
 
-        {/* Sources */}
-        {meta.sources && meta.sources.length > 0 && (
-          <section className="max-w-4xl mx-auto px-6 mt-16">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 rounded-lg bg-primary-50 flex items-center justify-center">
-                <span className="material-symbols-outlined text-primary text-base">link</span>
+          {/* 광고 1: 본문 끝 */}
+          <AdSense slot="auto" format="auto" />
+
+          {/* Sources */}
+          {meta.sources && meta.sources.length > 0 && (
+            <section aria-labelledby="sources-title" className="mt-12">
+              <h2 id="sources-title" className="text-[1.1rem] font-bold text-ink">
+                {dict.post.references}
+              </h2>
+              <p className="mt-1 text-[13px] text-ink-3">
+                {en ? "This post is based on the following sources." : "이 글은 아래 자료를 바탕으로 작성되었습니다."}
+              </p>
+              <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                {meta.sources.map((source, i) => (
+                  <SourceCard key={i} source={source} index={i} />
+                ))}
               </div>
-              <h2 className="text-xl font-extrabold text-stone-900 font-headline">{dict.post.references}</h2>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {meta.sources.map((source, i) => <SourceCard key={i} source={source} />)}
-            </div>
-          </section>
-        )}
+            </section>
+          )}
 
-        {/* Disclaimer */}
-        <div className="max-w-4xl mx-auto px-6 mt-12">
-          <div className="flex items-start gap-3.5 rounded-2xl bg-stone-50 p-5 ring-1 ring-stone-100">
-            <span className="material-symbols-outlined text-stone-400 text-lg mt-0.5">info</span>
-            <div className="text-xs text-stone-400 leading-relaxed space-y-1">
-              <p>{siteConfig.disclaimer}</p>
-              {siteConfig.coupang.enabled && <p>{dict.coupang.disclaimer}</p>}
-            </div>
-          </div>
-        </div>
-
-        {/* Tags */}
-        {meta.tags.length > 0 && (
-          <div className="max-w-4xl mx-auto px-6 mt-10">
-            <div className="flex flex-wrap gap-2">
+          {/* Tags */}
+          {meta.tags.length > 0 && (
+            <ul className="mt-10 flex flex-wrap gap-2" aria-label={en ? "Tags" : "태그"}>
               {meta.tags.map((tag) => (
-                <a
-                  key={tag}
-                  href={lh(`/search?tag=${encodeURIComponent(tag)}`)}
-                  className="px-4 py-2 rounded-full bg-stone-50 ring-1 ring-stone-100 text-sm text-stone-500 hover:ring-primary hover:text-primary hover:bg-primary-50 transition-all duration-200"
-                >
-                  #{tag}
-                </a>
+                <li key={tag}>
+                  <a
+                    href={lh(`/search?tag=${encodeURIComponent(tag)}`)}
+                    className="inline-block rounded-md bg-subtle px-2.5 py-1 text-[13px] text-ink-2 transition-colors hover:text-ink"
+                  >
+                    #{tag}
+                  </a>
+                </li>
               ))}
-            </div>
-          </div>
-        )}
+            </ul>
+          )}
 
-        {/* Coupang bottom */}
-        {siteConfig.coupang.enabled && (
-          <div className="max-w-4xl mx-auto px-6 mt-10">
-            <CoupangLinkAd keywords={["삼성 갤럭시북4 프로", "맥북 에어 M3", "로지텍 MX Master 3S", "LG 울트라와이드 모니터"]} title={dict.post.coupangDevTitle} />
-          </div>
-        )}
+          {/* Disclaimer + corrections */}
+          <p className="mt-10 border-t border-line pt-5 text-[12.5px] leading-relaxed text-ink-3">
+            {siteConfig.disclaimer} 오류를 발견하셨다면{" "}
+            <a href={`mailto:${siteConfig.email}`} className="underline underline-offset-2 hover:text-ink">
+              {siteConfig.email}
+            </a>
+            로 알려 주세요. 확인 후 정정 내역과 함께 바로잡습니다.
+          </p>
 
-        {/* Prev / Next */}
-        {(prevPost || nextPost) && (
-          <nav className="max-w-4xl mx-auto px-6 mt-16">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* 광고 2: 쿠팡 */}
+          {siteConfig.coupang.enabled && (
+            <CoupangLinkAd keywords={coupangKeywords} title={dict.post.coupangReaderTitle} className="mt-8" />
+          )}
+
+          {/* Prev / Next */}
+          {(prevPost || nextPost) && (
+            <nav aria-label={en ? "Previous and next posts" : "이전/다음 글"} className="mt-12 grid gap-3 sm:grid-cols-2">
               {prevPost ? (
                 <a
                   href={lh(`/posts/${prevPost.slug}`)}
-                  className="group flex items-start gap-3 p-5 rounded-2xl border border-stone-100 hover:border-primary/20 hover:bg-primary-50/30 transition-all duration-300"
+                  className="group rounded-xl border border-line p-4 transition-colors hover:border-line-strong"
                 >
-                  <span className="material-symbols-outlined text-stone-300 group-hover:text-primary mt-0.5 transition-colors">arrow_back</span>
-                  <div className="min-w-0">
-                    <p className="text-[10px] text-stone-400 mb-1.5 uppercase tracking-wider font-semibold">Previous</p>
-                    <p className="text-sm font-bold text-stone-700 truncate group-hover:text-primary transition-colors">{prevPost.title}</p>
-                  </div>
+                  <span className="flex items-center gap-1 text-[12px] text-ink-3">
+                    <Icon name="arrowLeft" className="h-3.5 w-3.5" /> {en ? "Previous" : "이전 글"}
+                  </span>
+                  <span className="card-title mt-1.5 line-clamp-2 block text-[14.5px] font-semibold leading-snug text-ink">
+                    {prevPost.title}
+                  </span>
                 </a>
-              ) : <div />}
-              {nextPost ? (
+              ) : (
+                <span className="hidden sm:block" />
+              )}
+              {nextPost && (
                 <a
                   href={lh(`/posts/${nextPost.slug}`)}
-                  className="group flex items-start gap-3 p-5 rounded-2xl border border-stone-100 hover:border-primary/20 hover:bg-primary-50/30 transition-all duration-300 text-right sm:justify-end"
+                  className="group rounded-xl border border-line p-4 text-right transition-colors hover:border-line-strong"
                 >
-                  <div className="min-w-0">
-                    <p className="text-[10px] text-stone-400 mb-1.5 uppercase tracking-wider font-semibold">Next</p>
-                    <p className="text-sm font-bold text-stone-700 truncate group-hover:text-primary transition-colors">{nextPost.title}</p>
-                  </div>
-                  <span className="material-symbols-outlined text-stone-300 group-hover:text-primary mt-0.5 transition-colors">arrow_forward</span>
+                  <span className="flex items-center justify-end gap-1 text-[12px] text-ink-3">
+                    {en ? "Next" : "다음 글"} <Icon name="arrowRight" className="h-3.5 w-3.5" />
+                  </span>
+                  <span className="card-title mt-1.5 line-clamp-2 block text-[14.5px] font-semibold leading-snug text-ink">
+                    {nextPost.title}
+                  </span>
                 </a>
-              ) : <div />}
-            </div>
-          </nav>
-        )}
+              )}
+            </nav>
+          )}
+        </article>
 
-        {/* Related posts */}
-        {related.length > 0 && (
-          <section className="max-w-7xl mx-auto px-6 mt-24 pt-14 border-t border-stone-100">
-            <div className="flex items-center justify-between mb-10">
-              <h2 className="text-2xl font-extrabold text-stone-900 font-headline">{dict.post.relatedPosts}</h2>
-              <a href={lh("/posts")} className="group text-sm text-primary font-bold hover:underline flex items-center gap-1">
-                {dict.post.viewAll}
-                <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-              </a>
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((p) => <PostCard key={p.slug} post={p} locale={locale} />)}
-            </div>
-          </section>
-        )}
-      </article>
+        <aside className="hidden xl:block" aria-label={en ? "Table of contents" : "목차"}>
+          <div className="sticky top-[calc(var(--header-h)+2.5rem)] max-h-[calc(100vh-8rem)] overflow-y-auto pt-[4.5rem]">
+            <TableOfContents variant="sidebar" title={en ? "Contents" : "목차"} />
+          </div>
+        </aside>
+      </div>
+
+      {/* Related posts (보관 글 제외) */}
+      {related.length > 0 && (
+        <section
+          aria-labelledby="related-title"
+          className="mx-auto mt-20 max-w-page border-t border-line px-4 pt-12 sm:px-6"
+        >
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <h2 id="related-title" className="text-[1.25rem] font-bold tracking-[-0.02em] text-ink">
+              {archived ? (en ? "Latest from SERO AI" : "세로AI의 최신 AI 글") : dict.post.relatedPosts}
+            </h2>
+            <a href={lh("/posts")} className="link-arrow inline-flex items-center gap-1 text-[14px] text-ink-2 hover:text-ink">
+              {dict.post.viewAll} <Icon name="arrowRight" className="h-3.5 w-3.5" />
+            </a>
+          </div>
+          <div className="grid gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((p) => (
+              <PostCard key={p.slug} post={p} locale={locale} />
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }
