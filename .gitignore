@@ -34,6 +34,7 @@ __pycache__/
 *.pyc
 scripts/.env
 scripts/publish_history.json
+scripts/keyword_cache.json
 scripts/social_history.json
 
 # debug

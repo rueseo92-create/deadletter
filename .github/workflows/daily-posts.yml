@@ -58,6 +58,12 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           BLOG_REPO_PATH: ${{ github.workspace }}
           BLOG_SITE_URL: https://deadletter.vercel.app
+          # 키워드 발굴 (없어도 자동완성만으로 동작)
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          NAVER_AD_API_KEY: ${{ secrets.NAVER_AD_API_KEY }}
+          NAVER_AD_SECRET: ${{ secrets.NAVER_AD_SECRET }}
+          NAVER_AD_CUSTOMER_ID: ${{ secrets.NAVER_AD_CUSTOMER_ID }}
         run: |
           cd scripts
           SLOT="${{ github.event.inputs.slot || 'auto' }}"
@@ -73,6 +79,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add content/posts/*.mdx
           git add -f scripts/publish_history.json || true
+          git add -f scripts/keyword_cache.json || true
           SLOT_LABEL=$(TZ=Asia/Seoul date +%H:%M)
           git diff --staged --quiet || git commit -m "feat: 자동 발행 $(date +%Y-%m-%d) ${SLOT_LABEL}"
           git pull --rebase origin main || true

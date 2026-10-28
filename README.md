@@ -104,3 +104,27 @@ sero-reels.py에서 WP REST API 대신 이 블로그에 직접 MDX 파일을
 - `description`: 설명
 - `categories`: 카테고리 목록
 - `nav`: 네비게이션
+
+## 🔑 키워드 발굴 → 검색 의도 → 제목 (자동 발행)
+
+`scripts/daily_publish.py` 는 고정 토픽 대신 아래 순서로 글감을 고릅니다.
+
+1. **키워드 발굴** (`scripts/keyword_research.py`): 카테고리별 메인 키워드 → 네이버·구글 자동완성과
+   네이버 검색광고 연관 키워드로 세부 키워드 확장 → 검색량 대비 블로그 문서가 적은 키워드 선택.
+   이미 쓴 키워드는 `content/posts` 의 `keyword` 필드로 걸러냅니다. 조회 결과는 `scripts/keyword_cache.json` 에 7일 캐시.
+2. **검색 의도 분류** (`scripts/search_intent.py`): 정보·비교·후기 종합·문제 해결 중 하나로 나누고, 의도별 글 구조를 프롬프트에 넣습니다.
+3. **제목 4단계 공식 + 주의 표현 점검** (`scripts/title_rules.py`): 메인 + 세부 키워드 + 근거 있는 수식어.
+   없는 경험("직접 써보니"), 과장("무조건", "100%"), 본문에 없는 숫자, 상위 글 베끼기, 지난 연도는 탈락시키고,
+   건강·금융·보험 분야는 효과 단정·조건 누락 표현을 점검합니다. 의료·시술·의약품 키워드는 자동 발행하지 않습니다.
+
+```bash
+cd scripts
+python keyword_research.py --category finance -n 3 --show-block   # 키워드 플랜 미리보기 (글 생성 없음)
+```
+
+선택 환경변수 (없으면 자동완성 신호만으로 동작, GitHub Secrets 에 같은 이름으로 등록):
+
+| 변수 | 용도 | 발급 |
+|---|---|---|
+| `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` | 블로그 문서 수, 상위 글 제목, 지식iN 질문, 뉴스 | developers.naver.com → 검색 API |
+| `NAVER_AD_API_KEY`, `NAVER_AD_SECRET`, `NAVER_AD_CUSTOMER_ID` | 월간 검색량, 연관 키워드 | searchad.naver.com → 도구 → API 사용 관리 |

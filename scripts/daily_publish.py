@@ -30,6 +30,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import sero_blog
+import keyword_research
+import title_rules
 
 # ──────────────────────────────────────────────
 # 시간대별 발행 슬롯 (한국시간 기준)
@@ -145,18 +147,6 @@ TOPIC_POOL = {
     ],
 }
 
-# ──────────────────────────────────────────────
-# SEO 트래픽 부스트: 검색량 높은 키워드 수식어
-# ──────────────────────────────────────────────
-SEO_MODIFIERS = {
-    "finance": ["금리 비교", "절세 꿀팁", "무료 상담", "초보자 필독", "2026년 최신"],
-    "insurance": ["보험료 절약", "비교 추천", "가입 전 필독", "직접 비교", "무료 견적"],
-    "health": ["전문가 추천", "직접 써보니", "무료 검진", "초보자용", "효과 검증"],
-    "tech": ["무료", "추천 TOP", "직접 써보니", "비교", "초보자용"],
-    "realestate": ["시세 분석", "투자 전략", "초보자 가이드", "2026년 전망", "세금 절약"],
-    "lifestyle": ["생활 꿀팁", "무료 강의", "직장인 필독", "절약 비법", "실전 후기"],
-}
-
 # 발행 이력 추적 (중복 방지)
 HISTORY_FILE = Path(__file__).parent / "publish_history.json"
 
@@ -233,25 +223,27 @@ def select_daily_topics(count: int = 10, slot: str = None) -> list[dict]:
                 min_cat = min(distribution, key=distribution.get)
                 distribution[min_cat] += 1
 
+    recent_keywords = {p["keyword"] for p in history["published"] if p.get("keyword")}
+
     topics = []
     for category, num in distribution.items():
+        # 1순위: 키워드 발굴 → 세부 키워드 + 검색 의도 플랜
+        plans = []
+        try:
+            plans = keyword_research.pick_plans(category, num, exclude=recent_keywords)
+        except Exception as e:
+            print(f"  [키워드] {category} 발굴 실패, 토픽 풀로 대체: {e}")
+        for plan in plans:
+            topics.append({"topic": plan["keyword"], "category": category, "plan": plan})
+
+        # 부족분은 기존 토픽 풀에서 (최근 발행하지 않은 토픽 우선)
+        need = num - len(plans)
+        if need <= 0:
+            continue
         pool = TOPIC_POOL.get(category, [])
-        # 최근 발행하지 않은 토픽 우선
-        available = [t for t in pool if t not in recent_titles]
-        if not available:
-            available = pool  # 전부 발행했으면 리셋
-
-        selected = random.sample(available, min(num, len(available)))
-
-        # SEO 수식어 부스트
-        modifiers = SEO_MODIFIERS.get(category, [])
-        for topic_title in selected:
-            modifier = random.choice(modifiers) if modifiers else ""
-            topics.append({
-                "topic": topic_title,
-                "category": category,
-                "seo_modifier": modifier,
-            })
+        available = [t for t in pool if t not in recent_titles] or pool
+        for topic_title in random.sample(available, min(need, len(available))):
+            topics.append({"topic": topic_title, "category": category, "plan": None})
 
     random.shuffle(topics)
     return topics[:count]
@@ -361,6 +353,19 @@ def run_qc(days: int = 7) -> list[dict]:
         else:
             issues.append({"file": f.name, "issue": "표(Table) 없음", "severity": "info"})
 
+        # 10. 키워드 플랜 글: 제목 4단계 공식 + 주의 표현
+        kw_m = re.search(r'^keyword:\s*"(.+?)"', fm, re.MULTILINE)
+        cat_m = re.search(r'^category:\s*"(.+?)"', fm, re.MULTILINE)
+        if kw_m and title_m:
+            checks_total += 1
+            found = title_rules.check_title(title_m.group(1), kw_m.group(1), cat_m.group(1) if cat_m else "", body)
+            found += title_rules.check_content(body, kw_m.group(1), cat_m.group(1) if cat_m else "")
+            if not found:
+                checks_passed += 1
+            for it in found:
+                sev = "error" if it["severity"] == "error" else "warning"
+                issues.append({"file": f.name, "issue": it["issue"], "severity": sev})
+
         score = round(checks_passed / checks_total * 100)
         scores.append({"file": f.name, "score": score})
 
@@ -444,8 +449,9 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
     daily_topics = select_daily_topics(remaining, slot=slot if slot_config else None)
     print(f"\n선택된 토픽 ({len(daily_topics)}개):")
     for i, t in enumerate(daily_topics):
-        mod = f" [{t.get('seo_modifier', '')}]" if t.get("seo_modifier") else ""
-        print(f"  {i+1}. [{t['category']}] {t['topic']}{mod}")
+        plan = t.get("plan")
+        info = f" [{plan['main']} > 의도 {plan['intent']}]" if plan else " [토픽 풀]"
+        print(f"  {i+1}. [{t['category']}] {t['topic']}{info}")
 
     # K-Startup 최신 공고 크롤링 (finance 카테고리에 사용)
     kstartup_topics = []
@@ -481,13 +487,11 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
                 kstartup_idx += 1
                 print(f"  -> K-Startup 실제 데이터 사용: {topic_data.title}")
             else:
-                # SEO 수식어를 summary에 힌트로 전달
-                seo_hint = topic_info.get("seo_modifier", "")
                 topic_data = sero_blog.TopicData(
                     title=topic_info["topic"],
                     category=topic_info["category"],
-                    summary=f"SEO 키워드 힌트: {seo_hint}" if seo_hint else "",
                     difficulty="beginner",
+                    keyword_plan=topic_info.get("plan"),
                 )
 
             # 글 생성 + 프로그래밍 품질 보정 (단일 API 호출)
@@ -516,6 +520,8 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
             # 이력 기록 (슬롯 정보 포함)
             history["published"].append({
                 "title": topic_info["topic"],
+                "keyword": post.keyword,
+                "intent": post.intent,
                 "category": topic_info["category"],
                 "date": today,
                 "slot": slot,

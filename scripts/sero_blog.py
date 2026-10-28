@@ -47,6 +47,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+sys.path.insert(0, str(Path(__file__).parent))
+import keyword_research  # noqa: E402
+import title_rules  # noqa: E402
+
 # ──────────────────────────────────────────────
 # Config
 # ──────────────────────────────────────────────
@@ -111,6 +115,7 @@ class TopicData:
     tags: list = field(default_factory=list)
     score: float = 0.0
     language: str = "ko"
+    keyword_plan: Optional[dict] = None  # keyword_research.build_plan() 결과
 
 
 @dataclass
@@ -138,6 +143,9 @@ class BlogPost:
     reading_time: int = 0
     char_count: int = 0
     language: str = "ko"
+    keyword: str = ""      # 세부 키워드 (키워드 플랜이 있을 때)
+    intent: str = ""       # 검색 의도
+    quality_issues: list = field(default_factory=list)  # 제목·본문 점검 결과
 
 
 # ──────────────────────────────────────────────
@@ -686,10 +694,17 @@ BLOG_PROMPT = """당신은 SEO·GEO(Generative Engine Optimization)에 특화된
 난이도: {difficulty}
 오늘 날짜: {today}
 
+{keyword_block}
+
 작성 규칙:
-1. SEO 최적화 + 후킹 제목 (구글 검색 상위 노출)
-   - 제목은 클릭을 유도하는 후킹 스타일, 50자 이내
-   - 숫자, 감정, 호기심, 대화체 활용 ("직접 써보니", "이것 모르면 손해", "1등은 의외")
+1. 제목: 메인 키워드 + 세부 키워드 + 수식어 (4단계 공식)
+   - 1) 세부 키워드를 제목 앞부분에 그대로 넣는다 (40자 안팎, 최대 50자)
+   - 2) 검색 의도에 맞게 독자가 가장 먼저 궁금해할 점을 짚는다
+   - 3) 수식어는 실제 자료(독자 질문·뉴스·공식 자료)에 근거가 있고 본문에서 설명하는 내용으로만 만든다
+   - 4) 제목만 보고 글의 핵심을 예상할 수 있어야 한다
+   - 금지: 없는 경험("직접 써보니", "내돈내산", "솔직 후기"), 과장("무조건", "100%", "모르면 손해", "역대급"),
+     본문에 없는 숫자, 상위 글 제목 베끼기, 지난 연도
+   - 제목 후보 3개를 서로 다른 수식어로 만든다 (title_candidates)
    - 소제목(H2, H3)에 키워드 변형 자연스럽게 배치
    - 첫 100자 이내에 핵심 키워드 언급
    - 키워드 밀도 1~3% 유지
@@ -715,8 +730,9 @@ BLOG_PROMPT = """당신은 SEO·GEO(Generative Engine Optimization)에 특화된
      (AI 인용률 +30~40% 효과)
    - 엔티티 관계: 핵심 개념 간 관계를 명시적으로 서술
      예: "ChatGPT는 OpenAI가 개발한 대규모 언어 모델로, GPT-4 아키텍처 기반이다"
-   - E-E-A-T 신호: 경험·전문성·권위·신뢰를 드러내는 표현 포함
-     예: "실제 3개월간 테스트한 결과", "공식 문서에 따르면", "업계 전문가들의 분석"
+   - E-E-A-T 신호: 전문성·권위·신뢰를 드러내는 표현 포함
+     예: "공식 문서에 따르면", "금융감독원 공시 기준", "공개된 이용자 후기에서 자주 언급되는 점은"
+   - 직접 체험·사용·방문한 것처럼 쓰지 말 것 (1인칭 경험담 금지 — 이 블로그는 자료를 정리하는 글이다)
 
 4. 콘텐츠 디자인 규칙 — 매우 중요!
    - 핵심 정보는 인용블록(>)으로 강조 (최소 3개 포함)
@@ -775,7 +791,8 @@ BLOG_PROMPT = """당신은 SEO·GEO(Generative Engine Optimization)에 특화된
 
 반드시 아래 JSON만 출력:
 {{
-  "title": "SEO 최적화된 제목 (60자 이하)",
+  "title": "가장 추천하는 제목 (50자 이하)",
+  "title_candidates": ["다른 수식어의 제목 후보 1", "제목 후보 2"],
   "description": "meta description (150자 이내)",
   "tldr": "핵심 내용 1-2문장 TL;DR",
   "tags": ["태그1", "태그2", "태그3", "태그4", "태그5"],
@@ -816,7 +833,10 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
         topic.category = "finance"
 
     lang = getattr(topic, "language", "ko")
+    plan = topic.keyword_plan if lang == "ko" else None
     print(f"[2/5] 블로그 글 생성 중... (토픽: {topic.title}, lang={lang})")
+    if plan:
+        print(f"  → 키워드: {plan['main']} > {plan['keyword']} (의도: {plan['intent']})")
 
     blog_prompt = BLOG_PROMPT_EN if lang == "en" else BLOG_PROMPT
     prompt_content = blog_prompt.format(
@@ -825,6 +845,7 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
         summary=topic.summary or ("Latest practical insights" if lang == "en" else "최신 실용 정보"),
         difficulty=topic.difficulty,
         today=datetime.now().strftime("%Y-%m-%d"),
+        keyword_block=keyword_research.prompt_block(plan) if plan else "",
     )
 
     data = None
@@ -882,6 +903,20 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
 
     today = datetime.now().strftime("%Y-%m-%d")
     title = data["title"]
+    quality_issues = []
+    if plan:
+        # 제목 4단계 공식 검사: 오류 없는 첫 후보 사용
+        candidates = [data.get("title", "")] + list(data.get("title_candidates") or [])
+        title, title_issues, checked = title_rules.choose_title(
+            candidates, plan["keyword"], topic.category, data["content"], plan.get("serp_titles", []),
+            plan.get("intent", "info"))
+        for t, iss in checked:
+            if t != title and iss:
+                print(f"  [제목 탈락] {t} → " + ", ".join(i["issue"] for i in iss if i["severity"] == "error"))
+        quality_issues = title_issues + title_rules.check_content(data["content"], plan["keyword"], topic.category)
+        if any(i["severity"] == "error" for i in quality_issues):
+            raise RuntimeError("품질 검사 오류: " + ", ".join(
+                i["issue"] for i in quality_issues if i["severity"] == "error"))
     slug = f"{today}-{_generate_english_slug(title, topic.title)}"
 
     post = BlogPost(
@@ -890,15 +925,20 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
         description=data.get("description", ""),
         category=topic.category,
         tags=data.get("tags", topic.tags),
-        main_keyword=topic.title,
+        main_keyword=plan["keyword"] if plan else topic.title,
         content=data["content"],
         sources=sources,
         difficulty=topic.difficulty,
         tldr=data.get("tldr", ""),
         language=lang,
+        keyword=plan["keyword"] if plan else "",
+        intent=plan["intent"] if plan else "",
+        quality_issues=quality_issues,
     )
 
     print(f"  → 제목: {post.title}")
+    for i in quality_issues:
+        print(f"  [점검:{i['severity']}] {i['issue']}")
     return post
 
 
@@ -933,6 +973,13 @@ def run_seo_audit(post: BlogPost) -> BlogPost:
         {"label": "답변 캡슐 2개+", "passed": len(answer_capsules) >= 2},
         {"label": "본문 출처 인용 2개+", "passed": len(source_citations) >= 2},
     ]
+    if post.keyword:
+        # 키워드 플랜 기반 점검 (4단계 제목 공식 + 주의 표현)
+        checks += [
+            {"label": "세부 키워드 제목 포함", "passed": title_rules.contains_keyword(post.title, post.keyword)},
+            {"label": "세부 키워드 첫 100자", "passed": title_rules.contains_keyword(content[:100], post.keyword)},
+            {"label": "제목·본문 주의 표현 없음", "passed": not post.quality_issues},
+        ]
 
     passed = sum(1 for c in checks if c["passed"])
     score = round((passed / len(checks)) * 100)
@@ -1063,6 +1110,10 @@ def create_mdx_file(post: BlogPost) -> Path:
     thumbnail = _pick_thumbnail(post.slug, post.category)
 
     lang_field = f'\nlanguage: "{post.language}"' if post.language == "en" else ""
+    if post.keyword:
+        kw = post.keyword.replace('"', "")
+        lang_field += f'\nkeyword: "{kw}"\nintent: "{post.intent}"'
+
     mdx = f"""---
 title: "{post.title}"
 description: "{post.description}"
