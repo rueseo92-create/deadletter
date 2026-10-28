@@ -886,6 +886,56 @@
      "score": 0.4
     }
    ]
+  },
+  "AI 블로그 수익": {
+   "fetched": "2026-10-28T16:34:44",
+   "candidates": [
+    {
+     "keyword": "AI 블로그 수익화",
+     "ac_score": 3.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.8
+    },
+    {
+     "keyword": "AI 블로그 수익화 강의",
+     "ac_score": 2.08,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.08
+    },
+    {
+     "keyword": "AI 사진 블로그 수익",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "AI 블로그 애드 센스 수익",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    }
+   ]
   }
  },
  "seed_used": {
@@ -895,6 +945,7 @@
   "AI 도구": "2026-10-28T14:23:34",
   "챗GPT 사용법": "2026-10-28T15:42:48",
   "클로드 사용법": "2026-10-28T15:51:15",
-  "AI 부업": "2026-10-28T16:25:34"
+  "AI 부업": "2026-10-28T16:25:34",
+  "AI 블로그 수익": "2026-10-28T16:34:45"
  }
 }
