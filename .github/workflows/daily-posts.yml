@@ -80,6 +80,7 @@ jobs:
           git add content/posts/*.mdx
           git add -f scripts/publish_history.json || true
           git add -f scripts/keyword_cache.json || true
+          git add -f scripts/news_seen.json || true
           SLOT_LABEL=$(TZ=Asia/Seoul date +%H:%M)
           git diff --staged --quiet || git commit -m "feat: 자동 발행 $(date +%Y-%m-%d) ${SLOT_LABEL}"
           git pull --rebase origin main || true

@@ -43,22 +43,38 @@ UA = "Mozilla/5.0 (compatible; DailyInsightBot/1.0)"
 
 # 메인 키워드. 큰 주제 그대로 쓰지 않고 여기서 세부 키워드로 좁힌다.
 SEED_KEYWORDS = {
-    "finance": ["적금", "예금 금리", "연말정산", "ETF", "신용점수", "ISA 계좌", "배당주", "신용카드 혜택",
-                "청년 적금", "파킹통장"],
-    "insurance": ["실비보험", "자동차보험", "암보험", "치아보험", "운전자보험", "어린이보험", "실손보험 청구",
-                  "보험 리모델링"],
-    "health": ["건강검진", "영양제", "수면", "홈트", "눈 건강", "허리 스트레칭", "건강보험료", "혈압 관리"],
-    "tech": ["챗GPT", "AI 도구", "노트북 추천", "스마트폰 비교", "클라우드 저장공간", "생산성 앱",
-             "무선 이어폰", "아이패드"],
-    "realestate": ["청약", "전세", "월세", "전세사기", "이사 체크리스트", "주택담보대출", "신혼부부 주택",
-                   "양도소득세"],
-    "lifestyle": ["자격증", "온라인 강의", "생활비 절약", "부업", "시간 관리", "독서 습관", "미니멀 라이프",
-                  "재택근무"],
+    "ai-automation": ["업무 자동화 AI", "엑셀 자동화 챗GPT", "n8n 자동화", "Make 자동화", "AI 에이전트 만들기",
+                      "클로드 코드", "GPTs 만들기", "노션 AI", "AI 이메일 자동화", "구글 시트 자동화",
+                      "AI 회의록", "파이썬 자동화 챗GPT"],
+    "ai-side-hustle": ["AI 부업", "챗GPT 부업", "AI 블로그 수익", "AI 이미지 판매", "AI 쇼츠 수익",
+                       "AI 전자책", "AI 그림 부업", "AI 번역 부업", "AI 영상 편집 부업", "AI 강의 판매"],
+    "ai-tools": ["챗GPT 사용법", "클로드 사용법", "제미나이 사용법", "퍼플렉시티", "미드저니", "AI 영상 생성",
+                 "AI 음성 생성", "AI 코딩 도구", "AI PPT 만들기", "AI 요약 도구", "AI 이미지 생성", "커서 AI"],
 }
 
 # 블로그 글로 답할 수 없는 탐색형·도구형 키워드
 NAV_WORDS = ["영어로", "계산기", "로그인", "홈페이지", "사이트", "고객센터", "전화번호", "앱 다운", "다운로드",
-             "주가", "시세", "날씨", "가사", "노래", "영화", "드라마", "주소", "위치", "갤러리", "디시", "나무위키"]
+             "주가", "시세", "날씨", "가사", "노래", "영화", "드라마", "주소", "위치", "갤러리", "디시", "나무위키",
+             "책", "apk", "크랙", "탈옥", "우회", "무료 계정", "공유 계정"]
+
+# 자동완성은 영문을 소문자로 준다 → 브랜드 표기 복원
+CASING = {"챗gpt": "챗GPT", "chatgpt": "ChatGPT", "gpt": "GPT", "gpts": "GPTs", "ai": "AI", "pdf": "PDF",
+          "ppt": "PPT", "api": "API", "n8n": "n8n", "make": "Make", "notion": "Notion", "zapier": "Zapier",
+          "claude": "Claude", "gemini": "Gemini", "cursor": "Cursor", "midjourney": "Midjourney", "sora": "Sora"}
+
+
+def _case(kw: str) -> str:
+    out = []
+    for w in kw.split():
+        low = w.lower()
+        fixed = CASING.get(low)
+        if not fixed:
+            for k, v in CASING.items():  # 붙어 있는 경우 (챗gpt사용법)
+                if low.startswith(k) and len(k) >= 3:
+                    fixed = v + w[len(k):]
+                    break
+        out.append(fixed or w)
+    return " ".join(out)
 
 
 # ──────────────────────────────────────────────
@@ -206,7 +222,7 @@ def expand(seed: str) -> list[dict]:
         words = len(c["keyword"].split())
         bonus = 0.5 if len(c["engines"]) == 2 else 0.0
         bonus += 0.3 if 2 <= words <= 4 else 0.0  # 롱테일 선호
-        out.append({"keyword": c["keyword"], "ac_score": round(c["ac_score"] + bonus, 3),
+        out.append({"keyword": _case(c["keyword"]), "ac_score": round(c["ac_score"] + bonus, 3),
                     "engines": sorted(c["engines"])})
     return sorted(out, key=lambda x: -x["ac_score"])
 

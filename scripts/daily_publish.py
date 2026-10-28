@@ -30,7 +30,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import sero_blog
+import ai_news
 import keyword_research
+import slop_killers
 import title_rules
 
 # ──────────────────────────────────────────────
@@ -39,112 +41,63 @@ import title_rules
 # 하루 총 10편: 4개 슬롯에 분산 발행
 # 검색 트래픽 패턴에 맞춰 카테고리+검색 의도 배분
 SLOT_CONFIG = {
+    # 하루 6편. 양보다 검수 통과율. 각 글은 슬롭 킬러 10명 심사를 거친다.
     "morning": {
-        "hours": (0, 11),       # 00:00~10:59 KST (GitHub Actions 지연 대비 여유)
-        "count": 3,
-        "distribution": {"finance": 2, "insurance": 1},
-        "seo_angle": "최신 금융 뉴스, 금리, 보험 트렌드",
+        "hours": (0, 11),
+        "count": 2,
+        "distribution": {"ai-news": 1, "ai-tools": 1},
+        "seo_angle": "밤사이 AI 소식, 출근길에 바로 쓰는 도구",
         "label": "오전 (07:00)",
     },
     "lunch": {
-        "hours": (11, 17),      # 11:00~16:59 KST
-        "count": 2,
-        "distribution": {"health": 1, "tech": 1},
-        "seo_angle": "건강 가이드, IT 활용법, 추천",
+        "hours": (11, 17),
+        "count": 1,
+        "distribution": {"ai-automation": 1},
+        "seo_angle": "업무 자동화 따라 하기",
         "label": "점심 (12:30)",
     },
     "evening": {
-        "hours": (17, 20),      # 17:00~19:59 KST
-        "count": 3,
-        "distribution": {"realestate": 1, "lifestyle": 1, "finance": 1},
-        "seo_angle": "부동산 분석, 생활 팁, 재테크 전략",
+        "hours": (17, 20),
+        "count": 2,
+        "distribution": {"ai-side-hustle": 1, "ai-news": 1},
+        "seo_angle": "퇴근 후 AI 부업, 오늘의 AI 뉴스",
         "label": "저녁 (18:00)",
     },
     "night": {
-        "hours": (20, 24),      # 20:00~23:59 KST
-        "count": 2,
-        "distribution": {"insurance": 1, "lifestyle": 1},
-        "seo_angle": "보험 비교, 자기계발, 절약 전략",
+        "hours": (20, 24),
+        "count": 1,
+        "distribution": {"ai-tools": 1},
+        "seo_angle": "AI 도구 비교·사용법",
         "label": "야간 (21:30)",
     },
 }
 
 # ──────────────────────────────────────────────
-# 토픽 풀: 카테고리별 주제 템플릿
+# 키워드 발굴 실패 시 대체 토픽
 # ──────────────────────────────────────────────
 TOPIC_POOL = {
-    "finance": [
-        "2026년 적금 금리 비교 TOP 10",
-        "연말정산 환급 많이 받는 방법",
-        "ETF 초보자 입문 가이드",
-        "신용점수 올리는 5가지 방법",
-        "대출 금리 비교 꿀팁",
-        "주식 배당금 투자 전략",
-        "세금 절약하는 재테크 방법",
-        "청년 우대 적금 추천",
-        "카드 혜택 비교 분석",
-        "ISA 계좌 활용법",
+    "ai-automation": [
+        "챗GPT로 엑셀 반복 작업 자동화하는 법",
+        "n8n으로 이메일 요약 자동화 만들기",
+        "구글 시트와 AI로 보고서 자동 작성",
+        "회의록 AI 요약 자동화 흐름",
+        "노션 AI로 업무 문서 정리 자동화",
     ],
-    "insurance": [
-        "실비보험 비교 추천",
-        "자동차보험 저렴하게 가입하는 법",
-        "암보험 가입 시 주의사항",
-        "보험료 아끼는 5가지 꿀팁",
-        "어린이보험 추천 비교",
-        "운전자보험 필요할까?",
-        "보험 리모델링 방법",
-        "종신보험 vs 정기보험 비교",
-        "실손보험 청구 방법 총정리",
-        "치아보험 추천 TOP 5",
+    "ai-side-hustle": [
+        "AI 부업 종류별 필요한 비용과 시간 비교",
+        "AI 이미지 판매 시작 전 확인할 저작권과 플랫폼 정책",
+        "AI로 전자책 만들 때 현실적인 수익 구조",
+        "AI 쇼츠 채널 운영 시 수익화 정책과 주의점",
+        "AI 번역·교정 부업 시작하는 법",
     ],
-    "health": [
-        "건강검진 항목 총정리",
-        "영양제 추천 조합 가이드",
-        "다이어트 식단 추천",
-        "홈트레이닝 루틴 초보자용",
-        "수면 질 높이는 방법",
-        "면역력 높이는 생활습관",
-        "건강보험료 절약하는 법",
-        "눈 건강 관리법",
-        "허리 통증 예방 운동",
-        "건강기능식품 고르는 법",
+    "ai-tools": [
+        "챗GPT 클로드 제미나이 용도별 비교",
+        "AI PPT 생성 도구 비교",
+        "AI 회의 녹음 요약 앱 비교",
+        "AI 이미지 생성 도구 고르는 기준",
+        "AI 코딩 도구 입문자 비교",
     ],
-    "tech": [
-        "ChatGPT 활용법 2026",
-        "스마트폰 추천 비교",
-        "생산성 앱 TOP 10",
-        "AI 코딩 도구 비교",
-        "무료 AI 도구 모음",
-        "클라우드 스토리지 비교",
-        "VPN 추천 비교",
-        "노트북 추천 가성비",
-        "AI 영상 편집 도구",
-        "스마트홈 기기 추천",
-    ],
-    "realestate": [
-        "아파트 청약 준비 가이드",
-        "전세 vs 월세 비교 분석",
-        "부동산 투자 초보자 가이드",
-        "이사 체크리스트 총정리",
-        "신혼부부 주택 지원제도",
-        "부동산 세금 절약 방법",
-        "오피스텔 투자 주의사항",
-        "전세 사기 예방법",
-        "주택담보대출 비교",
-        "재건축 투자 전략",
-    ],
-    "lifestyle": [
-        "자격증 추천 취업에 도움되는",
-        "온라인 강의 추천 무료",
-        "생활비 절약하는 10가지 방법",
-        "부업 아이디어 현실적인 추천",
-        "시간 관리 방법 직장인",
-        "독서 습관 만드는 법",
-        "미니멀 라이프 시작하기",
-        "스트레스 관리법",
-        "자기계발 루틴 만들기",
-        "재택근무 생산성 높이는 법",
-    ],
+    "ai-news": [],
 }
 
 # 발행 이력 추적 (중복 방지)
@@ -202,12 +155,10 @@ def select_daily_topics(count: int = 10, slot: str = None) -> list[dict]:
         distribution = dict(SLOT_CONFIG[slot]["distribution"])
     else:
         distribution = {
-            "finance": 2,
-            "insurance": 2,
-            "health": 2,
-            "tech": 2,
-            "realestate": 1,
-            "lifestyle": 1,
+            "ai-news": 3,
+            "ai-tools": 3,
+            "ai-automation": 2,
+            "ai-side-hustle": 2,
         }
         # count에 맞게 비례 배분 조정
         if count != 10:
@@ -230,11 +181,15 @@ def select_daily_topics(count: int = 10, slot: str = None) -> list[dict]:
         # 1순위: 키워드 발굴 → 세부 키워드 + 검색 의도 플랜
         plans = []
         try:
-            plans = keyword_research.pick_plans(category, num, exclude=recent_keywords)
+            if category == "ai-news":
+                plans = ai_news.pick_plans(num)
+            else:
+                plans = keyword_research.pick_plans(category, num, exclude=recent_keywords)
         except Exception as e:
             print(f"  [키워드] {category} 발굴 실패, 토픽 풀로 대체: {e}")
         for plan in plans:
-            topics.append({"topic": plan["keyword"], "category": category, "plan": plan})
+            topic = plan["keyword"] or (plan["sources"][0]["title"] if plan.get("news") else "")
+            topics.append({"topic": topic, "category": category, "plan": plan})
 
         # 부족분은 기존 토픽 풀에서 (최근 발행하지 않은 토픽 우선)
         need = num - len(plans)
@@ -458,7 +413,7 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
 
     # K-Startup 최신 공고 크롤링 (finance 카테고리에 사용)
     kstartup_topics = []
-    if sero_blog.KSTARTUP_ENABLED:
+    if sero_blog.KSTARTUP_ENABLED and any(t["category"] == "finance" for t in daily_topics):
         try:
             import kstartup_crawler
             anns = kstartup_crawler.crawl_recent(days=7, max_results=3)
@@ -502,6 +457,9 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
             post = sero_blog.generate_blog_post(topic_data)
             post.published = True
 
+            # 슬롭 킬러 10명 심사 (탈락 시 1회 수정, 그래도 탈락이면 발행하지 않음)
+            post = slop_killers.gate(post, topic_data.keyword_plan)
+
             # SEO 감사 (API 호출 없음)
             post = sero_blog.run_seo_audit(post)
 
@@ -521,6 +479,10 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
                 "file": filepath.name if filepath else "",
             })
 
+            plan = topic_data.keyword_plan
+            if plan and plan.get("news") and not dry_run:
+                ai_news.mark_seen([x["url"] for x in plan["sources"]])
+
             # 이력 기록 (슬롯 정보 포함)
             history["published"].append({
                 "title": topic_info["topic"],
@@ -533,6 +495,9 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
             })
             save_history(history)
 
+        except slop_killers.SlopRejected as e:
+            print(f"  [탈락] {e} → 발행하지 않습니다.")
+            LAST_RUN["rejected"] = LAST_RUN.get("rejected", 0) + 1
         except Exception as e:
             print(f"  [오류] 생성 실패: {e}")
             print("  -> 다음 글로 넘어갑니다.")
@@ -580,6 +545,7 @@ if __name__ == "__main__":
     else:
         results = run_daily(slot=args.slot, count=args.count, dry_run=args.dry_run)
         # 생성 대상이 있었는데 한 편도 못 만들었으면 실패로 종료 (조용한 실패 방지)
-        if results is not None and len(results) == 0 and LAST_RUN.get("attempted", 0) > 0:
+        if (results is not None and len(results) == 0 and LAST_RUN.get("attempted", 0) > 0
+                and LAST_RUN.get("rejected", 0) < LAST_RUN["attempted"]):
             print("\n[실패] 글을 한 편도 생성하지 못했습니다. 위 오류(API 크레딧·모델·키)를 확인하세요.")
             sys.exit(1)

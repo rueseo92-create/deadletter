@@ -51,6 +51,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 sys.path.insert(0, str(Path(__file__).parent))
+import ai_news  # noqa: E402
 import keyword_research  # noqa: E402
 import title_rules  # noqa: E402
 
@@ -64,12 +65,10 @@ SITE_URL = os.getenv("BLOG_SITE_URL", "")
 
 # 데일리인사이트 카테고리 (lib/config.ts 와 동기화)
 CATEGORIES = {
-    "finance": {"name": "금융·재테크", "emoji": "💰"},
-    "insurance": {"name": "보험", "emoji": "🛡️"},
-    "health": {"name": "건강·의료", "emoji": "🏥"},
-    "tech": {"name": "IT·테크", "emoji": "💻"},
-    "realestate": {"name": "부동산", "emoji": "🏠"},
-    "lifestyle": {"name": "생활·자기계발", "emoji": "🌱"},
+    "ai-automation": {"name": "AI 자동화", "emoji": ""},
+    "ai-side-hustle": {"name": "AI 부업", "emoji": ""},
+    "ai-news": {"name": "AI 뉴스", "emoji": ""},
+    "ai-tools": {"name": "AI 도구", "emoji": ""},
 }
 
 claude = anthropic.Anthropic()
@@ -109,7 +108,7 @@ except Exception:
 class TopicData:
     """블로그 토픽 정보"""
     title: str
-    category: str = "finance"
+    category: str = "ai-tools"
     summary: str = ""
     source_name: str = ""
     source_url: str = ""
@@ -149,6 +148,7 @@ class BlogPost:
     keyword: str = ""      # 세부 키워드 (키워드 플랜이 있을 때)
     intent: str = ""       # 검색 의도
     quality_issues: list = field(default_factory=list)  # 제목·본문 점검 결과
+    review: Optional[dict] = None  # 슬롭 킬러 심사 결과 {panel, passed, score}
 
 
 # ──────────────────────────────────────────────
@@ -333,10 +333,12 @@ def _programmatic_polish(content: str, category: str) -> str:
             prev_was_h2_section = True
         result.append(line)
     content = "\n".join(result)
+    # 4-1. 연속된 수평선(---) 하나로
+    content = re.sub(r"(\n---\s*\n)(\s*---\s*\n)+", r"\1", content)
     # 5. 내부 링크 부족 시 자동 추가
     internal_links = re.findall(r'\]\(/(?:posts|categories)/', content)
     if len(internal_links) < 2:
-        cats = {"finance": "금융·재테크", "insurance": "보험", "health": "건강·의료", "tech": "IT·테크", "realestate": "부동산", "lifestyle": "생활·자기계발"}
+        cats = {k: v["name"] for k, v in CATEGORIES.items()}
         others = [k for k in cats if k != category][:2]
         link_block = "\n\n---\n\n"
         for slug in others:
@@ -689,125 +691,66 @@ Output JSON only:
 }}"""
 
 
-BLOG_PROMPT = """당신은 SEO·GEO(Generative Engine Optimization)에 특화된 한국어 생활정보 블로그 작가이자 콘텐츠 디자이너입니다. (데일리인사이트 — seroai.xyz)
-금융, 보험, 건강, IT, 부동산, 생활 분야의 고CPC 실용 정보 콘텐츠를 작성합니다.
-아래 토픽에 대해 시각적으로 풍부하고 읽기 쉬운 블로그 글을 작성해주세요.
+BLOG_PROMPT = """당신은 한국어 AI 실무 매체 '세로AI'(seroai.xyz)의 에디터입니다.
+AI 자동화, AI 부업, AI 뉴스, AI 도구를 직장인·1인 사업자·부업 준비자가 바로 써먹을 수 있게 정리합니다.
+이 매체의 원칙은 '검증된 것만, 바로 따라 할 수 있게, 과장 없이'입니다.
 
 토픽: {title}
 카테고리: {category}
-요약: {summary}
-난이도: {difficulty}
+메모: {summary}
 오늘 날짜: {today}
 
 {keyword_block}
 
 작성 규칙:
-1. 제목: 메인 키워드 + 세부 키워드 + 수식어 (4단계 공식)
-   - 1) 세부 키워드를 제목 앞부분에 그대로 넣는다 (40자 안팎, 최대 50자)
-   - 2) 검색 의도에 맞게 독자가 가장 먼저 궁금해할 점을 짚는다
-   - 3) 수식어는 실제 자료(독자 질문·뉴스·공식 자료)에 근거가 있고 본문에서 설명하는 내용으로만 만든다
-   - 4) 제목만 보고 글의 핵심을 예상할 수 있어야 한다
-   - 금지: 없는 경험("직접 써보니", "내돈내산", "솔직 후기"), 과장("무조건", "100%", "모르면 손해", "역대급"),
-     본문에 없는 숫자, 상위 글 제목 베끼기, 지난 연도
-   - 제목 후보 3개를 서로 다른 수식어로 만든다 (title_candidates)
-   - 소제목(H2, H3)에 키워드 변형 자연스럽게 배치
-   - 첫 100자 이내에 핵심 키워드 언급
-   - 키워드 밀도 1~3% 유지
-   - meta description 150자 이하
-   - FAQ 섹션 포함 (구글 리치 스니펫 대응)
+1. 제목: 메인 키워드 + 세부 키워드 + 수식어
+   - 세부 키워드(또는 뉴스의 핵심 대상)를 제목 앞부분에 둔다. 40자 안팎, 최대 50자
+   - 수식어는 본문에서 실제로 설명하는 구체적인 내용(단계 수, 비용, 비교 대상, 바뀐 점)으로 만든다
+   - 금지: 없는 경험("직접 써보니", "써본 후기"), 과장("무조건", "100%", "월 300", "역대급"), 본문에 없는 숫자, 지난 연도
+   - title_candidates 에 서로 다른 수식어의 후보 2개를 더 낸다
 
-2. 글 구조 (시각적 계층)
-   - 도입: 독자의 고민/질문으로 공감 (2~3문장, "혹시 ~하신 적 있나요?")
-   - 본론: 3~5개 H2 섹션, 각 섹션에 H3 포함
-   - H2 섹션 사이에 반드시 수평선(---) 삽입 (시각적 구분)
-   - 구체적인 숫자, 날짜, 사례 포함
-   - 결론: 핵심 요약 + 다음 단계 안내
-   - FAQ: 자주 묻는 질문 2-3개 (### Q1. 질문 / A1. 답변 형식)
+2. 첫 단락: 3문장 이내로 검색한 사람이 원하는 답을 바로 준다. "혹시 ~하신 적 있나요?" 같은 질문형 도입 금지.
+   바로 아래에 > 핵심 답변: (40-60자 한 줄 결론) 을 둔다.
 
-3. GEO 최적화 — AI 검색엔진 인용 극대화 (매우 중요!)
-   - 통계/수치 삽입: 150~200자마다 구체적 통계·수치를 포함
-     예: "2026년 기준 국내 AI 시장 규모는 약 15조 원으로 전년 대비 35% 성장했다"
-     (AI 검색 인용률 +30~40% 효과)
-   - 인용 가능한 답변 캡슐: 핵심 질문에 대해 40~60자 분량의 명확한 한 줄 답변 제공
-     형식: > 핵심 답변: [질문에 대한 명확하고 간결한 답변 40~60자]
-     (AI가 직접 인용하기 좋은 구조, 검색 노출 +20~30%)
-   - 출처 인용: 본문 내에서 "(출처: OOO, 2026)" 형태로 신뢰도 표시
-     (AI 인용률 +30~40% 효과)
-   - 엔티티 관계: 핵심 개념 간 관계를 명시적으로 서술
-     예: "ChatGPT는 OpenAI가 개발한 대규모 언어 모델로, GPT-4 아키텍처 기반이다"
-   - E-E-A-T 신호: 전문성·권위·신뢰를 드러내는 표현 포함
-     예: "공식 문서에 따르면", "금융감독원 공시 기준", "공개된 이용자 후기에서 자주 언급되는 점은"
-   - 직접 체험·사용·방문한 것처럼 쓰지 말 것 (1인칭 경험담 금지 — 이 블로그는 자료를 정리하는 글이다)
+3. 본문: 3-5개 H2, 필요한 곳에 H3. 검색 의도별 권장 구조가 주어지면 따른다.
+   - 도구·자동화 글: 준비물(계정, 요금제, 소요 시간) → 단계별 따라 하기(메뉴 경로, 실제 예시 프롬프트나 설정값) → 자주 막히는 곳 → 한계와 대안
+   - 부업 글: 무엇을 하는 일인지 → 필요한 것과 비용 → 실제 진행 단계 → 현실적인 기대치(수익은 사람·시장에 따라 크게 다르다는 점) → 리스크(플랫폼 정책, 저작권, AI 생성물 표시 의무, 세금) → 맞는 사람/안 맞는 사람
+   - 비교 글: 비교 기준 → 비교표 → 상황별 추천
+   - 마지막: FAQ 2-3개 (### Q1. 질문 / 답변 형식)
 
-4. 콘텐츠 디자인 규칙 — 매우 중요!
-   - 핵심 정보는 인용블록(>)으로 강조 (최소 3개 포함)
-     예시: > 핵심: ChatGPT-4는 무료 버전도 충분히 강력합니다.
-     예시: > 꿀팁: 프롬프트에 "단계별로 설명해줘"를 추가하면 답변 품질이 올라갑니다.
-     예시: > 핵심 답변: AI가 인용할 수 있는 간결한 답변
-   - 마크다운 볼드(**) 절대 사용 금지 — 본문에 ** 기호를 넣지 마세요
-   - ~~취소선~~ 사용 금지
-   - 물결표(~) 사용 금지 — 범위 표현 시 하이픈(-) 사용 (예: "2-4주", "50-100자", "30-40%")
-   - 이모지 절제: 1섹션당 최대 2개 (과다 사용 금지)
-   - 스캔 가능성: 3초 안에 핵심이 눈에 들어오도록 구조화
-   - 내부 링크: [관련 글 보기](/categories/카테고리슬러그) 형태로 2개 이상 포함
-   - 체크리스트: 실행 단계는 순서 있는 목록(1. 2. 3.)으로 작성
+4. 사실과 수치
+   - 확실히 아는 것만 쓴다. 요금·기능·한도처럼 바뀌기 쉬운 정보는 "작성 시점 기준" 이라고 밝히고 공식 페이지 확인을 권한다
+   - 통계·수치를 채우기 위해 지어내지 않는다. 출처를 댈 수 없는 숫자는 쓰지 않는다
+   - 출처가 있는 주장에는 (출처: 기관·서비스명) 을 붙인다
+   - 존재하지 않는 기능, 메뉴, 요금제, 정책을 만들지 않는다. 확실하지 않으면 "확인 필요"라고 쓴다
+   - 직접 써 본 것처럼 쓰지 않는다 (1인칭 체험담 금지)
 
-5. 톤 & 스타일
-   - 전문적이면서도 쉬운 설명 ("~거든요", "~인데요")
-   - 비전공자도 이해할 수 있는 수준
-   - 비유와 예시 적극 활용
-   - 광고 느낌 없는 정보성 콘텐츠
-   - 형광색, 빨간 밑줄, 깜빡이는 텍스트 같은 저급한 꾸밈 금지
+5. 문체
+   - 담백한 존댓말. 짧은 문장. 한 문단 2-4문장
+   - 금지 표현: "결론적으로", "다양한", "중요합니다", "게임 체인저", "혁신적인", "알아보겠습니다", "놓치지 마세요", 이모지
+   - 마크다운 볼드(**), 취소선, 물결표(~) 금지. 범위는 하이픈(2-4주)
+   - 핵심 정보는 인용블록(>)으로 1-3개만
 
-6. 분량: 2500~3500자
+6. 형식
+   - 표는 비교·조건 정리가 필요할 때만 1-2개. 표 위아래 빈 줄, 헤더 구분선 |------|, 셀 안에 | 금지
+   - 내부 링크: [관련 글](/categories/카테고리슬러그) 형태로 1-2개 (슬러그: ai-automation, ai-side-hustle, ai-news, ai-tools)
+   - 분량: 공백 포함 2000-3500자. 분량을 채우려고 반복하지 않는다
 
-7. 정보 정확성 (매우 중요! — 할루시네이션 절대 금지)
-   - 존재하지 않는 사업, 보조금, 공모전을 절대 만들어내지 말 것
-   - 구체적 지원금액, 마감일, 선정 규모를 지어내지 말 것
-   - 실제 확인되지 않은 URL을 절대 만들지 말 것
-   - 출처 URL은 반드시 실제 존재하는 공식 도메인의 메인 페이지만 사용
-     예: "https://openai.com", "https://www.msit.go.kr" (OK)
-     예: "https://msit.go.kr/ai-startup-2026" (금지 — 실제 존재 확인 불가)
-   - 확실하지 않은 정보는 "~로 알려져 있다", "~한 것으로 보인다"와 같은 추정 표현 사용
-   - 정부 정책/사업 정보는 크롤링으로 확인된 경우에만 구체적으로 언급
-   - 반드시 2026년 최신 정보만 작성 (과거 연도 정보 사용 금지)
-   - "2024년", "2025년" 등 과거 데이터를 현재 정보처럼 쓰지 말 것
-
-8. 표(Table) 작성 규칙 — 중요!
-   - 비교/목록 데이터는 반드시 마크다운 표로 정리
-   - 표 위에 반드시 빈 줄 1개, 표 아래에도 빈 줄 1개 필수
-   - 표 형식을 정확히 지킬 것:
-
-| 항목 | 내용 | 비고 |
-|------|------|------|
-| 데이터1 | 설명1 | 참고1 |
-| 데이터2 | 설명2 | 참고2 |
-
-   - 헤더 구분선은 반드시 |------|------|------| 형태 (하이픈 3개 이상)
-   - 셀 안에 파이프(|) 문자 사용 금지
-   - 최소 1개 이상의 표를 포함할 것
-
-9. 참고 자료 (출처 URL 규칙)
-   - sources의 URL은 반드시 실제 존재하는 공식 웹사이트의 메인 페이지 또는 알려진 경로만 사용
-   - 절대 URL을 지어내지 말 것. 확실하지 않으면 해당 기관의 메인 도메인만 제공
-   - 허용 예: "https://openai.com", "https://www.anthropic.com", "https://www.msit.go.kr"
-   - 금지 예: "https://msit.go.kr/specific-fake-path-2026" (존재 확인 불가능한 경로)
-   - 출처는 신뢰도 높은 기관 우선 (공식 사이트, 학술, 공식 보고서)
+7. 출처(sources)
+   - 실제로 존재하는 공식 사이트 메인 또는 확실한 공식 문서만. 지어낸 경로 금지
+   - AI 뉴스 글은 제공된 기사만 사용한다
 
 반드시 아래 JSON만 출력:
 {{
   "title": "가장 추천하는 제목 (50자 이하)",
   "title_candidates": ["다른 수식어의 제목 후보 1", "제목 후보 2"],
+  "slug": "영문 소문자 kebab-case 주소 (3-6단어, 예: claude-code-excel-automation)",
   "description": "meta description (150자 이내)",
-  "tldr": "핵심 내용 1-2문장 TL;DR",
+  "tldr": "핵심 내용 1-2문장",
   "tags": ["태그1", "태그2", "태그3", "태그4", "태그5"],
-  "content": "마크다운 본문 전체 (H2, H3, 목록, 표, 인용블록, 수평선, FAQ, 통계, 답변캡슐 포함)",
+  "content": "마크다운 본문 전체",
   "sources": [
-    {{
-      "name": "출처 이름",
-      "url": "출처 URL",
-      "type": "government/news/official/paper"
-    }}
+    {{"name": "출처 이름", "url": "출처 URL", "type": "official/news/docs/paper"}}
   ]
 }}"""
 
@@ -834,8 +777,8 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
     """Claude API로 SEO 최적화 블로그 글 생성"""
     # 카테고리 유효성 검증
     if topic.category not in CATEGORIES:
-        print(f"  [경고] 알 수 없는 카테고리 '{topic.category}' → finance로 변경")
-        topic.category = "finance"
+        print(f"  [경고] 알 수 없는 카테고리 '{topic.category}' → ai-tools로 변경")
+        topic.category = "ai-tools"
 
     lang = getattr(topic, "language", "ko")
     plan = topic.keyword_plan if lang == "ko" else None
@@ -850,7 +793,8 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
         summary=topic.summary or ("Latest practical insights" if lang == "en" else "최신 실용 정보"),
         difficulty=topic.difficulty,
         today=datetime.now().strftime("%Y-%m-%d"),
-        keyword_block=keyword_research.prompt_block(plan) if plan else "",
+        keyword_block=(ai_news.prompt_block(plan) if plan and plan.get("news")
+                       else keyword_research.prompt_block(plan) if plan else ""),
     )
 
     data = None
@@ -899,6 +843,10 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
             url=url,
             type=s.get("type", "news"),
         ))
+    # AI 뉴스: 모델이 낸 출처 대신 실제 수집한 기사만 출처로 쓴다
+    if plan and plan.get("news"):
+        sources = [SourceLink(name=f"{x['name']} - {x['title'][:60]}", url=x["url"], type="news")
+                   for x in plan["sources"]]
     # 크롤링 원본 출처 추가
     if topic.source_url:
         sources.insert(0, SourceLink(
@@ -911,7 +859,7 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
     title = data["title"]
     quality_issues = []
     if plan:
-        # 제목 4단계 공식 검사: 오류 없는 첫 후보 사용
+        # 제목 4단계 공식 검사: 오류 없는 첫 후보 사용 (뉴스는 핵심 대상이 없으면 키워드 조건 생략)
         candidates = [data.get("title", "")] + list(data.get("title_candidates") or [])
         title, title_issues, checked = title_rules.choose_title(
             candidates, plan["keyword"], topic.category, data["content"], plan.get("serp_titles", []),
@@ -923,7 +871,9 @@ def generate_blog_post(topic: TopicData) -> BlogPost:
         if any(i["severity"] == "error" for i in quality_issues):
             raise RuntimeError("품질 검사 오류: " + ", ".join(
                 i["issue"] for i in quality_issues if i["severity"] == "error"))
-    slug = f"{today}-{_generate_english_slug(title, topic.title)}"
+    model_slug = re.sub(r"[^a-z0-9-]+", "-", str(data.get("slug", "")).lower()).strip("-")
+    model_slug = re.sub(r"-{2,}", "-", model_slug)[:60]
+    slug = f"{today}-{model_slug if len(model_slug) >= 5 else _generate_english_slug(title, topic.title)}"
 
     post = BlogPost(
         title=title,
@@ -975,15 +925,14 @@ def run_seo_audit(post: BlogPost) -> BlogPost:
         {"label": "TL;DR 존재", "passed": bool(post.tldr)},
         {"label": "출처 링크", "passed": len(post.sources) > 0},
         # GEO 최적화
-        {"label": "통계/수치 4개+", "passed": len(stat_patterns) >= 4},
-        {"label": "답변 캡슐 2개+", "passed": len(answer_capsules) >= 2},
+        {"label": "답변 캡슐 1개+", "passed": len(answer_capsules) >= 1},
         {"label": "본문 출처 인용 2개+", "passed": len(source_citations) >= 2},
     ]
-    if post.keyword:
+    if post.keyword or post.intent:
         # 키워드 플랜 기반 점검 (4단계 제목 공식 + 주의 표현)
         checks += [
-            {"label": "세부 키워드 제목 포함", "passed": title_rules.contains_keyword(post.title, post.keyword)},
-            {"label": "세부 키워드 첫 100자", "passed": title_rules.contains_keyword(content[:100], post.keyword)},
+            {"label": "세부 키워드 제목 포함", "passed": not post.keyword or title_rules.contains_keyword(post.title, post.keyword)},
+            {"label": "세부 키워드 첫 100자", "passed": not post.keyword or title_rules.contains_keyword(content[:100], post.keyword)},
             {"label": "제목·본문 주의 표현 없음", "passed": not post.quality_issues},
         ]
 
@@ -1101,6 +1050,11 @@ def _pick_thumbnail(slug: str, category: str) -> str:
 # ──────────────────────────────────────────────
 # Step 5: MDX 파일 생성
 # ──────────────────────────────────────────────
+def _yq(text: str) -> str:
+    """YAML 큰따옴표 문자열 안전 처리."""
+    return (text or "").replace("\\", "").replace('"', "'").replace("\n", " ")
+
+
 def create_mdx_file(post: BlogPost) -> Path:
     """Next.js 블로그 호환 MDX 파일 생성"""
     print("[4/5] MDX 파일 생성 중...")
@@ -1110,25 +1064,29 @@ def create_mdx_file(post: BlogPost) -> Path:
     # sources YAML
     sources_yaml = ""
     for s in post.sources:
-        sources_yaml += f'\n  - name: "{s.name}"\n    url: "{s.url}"\n    type: "{s.type}"'
+        sources_yaml += f'\n  - name: "{_yq(s.name)}"\n    url: "{_yq(s.url)}"\n    type: "{_yq(s.type)}"'
 
     # 카테고리별 Unsplash 썸네일 자동 할당
     thumbnail = _pick_thumbnail(post.slug, post.category)
 
     lang_field = f'\nlanguage: "{post.language}"' if post.language == "en" else ""
-    if post.keyword:
+    if post.keyword or post.intent:
         kw = post.keyword.replace('"', "")
         lang_field += f'\nkeyword: "{kw}"\nintent: "{post.intent}"'
+    if post.review:
+        r = post.review
+        lang_field += f'\nreview:\n  panel: {r["panel"]}\n  passed: {r["passed"]}\n  score: {r["score"]}'
+
 
     mdx = f"""---
-title: "{post.title}"
-description: "{post.description}"
+title: "{_yq(post.title)}"
+description: "{_yq(post.description)}"
 date: "{datetime.now().strftime('%Y-%m-%dT%H:%M:%S')}"
 category: "{post.category}"
 tags: {json.dumps(post.tags, ensure_ascii=False)}
 thumbnail: "{thumbnail}"
 difficulty: "{post.difficulty}"
-tldr: "{post.tldr}"
+tldr: "{_yq(post.tldr)}"
 published: {str(post.published).lower()}{lang_field}
 sources:{sources_yaml if sources_yaml else " []"}
 ---
@@ -1138,6 +1096,10 @@ sources:{sources_yaml if sources_yaml else " []"}
 
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
     filepath = POSTS_DIR / filename
+    n = 2
+    while filepath.exists():  # 같은 날 같은 주소면 덮어쓰지 않고 번호를 붙인다
+        filepath = POSTS_DIR / f"{post.slug[:76]}-{n}.mdx"
+        n += 1
     filepath.write_text(mdx, encoding="utf-8")
 
     print(f"  → 파일: {filepath}")
