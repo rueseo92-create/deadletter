@@ -673,6 +673,100 @@
      "score": 0.4
     }
    ]
+  },
+  "클로드 사용법": {
+   "fetched": "2026-10-28T15:51:14",
+   "candidates": [
+    {
+     "keyword": "클로드 사용법 강의",
+     "ac_score": 3.5,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.5
+    },
+    {
+     "keyword": "클로드 사용법 늘리는법",
+     "ac_score": 1.6,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.6
+    },
+    {
+     "keyword": "클로드 사용법 PDF",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "클로드 사용법 정리",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "클로드 코드 사용법 강의",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "클로드 사용법 배우기",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "클로드 사용법 추천",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "클로드 사용법 유튜브",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    }
+   ]
   }
  },
  "seed_used": {
@@ -680,6 +774,7 @@
   "챗GPT": "2026-10-28T14:12:56",
   "영양제": "2026-10-28T14:23:29",
   "AI 도구": "2026-10-28T14:23:34",
-  "챗GPT 사용법": "2026-10-28T15:42:48"
+  "챗GPT 사용법": "2026-10-28T15:42:48",
+  "클로드 사용법": "2026-10-28T15:51:15"
  }
 }
