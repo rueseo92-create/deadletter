@@ -1,0 +1,64 @@
+name: Instagram auto post
+
+# 매일 한 번: 블로그 새 글 카드뉴스 1개 + 릴스 대기열 1개
+on:
+  schedule:
+    - cron: '10 3 * * *'   # 12:10 KST
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '카드만 만들고 게시하지 않기'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install
+        run: pip install anthropic pydantic pillow
+
+      - name: Post to Instagram
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          GH_SECRET_WRITE_TOKEN: ${{ secrets.GH_SECRET_WRITE_TOKEN }}
+          BLOG_SITE_URL: https://seroai.xyz
+        run: |
+          if [ -z "$INSTAGRAM_ACCESS_TOKEN" ] || [ -z "$INSTAGRAM_USER_ID" ]; then
+            echo "INSTAGRAM_ACCESS_TOKEN / INSTAGRAM_USER_ID 시크릿이 없어 건너뜁니다."
+            exit 0
+          fi
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python scripts/instagram.py daily --dry-run
+          else
+            python scripts/instagram.py daily
+          fi
+
+      - name: Save history
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f scripts/instagram_history.json 2>/dev/null || true
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: 인스타 발행 기록 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done

@@ -132,7 +132,8 @@ jobs:
         run: |
           cd scripts
           COUNT="${{ github.event.inputs.count || '3' }}"
-          python social_publish.py --count $COUNT
+          # 인스타그램은 instagram.yml 이 하루 한 번 카드뉴스·릴스로 올린다
+          python social_publish.py --count $COUNT --threads-only
 
       - name: Commit social history
         if: ${{ steps.commit.outputs.new_posts == 'true' || github.event.inputs.social_only == 'true' }}
