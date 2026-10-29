@@ -36,6 +36,26 @@ const WORK = [
   },
 ];
 
+// 대표 소개는 소속이 특정되지 않는 수준까지만 (병원·학교·국가·논문 표기 금지)
+const TEAM = [
+  {
+    role: "대표 · 상담과 기획",
+    name: "유서영",
+    items: [
+      "간호사 면허 2개 (대한민국, 미국 뉴욕주)",
+      "디지털헬스 박사",
+      "상급종합병원 의료 AI 연구원",
+      "해외 병원 디지털헬스 부서 근무",
+      "디지털치료제 스타트업 PM, 대학병원 임상연구 코디네이터",
+    ],
+  },
+  {
+    role: "개발",
+    name: "서울대 출신 개발자",
+    items: ["업무 자동화·홈페이지·웹앱 제작", "AI 블로그 자동 발행·검수 시스템 개발", "만든 뒤 고치기와 유지보수"],
+  },
+];
+
 export default async function Home({ params }: { params: { locale: string } }) {
   const locale = (params.locale || defaultLocale) as Locale;
   const lh = (path: string) => localizedHref(path, locale);
@@ -187,6 +207,31 @@ export default async function Home({ params }: { params: { locale: string } }) {
                 <h3 className="card-title mt-1 text-[1.1rem] font-bold tracking-[-0.02em] text-ink">{w.title}</h3>
                 <p className="mt-1.5 text-[14.5px] leading-relaxed text-ink-3">{w.desc}</p>
               </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 팀 ── */}
+      <section id="team" className="scroll-mt-20 border-t border-line bg-subtle/60">
+        <div className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20">
+          <p className="eyebrow">Team</p>
+          <h2 className="mt-3 text-[2rem] font-black tracking-[-0.04em] text-ink sm:text-[2.4rem]">누가 만드나요</h2>
+          <p className="mt-3 max-w-2xl text-[15px] text-ink-3">현장을 아는 사람이 듣고, 개발자가 직접 만듭니다. 중간에 하청을 거치지 않습니다.</p>
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            {TEAM.map((m) => (
+              <div key={m.name} className="rounded-2xl border border-line bg-surface p-7">
+                <p className="text-[13px] font-semibold text-ink-3">{m.role}</p>
+                <h3 className="mt-1 text-[1.35rem] font-bold tracking-[-0.02em] text-ink">{m.name}</h3>
+                <ul className="mt-4 space-y-2 text-[14.5px] text-ink-2">
+                  {m.items.map((it) => (
+                    <li key={it} className="flex gap-2">
+                      <Icon name="check" className="mt-0.5 h-4 w-4 flex-shrink-0 text-ink" strokeWidth={2.4} />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>
