@@ -1316,6 +1316,150 @@
      "score": 0.3
     }
    ]
+  },
+  "AI 마케팅": {
+   "fetched": "2026-10-29T10:12:51",
+   "candidates": [
+    {
+     "keyword": "AI 마케팅 교육",
+     "ac_score": 3.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.7
+    },
+    {
+     "keyword": "AI 마케팅 자격증",
+     "ac_score": 3.3,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.3
+    },
+    {
+     "keyword": "AI 마케팅 전문가",
+     "ac_score": 3.3,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.3
+    },
+    {
+     "keyword": "AI 마케팅 강의",
+     "ac_score": 2.6,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.6
+    },
+    {
+     "keyword": "AI 마케팅 전문가 자격증",
+     "ac_score": 2.42,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.42
+    },
+    {
+     "keyword": "AI 마케팅 자동화",
+     "ac_score": 1.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.8
+    },
+    {
+     "keyword": "AI 마케팅 사례",
+     "ac_score": 1.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.7
+    },
+    {
+     "keyword": "AI 마케팅 활용 전문가 자격증",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "AI 활용 마케팅 교육",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "AI 마케팅 툴",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "AI 마케팅 활용 전문가",
+     "ac_score": 0.72,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.72
+    },
+    {
+     "keyword": "AI 마케팅 부트캠프",
+     "ac_score": 0.7,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    }
+   ]
   }
  },
  "seed_used": {
@@ -1329,6 +1473,7 @@
   "AI 블로그 수익": "2026-10-28T16:34:45",
   "제미나이 사용법": "2026-10-28T16:49:13",
   "퍼플렉시티": "2026-10-28T16:58:44",
-  "업무 자동화 AI": "2026-10-28T17:07:28"
+  "업무 자동화 AI": "2026-10-28T17:07:28",
+  "AI 마케팅": "2026-10-29T10:12:52"
  }
 }
