@@ -20,11 +20,10 @@ const TEAM = [
     role: "상담 · 기획",
     name: "대표",
     items: [
-      "간호사 면허 2개 (대한민국, 미국 뉴욕주)",
-      "디지털헬스 박사",
-      "상급종합병원 의료 AI 연구원",
-      "해외 병원 디지털헬스 부서 근무",
-      "디지털치료제 스타트업 PM, 대학병원 임상연구 코디네이터",
+      "현직 AI 연구원",
+      "스타트업 서비스 기획·PM 경력",
+      "이 사이트의 AI 블로그 자동 발행 시스템 직접 설계·운영",
+      "상담부터 기획, 사용법 교육까지 직접 담당",
     ],
   },
   {
@@ -218,17 +217,30 @@ export default async function Home({ params }: { params: { locale: string } }) {
                   {p.name}
                   {p.highlight && <span className="rounded-full bg-[#ffdf3d] px-2.5 py-0.5 text-[12px] font-bold text-[#151413]">추천</span>}
                 </p>
-                <p className="mt-3 text-[2.1rem] font-black tracking-[-0.04em]">{p.price}</p>
-                <p className={`text-[13px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{p.period}</p>
                 <p className={`mt-4 text-[15px] ${p.highlight ? "text-bg/85" : "text-ink-2"}`}>{p.desc}</p>
-                <ul className="mt-5 flex-1 space-y-2 text-[14.5px]">
+                <ul className={`mt-5 space-y-2.5 border-y py-4 text-[14.5px] ${p.highlight ? "border-bg/15" : "border-line"}`}>
                   {p.items.map((it) => (
-                    <li key={it} className="flex gap-2">
-                      <Icon name="check" className="mt-0.5 h-4 w-4 flex-shrink-0" strokeWidth={2.4} />
-                      {it}
+                    <li key={it.label} className="flex items-start justify-between gap-3">
+                      <span className="flex gap-2">
+                        <Icon name="check" className="mt-0.5 h-4 w-4 flex-shrink-0" strokeWidth={2.4} />
+                        {it.label}
+                      </span>
+                      <span className={`whitespace-nowrap tabular-nums ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{it.value}</span>
                     </li>
                   ))}
                 </ul>
+                <p className={`mt-4 flex justify-between text-[14px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>
+                  <span>정가 합계</span>
+                  <s className="tabular-nums">{p.was}</s>
+                </p>
+                <div className="mt-1 flex flex-1 items-end justify-between gap-3">
+                  <div>
+                    <p className={`text-[13px] font-bold ${p.highlight ? "text-[#ffdf3d]" : "text-accent"}`}>런칭 기념가</p>
+                    <p className="text-[2.2rem] font-black leading-tight tracking-[-0.04em] tabular-nums">{p.price}</p>
+                  </div>
+                  <span className="mb-2 rounded-full bg-[#ffdf3d] px-2.5 py-1 text-[12.5px] font-black text-[#151413]">{p.off}</span>
+                </div>
+                <p className={`mt-1 text-[13px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{p.period}</p>
                 <a
                   href="#contact"
                   className={`mt-7 inline-flex h-11 items-center justify-center rounded-xl text-[14.5px] font-bold ${
@@ -241,7 +253,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
             ))}
           </div>
           <p className="mt-5 text-[13px] text-ink-3">
-            개별 작업(자동화 10만 원~, 홈페이지 20만 원~, 웹앱 50만 원~)도 가능합니다. AI·서버·도메인 사용료는 사장님 계정에서 직접 결제됩니다.
+            딸깍 진단은 런칭 기념으로 선착순 5팀만 무료이고, 이후에는 99,000원입니다. 파트너 런칭 기념가는 포트폴리오를 쌓는 동안만 적용합니다. 결과물을 사례로 소개하는 데 동의해 주시면 됩니다. 개별 작업(자동화 3만 원~, 홈페이지 5만 원~, 웹앱 15만 원~)도 가능합니다. AI·서버·도메인 사용료는 사장님 계정에서 직접 결제됩니다.
           </p>
         </div>
       </section>
