@@ -1460,6 +1460,155 @@
      "score": 0.7
     }
    ]
+  },
+  "미드저니": {
+   "fetched": "2026-10-29T17:06:16",
+   "candidates": [
+    {
+     "keyword": "미드저니 AI",
+     "ac_score": 3.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.8
+    },
+    {
+     "keyword": "미드저니 가격",
+     "ac_score": 3.5,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.5
+    },
+    {
+     "keyword": "미드저니 무료",
+     "ac_score": 3.5,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.5
+    },
+    {
+     "keyword": "미드저니 환불",
+     "ac_score": 2.6,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.6
+    },
+    {
+     "keyword": "미드저니 AI 가격",
+     "ac_score": 1.88,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.88
+    },
+    {
+     "keyword": "미드저니 무료 체험",
+     "ac_score": 1.82,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.82
+    },
+    {
+     "keyword": "미드저니 무료버전",
+     "ac_score": 1.82,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.82
+    },
+    {
+     "keyword": "미드저니 환불 방법",
+     "ac_score": 1.82,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.82
+    },
+    {
+     "keyword": "미드저니 사용법",
+     "ac_score": 1.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.7
+    },
+    {
+     "keyword": "미드저니 AI 사용법",
+     "ac_score": 1.64,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.64
+    },
+    {
+     "keyword": "미드저니 가격 비교",
+     "ac_score": 1.64,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.64
+    },
+    {
+     "keyword": "미드저니 환불 메일",
+     "ac_score": 1.64,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.64
+    }
+   ]
   }
  },
  "seed_used": {
@@ -1474,6 +1623,7 @@
   "제미나이 사용법": "2026-10-28T16:49:13",
   "퍼플렉시티": "2026-10-28T16:58:44",
   "업무 자동화 AI": "2026-10-28T17:07:28",
-  "AI 마케팅": "2026-10-29T10:12:52"
+  "AI 마케팅": "2026-10-29T10:12:52",
+  "미드저니": "2026-10-29T17:06:17"
  }
 }
