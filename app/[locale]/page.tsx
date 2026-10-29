@@ -218,7 +218,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
                   {p.name}
                   {p.highlight && <span className="rounded-full bg-[#ffdf3d] px-2.5 py-0.5 text-[12px] font-bold text-[#151413]">추천</span>}
                 </p>
-                <p className="mt-3 text-[2.1rem] font-black tracking-[-0.04em]">{p.price}</p>
+                <p className="mt-3 flex items-baseline gap-2 text-[2.1rem] font-black tracking-[-0.04em]">{p.price}{"was" in p && p.was && <s className={`text-[15px] font-semibold ${p.highlight ? "text-bg/50" : "text-ink-3"}`}>{p.was}</s>}</p>
                 <p className={`text-[13px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{p.period}</p>
                 <p className={`mt-4 text-[15px] ${p.highlight ? "text-bg/85" : "text-ink-2"}`}>{p.desc}</p>
                 <ul className="mt-5 flex-1 space-y-2 text-[14.5px]">
@@ -241,7 +241,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
             ))}
           </div>
           <p className="mt-5 text-[13px] text-ink-3">
-            개별 작업(자동화 10만 원~, 홈페이지 20만 원~, 웹앱 50만 원~)도 가능합니다. AI·서버·도메인 사용료는 사장님 계정에서 직접 결제됩니다.
+            포트폴리오를 쌓는 동안만 적용하는 오픈 가격입니다. 결과물을 사례로 소개하는 데 동의해 주시면 됩니다. 개별 작업(자동화 3만 원~, 홈페이지 5만 원~, 웹앱 15만 원~)도 가능합니다. AI·서버·도메인 사용료는 사장님 계정에서 직접 결제됩니다.
           </p>
         </div>
       </section>
