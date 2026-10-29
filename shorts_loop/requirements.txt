@@ -4,3 +4,5 @@ requests>=2.31
 Pillow>=10
 google-api-python-client>=2.100
 google-auth-oauthlib>=1.2
+yt-dlp>=2026.3.13
+# 틱톡 공개 검색 자동 수집을 쓰려면: playwright (pip install playwright && python -m playwright install chromium)

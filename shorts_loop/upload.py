@@ -43,8 +43,12 @@ def next_slots(cfg: dict, n: int) -> list[datetime]:
 
 def _body(cfg: dict, row, publish_at: datetime) -> dict:
     uc = cfg["upload"]
+    montage = row["hook_type"] == "montage"  # 직접 찍은 영상 모음
     desc = (row["description"] or "").strip()
-    desc += "\n\n※ 각색된 이야기이며 등장인물·상황은 실제와 무관합니다.\n#shorts #썰"
+    if montage:
+        desc += "\n\n#shorts " + " ".join("#" + t for t in json.loads(row["tags"] or "[]")[:5] if t != "shorts")
+    else:
+        desc += "\n\n※ 각색된 이야기이며 등장인물·상황은 실제와 무관합니다.\n#shorts #썰"
     return {
         "snippet": {
             "title": row["title"],
@@ -59,7 +63,7 @@ def _body(cfg: dict, row, publish_at: datetime) -> dict:
             "publishAt": publish_at.astimezone(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
             "selfDeclaredMadeForKids": False,
             # AI 음성·사실적인 AI 이미지를 쓰면 '변경되거나 합성된 콘텐츠' 표시
-            "containsSyntheticMedia": bool(uc["synthetic_media"]),
+            "containsSyntheticMedia": False if montage else bool(uc["synthetic_media"]),
         },
     }
 

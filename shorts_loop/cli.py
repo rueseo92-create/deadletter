@@ -1,9 +1,10 @@
 """명령줄 진입점: python -m shorts_loop <명령>"""
 import argparse
 import traceback
+from pathlib import Path
 from datetime import datetime, timedelta
 
-from . import analytics, config, db, ideas, learn, render, research, review, scriptgen, upload, voice
+from . import analytics, config, db, ideas, learn, montage, render, research, review, scriptgen, tiktok_trends, upload, voice
 from .config import DATA, TOKEN_PATH
 
 
@@ -60,6 +61,7 @@ def daily(cfg: dict, skip_upload: bool = False):
         step("③ 대본", lambda: f"{len(scriptgen.run(cfg, need))}개 작성")
     step("④ 음성", lambda: voice.run(cfg))
     step("⑤ 렌더", lambda: f"{len(render.run(cfg))}개 완성 → `review` 로 검수")
+    step("⑤-2 내 영상 모음", lambda: f"{len(montage.run(cfg))}개 편집 → `review` 로 검수")
     if not skip_upload:
         step("⑦ 예약 업로드(승인분)", lambda: upload.run(cfg) or "승인된 영상 없음")
     print()
@@ -92,6 +94,17 @@ def main():
     rv.add_argument("--port", type=int, default=8765)
     u = sub.add_parser("upload", help="⑦ 승인분 예약 업로드")
     u.add_argument("--dry-run", action="store_true")
+    tk = sub.add_parser("tiktok", help="틱톡 트렌드 리서치 (메타데이터만)")
+    tsub = tk.add_subparsers(dest="action", required=True)
+    tc = tsub.add_parser("collect", help="공개 검색 또는 링크 파일에서 조회수·해시태그 수집")
+    tc.add_argument("--query", required=True)
+    tc.add_argument("--urls", type=Path, help="공개 영상 링크 파일 (줄당 하나)")
+    tc.add_argument("--limit", type=int, default=30)
+    tc.add_argument("--show-browser", action="store_true")
+    ta = tsub.add_parser("analyze", help="수집한 데이터로 주제·후킹 인사이트 생성 → insights.md")
+    ta.add_argument("--query")
+    tsub.add_parser("stats", help="API 호출 없는 기본 통계")
+    sub.add_parser("montage", help="assets/my_clips 의 내 영상 프로젝트를 세로 쇼츠로 편집 → 검수 대기")
     sub.add_parser("collect", help="⑧ 성과 수집")
     sub.add_parser("learn", help="⑨ 가중치 갱신")
     sub.add_parser("report", help="성과·가중치 보고서")
@@ -136,6 +149,26 @@ def main():
         case "upload":
             for vid, msg in upload.run(cfg, dry_run=args.dry_run):
                 print(f"#{vid} {msg}")
+        case "tiktok":
+            if args.action == "collect":
+                urls = (tiktok_trends.read_urls(args.urls) if args.urls
+                        else tiktok_trends.discover(args.query, args.limit, headless=not args.show_browser))
+                r = tiktok_trends.collect(args.query, urls)
+                print(f"{r['saved']}개 저장, 실패 {len(r['errors'])}개")
+                for e in r["errors"][:5]:
+                    print("  !", e)
+            elif args.action == "analyze":
+                print(f"인사이트: {tiktok_trends.analyze(cfg, args.query)}")
+            else:
+                st = tiktok_trends.stats()
+                if not st["count"]:
+                    print("데이터 없음")
+                else:
+                    print(f"{st['count']}개 · 중앙 길이 {st['median_duration_s']}초 · 중앙 참여율 {st['median_engagement_pct']}%")
+                    print("해시태그:", ", ".join(f"#{t}({n})" for t, n in st["top_hashtags"]))
+        case "montage":
+            made = montage.run(cfg)
+            print(f"{len(made)}개 편집 완료 → `review` 로 검수" if made else "새 프로젝트 없음 (assets/my_clips/<폴더>)")
         case "collect":
             print(f"{analytics.run(cfg)}건 수집")
         case "learn":

@@ -92,3 +92,42 @@ python -m shorts_loop collect && python -m shorts_loop learn && python -m shorts
   듭니다. `research.keywords` 는 5~10개로 유지하세요.
 - 스와이프 이탈률은 API로 제공되지 않아 Studio 에서 확인해야 합니다.
 - ElevenLabs 등 TTS는 상업 이용이 허용된 요금제에서만 쓰세요.
+
+## 틱톡 트렌드 리서치 (메타데이터만)
+
+틱톡 인기 영상의 조회수·좋아요·댓글·길이·해시태그만 읽어서 어떤 주제와 후킹이 반응을 얻는지 분석합니다.
+**영상은 내려받지 않고, 남의 영상을 다시 올리지 않습니다.** 결과는 `data/insights.md` 에 덧붙여져
+소재 제안(`ideas suggest`)과 대본(`script`)이 참고합니다.
+
+```bash
+pip install yt-dlp playwright && python -m playwright install chromium   # 내 PC에서 1회
+python -m shorts_loop tiktok collect --query "캠핑 요리"                  # 공개 검색에서 수집
+python -m shorts_loop tiktok collect --query "캠핑 요리" --urls links.txt  # 검색이 막히면 링크 파일로
+python -m shorts_loop tiktok stats                                        # 길이·참여율·해시태그 통계
+python -m shorts_loop tiktok analyze --query "캠핑 요리"                  # 주제·후킹 인사이트 생성
+```
+
+틱톡은 로그인 벽·CAPTCHA·지역 제한으로 클라우드 서버 접속을 막는 경우가 많아 **내 PC에서** 실행하세요.
+막히면 우회하지 않고, 브라우저에서 모은 공개 링크(`https://www.tiktok.com/@계정/video/숫자`)를 줄당 하나씩 파일로 넣습니다.
+
+## 내 영상 모음 쇼츠
+
+직접 찍었거나 권리가 있는 영상을 자동으로 잘라 세로 쇼츠로 만들고, 검수 후 예약 업로드합니다.
+
+1. `assets/my_clips/<프로젝트>/` 에 영상들과 `project.txt` 를 넣습니다.
+
+```
+제목: 주말 캠핑 하이라이트
+훅: 이 장면 때문에 또 간다
+설명: 가평 캠핑장에서 찍은 장면 모음
+태그: 캠핑, 브이로그
+권리: 본인 촬영
+클립당 초: 4
+# 선택: 파일별 구간과 자막
+clip2.mp4 00:03-00:07 | 텐트 치는 데 40분
+```
+
+2. `python -m shorts_loop montage` (또는 `daily`) → 클립마다 소리가 가장 큰 구간(웃음·환호·액션)을 자동으로 고르고,
+   가로 영상은 흐린 배경 위에 잘림 없이 얹어 1080x1920 으로 이어 붙인 뒤 훅·자막을 넣습니다.
+3. `review` 대시보드에서 승인 → 예약 업로드. `권리:` 줄이 없으면 승인 버튼이 막힙니다.
+   직접 찍은 영상은 AI 합성 표시를 하지 않습니다.
