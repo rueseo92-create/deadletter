@@ -41,7 +41,7 @@ export default function InquiryForm({ services, email }: Props) {
       if (json.fallback === "mail") {
         const names = services.filter((s) => picked.includes(s.id)).map((s) => s.name).join(", ") || "아직 모르겠음";
         const body = `이름/상호: ${data.name}\n연락처: ${data.contact}\n업종: ${data.business}\n관심 서비스: ${names}\n\n${data.message}`;
-        setMailHref(`mailto:${email}?subject=${encodeURIComponent("[딸깍 상담] " + data.name)}&body=${encodeURIComponent(body)}`);
+        setMailHref(`mailto:${email}?subject=${encodeURIComponent("[딸깍] 상담 · " + data.name)}&body=${encodeURIComponent(body)}`);
         return setStatus("mail");
       }
       setError(json.error || "오류가 발생했어요. 잠시 후 다시 시도해 주세요.");

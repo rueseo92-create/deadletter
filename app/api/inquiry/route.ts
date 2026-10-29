@@ -20,6 +20,64 @@ interface Inquiry {
 const hasFirebase = () =>
   Boolean(process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY);
 
+const MAIL_TO = "contact@seroai.xyz";
+
+/** 문의 알림 본문. 텔레그램과 메일에 같이 쓴다. */
+function inquiryText(q: Inquiry) {
+  const names = SERVICES.filter((s) => q.services.includes(s.id)).map((s) => s.name);
+  return [
+    `이름/상호: ${q.name}`,
+    `연락처: ${q.contact}`,
+    q.business ? `업종: ${q.business}` : "",
+    `관심 서비스: ${names.join(", ") || "아직 모르겠음"}`,
+    "",
+    q.message,
+    "",
+    new Date(q.createdAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" }),
+  ]
+    .filter((l, i, a) => l !== "" || a[i - 1] !== "")
+    .join("\n");
+}
+
+async function notifyTelegram(subject: string, text: string) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return false;
+  try {
+    const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: chatId, text: `${subject}\n\n${text}` }),
+    });
+    return r.ok;
+  } catch (error) {
+    console.error("Inquiry telegram error:", error);
+    return false;
+  }
+}
+
+async function sendMail(subject: string, text: string, replyTo?: string) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return false;
+  try {
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: process.env.MAIL_FROM || "딸깍스튜디오 <noreply@seroai.xyz>",
+        to: [MAIL_TO],
+        subject,
+        text,
+        ...(replyTo ? { reply_to: replyTo } : {}),
+      }),
+    });
+    return r.ok;
+  } catch (error) {
+    console.error("Inquiry mail error:", error);
+    return false;
+  }
+}
+
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
   try {
@@ -55,13 +113,22 @@ export async function POST(req: NextRequest) {
     status: "new",
   };
 
+  // 텔레그램·메일은 다른 저장소와 별개로 항상 시도한다
+  const subject = `[딸깍] 상담 · ${name}`;
+  const text = inquiryText(inquiry);
+  const [notified, mailed] = await Promise.all([
+    notifyTelegram(subject, text),
+    sendMail(subject, text, isEmail ? contact : undefined),
+  ]);
+
   const webhookUrl = process.env.INQUIRY_WEBHOOK_URL;
   if (!hasFirebase() && !webhookUrl) {
+    if (notified || mailed) return NextResponse.json({ ok: true });
     // 받을 곳이 설정되지 않았으면 화면에서 메일 보내기로 넘긴다
     return NextResponse.json({ error: "문의 접수 창구가 아직 연결되지 않았어요.", fallback: "mail" }, { status: 503 });
   }
 
-  let saved = false;
+  let saved = notified || mailed;
   if (hasFirebase()) {
     try {
       await getDb().collection(COLLECTION).add(inquiry);
