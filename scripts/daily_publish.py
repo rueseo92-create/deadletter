@@ -400,6 +400,14 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
         print(f"\n[{slot}] 슬롯에서 이미 {len(today_slot_published)}편 발행 완료. 스킵합니다.")
         return []
 
+    # 슬롯별 하루 시도 상한 (탈락이 이어질 때 매시간 보충 실행이 크레딧을 태우지 않게)
+    attempts = history.setdefault("attempts", {})
+    akey = f"{today}:{slot}"
+    max_attempts = effective_count * 2
+    if attempts.get(akey, 0) >= max_attempts and count is None:
+        print(f"\n[{slot}] 오늘 시도 {attempts[akey]}회로 상한({max_attempts}) 도달. 스킵합니다.")
+        return []
+
     remaining = effective_count - len(today_slot_published)
     print(f"  이 슬롯 발행: {len(today_slot_published)}편 완료 -> 추가 {remaining}편 생성")
 
@@ -433,6 +441,12 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
     results = []
     kstartup_idx = 0
     LAST_RUN["attempted"] += len(daily_topics)
+    attempts[akey] = attempts.get(akey, 0) + len(daily_topics)
+    # 30일 지난 시도 기록 정리
+    cutoff = (get_kst_now() - timedelta(days=30)).strftime("%Y-%m-%d")
+    for k in [k for k in attempts if k.split(":")[0] < cutoff]:
+        del attempts[k]
+    save_history(history)
 
     for i, topic_info in enumerate(daily_topics):
         print(f"\n{'─' * 50}")

@@ -3,10 +3,12 @@ name: Daily Blog Posts + Social
 on:
   schedule:
     # 하루 4회 시간대별 발행 (한국시간 기준)
-    - cron: '0 22 * * *'    # 07:00 KST - 오전 슬롯 (finance, insurance)
-    - cron: '30 3 * * *'    # 12:30 KST - 점심 슬롯 (health, tech)
-    - cron: '0 9 * * *'     # 18:00 KST - 저녁 슬롯 (realestate, lifestyle)
-    - cron: '30 12 * * *'   # 21:30 KST - 야간 슬롯 (mixed)
+    - cron: '0 22 * * *'    # 07:00 KST - 오전 슬롯 (AI 뉴스, AI 도구)
+    - cron: '30 3 * * *'    # 12:30 KST - 점심 슬롯 (AI 자동화)
+    - cron: '0 9 * * *'     # 18:00 KST - 저녁 슬롯 (AI 부업, AI 뉴스)
+    - cron: '30 12 * * *'   # 21:30 KST - 야간 슬롯 (AI 도구)
+    # 매시간 보충: GitHub 예약이 늦거나 빠져도 현재 시간대 슬롯의 남은 글을 채운다 (다 찼으면 바로 종료)
+    - cron: '17 * * * *'
   workflow_dispatch:
     inputs:
       slot:
@@ -33,6 +35,11 @@ on:
 
 permissions:
   contents: write
+  actions: write   # 새 글이 있을 때 배포 워크플로 호출
+
+concurrency:
+  group: daily-posts
+  cancel-in-progress: false
 
 jobs:
   publish:
@@ -81,7 +88,10 @@ jobs:
           $CMD
 
       - name: Commit and push blog posts
+        id: commit
         if: ${{ github.event.inputs.social_only != 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -90,12 +100,17 @@ jobs:
           git add -f scripts/keyword_cache.json || true
           git add -f scripts/news_seen.json || true
           SLOT_LABEL=$(TZ=Asia/Seoul date +%H:%M)
+          NEW_POSTS=false
+          git diff --staged --quiet -- content/posts || NEW_POSTS=true
           git diff --staged --quiet || git commit -m "feat: 자동 발행 $(date +%Y-%m-%d) ${SLOT_LABEL}"
           git pull --rebase origin main || true
           git push
+          echo "new_posts=$NEW_POSTS" >> "$GITHUB_OUTPUT"
+          # 새 글이 있을 때만 사이트 배포 (GITHUB_TOKEN 푸시는 다른 워크플로를 깨우지 않으므로 직접 호출)
+          if [ "$NEW_POSTS" = true ]; then gh workflow run deploy-vercel.yml --ref main; fi
 
       - name: Submit URLs to search engines (IndexNow)
-        if: ${{ github.event.inputs.social_only != 'true' }}
+        if: ${{ steps.commit.outputs.new_posts == 'true' }}
         continue-on-error: true
         run: |
           cd scripts
@@ -103,6 +118,7 @@ jobs:
 
       # ── 소셜 미디어 발행 (쓰레드 + 인스타그램) ──
       - name: Publish to Threads & Instagram
+        if: ${{ steps.commit.outputs.new_posts == 'true' || github.event.inputs.social_only == 'true' }}
         # 토큰이 없거나 실패해도 QC 등 뒤 단계는 계속
         continue-on-error: true
         env:
@@ -119,6 +135,7 @@ jobs:
           python social_publish.py --count $COUNT
 
       - name: Commit social history
+        if: ${{ steps.commit.outputs.new_posts == 'true' || github.event.inputs.social_only == 'true' }}
         continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
@@ -130,7 +147,7 @@ jobs:
 
       # ── QC ──
       - name: QC - 최근 포스트 품질 검사
-        if: ${{ github.event.inputs.social_only != 'true' }}
+        if: ${{ steps.commit.outputs.new_posts == 'true' }}
         continue-on-error: true
         run: |
           cd scripts

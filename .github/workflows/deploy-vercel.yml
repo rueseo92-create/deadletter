@@ -1,14 +1,11 @@
 name: Deploy to Vercel
 
 # Vercel 프로젝트를 CLI 로 만들고(없으면) 프로덕션 배포 + seroai.xyz 도메인 연결.
-# 자동 발행 커밋은 GITHUB_TOKEN 으로 푸시돼 push 이벤트가 안 생기므로 workflow_run 으로도 배포한다.
+# 자동 발행 워크플로는 새 글을 커밋했을 때만 이 워크플로를 직접 호출한다 (GITHUB_TOKEN 푸시는 push 이벤트를 만들지 않음).
 on:
   push:
     branches: [main]
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Daily Blog Posts + Social"]
-    types: [completed]
 
 concurrency:
   group: vercel-production
