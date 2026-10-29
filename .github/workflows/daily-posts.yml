@@ -101,6 +101,7 @@ jobs:
           git add -f scripts/publish_history.json || true
           git add -f scripts/keyword_cache.json || true
           git add -f scripts/news_seen.json || true
+          git add scripts/pipeline_log/*.jsonl || true
           SLOT_LABEL=$(TZ=Asia/Seoul date +%H:%M)
           NEW_POSTS=false
           git diff --staged --quiet -- content/posts || NEW_POSTS=true
