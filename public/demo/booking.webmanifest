@@ -1,0 +1,13 @@
+{
+  "name": "스튜디오 예약 (데모)",
+  "short_name": "스튜디오예약",
+  "start_url": "/demo/booking.html",
+  "scope": "/demo/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#111827",
+  "icons": [
+    { "src": "/demo/img/app-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/demo/img/app-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

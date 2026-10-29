@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#111827">
+<title>스튜디오 예약 · 웹앱 포트폴리오 데모</title>
+<meta name="description" content="세로AI 스튜디오 웹앱 MVP 제작 포트폴리오 데모 (가상의 스튜디오)">
+<link rel="manifest" href="booking.webmanifest">
+<link rel="apple-touch-icon" href="img/app-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{--bg:#eef1f6;--card:#fff;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--blue-s:#eff6ff;--green:#059669;--amber:#d97706;--red:#dc2626}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  button,input{font:inherit;color:inherit}
+  button{cursor:pointer}
+  .layout{min-height:100vh;display:flex;justify-content:center;align-items:flex-start;gap:56px;padding:40px 20px}
+  .intro{max-width:360px;position:sticky;top:40px;padding-top:24px}
+  .intro .badge{display:inline-block;font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-s);border:1px solid #bfdbfe;border-radius:999px;padding:5px 12px}
+  .intro h1{font-size:34px;line-height:1.25;margin:16px 0 12px;letter-spacing:-.02em}
+  .intro p{color:var(--muted);line-height:1.65;margin:0 0 20px}
+  .intro ul{list-style:none;padding:0;margin:0 0 24px;display:grid;gap:10px}
+  .intro li{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+  .intro li b{flex:none;width:22px;height:22px;border-radius:6px;background:var(--ink);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .intro small{color:var(--muted);font-size:12.5px;line-height:1.6;display:block}
+
+  .app{width:100%;max-width:420px;background:var(--card);border-radius:32px;overflow:hidden;box-shadow:0 30px 80px rgba(15,23,42,.18),0 0 0 1px rgba(15,23,42,.06);display:flex;flex-direction:column;min-height:min(860px,calc(100vh - 80px));position:relative}
+  .top{position:relative;height:176px;color:#fff;flex:none}
+  .top img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .top::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,.25),rgba(15,23,42,.88))}
+  .top .in{position:absolute;inset:0;z-index:1;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between}
+  .seg{display:flex;align-self:flex-start;background:rgba(255,255,255,.16);backdrop-filter:blur(10px);border-radius:999px;padding:4px}
+  .seg button{border:0;background:none;color:#e2e8f0;padding:7px 14px;border-radius:999px;font-size:13px;font-weight:600}
+  .seg button.on{background:#fff;color:var(--ink)}
+  .top h2{margin:0;font-size:24px;letter-spacing:-.01em}
+  .top p{margin:4px 0 0;font-size:13px;color:#cbd5e1}
+
+  .body{flex:1;overflow:auto;padding:20px 20px 120px}
+  .h{font-size:13px;font-weight:700;color:var(--muted);margin:22px 0 10px;display:flex;justify-content:space-between;align-items:center}
+  .h:first-child{margin-top:0}
+  .svc{display:grid;gap:10px}
+  .svc button{display:flex;justify-content:space-between;align-items:center;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:16px;padding:14px 16px;transition:.15s}
+  .svc button.on{border-color:var(--blue);background:var(--blue-s);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  .svc b{display:block;font-size:15.5px}
+  .svc span{font-size:12.5px;color:var(--muted)}
+  .svc .pr{font-weight:800;font-size:15px}
+
+  .dates{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin:0 -20px;padding:0 20px 4px}
+  .dates::-webkit-scrollbar{display:none}
+  .dates button{flex:none;width:56px;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:9px 0;text-align:center;transition:.15s}
+  .dates button small{display:block;font-size:11px;color:var(--muted)}
+  .dates button b{font-size:18px}
+  .dates button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .dates button.on small{color:#cbd5e1}
+  .dates button:disabled{opacity:.35;cursor:not-allowed}
+  .dates button.sun small{color:var(--red)}
+
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .slots button{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:11px 0;font-weight:700;font-size:15px;transition:.15s}
+  .slots button small{display:block;font-weight:500;font-size:11px;color:var(--green)}
+  .slots button:disabled{background:#f8fafc;color:#cbd5e1;cursor:not-allowed}
+  .slots button:disabled small{color:#cbd5e1}
+  .slots button.on{border-color:var(--blue);background:var(--blue);color:#fff}
+  .slots button.on small{color:#dbeafe}
+  .empty{color:var(--muted);font-size:14px;text-align:center;padding:18px;border:1.5px dashed var(--line);border-radius:14px}
+
+  .field{display:block;margin-bottom:10px}
+  .field span{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+  .field input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px;outline:none;transition:.15s}
+  .field input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  .err{color:var(--red);font-size:12.5px;min-height:18px}
+
+  .bar{position:absolute;left:0;right:0;bottom:0;padding:14px 20px calc(14px + env(safe-area-inset-bottom));background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;gap:12px;align-items:center}
+  .bar .sum{flex:1;font-size:12.5px;color:var(--muted);line-height:1.4;min-width:0}
+  .bar .sum b{display:block;color:var(--ink);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cta{border:0;background:var(--blue);color:#fff;font-weight:800;border-radius:14px;padding:14px 22px;font-size:15px;transition:.15s;white-space:nowrap}
+  .cta:disabled{background:#cbd5e1}
+  .ghost{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:13px 16px;font-weight:700}
+
+  .done{text-align:center;padding:30px 4px}
+  .done .ok{width:72px;height:72px;border-radius:50%;background:#dcfce7;color:var(--green);font-size:36px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;animation:pop .4s ease}
+  @keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+  .ticket{margin:22px 0 0;text-align:left;border:1.5px solid var(--line);border-radius:18px;padding:6px 18px}
+  .ticket div{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px dashed var(--line);font-size:14.5px}
+  .ticket div:last-child{border:0}
+  .ticket span{color:var(--muted)}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .stats div{border-radius:16px;padding:14px;background:#f8fafc;border:1px solid var(--line)}
+  .stats b{display:block;font-size:24px}
+  .stats span{font-size:12px;color:var(--muted)}
+  .stats .p b{color:var(--amber)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+  .chips button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .search{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;margin-top:10px;outline:none;font-size:15px}
+  .list{display:grid;gap:8px;margin-top:12px}
+  .item{border:1px solid var(--line);border-radius:16px;padding:13px 14px;display:grid;grid-template-columns:1fr auto;gap:6px 10px;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .item .when{font-weight:800;font-size:15px}
+  .item .who{font-size:13px;color:var(--muted)}
+  .st{font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;align-self:start}
+  .st.pending{background:#fef3c7;color:#92400e}.st.confirmed{background:#dcfce7;color:#166534}.st.canceled{background:#f1f5f9;color:#94a3b8}
+  .acts{grid-column:1/-1;display:flex;gap:6px}
+  .acts button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px;font-size:13px;font-weight:700}
+  .acts .y{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .reset{margin-top:18px;width:100%;border:0;background:none;color:var(--muted);font-size:12.5px;text-decoration:underline}
+
+  .lock{position:absolute;inset:0;z-index:5;background:rgba(15,23,42,.55);backdrop-filter:blur(6px);display:flex;align-items:flex-end}
+  .sheet{background:#fff;width:100%;border-radius:26px 26px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom));animation:up .3s ease}
+  @keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .pin{display:flex;gap:10px;justify-content:center;margin:18px 0 8px}
+  .pin i{width:14px;height:14px;border-radius:50%;background:var(--line)}
+  .pin i.f{background:var(--ink)}
+  .pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+  .pad button{border:0;background:#f1f5f9;border-radius:14px;padding:15px 0;font-size:20px;font-weight:700}
+  .toast{position:absolute;left:50%;top:16px;transform:translate(-50%,-10px);z-index:9;background:var(--ink);color:#fff;font-size:13.5px;padding:10px 16px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;white-space:nowrap}
+  .toast.on{opacity:1;transform:translate(-50%,0)}
+  .hide{display:none!important}
+
+  @media (max-width:900px){.intro{display:none}.layout{padding:0}.app{max-width:none;border-radius:0;min-height:100vh;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="intro">
+    <span class="badge">웹앱 MVP 포트폴리오 데모</span>
+    <h1>엑셀 대신 쓰는<br>예약 관리 웹앱</h1>
+    <p>고객은 링크 하나로 예약하고, 사장님은 같은 앱의 관리자 화면에서 확정·취소합니다. 설치 없이 휴대폰 홈 화면에 추가해 앱처럼 쓸 수 있어요.</p>
+    <ul>
+      <li><b>1</b>상품 → 날짜 → 시간 → 연락처, 4단계 예약</li>
+      <li><b>2</b>이미 찬 시간은 자동으로 막힘, 월요일 휴무 반영</li>
+      <li><b>3</b>관리자 화면: 오늘·대기 건수, 상태별 필터, 이름 검색</li>
+      <li><b>4</b>홈 화면 추가(PWA) 지원</li>
+    </ul>
+    <small>가상의 스튜디오입니다. 입력한 내용은 이 브라우저에만 저장되고 어디에도 전송되지 않아요. 실제 제작 시에는 서버·DB, 로그인, 카카오 알림톡 등을 연결합니다.<br>제작: 세로AI 스튜디오 · 사진: WordPress Photo Directory (CC0)</small>
+  </aside>
+
+  <main class="app" id="app">
+    <div class="toast" id="toast"></div>
+    <div class="top">
+      <img src="img/studio.webp" alt="촬영 스튜디오">
+      <div class="in">
+        <div class="seg"><button class="on" data-v="book">예약하기</button><button data-v="admin">관리자</button></div>
+        <div><h2 id="title">스튜디오 하루 예약</h2><p id="sub">원하는 촬영과 시간을 골라 주세요 · 데모</p></div>
+      </div>
+    </div>
+
+    <div class="body" id="body"></div>
+    <div class="bar" id="bar"></div>
+    <div class="lock hide" id="lock">
+      <div class="sheet">
+        <div style="text-align:center"><b style="font-size:18px">관리자 PIN 입력</b><div style="color:var(--muted);font-size:13px;margin-top:4px">데모 PIN은 <b>0000</b> 이에요</div></div>
+        <div class="pin" id="pinDots"><i></i><i></i><i></i><i></i></div>
+        <div class="err" id="pinErr" style="text-align:center"></div>
+        <div class="pad" id="pad"></div>
+        <button class="reset" id="pinClose">닫기</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const SERVICES = [
+  { id: 'profile', name: '프로필 촬영', desc: '1인 · 60분 · 보정 3장', price: 55000 },
+  { id: 'duo', name: '우정·커플 촬영', desc: '2인 · 90분 · 보정 5장', price: 89000 },
+  { id: 'product', name: '상품 촬영', desc: '제품 10컷 · 90분', price: 120000 },
+];
+const TIMES = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30'];
+const KEY = 'demo-studio-bookings-v1';
+const won = n => n.toLocaleString('ko-KR') + '원';
+const pad2 = n => String(n).padStart(2, '0');
+const ymd = d => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+const DOW = ['일', '월', '화', '수', '목', '금', '토'];
+const fmtDate = s => { const d = new Date(s + 'T00:00'); return `${d.getMonth() + 1}월 ${d.getDate()}일 (${DOW[d.getDay()]})`; };
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+function seed() {
+  const names = ['김*연', '이*준', '박*은', '최*호', '정*아', '강*민', '윤*서', '한*진'];
+  const out = []; const t0 = new Date(); t0.setHours(0, 0, 0, 0);
+  for (let i = 0; i < 14; i++) {
+    const d = new Date(t0); d.setDate(d.getDate() + i);
+    if (d.getDay() === 1) continue;
+    TIMES.forEach((t, j) => {
+      const h = (d.getDate() * 7 + j * 13 + i * 3) % 10;
+      if (h < (i < 3 ? 6 : 3)) out.push({
+        id: `S${i}${j}`, date: ymd(d), time: t, svc: SERVICES[h % 3].id, name: names[(i + j) % names.length],
+        phone: '010-****-' + pad2((i * 7 + j * 11) % 100) + pad2((i + j) % 100), status: h % 3 === 0 ? 'pending' : 'confirmed', seed: true,
+      });
+    });
+  }
+  return out;
+}
+function load() { try { const v = JSON.parse(localStorage.getItem(KEY)); if (Array.isArray(v)) return v; } catch (e) {} return seed(); }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) {} }
+let DB = load();
+
+const S = { view: 'book', step: 'pick', svc: null, date: null, time: null, name: '', phone: '', last: null, admin: false, filter: 'pending', range: 'all', q: '' };
+const $ = id => document.getElementById(id);
+const toast = (m) => { const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 2000); };
+const taken = (date, time) => DB.some(b => b.date === date && b.time === time && b.status !== 'canceled');
+
+function days() {
+  const out = []; const t = new Date(); t.setHours(0, 0, 0, 0);
+  for (let i = 0; i < 14; i++) { const d = new Date(t); d.setDate(d.getDate() + i); out.push(d); }
+  return out;
+}
+function slotPast(date, time) {
+  const [h, m] = time.split(':').map(Number); const d = new Date(date + 'T00:00'); d.setHours(h, m);
+  return d.getTime() < Date.now() + 30 * 60 * 1000;
+}
+
+function renderBook() {
+  $('title').textContent = '스튜디오 하루 예약'; $('sub').textContent = '원하는 촬영과 시간을 골라 주세요 · 데모';
+  const body = $('body'), bar = $('bar');
+  if (S.step === 'done') {
+    const b = S.last, svc = SERVICES.find(s => s.id === b.svc);
+    body.innerHTML = `<div class="done"><div class="ok">✓</div><h3 style="margin:0;font-size:22px">예약 신청이 접수됐어요</h3>
+      <p style="color:var(--muted);margin:8px 0 0;font-size:14.5px">스튜디오가 확인하면 확정 문자를 보내 드려요.<br><small>(데모라 실제 문자는 가지 않아요)</small></p>
+      <div class="ticket"><div><span>예약 번호</span><b>${b.id}</b></div><div><span>촬영</span><b>${svc.name}</b></div><div><span>일시</span><b>${fmtDate(b.date)} ${b.time}</b></div><div><span>예약자</span><b>${esc(b.name)}</b></div><div><span>금액</span><b>${won(svc.price)}</b></div></div></div>`;
+    bar.innerHTML = `<button class="ghost" id="toAdmin">관리자 화면에서 보기</button><button class="cta" id="again" style="flex:1">새 예약</button>`;
+    $('again').onclick = () => { Object.assign(S, { step: 'pick', svc: null, date: null, time: null }); render(); };
+    $('toAdmin').onclick = () => switchView('admin');
+    return;
+  }
+  if (S.step === 'form') {
+    const svc = SERVICES.find(s => s.id === S.svc);
+    body.innerHTML = `<div class="h">예약 정보</div>
+      <div class="ticket" style="margin:0 0 18px"><div><span>촬영</span><b>${svc.name}</b></div><div><span>일시</span><b>${fmtDate(S.date)} ${S.time}</b></div><div><span>금액</span><b>${won(svc.price)}</b></div></div>
+      <div class="h">연락처</div>
+      <label class="field"><span>이름</span><input id="nm" autocomplete="name" placeholder="홍길동" value="${esc(S.name)}"></label>
+      <label class="field"><span>휴대폰 번호</span><input id="ph" inputmode="numeric" autocomplete="tel" placeholder="010-0000-0000" value="${esc(S.phone)}"></label>
+      <div class="err" id="err"></div>
+      <p style="font-size:12px;color:var(--muted);margin:4px 0 0">데모: 입력한 정보는 이 브라우저에만 저장돼요.</p>`;
+    bar.innerHTML = `<button class="ghost" id="back">이전</button><button class="cta" id="submit" style="flex:1">예약 신청하기</button>`;
+    $('ph').oninput = e => { const v = e.target.value.replace(/\D/g, '').slice(0, 11); e.target.value = v.length > 7 ? `${v.slice(0, 3)}-${v.slice(3, v.length - 4)}-${v.slice(-4)}` : v.length > 3 ? `${v.slice(0, 3)}-${v.slice(3)}` : v; };
+    $('back').onclick = () => { S.name = $('nm').value; S.phone = $('ph').value; S.step = 'pick'; render(); };
+    $('submit').onclick = () => {
+      const name = $('nm').value.trim(), phone = $('ph').value.trim();
+      if (name.length < 2) return $('err').textContent = '이름을 2자 이상 입력해 주세요.';
+      if (!/^01[016789]-\d{3,4}-\d{4}$/.test(phone)) return $('err').textContent = '휴대폰 번호 형식을 확인해 주세요.';
+      if (taken(S.date, S.time)) { toast('방금 다른 예약이 들어왔어요. 다른 시간을 골라 주세요.'); S.time = null; S.step = 'pick'; return render(); }
+      const b = { id: 'B' + Date.now().toString(36).slice(-5).toUpperCase(), date: S.date, time: S.time, svc: S.svc, name, phone, status: 'pending', created: Date.now() };
+      DB.push(b); save(); S.last = b; S.name = ''; S.phone = ''; S.step = 'done'; render();
+    };
+    return;
+  }
+  const ds = days(); if (!S.date) { const first = ds.find(d => d.getDay() !== 1); S.date = ymd(first); }
+  const slots = TIMES.map(t => { const off = taken(S.date, t) || slotPast(S.date, t); return `<button data-t="${t}" ${off ? 'disabled' : ''} class="${S.time === t ? 'on' : ''}">${t}<small>${off ? '마감' : '가능'}</small></button>`; }).join('');
+  const openCount = TIMES.filter(t => !taken(S.date, t) && !slotPast(S.date, t)).length;
+  body.innerHTML = `<div class="h">1. 촬영 선택</div><div class="svc">${SERVICES.map(s => `<button data-s="${s.id}" class="${S.svc === s.id ? 'on' : ''}"><div><b>${s.name}</b><span>${s.desc}</span></div><span class="pr">${won(s.price)}</span></button>`).join('')}</div>
+    <div class="h">2. 날짜 <span style="font-weight:500">월요일 휴무</span></div>
+    <div class="dates">${ds.map(d => `<button data-d="${ymd(d)}" ${d.getDay() === 1 ? 'disabled' : ''} class="${ymd(d) === S.date ? 'on' : ''} ${d.getDay() === 0 ? 'sun' : ''}"><small>${DOW[d.getDay()]}</small><b>${d.getDate()}</b></button>`).join('')}</div>
+    <div class="h">3. 시간 <span style="font-weight:500">${openCount ? `${openCount}자리 남음` : ''}</span></div>
+    ${openCount ? `<div class="slots">${slots}</div>` : `<div class="empty">이 날은 예약이 모두 찼어요. 다른 날짜를 골라 주세요.</div>`}`;
+  const svc = SERVICES.find(s => s.id === S.svc);
+  const ready = S.svc && S.date && S.time;
+  bar.innerHTML = `<div class="sum">${svc ? won(svc.price) : '촬영을 골라 주세요'}<b>${svc ? svc.name : ''}${S.time ? ` · ${fmtDate(S.date)} ${S.time}` : ''}</b></div><button class="cta" id="next" ${ready ? '' : 'disabled'}>다음</button>`;
+  body.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { S.svc = b.dataset.s; render(); });
+  body.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { S.date = b.dataset.d; S.time = null; render(); });
+  body.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { S.time = b.dataset.t; render(); });
+  $('next').onclick = () => { S.step = 'form'; render(); };
+  const on = body.querySelector('.dates .on'); if (on) on.scrollIntoView({ inline: 'center', block: 'nearest' });
+}
+
+function renderAdmin() {
+  $('title').textContent = '예약 관리'; $('sub').textContent = '관리자 화면 · 데모';
+  const today = ymd(new Date());
+  const wk = new Date(); wk.setDate(wk.getDate() + 7); const wkEnd = ymd(wk);
+  const live = DB.filter(b => b.date >= today);
+  const stat = { today: live.filter(b => b.date === today && b.status !== 'canceled').length, week: live.filter(b => b.date < wkEnd && b.status !== 'canceled').length, pending: live.filter(b => b.status === 'pending').length };
+  let rows = live.filter(b => (S.filter === 'all' || b.status === S.filter) && (S.range === 'all' || (S.range === 'today' ? b.date === today : b.date < wkEnd)) && (!S.q || b.name.includes(S.q) || b.phone.includes(S.q)));
+  rows.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+  const label = { pending: '대기', confirmed: '확정', canceled: '취소' };
+  $('body').innerHTML = `<div class="stats"><div><b>${stat.today}</b><span>오늘 예약</span></div><div><b>${stat.week}</b><span>7일 안 예약</span></div><div class="p"><b>${stat.pending}</b><span>확인 대기</span></div></div>
+    <div class="h">상태</div><div class="chips" id="f">${[['pending', '대기'], ['confirmed', '확정'], ['canceled', '취소'], ['all', '전체']].map(([k, v]) => `<button data-k="${k}" class="${S.filter === k ? 'on' : ''}">${v}</button>`).join('')}</div>
+    <div class="h">기간</div><div class="chips" id="r">${[['today', '오늘'], ['week', '7일'], ['all', '전체']].map(([k, v]) => `<button data-k="${k}" class="${S.range === k ? 'on' : ''}">${v}</button>`).join('')}</div>
+    <input class="search" id="q" placeholder="이름 또는 번호 뒷자리 검색" value="${esc(S.q)}">
+    <div class="list">${rows.length ? rows.map(b => { const s = SERVICES.find(x => x.id === b.svc); return `<div class="item"><div><div class="when">${fmtDate(b.date)} ${b.time}</div><div class="who">${esc(b.name)} · ${esc(b.phone)} · ${s.name}</div></div><span class="st ${b.status}">${label[b.status]}</span>
+      ${b.status === 'pending' ? `<div class="acts"><button data-c="${b.id}">취소</button><button class="y" data-y="${b.id}">확정</button></div>` : b.status === 'confirmed' ? `<div class="acts"><button data-c="${b.id}">예약 취소</button></div>` : ''}</div>`; }).join('') : `<div class="empty">조건에 맞는 예약이 없어요.</div>`}</div>
+    <button class="reset" id="reset">데모 데이터 처음 상태로</button>`;
+  $('bar').innerHTML = `<div class="sum">관리자로 로그인됨<b>오늘 ${fmtDate(today)}</b></div><button class="ghost" id="logout">잠금</button>`;
+  $('f').querySelectorAll('button').forEach(b => b.onclick = () => { S.filter = b.dataset.k; render(); });
+  $('r').querySelectorAll('button').forEach(b => b.onclick = () => { S.range = b.dataset.k; render(); });
+  // 한글 조합 중에는 다시 그리지 않음 (조합이 끝나면 반영)
+  const q = $('q'), apply = () => { S.q = q.value.trim(); render(); const n = $('q'); n.focus(); n.setSelectionRange(n.value.length, n.value.length); };
+  q.oninput = e => { if (!e.isComposing) apply(); };
+  q.addEventListener('compositionend', apply);
+  $('body').querySelectorAll('[data-y]').forEach(b => b.onclick = () => { DB.find(x => x.id === b.dataset.y).status = 'confirmed'; save(); toast('예약을 확정했어요 (데모: 문자 미발송)'); render(); });
+  $('body').querySelectorAll('[data-c]').forEach(b => b.onclick = () => { DB.find(x => x.id === b.dataset.c).status = 'canceled'; save(); toast('예약을 취소했어요'); render(); });
+  $('reset').onclick = () => { DB = seed(); save(); toast('데모 데이터를 초기화했어요'); render(); };
+  $('logout').onclick = () => { S.admin = false; switchView('book'); };
+}
+
+function render() { S.view === 'admin' ? renderAdmin() : renderBook(); }
+function switchView(v) {
+  if (v === 'admin' && !S.admin) return openPin();
+  S.view = v; document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  $('body').scrollTop = 0; render();
+}
+document.querySelectorAll('.seg button').forEach(b => b.onclick = () => switchView(b.dataset.v));
+
+let pin = '';
+function openPin() { pin = ''; drawPin(); $('pinErr').textContent = ''; $('lock').classList.remove('hide'); }
+function drawPin() { $('pinDots').querySelectorAll('i').forEach((i, k) => i.classList.toggle('f', k < pin.length)); }
+$('pad').innerHTML = [1, 2, 3, 4, 5, 6, 7, 8, 9, '', 0, '⌫'].map(k => k === '' ? '<span></span>' : `<button data-k="${k}">${k}</button>`).join('');
+$('pad').querySelectorAll('button').forEach(b => b.onclick = () => {
+  const k = b.dataset.k;
+  if (k === '⌫') pin = pin.slice(0, -1); else if (pin.length < 4) pin += k;
+  drawPin();
+  if (pin.length === 4) setTimeout(() => {
+    if (pin === '0000') { S.admin = true; $('lock').classList.add('hide'); switchView('admin'); }
+    else { $('pinErr').textContent = 'PIN이 맞지 않아요. 데모 PIN은 0000'; pin = ''; drawPin(); }
+  }, 120);
+});
+$('pinClose').onclick = () => $('lock').classList.add('hide');
+
+render();
+</script>
+</body>
+</html>
