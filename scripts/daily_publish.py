@@ -504,10 +504,10 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
             # MDX 파일 생성
             filepath = sero_blog.create_mdx_file(post)
 
-            # 배포
+            # 배포 (GitHub Actions에서는 워크플로의 "Commit and push blog posts" 단계가 커밋·푸시한다)
             deployed = False
             if not dry_run and filepath:
-                deployed = sero_blog.deploy(filepath)
+                deployed = os.getenv("GITHUB_ACTIONS") == "true" or sero_blog.deploy(filepath)
 
             results.append({
                 "title": post.title,
