@@ -205,7 +205,10 @@ export default async function Home({ params }: { params: { locale: string } }) {
                 key={p.name}
                 className={`flex flex-col rounded-2xl p-7 ${p.highlight ? "bg-ink text-bg" : "border border-line bg-surface text-ink"}`}
               >
-                <p className={`text-[14px] font-semibold ${p.highlight ? "text-bg/70" : "text-ink-3"}`}>{p.name}</p>
+                <p className={`flex items-center justify-between text-[14px] font-semibold ${p.highlight ? "text-bg/70" : "text-ink-3"}`}>
+                  {p.name}
+                  {p.highlight && <span className="rounded-full bg-[#ffdf3d] px-2.5 py-0.5 text-[12px] font-bold text-[#151413]">추천</span>}
+                </p>
                 <p className="mt-3 text-[2.1rem] font-black tracking-[-0.04em]">{p.price}</p>
                 <p className={`text-[13px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{p.period}</p>
                 <p className={`mt-4 text-[15px] ${p.highlight ? "text-bg/85" : "text-ink-2"}`}>{p.desc}</p>

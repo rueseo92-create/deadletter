@@ -77,7 +77,7 @@ export const PLANS = [
   {
     name: "딸깍 파트너 1개월",
     price: "590,000원",
-    period: "30일",
+    period: "30일 · 하루 약 2만 원꼴",
     desc: "진단부터 자동화·마케팅 기반까지 한 달에.",
     items: ["자동화 1~2개 세팅", "마케팅 기반 1개 (홈페이지·검색 등록 등)", "써 보고 고치기 + 다음 달 계획"],
     highlight: true,
@@ -85,7 +85,7 @@ export const PLANS = [
   {
     name: "딸깍 파트너 3개월",
     price: "1,490,000원",
-    period: "90일",
+    period: "90일 · 한 달 약 50만 원꼴",
     desc: "매달 하나씩 더 자동화하고 다듬습니다.",
     items: ["매달 자동화·마케팅 1개 추가", "월간 성과 점검", "우선 응대"],
     highlight: false,
