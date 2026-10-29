@@ -60,7 +60,7 @@ export const siteConfig = {
     "AI 자동화 대행 세로AI 딸깍스튜디오. 사업부터 이해하고 반복 업무 자동화, 홈페이지·웹앱 제작, 검색·AI 답변 마케팅까지 세팅해 드립니다.",
   url: "https://seroai.xyz",
   author: "세로AI 딸깍스튜디오",
-  // TODO: 실제 이메일 확인
+  // 포크번 메일 전달로 수신 (상담 폼의 메일 보내기도 이 주소)
   email: "contact@seroai.xyz",
   locale: "ko_KR",
 
