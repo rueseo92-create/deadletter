@@ -314,12 +314,12 @@ code, pre, kbd { @apply font-mono; }
 @keyframes pf-stamp { 0%, 66% { transform: scale(0) rotate(-12deg) } 72% { transform: scale(1.25) rotate(-12deg) } 78%, 92% { transform: scale(1) rotate(-12deg) } 100% { transform: scale(0) rotate(-12deg) } }
 
 /* 02 빵집 */
-.pf-phone { width: 128px; height: 176px; border-radius: 20px; border: 3px solid rgb(var(--ink)); background: rgb(var(--surface)); padding: 12px 10px; position: relative; display: flex; flex-direction: column; gap: 8px; }
+.pf-phone { width: 120px; height: 164px; border-radius: 20px; border: 3px solid rgb(var(--ink)); background: rgb(var(--surface)); padding: 10px 9px; position: relative; display: flex; flex-direction: column; gap: 8px; }
 .pf-open { font-size: 10px; font-weight: 800; color: #16a34a; animation: pf-blink 1.6s infinite; }
 .pf-chips { display: flex; gap: 4px; }
 .pf-chips em { font-style: normal; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 999px; background: rgb(var(--subtle)); color: rgb(var(--ink)); animation: pf-chip 4.5s infinite; }
 .pf-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
-.pf-menu i { height: 34px; border-radius: 7px; background: linear-gradient(135deg, #f6d9a8, #e8a96a); }
+.pf-menu i { height: 30px; border-radius: 7px; background: linear-gradient(135deg, #f6d9a8, #e8a96a); }
 .pf-cta { margin-top: auto; position: relative; text-align: center; font-size: 10px; font-weight: 800; color: rgb(var(--bg)); background: rgb(var(--ink)); border-radius: 8px; padding: 6px 0; overflow: hidden; }
 .pf-tap { position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.6); transform: translate(-50%,-50%) scale(0); animation: pf-ripple 2.4s infinite; }
 @keyframes pf-blink { 0%, 100% { opacity: 1 } 50% { opacity: .35 } }
