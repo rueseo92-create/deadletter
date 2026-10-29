@@ -14,7 +14,7 @@ const FONT_URL = "https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/
 
 const THEMES: Record<string, { label: string; accent: string; glow: string }> = {
   "ai-automation": { label: "AI 자동화", accent: "#818CF8", glow: "#4F46E5" },
-  "ai-side-hustle": { label: "AI 부업", accent: "#FBBF24", glow: "#D97706" },
+  "ai-side-hustle": { label: "AI 마케팅", accent: "#FBBF24", glow: "#D97706" },
   "ai-news": { label: "AI 뉴스", accent: "#FB7185", glow: "#E11D48" },
   "ai-tools": { label: "AI 도구", accent: "#2DD4BF", glow: "#0D9488" },
 };

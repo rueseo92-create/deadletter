@@ -18,6 +18,7 @@ import { AdSense } from "@/components/AdSense";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { TableOfContents } from "@/components/TableOfContents";
 import { ShareButtons } from "@/components/ShareButtons";
+import { ServiceCta } from "@/components/ServiceCta";
 import { mdxComponents } from "@/components/MdxComponents";
 import { Icon } from "@/components/Icon";
 import { MDXRemote } from "next-mdx-remote/rsc";
@@ -144,7 +145,7 @@ export default async function PostPage({ params }: { params: { locale: string; s
               <Icon name="archive" className="mt-[3px] h-4 w-4 flex-shrink-0 text-ink-3" />
               <p>
                 <strong className="font-semibold text-ink">이전 주제의 보관 글입니다.</strong>{" "}
-                세로AI는 현재 AI 자동화·부업·뉴스·도구를 다루며, 이 글의 정보는 최신이 아닐 수 있습니다.{" "}
+                세로AI는 현재 업무 자동화·AI 마케팅·AI 뉴스·AI 도구를 다루며, 이 글의 정보는 최신이 아닐 수 있습니다.{" "}
                 <a href={lh("/")} className="whitespace-nowrap font-medium text-accent underline underline-offset-2">
                   최신 AI 글 보기
                 </a>
@@ -273,6 +274,9 @@ export default async function PostPage({ params }: { params: { locale: string; s
               </div>
             </section>
           )}
+
+          {/* 상담 안내 */}
+          {!en && <ServiceCta category={meta.category} homeHref={lh("/")} />}
 
           {/* Tags */}
           {meta.tags.length > 0 && (

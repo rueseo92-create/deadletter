@@ -98,16 +98,16 @@ type DeepPartial<T> = { [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]>
 const overrides: Record<Locale, DeepPartial<Dictionary>> = {
   ko: {
     meta: {
-      defaultTitle: "세로AI | AI 자동화 · AI 부업 · AI 뉴스 · AI 도구",
+      defaultTitle: "세로AI 딸깍스튜디오 | AI 자동화 대행 · 홈페이지 · AI 마케팅",
       siteDescription:
-        "AI 자동화, AI 부업, AI 뉴스, AI 도구 — 쏟아지는 AI 정보 중 실제로 쓸 수 있는 것만 검증해서 정리합니다.",
+        "AI 공부할 시간 없는 사장님 대신, 사업부터 이해하고 업무 자동화·홈페이지·웹앱·검색과 AI 답변 마케팅까지 세팅해 드리는 AI 자동화 대행.",
     },
     nav: { home: "홈", about: "소개" },
     home: {
       latest: "최신",
       newsletter: "주간 AI 브리핑",
       newsletterDesc:
-        "한 주의 AI 소식과 바로 써먹을 수 있는 자동화·부업 아이디어를 매주 한 번 보내드립니다.",
+        "한 주의 AI 소식과 가게·회사에 바로 써먹을 수 있는 자동화·마케팅 아이디어를 매주 한 번 보내드립니다.",
       noPosts: "첫 글을 준비 중입니다",
       noPostsDesc: "검수 패널을 통과한 첫 글이 곧 올라옵니다.",
       firstPostSoon: "검수 패널을 통과한 첫 글이 곧 올라옵니다.",
@@ -115,7 +115,7 @@ const overrides: Record<Locale, DeepPartial<Dictionary>> = {
       coupangDevTitle: "AI 작업 환경 추천",
       aboutItems: [
         "AI 자동화 워크플로를 단계별로 정리",
-        "AI 부업의 실제 수익 구조와 비용",
+        "작은 가게 AI 마케팅의 비용과 주의할 정책",
         "꼭 알아야 할 AI 뉴스만 선별",
         "직접 써보고 비교한 AI 도구",
       ],
@@ -126,7 +126,7 @@ const overrides: Record<Locale, DeepPartial<Dictionary>> = {
     },
     search: {
       description: "키워드나 태그로 세로AI의 글을 찾아보세요",
-      placeholder: "검색어를 입력하세요 (예: 자동화, 챗GPT, 부업)",
+      placeholder: "검색어를 입력하세요 (예: 자동화, 챗GPT, 홈페이지)",
     },
     category: {
       noPostsDesc: "검수 패널을 통과한 첫 글을 준비하고 있습니다.",
@@ -134,9 +134,9 @@ const overrides: Record<Locale, DeepPartial<Dictionary>> = {
   },
   en: {
     meta: {
-      defaultTitle: "SERO AI | AI Automation · Side Hustles · News · Tools",
+      defaultTitle: "SERO AI Ttalkkak Studio | AI automation agency",
       siteDescription:
-        "AI automation, AI side hustles, AI news and AI tools — verified and organized.",
+        "An AI automation agency for busy small-business owners: workflow automation, websites, web apps and search/AI-answer marketing, set up for you.",
     },
     nav: { home: "Home", about: "About" },
     home: {

@@ -136,6 +136,16 @@ export default async function LocaleLayout({
     description: categoryDescription(cat, locale),
   }));
 
+  // 상단 메뉴: 대행 서비스 중심, 블로그는 '인사이트'
+  const home = lh("/");
+  const mainNav = [
+    { href: `${home}#services`, label: "서비스" },
+    { href: `${home}#work`, label: "작업" },
+    { href: `${home}#pricing`, label: "가격" },
+    { href: lh("/posts"), label: "인사이트" },
+    { href: `${home}#contact`, label: "문의" },
+  ];
+
   return (
     <html lang={htmlLangs[locale]} suppressHydrationWarning>
       <head>
@@ -182,9 +192,9 @@ export default async function LocaleLayout({
               <Wordmark />
             </a>
 
-            <nav aria-label={en ? "Categories" : "카테고리"} className="hidden md:block">
+            <nav aria-label={en ? "Main" : "메뉴"} className="hidden md:block">
               <ul className="flex items-center gap-1">
-                {navItems.map((item) => (
+                {mainNav.map((item) => (
                   <li key={item.href}>
                     <a
                       href={item.href}
@@ -199,6 +209,12 @@ export default async function LocaleLayout({
 
             <div className="flex items-center gap-1">
               <a
+                href={`${lh("/")}#contact`}
+                className="mr-1 hidden h-9 items-center rounded-lg bg-ink px-3.5 text-[13.5px] font-bold text-bg hover:opacity-90 sm:inline-flex"
+              >
+                무료 상담
+              </a>
+              <a
                 href={lh("/search")}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-subtle hover:text-ink"
                 aria-label={en ? "Search" : "검색"}
@@ -208,7 +224,7 @@ export default async function LocaleLayout({
               <MobileNav
                 items={navItems}
                 extraItems={[
-                  { href: lh("/posts"), label: en ? "All posts" : "전체 글" },
+                  ...mainNav,
                   { href: lh("/about"), label: dict.nav?.about || "소개" },
                 ]}
                 searchHref={lh("/search")}
@@ -234,7 +250,7 @@ export default async function LocaleLayout({
                 </p>
               </div>
               <nav aria-label={en ? "Categories" : "카테고리"} className="md:col-span-3">
-                <p className="eyebrow mb-3">{en ? "Topics" : "주제"}</p>
+                <p className="eyebrow mb-3">{en ? "Insights" : "인사이트"}</p>
                 <ul className="space-y-2 text-[14px]">
                   {navItems.map((item) => (
                     <li key={item.href}>
@@ -248,7 +264,9 @@ export default async function LocaleLayout({
               <nav aria-label={en ? "Site" : "사이트"} className="md:col-span-4">
                 <p className="eyebrow mb-3">{en ? "Site" : "사이트"}</p>
                 <ul className="space-y-2 text-[14px]">
-                  <li><a href={lh("/posts")} className="text-ink-2 hover:text-ink">{en ? "All posts" : "전체 글"}</a></li>
+                  <li><a href={`${home}#services`} className="text-ink-2 hover:text-ink">서비스</a></li>
+                  <li><a href={`${home}#contact`} className="text-ink-2 hover:text-ink">무료 상담</a></li>
+                  <li><a href={lh("/posts")} className="text-ink-2 hover:text-ink">{en ? "All posts" : "인사이트 전체"}</a></li>
                   <li><a href={lh("/about")} className="text-ink-2 hover:text-ink">{dict.nav?.about || "소개"}</a></li>
                   <li><a href={lh("/privacy")} className="text-ink-2 hover:text-ink">{dict.footer.privacyPolicy}</a></li>
                   <li>

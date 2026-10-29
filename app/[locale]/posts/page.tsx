@@ -8,7 +8,7 @@ import { getDictionary, localizedHref, defaultLocale, type Locale } from "@/lib/
 
 export const metadata: Metadata = {
   title: "전체 글",
-  description: `${siteConfig.name}의 AI 자동화 · AI 부업 · AI 뉴스 · AI 도구 글 전체 목록`,
+  description: `${siteConfig.name}의 업무 자동화 · AI 마케팅 · AI 뉴스 · AI 도구 인사이트 전체 목록`,
 };
 
 export default async function PostsPage({ params }: { params: { locale: string } }) {

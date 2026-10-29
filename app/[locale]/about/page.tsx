@@ -35,7 +35,7 @@ const POLICIES = [
     items: [
       "숫자·가격·정책·출시일 등 사실 정보에는 가능한 한 1차 출처를 답니다.",
       "확인되지 않은 루머나 유출 정보는 ‘미확인’임을 분명히 밝히거나 다루지 않습니다.",
-      "수익을 약속하는 표현(‘누구나 월 100만 원’ 등)은 쓰지 않습니다. 부업 글에는 비용과 리스크를 함께 적습니다.",
+      "수익·매출·순위를 약속하는 표현은 쓰지 않습니다. 마케팅 글에는 비용, 플랫폼 정책과 리스크를 함께 적습니다.",
     ],
   },
   {
@@ -71,13 +71,14 @@ export default function AboutPage({ params }: { params: { locale: string } }) {
         <div className="mx-auto max-w-page px-4 pb-12 pt-10 sm:px-6 sm:pb-16 sm:pt-14">
           <p className="eyebrow">About {siteConfig.nameEn}</p>
           <h1 className="mt-4 max-w-3xl text-[2rem] font-bold leading-[1.28] tracking-[-0.035em] text-ink sm:text-[2.6rem]">
-            AI 정보는 넘칩니다.
+            세팅은 저희가,
             <br />
-            <span className="text-ink-3">검증된 정리는 드뭅니다.</span>
+            <span className="text-ink-3">사장님은 딸깍만.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-[16.5px] leading-[1.8] text-ink-2">
-            세로AI는 AI 자동화, AI 부업, AI 뉴스, AI 도구를 다루는 미디어입니다. 매일 쏟아지는 AI 소식과 도구 가운데
-            실제로 일과 수익에 도움이 되는 것만 골라, 원문 출처와 함께 이해하기 쉽게 정리합니다.
+            세로AI 딸깍스튜디오는 AI를 공부할 시간이 없는 사장님 대신 업무 자동화, 홈페이지·웹앱, 검색과 AI 답변 마케팅을
+            세팅해 드리는 AI 자동화 대행입니다. 이 사이트의 인사이트 글도 저희가 만든 자동 발행 시스템이 매일 조사·작성·검수해서 올리며,
+            아래는 그 글들을 만드는 원칙입니다.
           </p>
         </div>
       </header>

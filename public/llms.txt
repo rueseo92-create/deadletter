@@ -1,22 +1,37 @@
-# 세로AI (SERO AI) — llms.txt
+# 세로AI 딸깍스튜디오 (SERO AI Ttalkkak Studio) — llms.txt
 
-> AI automation, AI side hustles, AI news and AI tools — verified and organized.
-> AI 자동화 · AI 부업 · AI 뉴스 — 검증해서 정리합니다.
+> AI automation agency for busy small-business owners in Korea: workflow automation, websites, web apps, SEO/AEO/GEO setup and a monthly "ttalkkak partner" plan.
+> AI 공부할 시간 없는 사장님 대신 — 자동화·홈페이지·마케팅을 세팅해 드리는 AI 자동화 대행.
 
 ## Site Information
 
-- Name: 세로AI (SERO AI)
+- Name: 세로AI 딸깍스튜디오 (SERO AI Ttalkkak Studio)
 - URL: https://seroai.xyz
-- Language: Korean (ko), English (en)
-- Topics: AI automation, AI side hustles, AI news, AI tools
-- Author: 세로AI 편집팀 (SERO AI Editorial)
+- Language: Korean (ko)
+- What it is: an AI automation agency (home page: services, process, work, pricing, contact) with an auto-published insights blog
+- Contact: the inquiry form at https://seroai.xyz/#contact
 
-## Categories
+## Services (starting prices, KRW)
 
-- AI 자동화 / AI Automation (/categories/ai-automation): Practical workflows that hand repetitive work to AI and no-code tools
-- AI 부업 / AI Side Hustle (/categories/ai-side-hustle): Side income with AI — real revenue models, costs and risks
-- AI 뉴스 / AI News (/categories/ai-news): The AI news that matters, with context
-- AI 도구 / AI Tools (/categories/ai-tools): Hands-on guides and comparisons of AI tools
+- 업무 자동화 / Workflow automation (Excel, Google Sheets, reports, reminders): from 100,000
+- 홈페이지 · 랜딩페이지 / Websites and landing pages: from 200,000
+- 웹앱 MVP / Web app MVPs (booking, members, admin): from 500,000
+- AI 블로그 자동 발행 / Automated blog publishing with a 10-reviewer quality panel: from 300,000
+- SEO · AEO · GEO 세팅 / Search and AI-answer readiness setup: from 200,000
+- 딸깍 파트너 / Monthly partner plan: 590,000 per month; 딸깍 진단 (diagnosis) 99,000
+- No guarantees of revenue, rankings or AI citations are made.
+
+## Insight categories
+
+- 업무 자동화 / Automation (/categories/ai-automation)
+- AI 마케팅 / AI Marketing (/categories/ai-side-hustle)
+- AI 뉴스 / AI News (/categories/ai-news)
+- AI 도구 / AI Tools (/categories/ai-tools)
+
+## Portfolio demos (fictional businesses)
+
+- Bakery landing page: https://seroai.xyz/demo/bakery.html
+- Studio booking web app: https://seroai.xyz/demo/booking.html
 
 ## How content is produced
 

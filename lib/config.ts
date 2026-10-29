@@ -1,6 +1,6 @@
 // ============================================
-// 사이트 설정 — 세로AI (SERO AI)
-// AI 자동화 · AI 부업 · AI 뉴스 · AI 도구
+// 사이트 설정 — 세로AI 딸깍스튜디오 (AI 자동화 대행)
+// 홈은 대행 서비스 소개, 블로그는 자동 발행 인사이트(업무 자동화 · AI 마케팅 · AI 뉴스 · AI 도구)
 // ============================================
 
 export type CategoryIcon = "automation" | "hustle" | "news" | "tools";
@@ -19,18 +19,18 @@ export interface Category {
 const categories: Category[] = [
   {
     slug: "ai-automation",
-    name: "AI 자동화",
-    nameEn: "AI Automation",
-    description: "반복 업무를 AI와 노코드 도구로 줄이는 실전 워크플로",
+    name: "업무 자동화",
+    nameEn: "Automation",
+    description: "가게·회사에서 매일 반복하는 일을 AI와 노코드 도구로 줄이는 방법",
     descriptionEn: "Practical workflows that hand repetitive work to AI and no-code tools",
     icon: "automation",
   },
   {
     slug: "ai-side-hustle",
-    name: "AI 부업",
-    nameEn: "AI Side Hustle",
-    description: "AI로 시작하는 부업 — 실제 수익 구조와 비용, 리스크까지",
-    descriptionEn: "Side income with AI — real revenue models, costs and risks",
+    name: "AI 마케팅",
+    nameEn: "AI Marketing",
+    description: "홈페이지·블로그·검색·AI 답변으로 손님을 데려오는 방법과 주의할 정책",
+    descriptionEn: "Websites, blogs, search and AI answers that bring customers in — and the rules to follow",
     icon: "hustle",
   },
   {
@@ -54,17 +54,24 @@ const categories: Category[] = [
 export const siteConfig = {
   name: "세로AI",
   nameEn: "SERO AI",
-  tagline: "AI 자동화 · AI 부업 · AI 뉴스 — 검증해서 정리합니다",
+  studio: "딸깍스튜디오",
+  tagline: "AI 공부할 시간 없는 사장님 대신 — 자동화·홈페이지·마케팅을 진짜 딸깍으로",
   description:
-    "AI 자동화, AI 부업, AI 뉴스, AI 도구 — 쏟아지는 AI 정보 중 실제로 쓸 수 있는 것만 검증해서 정리합니다.",
+    "AI 자동화 대행 세로AI 딸깍스튜디오. 사업부터 이해하고 반복 업무 자동화, 홈페이지·웹앱 제작, 검색·AI 답변 마케팅까지 세팅해 드립니다.",
   url: "https://seroai.xyz",
-  author: "세로AI 편집팀",
+  author: "세로AI 딸깍스튜디오",
   // TODO: 실제 이메일 확인
   email: "contact@seroai.xyz",
   locale: "ko_KR",
 
-  defaultTitle: "세로AI | AI 자동화 · AI 부업 · AI 뉴스 · AI 도구",
+  defaultTitle: "세로AI 딸깍스튜디오 | AI 자동화 대행 · 홈페이지 · AI 마케팅",
   titleTemplate: "%s | 세로AI",
+
+  // 문의 채널: 값이 있는 것만 화면에 버튼으로 나온다
+  contact: {
+    kmongUrl: "", // 크몽 서비스 등록 후 링크
+    kakaoUrl: "", // 카카오톡 채널·오픈채팅 링크
+  },
 
   social: {
     instagram: "",
@@ -76,8 +83,9 @@ export const siteConfig = {
   nav: categories.map((c) => ({ href: `/categories/${c.slug}`, label: c.name })),
 
   // 쿠팡 파트너스
+  // 대행사 사이트에서는 쇼핑 광고를 끈다
   coupang: {
-    enabled: true,
+    enabled: false,
     trackingCode: "AF9905627",
     ads: {
       postBottom: { id: 838592, template: "carousel" as const, width: "680", height: "140" },

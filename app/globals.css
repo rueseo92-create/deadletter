@@ -273,3 +273,22 @@ code, pre, kbd { @apply font-mono; }
   .prose { max-width: 100% !important; }
   body { background: white !important; color: black !important; }
 }
+
+/* ── 딸깍스튜디오: 형광펜 강조 ── */
+.hl {
+  background: linear-gradient(transparent 58%, rgb(255 223 61 / 0.9) 58%, rgb(255 223 61 / 0.9) 92%, transparent 92%);
+  padding: 0 0.08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@media (prefers-color-scheme: dark) {
+  .hl { background: linear-gradient(transparent 58%, rgb(255 223 61 / 0.38) 58%, rgb(255 223 61 / 0.38) 92%, transparent 92%); }
+}
+.keycap {
+  box-shadow: 0 10px 0 rgb(var(--line-strong)), 0 24px 40px rgb(0 0 0 / 0.12);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.keycap:active, .keycap:hover {
+  transform: translateY(6px);
+  box-shadow: 0 4px 0 rgb(var(--line-strong)), 0 12px 24px rgb(0 0 0 / 0.12);
+}

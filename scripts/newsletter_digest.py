@@ -56,7 +56,7 @@ NEWSLETTER_FROM = os.environ.get("NEWSLETTER_FROM", "세로AI <newsletter@seroai
 
 CATEGORY_LABELS = {
     "ai-automation": "AI 자동화",
-    "ai-side-hustle": "AI 부업",
+    "ai-side-hustle": "AI 마케팅",
     "ai-news": "AI 뉴스",
     "ai-tools": "AI 도구",
 }
