@@ -115,36 +115,34 @@ const ITEMS: Item[] = [
 export default function PortfolioShowcase({ lh }: { lh: (href: string) => string }) {
   return (
     <>
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {ITEMS.map(({ no, title, en, desc, href, external, scene: Scene }) => (
           <a
             key={no}
             href={external || href.startsWith("/demo") ? href : lh(href)}
             {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            className="pf-card group block rounded-3xl border border-line bg-surface p-4 transition hover:-translate-y-1 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,.35)]"
+            className={`pf-card pf-reveal pf-t${no} group block rounded-[28px] bg-surface p-3`}
           >
             <div className="pf-stage" aria-hidden="true">
               <Scene />
             </div>
-            <div className="px-2 pb-2 pt-5">
-              <h3 className="text-[1.15rem] font-black tracking-[-0.03em] text-ink">
-                <span className="pf-no">{no}</span> {title}
-              </h3>
-              <p className="text-[12.5px] font-semibold text-ink-3">{en}</p>
-              <p className="mt-3 text-[14.5px] leading-relaxed text-ink-2">{desc}</p>
-              <span className="mt-4 inline-flex items-center gap-1 text-[13.5px] font-bold text-ink">
+            <div className="px-4 pb-4 pt-6">
+              <p className="pf-no text-[13px] font-semibold">{no} · {en}</p>
+              <h3 className="pf-title mt-1 text-[1.4rem] font-extrabold tracking-[-0.03em] text-ink">{title}</h3>
+              <p className="mt-2.5 text-[15px] leading-relaxed text-ink-3">{desc}</p>
+              <span className="pf-link mt-5 inline-flex items-center gap-1 text-[14.5px] font-semibold">
                 직접 보기 <Icon name="arrowRight" className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
               </span>
             </div>
           </a>
         ))}
       </div>
-      <a href="#contact" className="pf-next mt-5 flex items-center justify-between gap-4 rounded-3xl bg-ink px-7 py-6 text-bg">
-        <span>
-          <span className="block text-[13px] font-semibold text-bg/60">07</span>
-          <span className="text-[1.25rem] font-black tracking-[-0.03em]">다음 작업은 사장님 가게입니다</span>
-        </span>
+      <a href="#contact" className="pf-next pf-reveal group mt-6 flex flex-col items-center gap-5 rounded-[28px] bg-ink px-7 py-14 text-center text-bg sm:py-16">
         <span className="pf-plus" aria-hidden="true">+</span>
+        <span className="text-[1.8rem] font-extrabold tracking-[-0.035em] sm:text-[2.4rem]">
+          다음 작업은 <span className="pf-grad">사장님 가게</span>입니다.
+        </span>
+        <span className="pf-pill">무료 상담 신청 ›</span>
       </a>
     </>
   );

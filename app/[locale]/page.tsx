@@ -169,10 +169,10 @@ export default async function Home({ params }: { params: { locale: string } }) {
       </section>
 
       {/* ── 작업 ── */}
-      <section id="work" className="scroll-mt-20 border-t border-line">
+      <section id="work" className="scroll-mt-20 bg-subtle/70">
         <div className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20">
           <p className="eyebrow">Work</p>
-          <h2 className="mt-3 text-[2rem] font-black tracking-[-0.04em] text-ink sm:text-[2.4rem]">직접 만들어 돌리고 있는 것들</h2>
+          <h2 className="mt-3 text-balance text-[2.2rem] font-black leading-[1.1] tracking-[-0.04em] text-ink sm:text-[3.2rem]">직접 만들어, 매일 돌리고 있습니다.</h2>
           <p className="mt-3 max-w-2xl text-[15px] text-ink-3">직접 만들어 운영 중인 서비스와, 가상의 가게로 만든 데모입니다. 눌러서 직접 써 보세요.</p>
           <PortfolioShowcase lh={lh} />
         </div>
