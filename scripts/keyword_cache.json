@@ -1609,6 +1609,66 @@
      "score": 1.64
     }
    ]
+  },
+  "AI 영상 생성": {
+   "fetched": "2026-10-29T18:38:44",
+   "candidates": [
+    {
+     "keyword": "AI 영상 생성 무료",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "AI 영상 생성 툴",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "AI 영상 생성 추천",
+     "ac_score": 0.7,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    },
+    {
+     "keyword": "AI 영상 생성 순위",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "AI 영상 생성 모델",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    }
+   ]
   }
  },
  "seed_used": {
@@ -1624,6 +1684,7 @@
   "퍼플렉시티": "2026-10-28T16:58:44",
   "업무 자동화 AI": "2026-10-28T17:07:28",
   "AI 마케팅": "2026-10-29T10:12:52",
-  "미드저니": "2026-10-29T17:06:17"
+  "미드저니": "2026-10-29T17:06:17",
+  "AI 영상 생성": "2026-10-29T18:38:44"
  }
 }

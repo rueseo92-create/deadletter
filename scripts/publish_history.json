@@ -71,11 +71,21 @@
       "date": "2026-10-30",
       "slot": "morning",
       "slug": "2026-10-29-hancom-nomadian-us-launch-goals"
+    },
+    {
+      "title": "AI 영상 생성 무료",
+      "keyword": "AI 영상 생성 무료",
+      "intent": "compare",
+      "category": "ai-tools",
+      "date": "2026-10-30",
+      "slot": "night",
+      "slug": "2026-10-29-free-ai-video-generator-checklist"
     }
   ],
-  "last_run": "2026-10-30 [morning] (2/2 성공, 614초)",
+  "last_run": "2026-10-30 [night] (1/1 성공, 349초)",
   "attempts": {
     "2026-10-29:evening": 1,
-    "2026-10-30:morning": 2
+    "2026-10-30:morning": 2,
+    "2026-10-30:night": 1
   }
 }
