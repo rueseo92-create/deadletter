@@ -216,9 +216,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
       <section id="team" className="scroll-mt-20 border-t border-line bg-subtle/60">
         <div className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20">
           <p className="eyebrow">Team</p>
-          <h2 className="mt-3 text-[2rem] font-black tracking-[-0.04em] text-ink sm:text-[2.4rem]">누가 만드나요</h2>
-          <p className="mt-3 max-w-2xl text-[15px] text-ink-3">현장을 아는 사람이 듣고, 개발자가 직접 만듭니다. 중간에 하청을 거치지 않습니다.</p>
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
             {TEAM.map((m) => (
               <div key={m.name} className="rounded-2xl border border-line bg-surface p-7">
                 <p className="text-[13px] font-semibold text-ink-3">{m.role}</p>
