@@ -1,6 +1,6 @@
 import { getAllPosts } from "@/lib/posts";
 import { siteConfig } from "@/lib/config";
-import { SERVICES, PROCESS, PLANS, FAQ } from "@/lib/agency";
+import { SERVICES, PROCESS, PLANS, FAQ, DELIVERY_STEPS, DELIVERABLES, TASK_TERMS } from "@/lib/agency";
 import { PostCard } from "@/components/PostCard";
 import InquiryForm from "@/components/InquiryForm";
 import PortfolioShowcase from "@/components/PortfolioShowcase";
@@ -254,6 +254,76 @@ export default async function Home({ params }: { params: { locale: string } }) {
           </div>
           <p className="mt-5 text-[13px] text-ink-3">
             딸깍 진단은 런칭 기념으로 선착순 5팀만 무료이고, 이후에는 99,000원입니다. 파트너 런칭 기념가는 포트폴리오를 쌓는 동안만 적용합니다. 결과물을 사례로 소개하는 데 동의해 주시면 됩니다. 개별 작업(자동화 3만 원~, 홈페이지 5만 원~, 웹앱 15만 원~)도 가능합니다. AI·서버·도메인 사용료는 사장님 계정에서 직접 결제됩니다.
+          </p>
+        </div>
+      </section>
+
+      {/* ── 받게 되는 것 ── */}
+      <section id="deliverables" className="scroll-mt-20 border-t border-line bg-subtle/60">
+        <div className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20">
+          <p className="eyebrow">Deliverables</p>
+          <h2 className="mt-3 text-[2rem] font-black tracking-[-0.04em] text-ink sm:text-[2.4rem]">
+            맡기시면 <span className="hl">이렇게 받습니다</span>
+          </h2>
+          <p className="mt-3 max-w-2xl text-[15.5px] leading-relaxed text-ink-2">
+            의뢰가 접수되면 줌 미팅을 한 번 잡고, 시작 전에 할 일과 받을 것을 1장으로 정리해 확인받습니다. 비밀번호는 받지 않고, 만든 것은 전부 사장님 소유입니다.
+          </p>
+
+          <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+            {DELIVERY_STEPS.map((s, i) => (
+              <li key={s.when} className="pf-reveal rounded-2xl border border-line bg-surface p-5">
+                <p className="text-[12.5px] font-bold tabular-nums text-accent">{String(i + 1).padStart(2, "0")}</p>
+                <p className="mt-1 text-[15px] font-black text-ink">{s.when}</p>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-2">{s.what}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-3">
+            {DELIVERABLES.map((d) => (
+              <div key={d.name} className="pf-reveal rounded-2xl border border-line bg-surface p-7">
+                <p className="flex items-center justify-between text-[16px] font-black text-ink">
+                  {d.name}
+                  <span className="rounded-full bg-subtle px-2.5 py-0.5 text-[12.5px] font-bold text-ink-3">{d.span}</span>
+                </p>
+                <ul className="mt-5 space-y-3 text-[14.5px] leading-relaxed text-ink-2">
+                  {d.items.map((it) => (
+                    <li key={it} className="flex gap-2">
+                      <Icon name="check" className="mt-1 h-4 w-4 flex-shrink-0 text-accent" strokeWidth={2.4} />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 overflow-x-auto rounded-2xl border border-line bg-surface">
+            <table className="w-full min-w-[640px] text-left text-[14px]">
+              <thead className="border-b border-line text-[13px] text-ink-3">
+                <tr>
+                  <th className="px-5 py-3 font-semibold">개별 작업</th>
+                  <th className="px-5 py-3 font-semibold">가격</th>
+                  <th className="px-5 py-3 font-semibold">납기</th>
+                  <th className="px-5 py-3 font-semibold">받는 것</th>
+                  <th className="px-5 py-3 font-semibold">수정</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-line text-ink-2">
+                {TASK_TERMS.map((t) => (
+                  <tr key={t.name}>
+                    <td className="px-5 py-3.5 font-bold text-ink">{t.name}</td>
+                    <td className="whitespace-nowrap px-5 py-3.5 tabular-nums">{t.price}</td>
+                    <td className="whitespace-nowrap px-5 py-3.5 tabular-nums">{t.due}</td>
+                    <td className="px-5 py-3.5">{t.gets}</td>
+                    <td className="whitespace-nowrap px-5 py-3.5 tabular-nums">{t.fix}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 text-[13px] text-ink-3">
+            납품 후 30일 동안 오류 수정은 무료입니다. 새 기능 추가는 별도 견적으로 안내합니다. AI·서버·도메인 사용료는 시작 전에 예상 금액을 표로 알려드립니다.
           </p>
         </div>
       </section>
