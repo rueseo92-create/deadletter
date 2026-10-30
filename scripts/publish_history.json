@@ -89,13 +89,23 @@
       "date": "2026-10-30",
       "slot": "lunch",
       "slug": "2026-10-30-n8n-automation-pricing-executions-guide"
+    },
+    {
+      "title": "소상공인 마케팅 지원방법",
+      "keyword": "소상공인 마케팅 지원방법",
+      "intent": "info",
+      "category": "ai-side-hustle",
+      "date": "2026-10-30",
+      "slot": "evening",
+      "slug": "2026-10-30-small-business-marketing-support-guide"
     }
   ],
-  "last_run": "2026-10-30 [lunch] (1/1 성공, 420초)",
+  "last_run": "2026-10-30 [evening] (1/2 성공, 839초)",
   "attempts": {
     "2026-10-29:evening": 1,
     "2026-10-30:morning": 2,
     "2026-10-30:night": 1,
-    "2026-10-30:lunch": 2
+    "2026-10-30:lunch": 2,
+    "2026-10-30:evening": 2
   }
 }

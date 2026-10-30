@@ -1801,6 +1801,132 @@
      "score": 0.4
     }
    ]
+  },
+  "소상공인 마케팅": {
+   "fetched": "2026-10-30T09:03:11",
+   "candidates": [
+    {
+     "keyword": "소상공인 마케팅 지원방법",
+     "ac_score": 1.9,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.9
+    },
+    {
+     "keyword": "소상공인마케팅 바우처",
+     "ac_score": 1.7,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.7
+    },
+    {
+     "keyword": "소상공인 마케팅 지원사업",
+     "ac_score": 1.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "소상공인 마케팅 지원",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "소상공인 마케팅 어려움",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "소상공인 마케팅 협회",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "소상공인 마케팅 전략",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "소상공인 마케팅 비용",
+     "ac_score": 0.7,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    },
+    {
+     "keyword": "소상공인 마케팅 지원금",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "소상공인 마케팅 대행",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "한국 소상공인 마케팅 협회",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    }
+   ]
   }
  },
  "seed_used": {
@@ -1819,6 +1945,7 @@
   "미드저니": "2026-10-29T17:06:17",
   "AI 영상 생성": "2026-10-29T18:38:44",
   "엑셀 자동화 챗GPT": "2026-10-30T02:10:15",
-  "n8n 자동화": "2026-10-30T07:14:01"
+  "n8n 자동화": "2026-10-30T07:14:01",
+  "소상공인 마케팅": "2026-10-30T09:03:12"
  }
 }
