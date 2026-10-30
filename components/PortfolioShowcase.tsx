@@ -79,7 +79,7 @@ const BaljuScene = () => (
 const AuraScene = () => (
   <div className="pf-chat">
     <p className="pf-q">주차 되나요?</p>
-    <p className="pf-a">네, 건물 뒤 무료 주차 2시간 가능해요 🙂</p>
+    <p className="pf-a">네, 건물 뒤 무료 주차 2시간 가능해요.</p>
     <p className="pf-q" style={{ animationDelay: "2.2s" }}>오늘 예약 돼요?</p>
     <p className="pf-typing">
       <i />
@@ -131,7 +131,7 @@ export default function PortfolioShowcase({ lh }: { lh: (href: string) => string
               <h3 className="pf-title mt-1 text-[1.4rem] font-extrabold tracking-[-0.03em] text-ink">{title}</h3>
               <p className="mt-2.5 text-[15px] leading-relaxed text-ink-3">{desc}</p>
               <span className="pf-link mt-5 inline-flex items-center gap-1 text-[14.5px] font-semibold">
-                직접 보기 <Icon name="arrowRight" className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+                직접 보기 <Icon name="arrowRight" className="h-3.5 w-3.5" />
               </span>
             </div>
           </a>
