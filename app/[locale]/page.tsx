@@ -325,6 +325,12 @@ export default async function Home({ params }: { params: { locale: string } }) {
           <p className="mt-4 text-[13px] text-ink-3">
             납품 후 30일 동안 오류 수정은 무료입니다. 새 기능 추가는 별도 견적으로 안내합니다. AI·서버·도메인 사용료는 시작 전에 예상 금액을 표로 알려드립니다.
           </p>
+          <a
+            href="/samples/index.html"
+            className="mt-6 inline-flex h-11 items-center gap-1.5 rounded-xl bg-ink px-5 text-[14.5px] font-bold text-bg hover:opacity-90"
+          >
+            결과물 예시 직접 보기 <Icon name="arrowRight" className="h-4 w-4" />
+          </a>
         </div>
       </section>
 
