@@ -1685,6 +1685,122 @@
      "score": 1.3
     }
    ]
+  },
+  "n8n 자동화": {
+   "fetched": "2026-10-30T07:14:00",
+   "candidates": [
+    {
+     "keyword": "n8n 자동화 툴",
+     "ac_score": 3.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.4
+    },
+    {
+     "keyword": "n8n 자동화 뜻",
+     "ac_score": 1.7,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.7
+    },
+    {
+     "keyword": "n8n 자동화 가격",
+     "ac_score": 1.6,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.6
+    },
+    {
+     "keyword": "n8n 자동화 사례",
+     "ac_score": 1.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "n8n 자동화 예제",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "n8n 자동화 워크플로우",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "n8n 자동화 서버",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "n8n 자동화 강의",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "n8n 자동화 방법",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "n8n 자동화 도구",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    }
+   ]
   }
  },
  "seed_used": {
@@ -1702,6 +1818,7 @@
   "AI 마케팅": "2026-10-29T10:12:52",
   "미드저니": "2026-10-29T17:06:17",
   "AI 영상 생성": "2026-10-29T18:38:44",
-  "엑셀 자동화 챗GPT": "2026-10-30T02:10:15"
+  "엑셀 자동화 챗GPT": "2026-10-30T02:10:15",
+  "n8n 자동화": "2026-10-30T07:14:01"
  }
 }

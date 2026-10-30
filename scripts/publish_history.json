@@ -80,13 +80,22 @@
       "date": "2026-10-30",
       "slot": "night",
       "slug": "2026-10-29-free-ai-video-generator-checklist"
+    },
+    {
+      "title": "n8n 자동화 툴",
+      "keyword": "n8n 자동화 툴",
+      "intent": "info",
+      "category": "ai-automation",
+      "date": "2026-10-30",
+      "slot": "lunch",
+      "slug": "2026-10-30-n8n-automation-pricing-executions-guide"
     }
   ],
-  "last_run": "2026-10-30 [lunch] (0/1 성공, 565초)",
+  "last_run": "2026-10-30 [lunch] (1/1 성공, 420초)",
   "attempts": {
     "2026-10-29:evening": 1,
     "2026-10-30:morning": 2,
     "2026-10-30:night": 1,
-    "2026-10-30:lunch": 1
+    "2026-10-30:lunch": 2
   }
 }
