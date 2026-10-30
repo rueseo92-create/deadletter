@@ -100,12 +100,13 @@
       "slug": "2026-10-30-small-business-marketing-support-guide"
     }
   ],
-  "last_run": "2026-10-30 [evening] (1/2 성공, 839초)",
+  "last_run": "2026-10-31 [evening] (0/2 성공, 1083초)",
   "attempts": {
     "2026-10-29:evening": 1,
     "2026-10-30:morning": 2,
     "2026-10-30:night": 1,
     "2026-10-30:lunch": 2,
-    "2026-10-30:evening": 2
+    "2026-10-30:evening": 2,
+    "2026-10-31:evening": 2
   }
 }

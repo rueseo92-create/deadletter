@@ -1927,6 +1927,147 @@
      "score": 0.4
     }
    ]
+  },
+  "네이버 플레이스 관리": {
+   "fetched": "2026-10-30T15:45:07",
+   "candidates": [
+    {
+     "keyword": "네이버 플레이스 관리자센터",
+     "ac_score": 4.52,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 4.52
+    },
+    {
+     "keyword": "네이버플레이스 관리자 추가",
+     "ac_score": 4.52,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 4.52
+    },
+    {
+     "keyword": "네이버 플레이스 관리자",
+     "ac_score": 4.0,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 4.0
+    },
+    {
+     "keyword": "네이버플레이스 관리방법",
+     "ac_score": 2.3,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.3
+    },
+    {
+     "keyword": "네이버 플레이스 관리자 변경",
+     "ac_score": 1.32,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.32
+    },
+    {
+     "keyword": "네이버플레이스 관리자 변경방법",
+     "ac_score": 1.22,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.22
+    },
+    {
+     "keyword": "네이버 플레이스 관리자 등록",
+     "ac_score": 1.16,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.16
+    },
+    {
+     "keyword": "네이버플레이스 관리자모드",
+     "ac_score": 1.06,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.06
+    },
+    {
+     "keyword": "네이버플레이스 관리자 바꾸는법",
+     "ac_score": 0.9,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "네이버 플레이스 관리자 페이지",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "네이버플레이스 관리자 등록방법",
+     "ac_score": 0.74,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.74
+    },
+    {
+     "keyword": "네이버 플레이스 관리 대행",
+     "ac_score": 0.7,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    }
+   ]
   }
  },
  "seed_used": {
@@ -1946,6 +2087,7 @@
   "AI 영상 생성": "2026-10-29T18:38:44",
   "엑셀 자동화 챗GPT": "2026-10-30T02:10:15",
   "n8n 자동화": "2026-10-30T07:14:01",
-  "소상공인 마케팅": "2026-10-30T09:03:12"
+  "소상공인 마케팅": "2026-10-30T09:03:12",
+  "네이버 플레이스 관리": "2026-10-30T15:45:08"
  }
 }
