@@ -60,6 +60,20 @@ jobs:
       - name: Install dependencies
         run: pip install anthropic python-dotenv
 
+      # ── 오늘의 황금 키워드 (하루 한 번, 이미 있으면 건너뜀) ──
+      - name: Golden keyword report
+        continue-on-error: true
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          NAVER_AD_API_KEY: ${{ secrets.NAVER_AD_API_KEY }}
+          NAVER_AD_SECRET: ${{ secrets.NAVER_AD_SECRET }}
+          NAVER_AD_CUSTOMER_ID: ${{ secrets.NAVER_AD_CUSTOMER_ID }}
+        run: |
+          cd scripts
+          TODAY=$(TZ=Asia/Seoul date +%Y-%m-%d)
+          if [ ! -f "../research/keywords/$TODAY.json" ]; then timeout 600 python golden_keywords.py --json || true; fi
+
       # ── 블로그 글 발행 ──
       - name: Generate and publish blog posts
         if: ${{ github.event.inputs.social_only != 'true' }}
@@ -101,6 +115,7 @@ jobs:
           git add -f scripts/publish_history.json || true
           git add -f scripts/keyword_cache.json || true
           git add -f scripts/news_seen.json || true
+          git add -f research/keywords/*.md research/keywords/*.json 2>/dev/null || true
           SLOT_LABEL=$(TZ=Asia/Seoul date +%H:%M)
           NEW_POSTS=false
           git diff --staged --quiet -- content/posts || NEW_POSTS=true

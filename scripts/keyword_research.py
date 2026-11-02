@@ -330,12 +330,37 @@ def build_plan(seed: str, cand: dict, category: str) -> dict:
     }
 
 
+TREND_CATEGORY = [
+    ("ai-automation", ["자동화", "엑셀", "구글시트", "노션", "업무", "예약", "키오스크"]),
+    ("ai-side-hustle", ["마케팅", "광고", "홈페이지", "블로그", "스마트스토어", "플레이스", "쇼핑몰", "소상공인", "자영업", "창업"]),
+    ("ai-tools", ["챗GPT", "클로드", "제미나이", "앱", "요금제", "출시", "업데이트"]),
+    ("ai-news", ["AI", "인공지능"]),
+]
+
+
+def trending_seeds(category: str, n: int = 2) -> list[str]:
+    """오늘의 황금 키워드 리포트에서 'seroai 적합' 판정을 받은 것 중 이 카테고리에 맞는 것"""
+    try:
+        import golden_keywords
+        fits = golden_keywords.fit_keywords(n=20)
+    except Exception:
+        return []
+    out = []
+    for kw in fits:
+        cat = next((c for c, words in TREND_CATEGORY if any(w.lower() in kw.lower() for w in words)), None)
+        if cat == category and kw not in out:
+            out.append(kw)
+    return out[:n]
+
+
 def pick_plans(category: str, n: int, exclude: set[str] = None, refresh: bool = False) -> list[dict]:
     """카테고리에서 n개의 키워드 플랜. 최근에 덜 쓴 시드부터 돌아가며 시드당 1개씩 고른다."""
     cache = _load_cache()
     cache.setdefault("seed_used", {})
     used = used_keywords() | {_nkey(x) for x in (exclude or set())}
     seeds = sorted(SEED_KEYWORDS.get(category, []), key=lambda s: cache["seed_used"].get(s, ""))
+    # 오늘 뜨는 검색어 중 이 카테고리에 맞는 것을 맨 앞에 (golden_keywords.py 리포트가 있을 때만)
+    seeds = [t for t in trending_seeds(category) if t not in seeds] + seeds
     plans = []
     for seed in seeds:
         if len(plans) >= n:
