@@ -53,7 +53,7 @@ export function PostCard({
             <img
               src={post.thumbnail}
               alt=""
-              className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.015]"
+              className="aspect-[16/9] w-full object-cover"
             />
           </div>
         )}
@@ -98,7 +98,7 @@ export function PostCard({
             src={post.thumbnail}
             alt=""
             loading="lazy"
-            className="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            className="aspect-[16/9] w-full object-cover"
           />
         </div>
       )}

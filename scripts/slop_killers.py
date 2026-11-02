@@ -18,6 +18,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 import claude_client
+import pipeline_log
 import title_rules
 
 PANEL_SIZE = 10
@@ -199,11 +200,14 @@ def gate(post, plan: dict | None):
     results = review(post.title, post.content, plan)
     s = _summary(results)
     _print(results, s)
+    _log(results, 0)
     for n in range(1, MAX_REVISIONS + 1):
         if s["ok"]:
             break
         print(f"  [슬롭 킬러] 기준 미달 → 고쳐 쓰기 {n}/{MAX_REVISIONS}")
         rev = _revise(post, plan, results)
+        pipeline_log.step("S7", "수정", model=claude_client.WRITER_MODEL, round_no=n,
+                          detail={"issues_in": sum(len(r["issues"]) for r in results)})
         post.content = rev.content
         post.tldr = rev.tldr or post.tldr
         post.description = (rev.description or post.description)[:155]
@@ -221,10 +225,24 @@ def gate(post, plan: dict | None):
         results = list(merged.values())
         s = _summary(results)
         _print(again, s)
+        _log(again, n)
     if not s["ok"]:
         raise SlopRejected(f"슬롭 킬러 최종 탈락: {s['passed']}/{s['panel']} 통과, 치명적 지적 {s['critical']}건")
     post.review = {"panel": s["panel"], "passed": s["passed"], "score": s["score"]}
     return post
+
+
+def _log(results: list[dict], round_no: int):
+    """심사위원별 판정을 단계 기록에 남긴다 (심사위원 1명 = 하위 단계 1줄)"""
+    by_id = {rv["id"]: rv for rv in REVIEWERS}
+    for r in results:
+        sev = [i["severity"] for i in r["issues"]]
+        pipeline_log.step(
+            "S6", "통과" if r["passed"] else "탈락", model=claude_client.MODEL,
+            prompt=by_id.get(r["id"], {}).get("focus", ""), sub=r["name"], round_no=round_no,
+            detail={"reviewer": r["id"], "score": r["score"], "critical": sev.count("critical"),
+                    "major": sev.count("major"), "minor": sev.count("minor"),
+                    "error": r.get("error", "")})
 
 
 def _print(results: list[dict], s: dict):

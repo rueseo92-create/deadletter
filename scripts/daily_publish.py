@@ -34,6 +34,7 @@ import ai_news
 import keyword_research
 import slop_killers
 import title_rules
+import pipeline_log
 
 # ──────────────────────────────────────────────
 # 시간대별 발행 슬롯 (한국시간 기준)
@@ -360,6 +361,21 @@ def run_qc(days: int = 7) -> list[dict]:
 # ──────────────────────────────────────────────
 # 메인 발행 로직
 # ──────────────────────────────────────────────
+def _log_generation(plan: dict | None):
+    """글 생성(S2~S5) 결과를 단계 기록에 남긴다 (generate_blog_post 가 plan 에 채운 값 기준)"""
+    plan = plan or {}
+    if plan.get("research"):
+        notes = plan["research"].get("notes") or ""
+        pipeline_log.step("S2", "통과" if notes else "실패", model=sero_blog.claude_client.MODEL,
+                          prompt=sero_blog.research.SYSTEM,
+                          detail={"sources": len(plan["research"].get("sources") or [])})
+    if "experiments" in plan:
+        pipeline_log.step("S3", "통과", model=sero_blog.claude_client.MODEL,
+                          detail={"experiments": len(plan["experiments"] or [])})
+    pipeline_log.step("S4", "통과", model=sero_blog.claude_client.WRITER_MODEL, prompt=sero_blog.BLOG_PROMPT)
+    pipeline_log.step("S5", "통과")
+
+
 LAST_RUN = {"attempted": 0}
 
 
@@ -457,6 +473,7 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
         print(f"\n{'─' * 50}")
         print(f"[{i+1}/{len(daily_topics)}] {topic_info['topic']}")
         print(f"{'─' * 50}")
+        pipeline_log.start(topic_info["topic"], topic_info["category"], slot)
 
         try:
             # finance + K-Startup 실제 데이터 우선
@@ -475,12 +492,14 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
             # 글 생성 + 프로그래밍 품질 보정 (단일 API 호출)
             post = sero_blog.generate_blog_post(topic_data)
             post.published = True
+            _log_generation(topic_data.keyword_plan)
 
             # 슬롭 킬러 10명 심사 (탈락 시 1회 수정, 그래도 탈락이면 발행하지 않음)
             post = slop_killers.gate(post, topic_data.keyword_plan)
 
             # SEO 감사 (API 호출 없음)
             post = sero_blog.run_seo_audit(post)
+            pipeline_log.step("S8", "기록", detail={"seo_score": post.seo_score})
 
             # MDX 파일 생성
             filepath = sero_blog.create_mdx_file(post)
@@ -513,11 +532,17 @@ def run_daily(slot: str = "auto", count: int = None, dry_run: bool = False):
                 "slug": filepath.stem if filepath else "",
             })
             save_history(history)
+            pipeline_log.finish("발행" if deployed or dry_run else "파일만", filepath.stem if filepath else "")
 
         except slop_killers.SlopRejected as e:
             print(f"  [탈락] {e} → 발행하지 않습니다.")
             LAST_RUN["rejected"] = LAST_RUN.get("rejected", 0) + 1
+            pipeline_log.finish("탈락", reason=str(e))
         except Exception as e:
+            if str(e).startswith("품질 검사 오류"):
+                _log_generation(topic_info.get("plan"))
+                pipeline_log.step("S5", "탈락", detail={"reason": str(e)[:300]})
+            pipeline_log.finish("오류", reason=str(e))
             print(f"  [오류] 생성 실패: {e}")
             print("  -> 다음 글로 넘어갑니다.")
 

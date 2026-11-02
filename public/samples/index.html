@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>결과물 예시 · 딸깍스튜디오</title>
+<meta name="description" content="딸깍 진단 리포트, 1장 견적서, 주간 진행 보고, 월말 리포트를 가상의 가게 기준으로 미리 보여드립니다." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{--bg:#fcfcfb;--paper:#fff;--subtle:#f4f4f2;--line:#e7e7e4;--ink:#111113;--ink2:#46464d;--ink3:#80808a;--accent:#4f46e5;--soft:#eeefff;--yellow:#ffdf3d;--ok:#0f9d58;--warn:#e8710a}
+@media (prefers-color-scheme:dark){:root{--bg:#0c0c0e;--paper:#161619;--subtle:#1c1c20;--line:#28282e;--ink:#ececef;--ink2:#b9b9c2;--ink3:#86868f;--accent:#9796ff;--soft:#1e1e38}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all}
+a{color:inherit}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-weight:900;letter-spacing:-.03em;text-decoration:none}
+.btn{display:inline-flex;align-items:center;height:38px;padding:0 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:700;font-size:14px;text-decoration:none}
+.hero{padding:64px 0 28px}
+.eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin:0}
+h1{font-size:clamp(2rem,5vw,2.8rem);font-weight:900;letter-spacing:-.045em;line-height:1.2;margin:12px 0 12px}
+.lead{color:var(--ink2);font-size:16.5px;max-width:640px;margin:0}
+.note{display:inline-block;margin-top:18px;padding:6px 12px;border-radius:999px;background:var(--soft);color:var(--accent);font-size:13px;font-weight:700}
+nav.tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px;margin-top:24px;scrollbar-width:none}
+nav.tabs a{flex:0 0 auto;padding:9px 14px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:700;text-decoration:none;background:var(--paper)}
+section.doc{margin:40px 0 64px}
+.doc-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:14px}
+.doc-head h2{font-size:1.6rem;font-weight:900;letter-spacing:-.04em;margin:0}
+.doc-head p{margin:0;color:var(--ink3);font-size:14px}
+.paper{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,4vw,44px);box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.stamp{display:inline-block;font-size:12px;font-weight:800;color:var(--ink3);border:1px dashed var(--line);border-radius:8px;padding:3px 8px}
+.paper h3{font-size:1.25rem;font-weight:900;letter-spacing:-.03em;margin:28px 0 10px}
+.paper h3:first-of-type{margin-top:18px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:16px}
+.meta div{background:var(--subtle);border-radius:12px;padding:10px 14px;font-size:13.5px}
+.meta b{display:block;font-size:12px;color:var(--ink3);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;color:var(--ink3);font-weight:700;background:var(--subtle);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{height:8px;border-radius:99px;background:var(--subtle);overflow:hidden;min-width:90px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.top3{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{border:1px solid var(--line);border-radius:16px;padding:18px}
+.card .rank{font-size:12px;font-weight:800;color:var(--accent)}
+.card h4{margin:4px 0 8px;font-size:16.5px;letter-spacing:-.02em}
+.card ul{margin:0;padding-left:18px;font-size:14px;color:var(--ink2)}
+.big{font-size:1.9rem;font-weight:900;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.kpi{background:var(--subtle);border-radius:16px;padding:16px}
+.kpi p{margin:0;font-size:13px;color:var(--ink3)}
+.up{color:var(--ok);font-weight:800;font-size:13px}
+.road{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.road div{background:var(--subtle);border-radius:12px;padding:12px 14px;font-size:14px}
+.road b{display:block;font-size:13px;color:var(--accent)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--soft);color:var(--accent);white-space:nowrap}
+.tag.me{background:#fff4d6;color:#8a5a00}
+@media (prefers-color-scheme:dark){.tag.me{background:#3a2f12;color:#ffd77a}}
+.prompt{background:var(--subtle);border-radius:12px;padding:12px 14px;font-size:14px;margin:8px 0 0}
+.chat{max-width:440px;background:#b2c7da;border-radius:18px;padding:16px;font-size:14.5px}
+@media (prefers-color-scheme:dark){.chat{background:#2b3440}}
+.bubble{background:#fff;color:#111;border-radius:4px 16px 16px 16px;padding:12px 14px;display:grid;gap:6px}
+.ln{display:flex;gap:8px;align-items:flex-start}
+.ic{width:16px;height:16px;flex:0 0 16px;margin-top:3px;color:#4f46e5}
+.chat small{display:block;margin-top:6px;font-size:11.5px;color:#4b5563}
+@media (prefers-color-scheme:dark){.chat small{color:#a3acb8}}
+.sum{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--ink);margin-top:14px;padding-top:12px;font-weight:800}
+.small{font-size:13px;color:var(--ink3)}
+.cta{margin:24px 0 80px;padding:32px;border-radius:24px;background:var(--ink);color:var(--bg);text-align:center}
+.cta h2{margin:0 0 8px;font-size:1.6rem;letter-spacing:-.04em}
+.cta p{margin:0 0 18px;opacity:.75}
+.cta .btn{background:var(--yellow);color:#151413}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/">딸깍스튜디오</a>
+  <a class="btn" href="/#contact">무료 진단 신청</a>
+</div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <p class="eyebrow">Samples</p>
+    <h1>맡기시면 이런 걸 받습니다</h1>
+    <p class="lead">실제로 드리는 문서와 똑같은 형식이에요. 업종과 상황에 맞춰 내용만 달라집니다.</p>
+    <span class="note">예시 · 가상의 동네 카페 기준이며 실제 고객 자료가 아닙니다</span>
+    <nav class="tabs">
+      <a href="#report">① 진단 리포트</a>
+      <a href="#prompts">② AI 활용 카드</a>
+      <a href="#quote">③ 1장 견적서</a>
+      <a href="#weekly">④ 주간 진행 보고</a>
+      <a href="#monthly">⑤ 월말 리포트</a>
+    </nav>
+  </div>
+
+  <!-- ① 진단 리포트 -->
+  <section class="doc" id="report">
+    <div class="doc-head"><h2>① 자동화 우선순위 리포트</h2><p>딸깍 진단 · 3일차 전달 · PDF 5~8쪽 중 요약</p></div>
+    <div class="paper">
+      <span class="stamp">예시 카페 · 1인 운영 + 아르바이트 1명</span>
+      <div class="meta">
+        <div><b>업종</b>테이크아웃 카페</div>
+        <div><b>손님 오는 경로</b>지나가다 60% · 네이버 25% · 배달 15%</div>
+        <div><b>상담일</b>1일차 · 30분</div>
+      </div>
+
+      <h3>우리 가게 업무 지도</h3>
+      <div class="tbl"><table>
+        <tr><th>반복하는 일</th><th>주기</th><th>걸리는 시간 (월)</th><th></th></tr>
+        <tr><td>재고 확인하고 원두·우유·컵 발주</td><td>주 3회</td><td class="num">약 10시간</td><td><div class="bar"><i style="width:100%"></i></div></td></tr>
+        <tr><td>네이버 리뷰·배달 리뷰 답글</td><td>매일</td><td class="num">약 8시간</td><td><div class="bar"><i style="width:80%"></i></div></td></tr>
+        <tr><td>인스타·블로그 신메뉴 소개 글</td><td>주 1~2회</td><td class="num">약 6시간</td><td><div class="bar"><i style="width:60%"></i></div></td></tr>
+        <tr><td>아르바이트 근무표 정리·공유</td><td>주 1회</td><td class="num">약 3시간</td><td><div class="bar"><i style="width:30%"></i></div></td></tr>
+        <tr><td>하루 매출 엑셀에 옮겨 적기</td><td>매일</td><td class="num">약 3시간</td><td><div class="bar"><i style="width:30%"></i></div></td></tr>
+      </table></div>
+      <p class="small">합계 약 30시간/월. 상담 내용 기준 추정치이며, 자동화 후 실제 측정으로 다시 확인합니다.</p>
+
+      <h3>자동화 후보 Top 3</h3>
+      <div class="top3">
+        <div class="card"><span class="rank">1순위</span><h4>재고 → 발주 알림</h4>
+          <ul><li>아낄 시간: 월 약 7시간</li><li>난이도: 쉬움 · 3~5일</li><li>사용료: 월 0원 (구글 시트)</li><li>재고 수량만 입력하면 떨어지기 3일 전에 카톡 알림, 최저가 비교표 자동 정리</li></ul></div>
+        <div class="card"><span class="rank">2순위</span><h4>리뷰 답글 초안 자동 작성</h4>
+          <ul><li>아낄 시간: 월 약 6시간</li><li>난이도: 보통 · 5~7일</li><li>사용료: 월 3천~5천 원 (AI)</li><li>사장님 말투로 초안을 만들어 두면 확인 후 붙여넣기만</li></ul></div>
+        <div class="card"><span class="rank">3순위</span><h4>신메뉴 글 1번 쓰고 3곳에</h4>
+          <ul><li>아낄 시간: 월 약 4시간</li><li>난이도: 보통 · 1주</li><li>사용료: 월 3천 원 내외</li><li>사진+메모 → 인스타·블로그·네이버 소식 문구 자동 생성</li></ul></div>
+      </div>
+
+      <h3>4주 실행 로드맵</h3>
+      <div class="road">
+        <div><b>1주 · 혼자 가능</b>AI 활용 카드 5장으로 리뷰 답글부터 바로 써 보기</div>
+        <div><b>2주 · 맡기면 좋음</b>재고 → 발주 알림 세팅 (1순위)</div>
+        <div><b>3주 · 맡기면 좋음</b>리뷰 답글 초안 자동화 (2순위)</div>
+        <div><b>4주 · 혼자 가능</b>써 보고 불편한 점 메모 → 다음 달 계획</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② AI 활용 카드 -->
+  <section class="doc" id="prompts">
+    <div class="doc-head"><h2>② 바로 쓰는 AI 활용 카드</h2><p>딸깍 진단 · 업종 맞춤 5장 중 2장 · 각 1~2분 시연 영상 포함</p></div>
+    <div class="paper">
+      <div class="top3">
+        <div class="card"><span class="rank">카드 1 · 리뷰 답글</span><h4>별점 낮은 리뷰에 답할 때</h4>
+          <p class="prompt">아래 리뷰에 카페 사장으로서 답글을 써 줘. 변명하지 말고, 불편했던 점을 먼저 인정하고, 다음에 오면 어떻게 달라지는지 한 가지만 구체적으로 말해 줘. 3문장 이내, 존댓말.<br>[리뷰 붙여넣기]</p></div>
+        <div class="card"><span class="rank">카드 2 · 신메뉴 소개</span><h4>사진 한 장으로 소개 글 3종</h4>
+          <p class="prompt">이 사진은 우리 카페 신메뉴야. [메뉴명, 가격, 특징 한 줄]. 인스타용(해시태그 5개), 네이버 소식용(2문장), 매장 POP용(10자 이내) 세 가지로 써 줘.</p></div>
+      </div>
+      <p class="small" style="margin-top:14px">나머지 3장: 아르바이트 공지 문구, 단체 주문 견적 답장, 이번 달 매출 메모 정리.</p>
+    </div>
+  </section>
+
+  <!-- ③ 견적서 -->
+  <section class="doc" id="quote">
+    <div class="doc-head"><h2>③ 1장 견적서</h2><p>모든 작업 · 시작 전에 먼저 보내고 확인받습니다</p></div>
+    <div class="paper">
+      <span class="stamp">견적 번호 예시-001 · 유효기간 14일</span>
+      <h3>업무 자동화: 재고 → 발주 알림</h3>
+      <div class="tbl"><table>
+        <tr><th>할 일</th><td>재고 시트 만들기, 품목별 최소 수량 설정, 부족하면 카톡 알림, 거래처 3곳 가격 비교표</td></tr>
+        <tr><th>받는 것</th><td>작동하는 자동화 1개 · 사용법 영상 3분 · 1장 설명서 · 인수인계 체크리스트</td></tr>
+        <tr><th>납기</th><td>줌 미팅 후 5일 이내</td></tr>
+        <tr><th>사장님 준비물</th><td>거래처 목록, 자주 시키는 품목 20개, 카톡 알림 받을 번호</td></tr>
+        <tr><th>월 사용료 예상</th><td>0원 (구글 시트·무료 알림 사용)</td></tr>
+        <tr><th>수정</th><td>2회 · 납품 후 30일 오류 수정 무료</td></tr>
+      </table></div>
+      <div class="sum"><span>작업비</span><span class="num">30,000원</span></div>
+      <p class="small">비밀번호는 받지 않습니다. 연결이 필요한 곳은 화면 공유로 사장님이 직접 입력합니다. 만든 시트와 알림은 전부 사장님 계정에 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- ④ 주간 보고 -->
+  <section class="doc" id="weekly">
+    <div class="doc-head"><h2>④ 주간 진행 보고</h2><p>파트너 · 매주 금요일 카톡 5줄</p></div>
+    <div class="paper">
+      <div class="chat">
+        <div class="bubble"><b>[딸깍] 2주차 진행 보고</b>
+<span class="ln"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>이번 주: 재고 시트 완성, 발주 알림 테스트 3회 성공</span>
+<span class="ln"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>다음 주: 리뷰 답글 초안 자동화 시작</span>
+<span class="ln"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>확인 부탁: 우유 최소 수량 6개가 맞는지 봐 주세요</span>
+<span class="ln"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>사용법 영상: 링크</span>
+<span class="ln"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>이번 주 사장님 시간: 15분</span></div>
+        <small>오후 6:02</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ 월말 리포트 -->
+  <section class="doc" id="monthly">
+    <div class="doc-head"><h2>⑤ 월말 리포트</h2><p>파트너 · 매월 말 · PDF 2~3쪽 중 요약</p></div>
+    <div class="paper">
+      <span class="stamp">예시 카페 · 1개월차</span>
+      <h3>이번 달 만든 것</h3>
+      <div class="tbl"><table>
+        <tr><th>만든 것</th><th>상태</th><th>사장님이 쓰는 법</th></tr>
+        <tr><td>재고 → 발주 알림</td><td><span class="tag">사용 중</span></td><td>마감 때 시트에 남은 수량 입력 (2분)</td></tr>
+        <tr><td>리뷰 답글 초안</td><td><span class="tag">사용 중</span></td><td>알림 오면 초안 확인 후 붙여넣기</td></tr>
+        <tr><td>네이버 플레이스 정보 정리</td><td><span class="tag me">사장님 확인 대기</span></td><td>메뉴 사진 3장만 보내 주세요</td></tr>
+      </table></div>
+
+      <h3>숫자로 보면</h3>
+      <div class="kpis">
+        <div class="kpi"><p>아낀 시간 (추정)</p><div class="big">약 11시간</div><span class="small">발주 6 + 리뷰 5</span></div>
+        <div class="kpi"><p>리뷰 답글률</p><div class="big">35% → 90%</div><span class="up">▲ 55%p</span></div>
+        <div class="kpi"><p>발주 깜빡함</p><div class="big">0회</div><span class="small">지난달 2회</span></div>
+      </div>
+      <p class="small">아낀 시간은 작업 전후 사장님 기록 기준 추정치입니다. 측정할 수 없는 항목은 적지 않습니다.</p>
+
+      <h3>다음 달 추천</h3>
+      <div class="road">
+        <div><b>추천 1</b>신메뉴 글 1번 쓰고 3곳에 올리기 (진단 3순위)</div>
+        <div><b>추천 2</b>단골 쿠폰 문자 자동 발송</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <h2>우리 가게 기준으로 받아 보세요</h2>
+    <p>런칭 기념 무료 진단 · 선착순 5팀</p>
+    <a class="btn" href="/#contact">무료 진단 신청</a>
+  </div>
+</main>
+</body>
+</html>

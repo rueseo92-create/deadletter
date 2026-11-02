@@ -1,8 +1,9 @@
 import { getAllPosts } from "@/lib/posts";
 import { siteConfig } from "@/lib/config";
-import { SERVICES, PROCESS, PLANS, FAQ } from "@/lib/agency";
+import { SERVICES, PROCESS, PLANS, FAQ, DELIVERY_STEPS, DELIVERABLES, TASK_TERMS } from "@/lib/agency";
 import { PostCard } from "@/components/PostCard";
 import InquiryForm from "@/components/InquiryForm";
+import PortfolioShowcase from "@/components/PortfolioShowcase";
 import { Icon } from "@/components/Icon";
 import { localizedHref, defaultLocale, type Locale } from "@/lib/i18n";
 
@@ -12,27 +13,23 @@ const PAINS = [
   { t: "외주 맡겼더니 만들고 끝", d: "결국 안 쓰게 됐어요. 우리 가게에 맞게 고쳐 주는 사람이 없었으니까요." },
 ];
 
-const WORK = [
+
+// 팀 소개는 개인이 특정되지 않는 수준까지만 (이름·병원·학교·국가·논문 표기 금지)
+const TEAM = [
   {
-    img: "/work/seroai.webp",
-    title: "세로AI 인사이트 — 직접 운영 중",
-    desc: "키워드 조사 → AI 작성 → 10단계 검수 → 자동 배포. 지금 보시는 이 사이트의 글이 매일 이렇게 올라옵니다.",
-    href: "/posts",
-    tag: "AI 블로그 자동 발행",
+    role: "상담 · 기획",
+    name: "대표",
+    items: [
+      "현직 AI 연구원",
+      "스타트업 서비스 기획·PM 경력",
+      "이 사이트의 AI 블로그 자동 발행 시스템 직접 설계·운영",
+      "상담부터 기획, 사용법 교육까지 직접 담당",
+    ],
   },
   {
-    img: "/work/bakery.webp",
-    title: "동네 빵집 랜딩페이지",
-    desc: "모바일 예약 버튼, 메뉴 필터, 요일·시간에 따라 바뀌는 영업 상태.",
-    href: "/demo/bakery.html",
-    tag: "홈페이지 · 데모",
-  },
-  {
-    img: "/work/booking.webp",
-    title: "스튜디오 예약 관리 웹앱",
-    desc: "4단계 예약, 마감 시간 자동 차단, 관리자 확정·검색, 홈 화면 추가.",
-    href: "/demo/booking.html",
-    tag: "웹앱 MVP · 데모",
+    role: "제작",
+    name: "개발 리드",
+    items: ["업무 자동화·홈페이지·웹앱 제작", "AI 블로그 자동 발행·검수 시스템 개발", "만든 뒤 고치기와 유지보수"],
   },
 ];
 
@@ -171,22 +168,33 @@ export default async function Home({ params }: { params: { locale: string } }) {
       </section>
 
       {/* ── 작업 ── */}
-      <section id="work" className="scroll-mt-20 border-t border-line">
+      <section id="work" className="scroll-mt-20 bg-subtle/70">
         <div className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20">
           <p className="eyebrow">Work</p>
-          <h2 className="mt-3 text-[2rem] font-black tracking-[-0.04em] text-ink sm:text-[2.4rem]">직접 만들어 돌리고 있는 것들</h2>
-          <p className="mt-3 max-w-2xl text-[15px] text-ink-3">빵집과 예약 웹앱은 가상의 가게로 만든 포트폴리오 데모입니다. 눌러서 직접 써 보세요.</p>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {WORK.map((w) => (
-              <a key={w.title} href={w.href.startsWith("/demo") ? w.href : lh(w.href)} className="group block">
-                <div className="overflow-hidden rounded-2xl border border-line bg-subtle">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={w.img} alt={w.title} loading="lazy" className="aspect-[4/3] w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]" />
-                </div>
-                <p className="mt-4 text-[12.5px] font-semibold text-ink-3">{w.tag}</p>
-                <h3 className="card-title mt-1 text-[1.1rem] font-bold tracking-[-0.02em] text-ink">{w.title}</h3>
-                <p className="mt-1.5 text-[14.5px] leading-relaxed text-ink-3">{w.desc}</p>
-              </a>
+          <h2 className="mt-3 text-balance text-[2.2rem] font-black leading-[1.1] tracking-[-0.04em] text-ink sm:text-[3.2rem]">직접 만들어, 매일 돌리고 있습니다.</h2>
+          <p className="mt-3 max-w-2xl text-[15px] text-ink-3">직접 만들어 운영 중인 서비스와, 가상의 가게로 만든 데모입니다. 눌러서 직접 써 보세요.</p>
+          <PortfolioShowcase lh={lh} />
+        </div>
+      </section>
+
+      {/* ── 팀 ── */}
+      <section id="team" className="scroll-mt-20 border-t border-line bg-subtle/60">
+        <div className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20">
+          <p className="eyebrow">Team</p>
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
+            {TEAM.map((m) => (
+              <div key={m.name} className="rounded-2xl border border-line bg-surface p-7">
+                <p className="text-[13px] font-semibold text-ink-3">{m.role}</p>
+                <h3 className="mt-1 text-[1.35rem] font-bold tracking-[-0.02em] text-ink">{m.name}</h3>
+                <ul className="mt-4 space-y-2 text-[14.5px] text-ink-2">
+                  {m.items.map((it) => (
+                    <li key={it} className="flex gap-2">
+                      <Icon name="check" className="mt-0.5 h-4 w-4 flex-shrink-0 text-ink" strokeWidth={2.4} />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>
@@ -209,17 +217,30 @@ export default async function Home({ params }: { params: { locale: string } }) {
                   {p.name}
                   {p.highlight && <span className="rounded-full bg-[#ffdf3d] px-2.5 py-0.5 text-[12px] font-bold text-[#151413]">추천</span>}
                 </p>
-                <p className="mt-3 text-[2.1rem] font-black tracking-[-0.04em]">{p.price}</p>
-                <p className={`text-[13px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{p.period}</p>
                 <p className={`mt-4 text-[15px] ${p.highlight ? "text-bg/85" : "text-ink-2"}`}>{p.desc}</p>
-                <ul className="mt-5 flex-1 space-y-2 text-[14.5px]">
+                <ul className={`mt-5 space-y-2.5 border-y py-4 text-[14.5px] ${p.highlight ? "border-bg/15" : "border-line"}`}>
                   {p.items.map((it) => (
-                    <li key={it} className="flex gap-2">
-                      <Icon name="check" className="mt-0.5 h-4 w-4 flex-shrink-0" strokeWidth={2.4} />
-                      {it}
+                    <li key={it.label} className="flex items-start justify-between gap-3">
+                      <span className="flex gap-2">
+                        <Icon name="check" className="mt-0.5 h-4 w-4 flex-shrink-0" strokeWidth={2.4} />
+                        {it.label}
+                      </span>
+                      <span className={`whitespace-nowrap tabular-nums ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{it.value}</span>
                     </li>
                   ))}
                 </ul>
+                <p className={`mt-4 flex justify-between text-[14px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>
+                  <span>정가 합계</span>
+                  <s className="tabular-nums">{p.was}</s>
+                </p>
+                <div className="mt-1 flex flex-1 items-end justify-between gap-3">
+                  <div>
+                    <p className={`text-[13px] font-bold ${p.highlight ? "text-[#ffdf3d]" : "text-accent"}`}>런칭 기념가</p>
+                    <p className="text-[2.2rem] font-black leading-tight tracking-[-0.04em] tabular-nums">{p.price}</p>
+                  </div>
+                  <span className="mb-2 rounded-full bg-[#ffdf3d] px-2.5 py-1 text-[12.5px] font-black text-[#151413]">{p.off}</span>
+                </div>
+                <p className={`mt-1 text-[13px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{p.period}</p>
                 <a
                   href="#contact"
                   className={`mt-7 inline-flex h-11 items-center justify-center rounded-xl text-[14.5px] font-bold ${
@@ -232,8 +253,84 @@ export default async function Home({ params }: { params: { locale: string } }) {
             ))}
           </div>
           <p className="mt-5 text-[13px] text-ink-3">
-            개별 작업(자동화 10만 원~, 홈페이지 20만 원~, 웹앱 50만 원~)도 가능합니다. AI·서버·도메인 사용료는 사장님 계정에서 직접 결제됩니다.
+            딸깍 진단은 런칭 기념으로 선착순 5팀만 무료이고, 이후에는 99,000원입니다. 파트너 런칭 기념가는 포트폴리오를 쌓는 동안만 적용합니다. 결과물을 사례로 소개하는 데 동의해 주시면 됩니다. 개별 작업(자동화 3만 원~, 홈페이지 5만 원~, 웹앱 15만 원~)도 가능합니다. AI·서버·도메인 사용료는 사장님 계정에서 직접 결제됩니다.
           </p>
+        </div>
+      </section>
+
+      {/* ── 받게 되는 것 ── */}
+      <section id="deliverables" className="scroll-mt-20 border-t border-line bg-subtle/60">
+        <div className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20">
+          <p className="eyebrow">Deliverables</p>
+          <h2 className="mt-3 text-[2rem] font-black tracking-[-0.04em] text-ink sm:text-[2.4rem]">
+            맡기시면 <span className="hl">이렇게 받습니다</span>
+          </h2>
+          <p className="mt-3 max-w-2xl text-[15.5px] leading-relaxed text-ink-2">
+            의뢰가 접수되면 줌 미팅을 한 번 잡고, 시작 전에 할 일과 받을 것을 1장으로 정리해 확인받습니다. 비밀번호는 받지 않고, 만든 것은 전부 사장님 소유입니다.
+          </p>
+
+          <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
+            {DELIVERY_STEPS.map((s, i) => (
+              <li key={s.when} className="pf-reveal rounded-2xl border border-line bg-surface p-5">
+                <p className="text-[12.5px] font-bold tabular-nums text-accent">{String(i + 1).padStart(2, "0")}</p>
+                <p className="mt-1 text-[15px] font-black text-ink">{s.when}</p>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-2">{s.what}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-3">
+            {DELIVERABLES.map((d) => (
+              <div key={d.name} className="pf-reveal rounded-2xl border border-line bg-surface p-7">
+                <p className="flex items-center justify-between text-[16px] font-black text-ink">
+                  {d.name}
+                  <span className="rounded-full bg-subtle px-2.5 py-0.5 text-[12.5px] font-bold text-ink-3">{d.span}</span>
+                </p>
+                <ul className="mt-5 space-y-3 text-[14.5px] leading-relaxed text-ink-2">
+                  {d.items.map((it) => (
+                    <li key={it} className="flex gap-2">
+                      <Icon name="check" className="mt-1 h-4 w-4 flex-shrink-0 text-accent" strokeWidth={2.4} />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 overflow-x-auto rounded-2xl border border-line bg-surface">
+            <table className="w-full min-w-[640px] text-left text-[14px]">
+              <thead className="border-b border-line text-[13px] text-ink-3">
+                <tr>
+                  <th className="px-5 py-3 font-semibold">개별 작업</th>
+                  <th className="px-5 py-3 font-semibold">가격</th>
+                  <th className="px-5 py-3 font-semibold">납기</th>
+                  <th className="px-5 py-3 font-semibold">받는 것</th>
+                  <th className="px-5 py-3 font-semibold">수정</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-line text-ink-2">
+                {TASK_TERMS.map((t) => (
+                  <tr key={t.name}>
+                    <td className="px-5 py-3.5 font-bold text-ink">{t.name}</td>
+                    <td className="whitespace-nowrap px-5 py-3.5 tabular-nums">{t.price}</td>
+                    <td className="whitespace-nowrap px-5 py-3.5 tabular-nums">{t.due}</td>
+                    <td className="px-5 py-3.5">{t.gets}</td>
+                    <td className="whitespace-nowrap px-5 py-3.5 tabular-nums">{t.fix}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 text-[13px] text-ink-3">
+            납품 후 30일 동안 오류 수정은 무료입니다. 새 기능 추가는 별도 견적으로 안내합니다. AI·서버·도메인 사용료는 시작 전에 예상 금액을 표로 알려드립니다.
+          </p>
+          <a
+            href="/samples/index.html"
+            className="mt-6 inline-flex h-11 items-center gap-1.5 rounded-xl bg-ink px-5 text-[14.5px] font-bold text-bg hover:opacity-90"
+          >
+            결과물 예시 직접 보기 <Icon name="arrowRight" className="h-4 w-4" />
+          </a>
         </div>
       </section>
 
