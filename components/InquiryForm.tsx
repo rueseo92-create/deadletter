@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { Icon } from "@/components/Icon";
+import { readSource } from "@/lib/attribution";
 
 interface Props {
   services: { id: string; name: string }[];
@@ -27,6 +28,7 @@ export default function InquiryForm({ services, email }: Props) {
       business: String(f.get("business") || ""),
       message: String(f.get("message") || ""),
       services: picked,
+      source: readSource(),
     };
     setStatus("loading");
     setError("");
