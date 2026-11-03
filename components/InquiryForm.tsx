@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Icon } from "@/components/Icon";
 
 interface Props {
@@ -14,6 +14,18 @@ export default function InquiryForm({ services, email }: Props) {
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error" | "mail">("idle");
   const [error, setError] = useState("");
   const [mailHref, setMailHref] = useState("");
+  // 가격 카드·히어로의 버튼(data-plan)을 누르고 오면 어떤 상품으로 상담하려는지 기억한다
+  const [plan, setPlan] = useState("");
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement | null)?.closest?.("a[data-plan]");
+      const v = a?.getAttribute("data-plan");
+      if (v) setPlan(v);
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, []);
 
   const toggle = (sid: string) =>
     setPicked((p) => (p.includes(sid) ? p.filter((x) => x !== sid) : [...p, sid]));
@@ -25,7 +37,7 @@ export default function InquiryForm({ services, email }: Props) {
       name: String(f.get("name") || ""),
       contact: String(f.get("contact") || ""),
       business: String(f.get("business") || ""),
-      message: String(f.get("message") || ""),
+      message: (plan ? `[희망 상품] ${plan}\n` : "") + String(f.get("message") || ""),
       services: picked,
     };
     setStatus("loading");
@@ -83,6 +95,14 @@ export default function InquiryForm({ services, email }: Props) {
 
   return (
     <form onSubmit={onSubmit} className="space-y-4">
+      {plan && (
+        <p className="flex flex-wrap items-center gap-2 rounded-xl border border-ink/70 bg-surface px-4 py-2.5 text-[14px] text-ink-2">
+          선택한 상품 <b className="text-ink">{plan}</b>
+          <button type="button" onClick={() => setPlan("")} className="ml-auto text-[13px] text-ink-3 underline underline-offset-2 hover:text-ink">
+            선택 해제
+          </button>
+        </p>
+      )}
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="mb-1.5 block text-[13px] font-medium text-ink-2">이름 또는 상호 *</span>
