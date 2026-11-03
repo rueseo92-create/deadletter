@@ -171,3 +171,15 @@ jobs:
         run: |
           cd scripts
           python daily_publish.py --qc --qc-days 3
+
+      - name: Alert owner on failure
+        if: failure()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          [ -z "$TELEGRAM_BOT_TOKEN" ] && exit 0
+          MSG="[자동 발행 실패] $(TZ=Asia/Seoul date '+%m-%d %H:%M') 글을 만들지 못했어요. API 크레딧이나 키를 확인해 주세요.
+          ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -o /dev/null "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=${MSG}" || true
+

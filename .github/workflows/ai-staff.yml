@@ -1,0 +1,78 @@
+name: AI staff (Threads)
+
+# AI 직원: 30분마다 사장님 지시 읽기 + 댓글 답하기, 하루 3번 일지, 밤에 하루 보고
+on:
+  schedule:
+    - cron: '13,43 * * * *'   # 지시·댓글
+    - cron: '23 0 * * *'      # 09:23 KST 일지
+    - cron: '23 4 * * *'      # 13:23 KST 일지
+    - cron: '23 11 * * *'     # 20:23 KST 일지
+    - cron: '53 13 * * *'     # 22:53 KST 하루 보고
+  workflow_dispatch:
+    inputs:
+      task:
+        description: '할 일'
+        required: true
+        default: 'tick'
+        type: choice
+        options: [tick, diary, report]
+      dry_run:
+        description: '게시하지 않고 출력만'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-staff
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 200   # 일지 재료(최근 커밋)
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install
+        run: pip install anthropic pydantic
+
+      - name: Run
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          TASK="${{ github.event.inputs.task || 'tick' }}"
+          case "${{ github.event.schedule }}" in
+            "23 0 * * *"|"23 4 * * *"|"23 11 * * *") TASK=diary ;;
+            "53 13 * * *") TASK=report ;;
+          esac
+          if [ -z "$THREADS_ACCESS_TOKEN" ] && [ -z "$TELEGRAM_BOT_TOKEN" ]; then
+            echo "스레드·텔레그램 시크릿이 없어 건너뜁니다."; exit 0
+          fi
+          ARGS="$TASK"
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          echo "할 일: $ARGS"
+          python scripts/ai_staff.py $ARGS
+
+      - name: Save state
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f scripts/ai_staff_state.json 2>/dev/null || true
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: AI 직원 상태 $(TZ=Asia/Seoul date +%m-%d\ %H:%M)"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
