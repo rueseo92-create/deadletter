@@ -104,7 +104,7 @@ const TeumScene = () => (
 );
 
 const ITEMS: Item[] = [
-  { no: "01", title: "AI 블로그 자동 발행", en: "Auto publishing", desc: "키워드 조사부터 작성, 10단계 검수, 배포까지. 이 사이트의 글이 매일 이렇게 올라옵니다.", href: "/posts", scene: BlogScene },
+  { no: "01", title: "AI 블로그 자동 발행", en: "Auto publishing", desc: "키워드 조사부터 작성, 10단계 검수, 배포까지. 이 사이트의 글이 이렇게 만들어집니다.", href: "/posts", scene: BlogScene },
   { no: "02", title: "동네 빵집 랜딩페이지", en: "Landing page", desc: "요일·시간에 따라 바뀌는 영업 상태, 메뉴 필터, 모바일 예약 버튼.", href: "/demo/bakery.html", scene: BakeryScene },
   { no: "03", title: "예약 관리 웹앱", en: "Booking web app", desc: "4단계 예약, 마감 시간 자동 차단, 관리자 확정. 앱 설치 없이 홈 화면에 추가.", href: "/demo/booking.html", scene: BookingScene },
   { no: "04", title: "발주히어로", en: "Purchase optimizer", desc: "가게 소모품을 여러 쇼핑몰 가격과 비교해 가장 싼 곳을 찾아 주는 자영업자용 서비스.", href: "https://balju-hero.vercel.app", external: true, scene: BaljuScene },

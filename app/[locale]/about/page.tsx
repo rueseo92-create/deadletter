@@ -77,7 +77,7 @@ export default function AboutPage({ params }: { params: { locale: string } }) {
           </h1>
           <p className="mt-6 max-w-2xl text-[16.5px] leading-[1.8] text-ink-2">
             세로AI 딸깍스튜디오는 AI를 공부할 시간이 없는 사장님 대신 업무 자동화, 홈페이지·웹앱, 검색과 AI 답변 마케팅을
-            세팅해 드리는 AI 자동화 대행입니다. 이 사이트의 인사이트 글도 저희가 만든 자동 발행 시스템이 매일 조사·작성·검수해서 올리며,
+            세팅해 드리는 AI 자동화 대행입니다. 이 사이트의 인사이트 글도 저희가 만든 자동 발행 시스템이 조사·작성·검수해서 올리며,
             아래는 그 글들을 만드는 원칙입니다.
           </p>
         </div>
