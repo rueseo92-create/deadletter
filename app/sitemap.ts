@@ -9,6 +9,7 @@
 import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { siteConfig } from "@/lib/config";
+import { INDUSTRIES } from "@/lib/industries";
 
 const LOCALES = ["ko", "en"] as const;
 const BASE = siteConfig.url;
@@ -49,6 +50,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
         alternates: alternates(page.path),
       });
     }
+  }
+
+  // 업종별 랜딩 (한국어만)
+  for (const ind of INDUSTRIES) {
+    entries.push({
+      url: localUrl(`/for/${ind.slug}`, "ko"),
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    });
   }
 
   // 카테고리 페이지 (모든 로케일)
