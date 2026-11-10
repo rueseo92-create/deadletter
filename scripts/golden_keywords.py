@@ -39,9 +39,23 @@ NAVIGATIONAL = ["홈페이지", "고객센터", "로그인", "전화번호", "�
 # 조심해서만 쓸 것: 연예인·인물 근황 (사실만, 추측 금지)
 CAUTION = ["근황", "나이", "프로필", "남편", "아내", "여자친구", "남자친구", "재산", "집안", "학력"]
 # 세로AI(사장님 대상 AI 자동화 대행) 주제와 맞는 단어
-FIT = ["AI", "인공지능", "챗GPT", "클로드", "제미나이", "자동화", "엑셀", "구글시트", "노션", "앱", "홈페이지", "블로그",
+# 이 단어가 있으면 그 자체로 적합 (AI·업무·사장님 주제)
+FIT = ["AI", "인공지능", "챗GPT", "클로드", "제미나이", "자동화", "엑셀", "구글시트", "노션", "홈페이지", "블로그",
        "마케팅", "광고", "쇼핑몰", "스마트스토어", "네이버 플레이스", "소상공인", "자영업", "지원금", "정책자금", "창업",
-       "카드", "결제", "세금", "부가세", "종합소득세", "키오스크", "배달", "예약", "MTS", "업데이트", "출시", "요금제"]
+       "부가세", "종합소득세", "키오스크"]
+# '앱·카드·결제·세금·배달·예약·MTS·업데이트·출시·요금제'는 FIT에서 뺐다: 혼자서는 'gta6 출시일'·'아이폰 업데이트'·
+# '카드 혜택' 같은 게임·기기·생활 검색어가 걸린다. FIT 단어와 함께 있으면('챗GPT 앱 출시') 그대로 적합.
+
+
+def _has(word: str, text: str) -> bool:
+    """영문 단어는 단어 경계로 ('AI'가 'mail'·'thailand'에 걸리지 않게), 한글은 포함 여부로"""
+    if re.fullmatch(r"[A-Za-z]+", word):
+        return re.search(rf"(?<![a-z]){word.lower()}(?![a-z])", text.lower()) is not None
+    return word.lower() in text.lower()
+
+
+def is_fit(kw: str) -> bool:
+    return any(_has(w, kw) for w in FIT)
 # 생활정보 (별도 생활 블로그용으로 표시만)
 LIFE = ["축제", "쿠폰", "할인", "쓱데이", "세일", "신메뉴", "콘서트", "예매", "일정", "날씨", "연휴", "휴무", "택배"]
 
@@ -67,7 +81,7 @@ def classify(kw: str, news: list[str]) -> tuple[str, str]:
         return "제외", f"사건·사고·루머 ({hit})"
     if any(kw.endswith(w) or f" {w}" in kw for w in NAVIGATIONAL):
         return "제외", "특정 사이트 찾기(탐색형)"
-    if any(w.lower() in kw.lower() for w in FIT):
+    if is_fit(kw):
         return "seroai 적합", "AI·업무·사장님 주제"
     if any(w in kw for w in CAUTION):
         return "주의", "인물 신상 (사실만)"
@@ -148,7 +162,8 @@ def fit_keywords(rows: list[dict] | None = None, n: int = 5) -> list[str]:
         if not p.exists():
             return []
         rows = json.loads(p.read_text(encoding="utf-8"))
-    return [r["keyword"] for r in rows if r["verdict"] == "seroai 적합"][:n]
+    # 예전 기준으로 만든 리포트도 있으니 지금 기준(is_fit)으로 한 번 더 거른다
+    return [r["keyword"] for r in rows if r["verdict"] == "seroai 적합" and is_fit(r["keyword"])][:n]
 
 
 if __name__ == "__main__":
