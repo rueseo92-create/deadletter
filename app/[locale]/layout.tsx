@@ -11,6 +11,7 @@ import {
   type Locale,
 } from "@/lib/i18n";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { SourceTracker } from "@/components/SourceTracker";
 import { MobileNav } from "@/components/MobileNav";
 import { HeaderWrapper } from "@/components/HeaderWrapper";
 import { Wordmark } from "@/components/Wordmark";
@@ -176,6 +177,7 @@ export default async function LocaleLayout({
         )}
       </head>
       <body className="min-h-screen bg-bg text-ink antialiased">
+        <SourceTracker />
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1902054355965964"
           strategy="afterInteractive"

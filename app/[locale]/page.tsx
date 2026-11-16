@@ -60,9 +60,15 @@ export default async function Home({ params }: { params: { locale: string } }) {
               사업부터 이해하고, 매일 반복하는 일을 자동화하고, 써 보면서 같이 고치고, 손님이 찾아오게 만드는 것까지.
               AI 공부는 안 하셔도 됩니다.
             </p>
-            <div className="mt-8 flex flex-col gap-2.5 sm:flex-row">
-              <a href="#contact" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-ink px-6 text-[15px] font-bold text-bg hover:opacity-90">
-                무료 상담 신청 <Icon name="arrowRight" className="h-4 w-4" />
+            <p className="mt-7 inline-flex flex-wrap items-center gap-2 rounded-xl border border-line bg-surface px-3.5 py-2 text-[14px] text-ink-2">
+              <span className="rounded-full bg-[#ffdf3d] px-2 py-0.5 text-[12px] font-black text-[#151413]">런칭 기념</span>
+              <span>
+                <b className="text-ink">딸깍 진단 선착순 5팀 무료</b> · 이후 99,000원
+              </span>
+            </p>
+            <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
+              <a href="#contact" data-plan="딸깍 진단(무료)" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-ink px-6 text-[15px] font-bold text-bg hover:opacity-90">
+                무료 진단 신청 <Icon name="arrowRight" className="h-4 w-4" />
               </a>
               <a href="#services" className="inline-flex h-12 items-center justify-center rounded-xl border border-line-strong px-6 text-[15px] font-semibold text-ink hover:border-ink">
                 무엇을 해 드리나요
@@ -84,7 +90,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
               <ul className="mt-8 space-y-3 border-t border-line pt-6 text-[14.5px]">
                 {[
                   `이 사이트도 직접 자동 운영 중 · 인사이트 글 ${posts.length}편`,
-                  "하루 여러 번 예약 발행, 10단계 AI 검수",
+                  "예약 발행 구조 · 10단계 AI 검수",
                   "계정 비밀번호는 받지 않아요",
                 ].map((t) => (
                   <li key={t} className="flex items-start gap-2.5 text-ink-2">
@@ -171,7 +177,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
       <section id="work" className="scroll-mt-20 bg-subtle/70">
         <div className="mx-auto max-w-page px-4 py-16 sm:px-6 sm:py-20">
           <p className="eyebrow">Work</p>
-          <h2 className="mt-3 text-balance text-[2.2rem] font-black leading-[1.1] tracking-[-0.04em] text-ink sm:text-[3.2rem]">직접 만들어, 매일 돌리고 있습니다.</h2>
+          <h2 className="mt-3 text-balance text-[2.2rem] font-black leading-[1.1] tracking-[-0.04em] text-ink sm:text-[3.2rem]">직접 만들어, 운영하고 있습니다.</h2>
           <p className="mt-3 max-w-2xl text-[15px] text-ink-3">직접 만들어 운영 중인 서비스와, 가상의 가게로 만든 데모입니다. 눌러서 직접 써 보세요.</p>
           <PortfolioShowcase lh={lh} />
         </div>
@@ -243,6 +249,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
                 <p className={`mt-1 text-[13px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{p.period}</p>
                 <a
                   href="#contact"
+                  data-plan={p.name}
                   className={`mt-7 inline-flex h-11 items-center justify-center rounded-xl text-[14.5px] font-bold ${
                     p.highlight ? "bg-[#ffdf3d] text-[#151413] hover:opacity-90" : "border border-line-strong hover:border-ink"
                   }`}
@@ -361,7 +368,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
               <div>
                 <p className="eyebrow">Insights</p>
                 <h2 className="mt-3 text-[2rem] font-black tracking-[-0.04em] text-ink">사장님을 위한 AI 인사이트</h2>
-                <p className="mt-2 text-[15px] text-ink-3">자동 발행 시스템이 매일 조사·작성·검수해서 올립니다.</p>
+                <p className="mt-2 text-[15px] text-ink-3">자동 발행 시스템이 조사·작성·검수해서 올립니다.</p>
               </div>
               <a href={lh("/posts")} className="link-arrow hidden items-center gap-1 text-[14px] font-semibold text-ink-2 hover:text-ink sm:inline-flex">
                 전체 보기 <Icon name="arrowRight" className="h-3.5 w-3.5" />
@@ -388,6 +395,24 @@ export default async function Home({ params }: { params: { locale: string } }) {
             </h2>
             <p className="mt-4 text-[15.5px] leading-relaxed text-ink-2">
               어디부터 자동화할지 몰라도 괜찮아요. 지금 가장 시간 잡아먹는 일을 적어 주시면, 할 수 있는 것과 없는 것부터 솔직하게 말씀드릴게요.
+            </p>
+            <ul className="mt-6 space-y-2.5 text-[14.5px] text-ink-2">
+              {[
+                "영업일 기준 하루 안에 답장드려요",
+                "상담만 받고 끝내셔도 괜찮아요",
+                "계정 비밀번호는 받지 않아요",
+              ].map((t) => (
+                <li key={t} className="flex items-start gap-2.5">
+                  <Icon name="check" className="mt-0.5 h-4 w-4 flex-shrink-0 text-ink" strokeWidth={2.4} />
+                  {t}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-[14px] text-ink-3">
+              폼이 불편하면 메일로 바로:{" "}
+              <a href={`mailto:${siteConfig.email}`} className="font-semibold text-ink underline underline-offset-2">
+                {siteConfig.email}
+              </a>
             </p>
             {(kmongUrl || kakaoUrl) && (
               <div className="mt-6 flex flex-wrap gap-2">

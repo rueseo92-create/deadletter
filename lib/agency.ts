@@ -37,7 +37,7 @@ export const SERVICES: Service[] = [
   {
     id: "blog",
     name: "AI 블로그 자동 발행",
-    summary: "키워드 조사부터 작성·검수·배포까지, 이 사이트가 매일 쓰는 구조 그대로.",
+    summary: "키워드 조사부터 작성·검수·배포까지, 이 사이트가 쓰는 구조 그대로.",
     points: ["사실·출처·과장 표현 10단계 검수", "하루 N회 예약 발행", "기준 미달 글은 발행 안 함"],
     from: "9만 원부터",
     demo: { href: "/posts", label: "이 사이트의 인사이트 글" },
