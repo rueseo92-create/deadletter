@@ -1,0 +1,72 @@
+name: Inbox publish (피클 초안)
+
+# 피클이 inbox/ 에 넣어둔 초안을 10인 검수 통과본으로 발행
+on:
+  schedule:
+    - cron: '27 * * * *'   # 30분 간격 중 하나(매시 27분). 비어 있으면 즉시 종료
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '발행 없이 생성만'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: inbox-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+
+      - name: 인계함 비어 있으면 종료
+        id: chk
+        run: |
+          shopt -s nullglob
+          files=(inbox/*.md inbox/*.txt)
+          n=0; for f in "${files[@]}"; do [ "$(basename "$f")" = "README.md" ] || n=$((n+1)); done
+          echo "count=$n" >> "$GITHUB_OUTPUT"
+          echo "인계함 글: $n"
+
+      - name: Install
+        if: steps.chk.outputs.count != '0'
+        run: pip install anthropic pydantic python-dotenv
+
+      - name: 발행
+        if: steps.chk.outputs.count != '0'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BLOG_REPO_PATH: ${{ github.workspace }}
+          BLOG_SITE_URL: https://seroai.xyz
+        run: |
+          cd scripts
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python inbox_publish.py --dry-run
+          else
+            python inbox_publish.py
+          fi
+
+      - name: 커밋·배포
+        if: steps.chk.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add content/posts/*.mdx inbox/ 2>/dev/null || true
+          NEW=false
+          git diff --staged --quiet -- content/posts || NEW=true
+          git diff --staged --quiet || git commit -m "feat: 피클 인계함 발행 $(TZ=Asia/Seoul date +%m-%d\ %H:%M)"
+          git pull --rebase origin main || true
+          git push || true
+          if [ "$NEW" = true ]; then gh workflow run deploy-vercel.yml --ref main; fi

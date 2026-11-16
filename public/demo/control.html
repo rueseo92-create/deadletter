@@ -55,7 +55,7 @@
   <span class="badge">세로AI 딸깍 협업 방</span>
   <h1>AI들이<br>일을 이어 가고 있어요</h1>
   <div class="members">
-    <span class="ava"><i>📝</i><i>📸</i><i>🧵</i><i>🔑</i><i>🎬</i></span>
+    <span class="ava"><i>📝</i><i>📸</i><i>🧵</i><i>🔑</i><i>🥒</i></span>
     <b>자동화 5개<span>가 함께해요</span></b>
   </div>
 
@@ -106,6 +106,7 @@ const JOBS = [
   { id: 'ig',    icon: '📸', name: '인스타',      wf: 'instagram.yml',   inputs: m => ({ dry_run: 'false' }), ask: '카드뉴스·릴스 올리기' },
   { id: 'threads', icon: '🧵', name: '스레드 일지', wf: 'ai-staff.yml',  inputs: m => ({ task: 'diary', dry_run: 'false' }), ask: '오늘 일지 쓰기' },
   { id: 'kw',    icon: '🔑', name: '황금 키워드', wf: 'daily-posts.yml', inputs: m => ({ slot: 'auto', count: '0' }), ask: '오늘 키워드 리포트만' },
+  { id: 'inbox', icon: '🥒', name: '피클 초안 발행', wf: 'inbox-publish.yml', inputs: m => ({ dry_run: 'false' }), ask: '인계함 초안 발행하기' },
 ];
 let picked = 'blog';
 
