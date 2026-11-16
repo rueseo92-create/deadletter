@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/firebase-admin";
 import { SERVICES } from "@/lib/agency";
+import { sourceLine } from "@/lib/attribution";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +14,7 @@ interface Inquiry {
   business?: string;
   services: string[];
   message: string;
+  source: string;
   createdAt: string;
   status: "new" | "contacted" | "closed";
 }
@@ -33,6 +35,7 @@ function inquiryText(q: Inquiry) {
     "",
     q.message,
     "",
+    `유입: ${q.source}`,
     new Date(q.createdAt).toLocaleString("ko-KR", { timeZone: "Asia/Seoul" }),
   ]
     .filter((l, i, a) => l !== "" || a[i - 1] !== "")
@@ -109,6 +112,7 @@ export async function POST(req: NextRequest) {
     business: business || undefined,
     services,
     message,
+    source: sourceLine(body.source),
     createdAt: new Date().toISOString(),
     status: "new",
   };
