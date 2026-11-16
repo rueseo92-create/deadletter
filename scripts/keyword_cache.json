@@ -582,8 +582,31 @@
    ]
   },
   "챗GPT 사용법": {
-   "fetched": "2026-10-28T15:42:47",
+   "fetched": "2026-11-16T22:29:38",
    "candidates": [
+    {
+     "keyword": "챗GPT 사용법 강의",
+     "ac_score": 3.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.4
+    },
+    {
+     "keyword": "챗GPT 사용법 도서",
+     "ac_score": 1.9,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.9
+    },
     {
      "keyword": "챗GPT 사용법 PDF",
      "ac_score": 1.2,
@@ -605,17 +628,6 @@
      "comp": "",
      "docs": null,
      "score": 1.1
-    },
-    {
-     "keyword": "챗GPT 사용법 강의",
-     "ac_score": 0.9,
-     "engines": [
-      "google"
-     ],
-     "volume": null,
-     "comp": "",
-     "docs": null,
-     "score": 0.9
     },
     {
      "keyword": "카카오톡 챗GPT 사용법",
@@ -2726,7 +2738,7 @@
   "챗GPT": "2026-10-28T14:12:56",
   "영양제": "2026-10-28T14:23:29",
   "AI 도구": "2026-10-28T14:23:34",
-  "챗GPT 사용법": "2026-10-28T15:42:48",
+  "챗GPT 사용법": "2026-11-16T22:29:39",
   "클로드 사용법": "2026-10-28T15:51:15",
   "AI 부업": "2026-10-28T16:25:34",
   "AI 블로그 수익": "2026-10-28T16:34:45",
