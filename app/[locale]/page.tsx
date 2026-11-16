@@ -60,9 +60,15 @@ export default async function Home({ params }: { params: { locale: string } }) {
               사업부터 이해하고, 매일 반복하는 일을 자동화하고, 써 보면서 같이 고치고, 손님이 찾아오게 만드는 것까지.
               AI 공부는 안 하셔도 됩니다.
             </p>
-            <div className="mt-8 flex flex-col gap-2.5 sm:flex-row">
-              <a href="#contact" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-ink px-6 text-[15px] font-bold text-bg hover:opacity-90">
-                무료 상담 신청 <Icon name="arrowRight" className="h-4 w-4" />
+            <p className="mt-7 inline-flex flex-wrap items-center gap-2 rounded-xl border border-line bg-surface px-3.5 py-2 text-[14px] text-ink-2">
+              <span className="rounded-full bg-[#ffdf3d] px-2 py-0.5 text-[12px] font-black text-[#151413]">런칭 기념</span>
+              <span>
+                <b className="text-ink">딸깍 진단 선착순 5팀 무료</b> · 이후 99,000원
+              </span>
+            </p>
+            <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
+              <a href="#contact" data-plan="딸깍 진단(무료)" className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-ink px-6 text-[15px] font-bold text-bg hover:opacity-90">
+                무료 진단 신청 <Icon name="arrowRight" className="h-4 w-4" />
               </a>
               <a href="#services" className="inline-flex h-12 items-center justify-center rounded-xl border border-line-strong px-6 text-[15px] font-semibold text-ink hover:border-ink">
                 무엇을 해 드리나요
@@ -243,6 +249,7 @@ export default async function Home({ params }: { params: { locale: string } }) {
                 <p className={`mt-1 text-[13px] ${p.highlight ? "text-bg/60" : "text-ink-3"}`}>{p.period}</p>
                 <a
                   href="#contact"
+                  data-plan={p.name}
                   className={`mt-7 inline-flex h-11 items-center justify-center rounded-xl text-[14.5px] font-bold ${
                     p.highlight ? "bg-[#ffdf3d] text-[#151413] hover:opacity-90" : "border border-line-strong hover:border-ink"
                   }`}
@@ -388,6 +395,24 @@ export default async function Home({ params }: { params: { locale: string } }) {
             </h2>
             <p className="mt-4 text-[15.5px] leading-relaxed text-ink-2">
               어디부터 자동화할지 몰라도 괜찮아요. 지금 가장 시간 잡아먹는 일을 적어 주시면, 할 수 있는 것과 없는 것부터 솔직하게 말씀드릴게요.
+            </p>
+            <ul className="mt-6 space-y-2.5 text-[14.5px] text-ink-2">
+              {[
+                "영업일 기준 하루 안에 답장드려요",
+                "상담만 받고 끝내셔도 괜찮아요",
+                "계정 비밀번호는 받지 않아요",
+              ].map((t) => (
+                <li key={t} className="flex items-start gap-2.5">
+                  <Icon name="check" className="mt-0.5 h-4 w-4 flex-shrink-0 text-ink" strokeWidth={2.4} />
+                  {t}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-[14px] text-ink-3">
+              폼이 불편하면 메일로 바로:{" "}
+              <a href={`mailto:${siteConfig.email}`} className="font-semibold text-ink underline underline-offset-2">
+                {siteConfig.email}
+              </a>
             </p>
             {(kmongUrl || kakaoUrl) && (
               <div className="mt-6 flex flex-wrap gap-2">
