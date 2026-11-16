@@ -2577,6 +2577,148 @@
      "score": 0.9
     }
    ]
+  },
+  "커서 AI": {
+   "fetched": "2026-11-16T22:13:09",
+   "candidates": [
+    {
+     "keyword": "커서 AI 요금제",
+     "ac_score": 3.3,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.3
+    },
+    {
+     "keyword": "커서 AI 회사",
+     "ac_score": 2.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.8
+    },
+    {
+     "keyword": "커서 AI 구독 취소",
+     "ac_score": 2.6,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.6
+    },
+    {
+     "keyword": "커서 AI 가격",
+     "ac_score": 2.0,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.0
+    },
+    {
+     "keyword": "커서 AI 사용법",
+     "ac_score": 2.0,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.0
+    },
+    {
+     "keyword": "커서 AI 구독권",
+     "ac_score": 1.6,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.6
+    },
+    {
+     "keyword": "커서 AI 대학생 무료",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "커서 AI 한글 설정",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "커서 AI 요금제 변경",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "커서 AI 회사 에서",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "커서 AI 해지",
+     "ac_score": 0.8,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "커서 AI 클로드",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    }
+   ]
   }
  },
  "seed_used": {
@@ -2603,6 +2745,7 @@
   "Make 자동화": "2026-11-16T02:48:00",
   "AI PPT 만들기": "2026-11-16T11:33:38",
   "AI 이미지 생성": "2026-11-16T12:06:13",
-  "리뷰 답글 AI": "2026-11-16T19:27:34"
+  "리뷰 답글 AI": "2026-11-16T19:27:34",
+  "커서 AI": "2026-11-16T22:13:09"
  }
 }
