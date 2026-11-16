@@ -2129,6 +2129,110 @@
      "score": 0.3
     }
    ]
+  },
+  "AI 코딩 도구": {
+   "fetched": "2026-11-16T01:52:35",
+   "candidates": [
+    {
+     "keyword": "AI 코딩 도구 반발",
+     "ac_score": 1.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "AI 코딩 도구 비교",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "AI 코딩 도구 순위",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "AI 코딩 도구 생산성",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "AI 코딩 도구 추천",
+     "ac_score": 0.7,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    },
+    {
+     "keyword": "AI 코딩 도구 품질 저하",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "AI 코딩 도구 커서",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "AI 코딩 도구 개발자 대체",
+     "ac_score": 0.3,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.3
+    },
+    {
+     "keyword": "AI 코딩 도구 앱 스토어",
+     "ac_score": 0.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.1
+    }
+   ]
   }
  },
  "seed_used": {
@@ -2150,6 +2254,7 @@
   "n8n 자동화": "2026-10-30T07:14:01",
   "소상공인 마케팅": "2026-10-30T09:03:12",
   "네이버 플레이스 관리": "2026-10-30T15:45:08",
-  "AI 음성 생성": "2026-10-30T16:16:35"
+  "AI 음성 생성": "2026-10-30T16:16:35",
+  "AI 코딩 도구": "2026-11-16T01:52:35"
  }
 }
