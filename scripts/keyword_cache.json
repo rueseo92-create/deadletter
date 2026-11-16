@@ -2326,6 +2326,88 @@
      "score": 0.4
     }
    ]
+  },
+  "AI PPT 만들기": {
+   "fetched": "2026-11-16T11:33:37",
+   "candidates": [
+    {
+     "keyword": "AI PPT 만들기 무료",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "AI PPT 만들기 프롬프트",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "AI PPT 만들기 추천",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "AI PPT 만들기 감마",
+     "ac_score": 0.7,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    },
+    {
+     "keyword": "AI PPT 만들기 제미나이",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "AI PPT 만들기 앱",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "AI PPT 만들기 클로드",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    }
+   ]
   }
  },
  "seed_used": {
@@ -2349,6 +2431,7 @@
   "네이버 플레이스 관리": "2026-10-30T15:45:08",
   "AI 음성 생성": "2026-10-30T16:16:35",
   "AI 코딩 도구": "2026-11-16T01:52:35",
-  "Make 자동화": "2026-11-16T02:48:00"
+  "Make 자동화": "2026-11-16T02:48:00",
+  "AI PPT 만들기": "2026-11-16T11:33:38"
  }
 }
