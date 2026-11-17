@@ -2731,6 +2731,100 @@
      "score": 0.8
     }
    ]
+  },
+  "AI 에이전트 만들기": {
+   "fetched": "2026-11-17T04:34:15",
+   "candidates": [
+    {
+     "keyword": "AI 에이전트 만들기 강의",
+     "ac_score": 3.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.4
+    },
+    {
+     "keyword": "AI 에이전트 만들기 클로드",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "AI 에이전트 만들기 교육",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "개인 AI 에이전트 만들기",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "무료 AI 에이전트 만들기",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "나만 의 AI 에이전트 만들기",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    },
+    {
+     "keyword": "클로드 로 AI 에이전트 만들기",
+     "ac_score": 0.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.2
+    },
+    {
+     "keyword": "제미 나이 AI 에이전트 만들기",
+     "ac_score": 0.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.1
+    }
+   ]
   }
  },
  "seed_used": {
@@ -2758,6 +2852,7 @@
   "AI PPT 만들기": "2026-11-16T11:33:38",
   "AI 이미지 생성": "2026-11-16T12:06:13",
   "리뷰 답글 AI": "2026-11-16T19:27:34",
-  "커서 AI": "2026-11-16T22:13:09"
+  "커서 AI": "2026-11-16T22:13:09",
+  "AI 에이전트 만들기": "2026-11-17T04:34:15"
  }
 }
