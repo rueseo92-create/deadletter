@@ -270,7 +270,8 @@ export default async function LocaleLayout({
                   <li><a href={`${home}#contact`} className="text-ink-2 hover:text-ink">무료 상담</a></li>
                   <li><a href={lh("/posts")} className="text-ink-2 hover:text-ink">{en ? "All posts" : "인사이트 전체"}</a></li>
                   <li><a href={lh("/about")} className="text-ink-2 hover:text-ink">{dict.nav?.about || "소개"}</a></li>
-                  <li><a href={lh("/privacy")} className="text-ink-2 hover:text-ink">{dict.footer.privacyPolicy}</a></li>
+                  <li><a href={lh("/terms")} className="text-ink-2 hover:text-ink">{en ? "Terms of Service" : "이용약관"}</a></li>
+                  <li><a href={lh("/privacy")} className="text-ink-2 hover:text-ink"><strong>{dict.footer.privacyPolicy}</strong></a></li>
                   <li>
                     <a href="/feed.xml" className="inline-flex items-center gap-1.5 text-ink-2 hover:text-ink">
                       <Icon name="rss" className="h-3.5 w-3.5" /> {dict.footer.rss}
@@ -281,10 +282,30 @@ export default async function LocaleLayout({
             </div>
 
             <div className="mt-12 space-y-2 border-t border-line pt-6 text-[12px] leading-relaxed text-ink-3">
+              <address className="not-italic">
+                {[
+                  `상호 ${siteConfig.company.name}`,
+                  `대표자 ${siteConfig.company.ceo}`,
+                  `사업자등록번호 ${siteConfig.company.bizRegNo}`,
+                  `법인등록번호 ${siteConfig.company.corpRegNo}`,
+                  siteConfig.company.mailOrderNo && `통신판매업신고 ${siteConfig.company.mailOrderNo}`,
+                ]
+                  .filter(Boolean)
+                  .join(" · ")}
+                <br />
+                {[
+                  `주소 ${siteConfig.company.address}`,
+                  siteConfig.company.phone && `전화 ${siteConfig.company.phone}`,
+                  `이메일 ${siteConfig.company.email}`,
+                  `호스팅 ${siteConfig.company.hosting}`,
+                ]
+                  .filter(Boolean)
+                  .join(" · ")}
+              </address>
               <p>{siteConfig.disclaimer}</p>
               {siteConfig.coupang.enabled && <p>{siteConfig.coupang.disclaimer}</p>}
               <p className="pt-2">
-                &copy; {new Date().getFullYear()} {siteConfig.name} ({siteConfig.nameEn})
+                &copy; {new Date().getFullYear()} {siteConfig.company.name} · {siteConfig.name} ({siteConfig.nameEn})
               </p>
             </div>
           </div>

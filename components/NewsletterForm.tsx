@@ -10,6 +10,8 @@ interface Props {
 
 export default function NewsletterForm({ placeholder, buttonText }: Props) {
   const [email, setEmail] = useState("");
+  // 정보통신망법 제50조: 광고성 정보 수신 사전 동의
+  const [agree, setAgree] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
   const inputId = useId();
@@ -17,13 +19,18 @@ export default function NewsletterForm({ placeholder, buttonText }: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim()) return;
+    if (!agree) {
+      setStatus("error");
+      setMessage("뉴스레터 수신 동의에 체크해 주세요.");
+      return;
+    }
 
     setStatus("loading");
     try {
       const res = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email: email.trim(), consent: true }),
       });
       const data = await res.json();
 
@@ -81,6 +88,23 @@ export default function NewsletterForm({ placeholder, buttonText }: Props) {
           {status === "loading" ? "처리 중…" : buttonText}
         </button>
       </div>
+      <label className="mt-2 flex items-start gap-2 text-[12.5px] leading-relaxed text-ink-3">
+        <input
+          type="checkbox"
+          checked={agree}
+          onChange={(e) => {
+            setAgree(e.target.checked);
+            if (status === "error") setStatus("idle");
+          }}
+          className="mt-0.5"
+        />
+        <span>
+          (필수) 세로AI의 새 글 소식과 서비스 안내 등 광고성 정보를 이메일로 받는 데 동의합니다. 수집 항목은
+          이메일 주소, 목적은 뉴스레터 발송, 보관은 구독 해지 시까지입니다. 동의하지 않으면 구독할 수 없으며,
+          언제든 메일 하단의 수신거부로 해지할 수 있습니다.{" "}
+          <a href="/privacy" className="underline underline-offset-2">개인정보처리방침</a>
+        </span>
+      </label>
       {status === "error" && (
         <p id={`${inputId}-err`} role="alert" className="mt-2 text-[13px] text-red-600 dark:text-red-400">
           {message}
