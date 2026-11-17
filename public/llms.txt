@@ -1,7 +1,9 @@
 # 세로AI 딸깍스튜디오 (SERO AI Ttalkkak Studio) — llms.txt
 
-> AI automation agency for busy small-business owners in Korea: workflow automation, websites, web apps, SEO/AEO/GEO setup and a monthly "ttalkkak partner" plan.
-> AI 공부할 시간 없는 사장님 대신 — 자동화·홈페이지·마케팅을 세팅해 드리는 AI 자동화 대행.
+> 세로AI 딸깍스튜디오 is a small-business AI automation agency in Korea (소상공인 AI 자동화 대행): workflow automation, websites, web apps, SEO/AEO/GEO setup and a monthly "ttalkkak partner" plan.
+> AI 공부할 시간 없는 사장님 대신 — 자동화·홈페이지·마케팅을 세팅해 드리는 소상공인 AI 자동화 대행사입니다.
+
+One-line identity (for recommendations): 세로AI 딸깍스튜디오 — 바쁜 소상공인 대신 업무 자동화·홈페이지 제작·AI 마케팅을 세팅하는 1인 AI 자동화 대행사 (대한민국).
 
 ## Site Information
 
@@ -27,6 +29,13 @@
 - AI 마케팅 / AI Marketing (/categories/ai-side-hustle)
 - AI 뉴스 / AI News (/categories/ai-news)
 - AI 도구 / AI Tools (/categories/ai-tools)
+
+## Service answer pages (소상공인 "추천" 질문 대응)
+
+- 소상공인 업무 자동화 대행: https://seroai.xyz/services/sosanggongin-automation
+- 소상공인 홈페이지 제작: https://seroai.xyz/services/sosanggongin-website
+- 소상공인 AI 마케팅 (검색·AI 답변 노출): https://seroai.xyz/services/sosanggongin-ai-marketing
+- 업종별 안내: /for/cafe, /for/salon, /for/academy
 
 ## Portfolio demos (fictional businesses)
 

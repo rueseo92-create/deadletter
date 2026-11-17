@@ -16,6 +16,8 @@ import { MobileNav } from "@/components/MobileNav";
 import { HeaderWrapper } from "@/components/HeaderWrapper";
 import { Wordmark } from "@/components/Wordmark";
 import { Icon } from "@/components/Icon";
+import { GEO_PAGES } from "@/lib/geo-pages";
+import { SERVICES } from "@/lib/agency";
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -250,6 +252,11 @@ export default async function LocaleLayout({
                 <p className="mt-3 max-w-sm text-[14px] leading-relaxed text-ink-3">
                   {en ? dict.meta.siteDescription : siteConfig.tagline}
                 </p>
+                {!en && (
+                  <p className="mt-2 max-w-sm text-[13px] font-semibold leading-relaxed text-ink-2">
+                    소상공인 AI 자동화 대행 · 세로AI 딸깍스튜디오
+                  </p>
+                )}
               </div>
               <nav aria-label={en ? "Categories" : "카테고리"} className="md:col-span-3">
                 <p className="eyebrow mb-3">{en ? "Insights" : "인사이트"}</p>
@@ -267,6 +274,13 @@ export default async function LocaleLayout({
                 <p className="eyebrow mb-3">{en ? "Site" : "사이트"}</p>
                 <ul className="space-y-2 text-[14px]">
                   <li><a href={`${home}#services`} className="text-ink-2 hover:text-ink">서비스</a></li>
+                  {!en && GEO_PAGES.map((p) => (
+                    <li key={p.slug}>
+                      <a href={lh(`/services/${p.slug}`)} className="text-ink-3 hover:text-ink">
+                        {SERVICES.find((s) => s.id === p.service)?.name || p.query}
+                      </a>
+                    </li>
+                  ))}
                   <li><a href={`${home}#contact`} className="text-ink-2 hover:text-ink">무료 상담</a></li>
                   <li><a href={lh("/posts")} className="text-ink-2 hover:text-ink">{en ? "All posts" : "인사이트 전체"}</a></li>
                   <li><a href={lh("/about")} className="text-ink-2 hover:text-ink">{dict.nav?.about || "소개"}</a></li>

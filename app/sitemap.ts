@@ -10,6 +10,7 @@ import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/posts";
 import { siteConfig } from "@/lib/config";
 import { INDUSTRIES } from "@/lib/industries";
+import { GEO_PAGES } from "@/lib/geo-pages";
 
 const LOCALES = ["ko", "en"] as const;
 const BASE = siteConfig.url;
@@ -60,6 +61,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.7,
+    });
+  }
+
+  // 서비스 정답 페이지 (GEO, 한국어만)
+  for (const p of GEO_PAGES) {
+    entries.push({
+      url: localUrl(`/services/${p.slug}`, "ko"),
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
     });
   }
 
