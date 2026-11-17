@@ -1,0 +1,72 @@
+name: GEO 진단 (AI 추천 노출 측정)
+
+# "[지역/업종] 추천" 질문에 AI가 우리(또는 입력한 브랜드)를 추천하는지 측정한다.
+# GenRank 방법론을 Claude 1개 엔진으로 근사한 간이 진단.
+on:
+  workflow_dispatch:
+    inputs:
+      brand:
+        description: '브랜드/상호'
+        required: false
+        default: '세로AI 딸깍스튜디오'
+      aliases:
+        description: '별칭(쉼표)'
+        required: false
+        default: '세로AI,딸깍스튜디오,seroai'
+      category:
+        description: '업종/카테고리'
+        required: false
+        default: '소상공인 AI 자동화 대행'
+      region:
+        description: '지역(선택)'
+        required: false
+        default: ''
+      trials:
+        description: '질문당 반복 횟수'
+        required: false
+        default: '3'
+  schedule:
+    - cron: '41 0 1 * *'   # 매월 1일(UTC 0시 41분) 자체 GEO 월간 점검
+
+permissions:
+  contents: write
+
+concurrency:
+  group: geo-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install anthropic
+
+      - name: 진단
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          mkdir -p research/geo/reports
+          STAMP=$(TZ=Asia/Seoul date +%Y%m%d)
+          python scripts/geo_check.py \
+            --brand "${{ github.event.inputs.brand || '세로AI 딸깍스튜디오' }}" \
+            --aliases "${{ github.event.inputs.aliases || '세로AI,딸깍스튜디오,seroai' }}" \
+            --category "${{ github.event.inputs.category || '소상공인 AI 자동화 대행' }}" \
+            --region "${{ github.event.inputs.region }}" \
+            --trials "${{ github.event.inputs.trials || '3' }}" \
+            --out "research/geo/reports/geo_${STAMP}.json" | tee "research/geo/reports/geo_${STAMP}.txt"
+
+      - name: 커밋
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add research/geo/reports/ 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore: GEO 진단 리포트 $(TZ=Asia/Seoul date +%m-%d)"
+          git pull --rebase origin main || true
+          git push || true
