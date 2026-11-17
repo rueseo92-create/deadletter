@@ -152,7 +152,7 @@ export const siteConfig = {
     corpRegNo: "110111-0973326",
     address: "서울특별시 강남구 자곡로 186, 7층 721호",
     email: "contact@seroai.xyz",
-    phone: "", // 대표 확인 후 입력 (전자상거래법상 표시 항목)
+    phone: "010-4723-2324",
     mailOrderNo: "", // 통신판매업 신고번호 — 신고 후 입력
     hosting: "Vercel Inc.",
     privacyOfficer: "대표이사 유서영",
