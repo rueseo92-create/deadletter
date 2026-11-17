@@ -165,7 +165,11 @@ export default function InquiryForm({ services, email }: Props) {
         >
           {status === "loading" ? "보내는 중…" : "무료 상담 신청하기"}
         </button>
-        <p className="text-[12.5px] text-ink-3">상담 답장 외의 용도로 연락처를 쓰지 않아요.</p>
+        <p className="text-[12.5px] leading-relaxed text-ink-3">
+          보내 주신 이름·연락처·문의 내용은 상담 답장과 견적에만 쓰고, 상담이 끝난 뒤 1년간 보관한 다음
+          파기합니다.{" "}
+          <a href="/privacy" className="underline underline-offset-2 hover:text-ink">개인정보처리방침</a>
+        </p>
       </div>
     </form>
   );

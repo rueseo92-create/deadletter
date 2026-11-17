@@ -213,8 +213,11 @@ def build_html_email(digest: dict, posts: list[dict]) -> str:
 
     <!-- Footer -->
     <div style="background:#f8fafc;padding:24px;text-align:center;font-size:12px;color:#94a3b8">
-      <p>세로AI 뉴스레터 · <a href="{SITE_URL}" style="color:#64748b">seroai.xyz</a></p>
-      <p>더 이상 받고 싶지 않으시면 <a href="{SITE_URL}/unsubscribe" style="color:#64748b">구독 해지</a></p>
+      <p>보낸 곳: 주식회사 세로에이아이 (세로AI) · 서울특별시 강남구 자곡로 186, 7층 721호 · contact@seroai.xyz</p>
+      <p>이 메일은 수신에 동의하신 분께만 보냅니다. 더 이상 받고 싶지 않으시면
+        <a href="mailto:contact@seroai.xyz?subject=%EC%88%98%EC%8B%A0%EA%B1%B0%EB%B6%80" style="color:#64748b">수신거부</a>
+        를 눌러 제목 그대로 보내 주세요. 바로 목록에서 삭제합니다.</p>
+      <p>To unsubscribe, reply to contact@seroai.xyz with "수신거부".</p>
     </div>
   </div>
 </body>
@@ -330,7 +333,11 @@ def run(days: int = 7, send: bool = False, preview: bool = False):
             email = sub.get("email", "")
             if not email:
                 continue
-            result = send_via_resend(email, digest["subject"], html)
+            # 정보통신망법 제50조: 광고성 정보는 제목 앞에 (광고) 표기
+            subject = digest["subject"]
+            if not subject.startswith("(광고)"):
+                subject = f"(광고) {subject}"
+            result = send_via_resend(email, subject, html)
             if "error" in result:
                 print(f"  [X] {email}: {result['error']}")
             else:

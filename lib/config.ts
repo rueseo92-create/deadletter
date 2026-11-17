@@ -142,6 +142,24 @@ export const siteConfig = {
       "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.",
   },
 
+  // 법인 정보 — 하단 사업자 정보·개인정보처리방침·이용약관에 쓴다.
+  // 대표자 성명은 법적 표시가 필요한 이 세 곳에만 쓴다(소개·홍보 문구에는 쓰지 않음).
+  // 빈 값("")인 항목은 화면에 나오지 않는다.
+  company: {
+    name: "주식회사 세로에이아이",
+    ceo: "유서영",
+    bizRegNo: "810-81-04149",
+    corpRegNo: "110111-0973326",
+    address: "서울특별시 강남구 자곡로 186, 7층 721호",
+    email: "contact@seroai.xyz",
+    phone: "010-4723-2324",
+    mailOrderNo: "", // 통신판매업 신고번호 — 신고 후 입력
+    hosting: "Vercel Inc.",
+    privacyOfficer: "대표이사 유서영",
+    termsEffectiveDate: "2026-11-16",
+    privacyEffectiveDate: "2026-11-16",
+  },
+
   analytics: {
     gaId: "G-01E31GWTCD",
   },

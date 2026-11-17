@@ -7,7 +7,15 @@ const COLLECTION = "subscribers";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email } = await req.json();
+    const { email, consent } = await req.json();
+
+    // 광고성 정보 수신 동의 없이는 저장하지 않는다 (정보통신망법 제50조)
+    if (consent !== true) {
+      return NextResponse.json(
+        { error: "뉴스레터 수신 동의가 필요합니다." },
+        { status: 400 }
+      );
+    }
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
@@ -36,6 +44,8 @@ export async function POST(req: NextRequest) {
     await getDb().collection(COLLECTION).add({
       email: normalized,
       subscribedAt: new Date().toISOString(),
+      // 수신 동의 일시 — 2년마다 수신 동의 여부를 다시 확인해야 한다
+      adConsentAt: new Date().toISOString(),
       active: true,
     });
 

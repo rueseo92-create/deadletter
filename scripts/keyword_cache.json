@@ -582,8 +582,31 @@
    ]
   },
   "챗GPT 사용법": {
-   "fetched": "2026-10-28T15:42:47",
+   "fetched": "2026-11-16T22:29:38",
    "candidates": [
+    {
+     "keyword": "챗GPT 사용법 강의",
+     "ac_score": 3.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.4
+    },
+    {
+     "keyword": "챗GPT 사용법 도서",
+     "ac_score": 1.9,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.9
+    },
     {
      "keyword": "챗GPT 사용법 PDF",
      "ac_score": 1.2,
@@ -605,17 +628,6 @@
      "comp": "",
      "docs": null,
      "score": 1.1
-    },
-    {
-     "keyword": "챗GPT 사용법 강의",
-     "ac_score": 0.9,
-     "engines": [
-      "google"
-     ],
-     "volume": null,
-     "comp": "",
-     "docs": null,
-     "score": 0.9
     },
     {
      "keyword": "카카오톡 챗GPT 사용법",
@@ -675,11 +687,11 @@
    ]
   },
   "클로드 사용법": {
-   "fetched": "2026-10-28T15:51:14",
+   "fetched": "2026-11-17T04:26:06",
    "candidates": [
     {
      "keyword": "클로드 사용법 강의",
-     "ac_score": 3.5,
+     "ac_score": 3.6,
      "engines": [
       "google",
       "naver"
@@ -687,7 +699,7 @@
      "volume": null,
      "comp": "",
      "docs": null,
-     "score": 3.5
+     "score": 3.6
     },
     {
      "keyword": "클로드 사용법 늘리는법",
@@ -2326,6 +2338,493 @@
      "score": 0.4
     }
    ]
+  },
+  "AI PPT 만들기": {
+   "fetched": "2026-11-16T11:33:37",
+   "candidates": [
+    {
+     "keyword": "AI PPT 만들기 무료",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "AI PPT 만들기 프롬프트",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "AI PPT 만들기 추천",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "AI PPT 만들기 감마",
+     "ac_score": 0.7,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    },
+    {
+     "keyword": "AI PPT 만들기 제미나이",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "AI PPT 만들기 앱",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "AI PPT 만들기 클로드",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    }
+   ]
+  },
+  "AI 이미지 생성": {
+   "fetched": "2026-11-16T12:06:12",
+   "candidates": [
+    {
+     "keyword": "AI 이미지 생성 무료",
+     "ac_score": 3.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.4
+    },
+    {
+     "keyword": "AI 이미지 생성 추천",
+     "ac_score": 3.0,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.0
+    },
+    {
+     "keyword": "무료 AI 이미지 생성",
+     "ac_score": 2.9,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.9
+    },
+    {
+     "keyword": "AI 이미지 생성 어플",
+     "ac_score": 2.6,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.6
+    },
+    {
+     "keyword": "AI 이미지생성 프롬프트",
+     "ac_score": 1.3,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.3
+    },
+    {
+     "keyword": "무료ai이미지 생성 방법",
+     "ac_score": 0.84,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "ai이미지 생성 순위",
+     "ac_score": 0.6,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "AI 이미지 생성 프로그램",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "AI 이미지 생성 어플 추천",
+     "ac_score": 0.54,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.54
+    },
+    {
+     "keyword": "ai이미지 생성시 지문 방법",
+     "ac_score": 0.5,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "AI 이미지 생성 무료 무제한",
+     "ac_score": 0.48,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.48
+    },
+    {
+     "keyword": "무료 AI 이미지 생성 어플",
+     "ac_score": 0.42,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.42
+    }
+   ]
+  },
+  "리뷰 답글 AI": {
+   "fetched": "2026-11-16T19:27:33",
+   "candidates": [
+    {
+     "keyword": "배민 리뷰 답글 AI",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "네이버 리뷰 답글 AI",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    }
+   ]
+  },
+  "커서 AI": {
+   "fetched": "2026-11-16T22:13:09",
+   "candidates": [
+    {
+     "keyword": "커서 AI 요금제",
+     "ac_score": 3.3,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.3
+    },
+    {
+     "keyword": "커서 AI 회사",
+     "ac_score": 2.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.8
+    },
+    {
+     "keyword": "커서 AI 구독 취소",
+     "ac_score": 2.6,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.6
+    },
+    {
+     "keyword": "커서 AI 가격",
+     "ac_score": 2.0,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.0
+    },
+    {
+     "keyword": "커서 AI 사용법",
+     "ac_score": 2.0,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.0
+    },
+    {
+     "keyword": "커서 AI 구독권",
+     "ac_score": 1.6,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.6
+    },
+    {
+     "keyword": "커서 AI 대학생 무료",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "커서 AI 한글 설정",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "커서 AI 요금제 변경",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "커서 AI 회사 에서",
+     "ac_score": 0.84,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    },
+    {
+     "keyword": "커서 AI 해지",
+     "ac_score": 0.8,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "커서 AI 클로드",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    }
+   ]
+  },
+  "AI 에이전트 만들기": {
+   "fetched": "2026-11-17T04:34:15",
+   "candidates": [
+    {
+     "keyword": "AI 에이전트 만들기 강의",
+     "ac_score": 3.4,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.4
+    },
+    {
+     "keyword": "AI 에이전트 만들기 클로드",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "AI 에이전트 만들기 교육",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "개인 AI 에이전트 만들기",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "무료 AI 에이전트 만들기",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "나만 의 AI 에이전트 만들기",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    },
+    {
+     "keyword": "클로드 로 AI 에이전트 만들기",
+     "ac_score": 0.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.2
+    },
+    {
+     "keyword": "제미 나이 AI 에이전트 만들기",
+     "ac_score": 0.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.1
+    }
+   ]
   }
  },
  "seed_used": {
@@ -2333,8 +2832,8 @@
   "챗GPT": "2026-10-28T14:12:56",
   "영양제": "2026-10-28T14:23:29",
   "AI 도구": "2026-10-28T14:23:34",
-  "챗GPT 사용법": "2026-10-28T15:42:48",
-  "클로드 사용법": "2026-10-28T15:51:15",
+  "챗GPT 사용법": "2026-11-16T22:29:39",
+  "클로드 사용법": "2026-11-17T04:26:07",
   "AI 부업": "2026-10-28T16:25:34",
   "AI 블로그 수익": "2026-10-28T16:34:45",
   "제미나이 사용법": "2026-10-28T16:49:13",
@@ -2349,6 +2848,11 @@
   "네이버 플레이스 관리": "2026-10-30T15:45:08",
   "AI 음성 생성": "2026-10-30T16:16:35",
   "AI 코딩 도구": "2026-11-16T01:52:35",
-  "Make 자동화": "2026-11-16T02:48:00"
+  "Make 자동화": "2026-11-16T02:48:00",
+  "AI PPT 만들기": "2026-11-16T11:33:38",
+  "AI 이미지 생성": "2026-11-16T12:06:13",
+  "리뷰 답글 AI": "2026-11-16T19:27:34",
+  "커서 AI": "2026-11-16T22:13:09",
+  "AI 에이전트 만들기": "2026-11-17T04:34:15"
  }
 }

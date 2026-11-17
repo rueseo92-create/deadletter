@@ -116,9 +116,72 @@
       "date": "2026-11-16",
       "slot": "lunch",
       "slug": "2026-11-16-make-automation-credit-calculation"
+    },
+    {
+      "title": "AI 이미지 생성 무료",
+      "keyword": "AI 이미지 생성 무료",
+      "intent": "compare",
+      "category": "ai-tools",
+      "date": "2026-11-16",
+      "slot": "night",
+      "slug": "2026-11-16-free-ai-image-generator-checklist"
+    },
+    {
+      "title": "배민 리뷰 답글 AI",
+      "keyword": "배민 리뷰 답글 AI",
+      "intent": "review",
+      "category": "ai-side-hustle",
+      "date": "2026-11-17",
+      "slot": "evening",
+      "slug": "2026-11-16-baemin-review-reply-ai-checklist"
+    },
+    {
+      "title": "SASE",
+      "keyword": "SASE",
+      "intent": "news",
+      "category": "ai-news",
+      "date": "2026-11-17",
+      "slot": "evening",
+      "slug": "2026-11-16-lg-uplus-sase-ai-prompt-security"
+    },
+    {
+      "title": "SASE",
+      "keyword": "SASE",
+      "intent": "news",
+      "category": "ai-news",
+      "date": "2026-11-17",
+      "slot": "morning",
+      "slug": "2026-11-16-lg-uplus-sase-ai-leak-check"
+    },
+    {
+      "title": "챗GPT 사용법 강의",
+      "keyword": "챗GPT 사용법 강의",
+      "intent": "info",
+      "category": "ai-tools",
+      "date": "2026-11-17",
+      "slot": "night",
+      "slug": "2026-11-16-chatgpt-guide-free-plan-mistakes"
+    },
+    {
+      "title": "클로드 사용법 강의",
+      "keyword": "클로드 사용법 강의",
+      "intent": "info",
+      "category": "ai-tools",
+      "date": "2026-11-17",
+      "slot": "morning",
+      "slug": "2026-11-17-claude-usage-guide-plan-check"
+    },
+    {
+      "title": "AI 에이전트 만들기 클로드",
+      "keyword": "AI 에이전트 만들기 클로드",
+      "intent": "info",
+      "category": "ai-automation",
+      "date": "2026-11-17",
+      "slot": "lunch",
+      "slug": "2026-11-17-claude-ai-agent-four-methods"
     }
   ],
-  "last_run": "2026-11-16 [lunch] (1/1 성공, 428초)",
+  "last_run": "2026-11-17 [lunch] (1/1 성공, 527초)",
   "attempts": {
     "2026-10-29:evening": 1,
     "2026-10-30:morning": 2,
@@ -128,6 +191,11 @@
     "2026-10-31:evening": 2,
     "2026-10-31:morning": 2,
     "2026-11-16:morning": 2,
-    "2026-11-16:lunch": 1
+    "2026-11-16:lunch": 1,
+    "2026-11-16:night": 2,
+    "2026-11-17:evening": 2,
+    "2026-11-17:morning": 3,
+    "2026-11-17:night": 1,
+    "2026-11-17:lunch": 1
   }
 }
