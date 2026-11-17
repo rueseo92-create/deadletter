@@ -109,7 +109,7 @@ export default function IndustryPage({ params }: { params: { locale: string; ind
               업종 칸에 “{ind.label}”라고 적어 주시면 위 예시를 기준으로 이야기를 시작할게요.
             </p>
             <p className="mt-4 text-[14px] leading-relaxed text-ink-3">
-              {diag.name}: {diag.price === "무료" ? `${diag.off} (이후 ${diag.was})` : diag.price} · {diag.period}
+              {diag.name}: {diag.price === "무료" ? `${diag.off} (이후 ${diag.was}, 부가세 별도)` : diag.price} · {diag.period}
             </p>
           </div>
           <div className="lg:col-span-7">
