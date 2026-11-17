@@ -234,7 +234,15 @@ def main():
         trials = a.trials
 
     print(f"\n질문 {len(questions)}개 × {trials}회 = {len(questions)*trials}회 측정 시작…\n")
-    res = run(brand, aliases, questions, trials)
+    try:
+        res = run(brand, aliases, questions, trials)
+    except Exception as e:
+        msg = str(e)
+        if "credit balance is too low" in msg:
+            print("\n[중단] Anthropic API 크레딧이 부족합니다. 충전 후 다시 돌려주세요.")
+            return 2
+        print(f"\n[중단] 진단 실패: {msg}")
+        return 1
     print("\n" + report(res))
     if a.out:
         Path(a.out).write_text(json.dumps(res, ensure_ascii=False, indent=2), encoding="utf-8")

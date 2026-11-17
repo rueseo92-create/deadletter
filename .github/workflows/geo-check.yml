@@ -50,9 +50,10 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          set -o pipefail
           mkdir -p research/geo/reports
           STAMP=$(TZ=Asia/Seoul date +%Y%m%d)
-          python scripts/geo_check.py \
+          python -u scripts/geo_check.py \
             --brand "${{ github.event.inputs.brand || '세로AI 딸깍스튜디오' }}" \
             --aliases "${{ github.event.inputs.aliases || '세로AI,딸깍스튜디오,seroai' }}" \
             --category "${{ github.event.inputs.category || '소상공인 AI 자동화 대행' }}" \
