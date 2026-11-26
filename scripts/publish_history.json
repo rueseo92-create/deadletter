@@ -217,7 +217,7 @@
       "slug": "2026-11-26-aideep-deepgenguard-ai-dlp-security"
     }
   ],
-  "last_run": "2026-11-27 [evening] (1/2 성공, 711초)",
+  "last_run": "2026-11-27 [morning] (0/2 성공, 780초)",
   "attempts": {
     "2026-10-29:evening": 1,
     "2026-10-30:morning": 2,
@@ -236,6 +236,7 @@
     "2026-11-26:evening": 2,
     "2026-11-26:lunch": 1,
     "2026-11-26:night": 1,
-    "2026-11-27:evening": 2
+    "2026-11-27:evening": 2,
+    "2026-11-27:morning": 2
   }
 }
