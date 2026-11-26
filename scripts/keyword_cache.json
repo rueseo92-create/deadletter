@@ -2825,6 +2825,123 @@
      "score": 0.1
     }
    ]
+  },
+  "GEO 최적화": {
+   "fetched": "2026-11-26T09:37:39",
+   "candidates": [
+    {
+     "keyword": "GEO 최적화 방법",
+     "ac_score": 3.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.7
+    },
+    {
+     "keyword": "geo 최적화 뜻",
+     "ac_score": 3.3,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.3
+    },
+    {
+     "keyword": "GEO 최적화 비용",
+     "ac_score": 1.6,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.6
+    },
+    {
+     "keyword": "geo 최적화 전략",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "geo 최적화 업체",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "geo 최적화 사례",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "geo 최적화 가이드",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "geo 최적화 솔루션",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "seo geo 최적화",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "aeo geo 최적화",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    }
+   ]
   }
  },
  "seed_used": {
@@ -2853,6 +2970,7 @@
   "AI 이미지 생성": "2026-11-16T12:06:13",
   "리뷰 답글 AI": "2026-11-16T19:27:34",
   "커서 AI": "2026-11-16T22:13:09",
-  "AI 에이전트 만들기": "2026-11-17T04:34:15"
+  "AI 에이전트 만들기": "2026-11-17T04:34:15",
+  "GEO 최적화": "2026-11-26T09:37:40"
  }
 }
