@@ -1,0 +1,175 @@
+---
+title: "제미나이 사용법 PDF 올리기와 저장하기: 100MB·10개 기준과 Docs 경로"
+description: "제미나이 사용법 PDF 정리. Gemini 앱 PDF 업로드 공식 기준(파일당 100MB, 최대 10개, 컨텍스트 창), 견적서·계약서 프롬프트 예시, 답변을 Docs 경유로 PDF 저장하는 커뮤니티 방법, 업로드 실패 점검 순서를 공식과 비공식을 구분해 안내합니다."
+date: "2026-11-26T13:16:32"
+category: "ai-tools"
+tags: ["제미나이 사용법", "제미나이 PDF", "Gemini 파일 업로드", "PDF 요약", "AI 도구"]
+thumbnail: "https://seroai.xyz/api/og?title=%EC%A0%9C%EB%AF%B8%EB%82%98%EC%9D%B4%20%EC%82%AC%EC%9A%A9%EB%B2%95%20PDF%20%EC%98%AC%EB%A6%AC%EA%B8%B0%EC%99%80%20%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0%3A%20100MB%C2%B710%EA%B0%9C%20%EA%B8%B0%EC%A4%80%EA%B3%BC%20Docs%20%EA%B2%BD%EB%A1%9C&category=ai-tools"
+difficulty: "beginner"
+tldr: "Gemini 앱에는 PDF를 파일당 100MB, 한 프롬프트에 최대 10개(제공 여부에 따라 다름)까지 올릴 수 있어요. 파일이 많고 두꺼우면 10개 한도보다 컨텍스트 창(Plus 128k, Pro·Ultra 100만 토큰)이 먼저 걸릴 수 있어요. 답변을 PDF로 저장하는 공식 안내는 없어요. 커뮤니티 답변 기준으로는 Docs로 내보낸 뒤 PDF로 다운로드하고, 모바일에서는 휴대폰의 PDF로 인쇄를 써야 할 수 있어요."
+published: true
+keyword: "제미나이 사용법 PDF"
+intent: "info"
+review:
+  panel: 10
+  passed: 9
+  score: 81
+sources:
+  - name: "Upload and analyse files in Gemini Apps - Computer - Gemini Apps Help"
+    url: "https://support.google.com/gemini?p=code_upload&hl=en-AZ"
+    type: "official"
+  - name: "Upload & analyze files in Gemini Apps - Computer - Gemini Apps Help"
+    url: "https://support.google.com/gemini/answer/14903178?hl=en&amp=&co=GENIE.Platform%3DDesktop"
+    type: "official"
+  - name: "Upload and analyse files in Gemini Apps - Android - Gemini Apps Help"
+    url: "https://support.google.com/gemini/answer/14903178?hl=en-IS&co=GENIE.Platform%3DAndroid"
+    type: "official"
+  - name: "Upload and analyse files in Gemini Apps - iPhone and iPad - Gemini Apps Help"
+    url: "https://support.google.com/gemini/answer/14903178?hl=en-CO&co=GENIE.Platform%3DiOS"
+    type: "official"
+  - name: "Gemini Apps limits & feature availability - Gemini Apps Help"
+    url: "https://support.google.com/gemini/answer/16275805?hl=en"
+    type: "official"
+  - name: "Gemini Apps limits and upgrades for Google AI subscribers - Gemini Apps Help"
+    url: "https://support.google.com/gemini/answer/16275805?hl=en-HT"
+    type: "official"
+  - name: "Export responses from Gemini Apps - Computer - Gemini Apps Help"
+    url: "https://support.google.com/gemini/answer/14184041?hl=en&co=GENIE.Platform%3DDesktop"
+    type: "official"
+  - name: "Gemini app and output - Gemini Apps Community"
+    url: "https://support.google.com/gemini/thread/415435737/gemini-app-and-output?hl=en"
+    type: "official"
+  - name: "How to export Gemini chat to PDF, Google Docs? - Gemini Apps Community"
+    url: "https://support.google.com/gemini/thread/424706282"
+    type: "official"
+  - name: "Unable to upload any document to Gemini - Gemini Apps Community"
+    url: "https://support.google.com/gemini/thread/424082186/unable-to-upload-any-document-to-gemini?hl=en"
+    type: "official"
+  - name: "Upload & analyze files in Gemini Apps - Gemini Apps Help"
+    url: "https://support.google.com/gemini/answer/14903178?hl=en"
+    type: "official"
+  - name: "Export responses from Gemini Apps - Gemini Apps Help"
+    url: "https://support.google.com/gemini/answer/14184041?hl=en"
+    type: "official"
+---
+
+PDF는 파일당 100MB까지 Gemini에 올라가요. 한 번에 최대 10개까지요. 반대로 Gemini 답변을 PDF로 저장하는 버튼은 Google 공식 도움말에서 찾지 못했어요.
+
+제미나이 사용법 PDF를 검색하는 사람은 보통 둘 중 하나예요. 견적서나 계약서 PDF를 올려 요약시키려는 사람, 또는 Gemini 답변을 PDF로 남기려는 사람이죠. 이 글은 둘을 나눠서 봐요.
+
+> 핵심 답변: PDF 올리기는 공식 기준이 있어요. 파일당 100MB, 한 프롬프트에 최대 10개(제공 여부에 따라 다름)예요. 답변을 PDF로 저장하는 공식 안내는 없어요. 커뮤니티 답변에 Google Docs로 내보낸 뒤 PDF로 받는 방법이 나와요.
+
+## 제미나이 사용법 PDF는 두 가지 뜻이에요
+
+'PDF 올리기'는 문서를 Gemini 앱에 첨부해 요약, 비교, 질문을 하는 거예요.
+
+'PDF 저장'은 Gemini 답변을 PDF 파일로 남기는 거예요. 공식 내보내기 기능은 Gmail과 Google Docs로 보내는 데까지예요.
+
+## PDF 업로드 조건: 파일당 100MB, 최대 10개
+
+아래는 작성 시점의 Google 영어 도움말 기준이에요. 파일 수, 용량, 동영상은 [Gemini 파일 업로드 도움말](https://support.google.com/gemini/answer/14903178?hl=en)에, 컨텍스트 창은 [Gemini 한도 도움말](https://support.google.com/gemini/answer/16275805?hl=en)에 나와요. 한도는 바뀔 수 있으니 쓰기 전에 한 번 확인하세요.
+
+| 항목 | 기준 |
+|------|------|
+| 한 프롬프트 파일 수 | 최대 10개(제공 여부에 따라 다름) |
+| PDF 등 문서 용량 | 파일당 100MB |
+| 동영상 | 파일당 2GB, 총 길이 5분(AI Pro·Ultra는 1시간) |
+| 컨텍스트 창 | AI Plus 128k 토큰, AI Pro·Ultra 100만 토큰 |
+| PDF 페이지 수 제한 | 확인 못 함 |
+
+### 사용 한도는 배수로만 공개돼요
+
+요금제가 없으면 기본 한도예요. AI Plus는 기본의 2배, AI Pro는 4배예요. AI Ultra는 구독 유형에 따라 AI Pro의 5배 또는 20배예요.
+
+기본 한도 자체의 숫자는 공식 문서에 없어요. 그래서 하루에 몇 번 쓸 수 있는지는 배수만으로 알 수 없어요.
+
+AI 요금제 구독자의 한도는 5시간마다 갱신되고, 주간 한도가 따로 있어요. 이것도 같은 한도 도움말에 나와요.
+
+### 10개보다 컨텍스트 창이 먼저 걸릴 수 있어요
+
+여기서부턴 제 판단이에요. 업로드 조건은 이 순서로 따져 보면 돼요.
+
+1. 파일 하나가 100MB 이하인가.
+2. 한 번에 10개 이하인가.
+3. 올린 파일을 합친 분량이 컨텍스트 창 안에 들어가는가.
+
+1번과 2번은 숫자가 분명해요. 3번은 파일 크기만 봐서는 알기 어려워요. 컨텍스트 창은 Gemini가 한 번에 다룰 수 있는 분량이에요. 100MB 안의 파일을 10개 올려도 합친 분량이 이걸 넘으면 한 번에 다 읽지 못할 수 있어요. 두꺼운 PDF 여러 개를 자주 비교한다면 파일 개수보다 이쪽을 먼저 의심하세요.
+
+PDF 한 장이 몇 토큰인지는 근거 자료가 없어 추정하지 않을게요. 무료 사용자의 컨텍스트 창 크기도 확인하지 못했어요.
+
+## PDF 업로드부터 요약까지 순서대로 따라 하기
+
+1. Gemini 앱(웹 또는 모바일)에 로그인해요. 만 13세 이상이거나 해당 국가의 적용 연령 이상이어야 해요.
+2. PDF가 파일당 100MB 이하, 한 번에 10개 이하인지 확인하고 입력창의 파일 첨부 메뉴에서 골라요.
+3. 무엇을 뽑을지 구체적으로 적어요. 아래 예시를 참고하세요.
+4. 답변에 나온 금액, 날짜, 조건을 원본 PDF와 대조해요.
+
+버튼 모양과 정확한 메뉴 이름은 한국어 화면, 영어 화면 모두 이번 자료에서 확인하지 못했어요. 공식 도움말 제목이 'Upload and analyse files'이니, 화면에서 업로드나 파일 관련 메뉴를 찾으면 돼요.
+
+iPhone·iPad 앱에서는 Files 앱의 Google 문서나 스프레드시트를 골라도 돼요. PDF로 변환된 뒤 Gemini가 읽어요.
+
+### 3단계에 넣을 프롬프트 예시
+
+견적서 비교용이에요.
+
+```
+첨부한 견적서 3개를 비교해 줘.
+업체별 단가, 납기, 결제 조건을 표로 정리하고,
+문서에 없는 항목은 '문서에 없음'이라고 적어 줘.
+```
+
+계약서 조항 찾기용이에요.
+
+```
+첨부한 계약서에서 계약 기간, 해지 조건, 위약금, 자동 갱신 조항을 찾아 줘.
+항목마다 조항 번호와 원문 문장을 같이 적고,
+문서에 없는 항목은 '문서에 없음'이라고 적어 줘.
+```
+
+두 예시 모두 '문서에 없음' 줄을 넣었어요. 제 판단으로는 이 줄이 빈칸을 그럴듯하게 채운 답을 줄이는 데 도움이 될 수 있어요. 직접 비교 테스트를 한 건 아니에요. 완전히 막아 주지도 못해요. 4단계 원본 대조는 빼지 마세요. 조항 번호와 원문 문장을 같이 달라고 하면 대조할 곳을 찾기가 쉬워져요.
+
+## 답변을 PDF로 저장하려면? Docs를 거치는 경로
+
+[응답 내보내기 공식 도움말](https://support.google.com/gemini/answer/14184041?hl=en)에 나오는 경로는 Gmail과 Google Docs 내보내기예요. 로그인해야 쓸 수 있어요. 내보내기 메뉴가 안 보이면 로그인 상태부터 보세요.
+
+PDF로 받는 아래 방법은 공식 안내가 아니라 [커뮤니티 답변](https://support.google.com/gemini/thread/415435737/gemini-app-and-output?hl=en)이에요.
+
+### 웹: Docs로 내보낸 뒤 다운로드
+
+응답 하단의 공유·내보내기 아이콘에서 'Export to Docs'를 골라요. 열린 Google Docs에서 파일 > 다운로드 > PDF를 선택해요. 내보낸 뒤에는 그 내용에 Google Docs의 약관과 정책이 적용돼요.
+
+### 모바일: 휴대폰의 PDF로 인쇄
+
+같은 커뮤니티 답변에 따르면 모바일 앱에는 전용 'PDF로 저장' 버튼이 없어요. 휴대폰의 'PDF로 인쇄' 기능을 써야 할 수 있어요.
+
+### 대화 전체를 한 번에 받고 싶다면
+
+[다른 커뮤니티 글](https://support.google.com/gemini/thread/424706282)에는 내보내기가 응답 하나씩만 처리되며, 대화 전체는 Google Takeout을 시도해 볼 수 있다고 나와요. Takeout으로 받은 결과물 형식은 확인하지 못했어요.
+
+## 업로드가 실패할 때 점검 순서
+
+'파일 분석에 실패했다'는 오류가 나면 공식 도움말은 파일을 다시 올리라고 안내해요. 그래도 안 되면 [커뮤니티 글](https://support.google.com/gemini/thread/424082186/unable-to-upload-any-document-to-gemini?hl=en)이 권하는 순서대로 점검해 보세요.
+
+1. 형식(PDF, DOCX, CSV, TXT 등)과 100MB 이하인지 확인해요.
+2. 시크릿 창에서 다시 올려 봐요.
+3. 브라우저 캐시를 삭제해요.
+
+같은 글에는 브라우저 확장 프로그램이 충돌을 일으킬 수 있다는 내용도 있어요. 시크릿 창에서는 되는데 평소 창에서 안 된다면 확장 프로그램을 먼저 의심해 보세요.
+
+Gemini의 다른 활용법은 [AI 도구 활용 글 모음](/categories/ai-tools)에서 이어서 볼 수 있어요.
+
+## FAQ
+
+### Q1. 무료로도 PDF를 올릴 수 있나요?
+
+요금제 없이도 기본 한도로 쓸 수 있어요. 다만 무료 사용자의 하루 프롬프트 수나 파일 수는 공식 문서에 '기본 한도'라고만 나와 있고 숫자가 없어요. 한도를 높이려면 Google AI 요금제로 올리면 돼요. 한국 요금과 가입 조건은 이번에 확인하지 못했으니 공식 페이지에서 확인하세요.
+
+### Q2. 대화 전체를 PDF 한 파일로 받을 수 있나요?
+
+공식 문서로는 확인되지 않아요. 커뮤니티 글에는 Google Takeout을 시도해 볼 수 있다고 나와요. 자세한 내용은 위 '대화 전체를 한 번에 받고 싶다면'을 보세요.
+
+### Q3. Google이 만든 '제미나이 사용법 PDF' 매뉴얼이 있나요?
+
+이번 조사에서는 공식 PDF 매뉴얼을 확인하지 못했어요. 현재 기준을 보려면 Gemini Apps Help 페이지를 직접 보는 게 가장 정확해요.
+
+[AI 도구 더 보기](/categories/ai-tools) | [AI 자동화 더 보기](/categories/ai-automation)
