@@ -206,9 +206,18 @@
       "date": "2026-11-26",
       "slot": "night",
       "slug": "2026-11-26-gemini-pdf-upload-save-guide"
+    },
+    {
+      "title": "에이아이딥",
+      "keyword": "에이아이딥",
+      "intent": "news",
+      "category": "ai-news",
+      "date": "2026-11-27",
+      "slot": "evening",
+      "slug": "2026-11-26-aideep-deepgenguard-ai-dlp-security"
     }
   ],
-  "last_run": "2026-11-26 [night] (1/1 성공, 223초)",
+  "last_run": "2026-11-27 [evening] (1/2 성공, 711초)",
   "attempts": {
     "2026-10-29:evening": 1,
     "2026-10-30:morning": 2,
@@ -226,6 +235,7 @@
     "2026-11-17:lunch": 1,
     "2026-11-26:evening": 2,
     "2026-11-26:lunch": 1,
-    "2026-11-26:night": 1
+    "2026-11-26:night": 1,
+    "2026-11-27:evening": 2
   }
 }

@@ -3031,6 +3031,148 @@
      "score": 0.84
     }
    ]
+  },
+  "상세페이지 AI": {
+   "fetched": "2026-11-26T18:55:04",
+   "candidates": [
+    {
+     "keyword": "상세페이지 AI 제작 무료",
+     "ac_score": 3.78,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.78
+    },
+    {
+     "keyword": "상세페이지 AI 제작",
+     "ac_score": 3.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 3.7
+    },
+    {
+     "keyword": "상세페이지 AI 프로그램",
+     "ac_score": 2.6,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.6
+    },
+    {
+     "keyword": "상세페이지 AI 프롬프트",
+     "ac_score": 1.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.7
+    },
+    {
+     "keyword": "상세페이지 AI 비교",
+     "ac_score": 1.6,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.6
+    },
+    {
+     "keyword": "상세페이지 AI 툴",
+     "ac_score": 1.5,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.5
+    },
+    {
+     "keyword": "상세페이지 AI 추천",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "상세페이지 AI 무료",
+     "ac_score": 1.0,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.0
+    },
+    {
+     "keyword": "상세페이지 AI 제작 방법",
+     "ac_score": 0.78,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.78
+    },
+    {
+     "keyword": "상세페이지 제작 AI 추천",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "상세페이지 제작 AI 툴",
+     "ac_score": 0.54,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.54
+    },
+    {
+     "keyword": "제품 상세페이지 AI 제작",
+     "ac_score": 0.48,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.48
+    }
+   ]
   }
  },
  "seed_used": {
@@ -3061,6 +3203,7 @@
   "커서 AI": "2026-11-16T22:13:09",
   "AI 에이전트 만들기": "2026-11-17T04:34:15",
   "GEO 최적화": "2026-11-26T09:37:40",
-  "클로드 코드": "2026-11-26T13:06:49"
+  "클로드 코드": "2026-11-26T13:06:49",
+  "상세페이지 AI": "2026-11-26T18:55:05"
  }
 }
