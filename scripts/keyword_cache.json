@@ -2942,6 +2942,152 @@
      "score": 0.4
     }
    ]
+  },
+  "클로드 코드": {
+   "fetched": "2026-11-26T13:06:48",
+   "candidates": [
+    {
+     "keyword": "클로드 코드 사용방법",
+     "ac_score": 2.9,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.9
+    },
+    {
+     "keyword": "클로드 코드 요금제",
+     "ac_score": 2.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.8
+    },
+    {
+     "keyword": "클로드 코드 클로드 차이",
+     "ac_score": 2.7,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.7
+    },
+    {
+     "keyword": "클로드 코드 무료",
+     "ac_score": 2.6,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 2.6
+    },
+    {
+     "keyword": "클로드 코드 요금제 비교",
+     "ac_score": 1.82,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.82
+    },
+    {
+     "keyword": "클로드 코드 설치",
+     "ac_score": 1.8,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.8
+    },
+    {
+     "keyword": "클로드 코드 요금제 할인",
+     "ac_score": 1.58,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.58
+    },
+    {
+     "keyword": "클로드 코드 무료 사용",
+     "ac_score": 1.52,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.52
+    },
+    {
+     "keyword": "클로드 코드 무료 강의",
+     "ac_score": 1.52,
+     "engines": [
+      "google",
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.52
+    },
+    {
+     "keyword": "클로드 코드 사용법",
+     "ac_score": 1.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "클로드 코드 모드",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "클로드 코드 사용방법 저장소",
+     "ac_score": 0.84,
+     "engines": [
+      "naver"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.84
+    }
+   ]
   }
  },
  "seed_used": {
@@ -2971,6 +3117,7 @@
   "리뷰 답글 AI": "2026-11-16T19:27:34",
   "커서 AI": "2026-11-16T22:13:09",
   "AI 에이전트 만들기": "2026-11-17T04:34:15",
-  "GEO 최적화": "2026-11-26T09:37:40"
+  "GEO 최적화": "2026-11-26T09:37:40",
+  "클로드 코드": "2026-11-26T13:06:49"
  }
 }

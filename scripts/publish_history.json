@@ -188,9 +188,18 @@
       "date": "2026-11-26",
       "slot": "evening",
       "slug": "2026-11-26-naver-cloud-gov-ai-document-permission"
+    },
+    {
+      "title": "클로드 코드 사용방법",
+      "keyword": "클로드 코드 사용방법",
+      "intent": "info",
+      "category": "ai-automation",
+      "date": "2026-11-26",
+      "slot": "lunch",
+      "slug": "2026-11-26-claude-code-setup-skills-guide"
     }
   ],
-  "last_run": "2026-11-26 [evening] (1/2 성공, 702초)",
+  "last_run": "2026-11-26 [lunch] (1/1 성공, 302초)",
   "attempts": {
     "2026-10-29:evening": 1,
     "2026-10-30:morning": 2,
@@ -206,6 +215,7 @@
     "2026-11-17:morning": 3,
     "2026-11-17:night": 1,
     "2026-11-17:lunch": 1,
-    "2026-11-26:evening": 2
+    "2026-11-26:evening": 2,
+    "2026-11-26:lunch": 1
   }
 }
