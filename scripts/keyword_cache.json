@@ -3163,6 +3163,99 @@
      "score": 0.48
     }
    ]
+  },
+  "GPTs 만들기": {
+   "fetched": "2026-11-27T02:54:29",
+   "candidates": [
+    {
+     "keyword": "GPTs 만들기 무료",
+     "ac_score": 1.2,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.2
+    },
+    {
+     "keyword": "GPTs 만들기 도우미",
+     "ac_score": 1.1,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 1.1
+    },
+    {
+     "keyword": "ChatGPT GPTs 만들기",
+     "ac_score": 0.9,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.9
+    },
+    {
+     "keyword": "chat GPTs 만들기",
+     "ac_score": 0.8,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.8
+    },
+    {
+     "keyword": "챗 GPTs 만들기",
+     "ac_score": 0.7,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.7
+    },
+    {
+     "keyword": "챗 GPT GPTs 만들기",
+     "ac_score": 0.6,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.6
+    },
+    {
+     "keyword": "챗지피티 GPTs 만들기",
+     "ac_score": 0.5,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.5
+    },
+    {
+     "keyword": "나만 의 GPTs 만들기",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
+    }
+   ]
   }
  },
  "seed_used": {
@@ -3194,6 +3287,7 @@
   "AI 에이전트 만들기": "2026-11-17T04:34:15",
   "GEO 최적화": "2026-11-26T09:37:40",
   "클로드 코드": "2026-11-26T13:06:49",
-  "상세페이지 AI": "2026-11-26T18:55:05"
+  "상세페이지 AI": "2026-11-26T18:55:05",
+  "GPTs 만들기": "2026-11-27T02:54:30"
  }
 }

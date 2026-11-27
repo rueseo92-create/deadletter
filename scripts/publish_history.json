@@ -224,9 +224,18 @@
       "date": "2026-11-27",
       "slot": "morning",
       "slug": "2026-11-26-ebs-ai-esop-free-ai-platform"
+    },
+    {
+      "title": "GPTs 만들기 무료",
+      "keyword": "GPTs 만들기 무료",
+      "intent": "info",
+      "category": "ai-automation",
+      "date": "2026-11-27",
+      "slot": "lunch",
+      "slug": "2026-11-27-gpts-create-free-account-check"
     }
   ],
-  "last_run": "2026-11-27 [morning] (1/2 성공, 856초)",
+  "last_run": "2026-11-27 [lunch] (1/1 성공, 289초)",
   "attempts": {
     "2026-10-29:evening": 1,
     "2026-10-30:morning": 2,
@@ -247,6 +256,7 @@
     "2026-11-26:night": 1,
     "2026-11-27:evening": 2,
     "2026-11-27:morning": 4,
-    "2026-11-27:night": 1
+    "2026-11-27:night": 1,
+    "2026-11-27:lunch": 1
   }
 }
