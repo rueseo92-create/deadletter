@@ -2015,11 +2015,11 @@
    ]
   },
   "AI 음성 생성": {
-   "fetched": "2026-10-30T16:16:34",
+   "fetched": "2026-11-27T12:36:01",
    "candidates": [
     {
-     "keyword": "AI 음성 생성 프로그램",
-     "ac_score": 3.6,
+     "keyword": "AI 음성 생성 무료",
+     "ac_score": 3.8,
      "engines": [
       "google",
       "naver"
@@ -2027,18 +2027,19 @@
      "volume": null,
      "comp": "",
      "docs": null,
-     "score": 3.6
+     "score": 3.8
     },
     {
-     "keyword": "AI 음성 생성 무료",
-     "ac_score": 1.1,
+     "keyword": "AI 음성 생성 프로그램",
+     "ac_score": 3.4,
      "engines": [
-      "google"
+      "google",
+      "naver"
      ],
      "volume": null,
      "comp": "",
      "docs": null,
-     "score": 1.1
+     "score": 3.4
     },
     {
      "keyword": "구글 AI 음성 생성",
@@ -2061,6 +2062,17 @@
      "comp": "",
      "docs": null,
      "score": 0.5
+    },
+    {
+     "keyword": "음성 파일 생성 AI",
+     "ac_score": 0.4,
+     "engines": [
+      "google"
+     ],
+     "volume": null,
+     "comp": "",
+     "docs": null,
+     "score": 0.4
     },
     {
      "keyword": "제미 나이 AI 음성 생성",
@@ -3277,7 +3289,7 @@
   "n8n 자동화": "2026-10-30T07:14:01",
   "소상공인 마케팅": "2026-10-30T09:03:12",
   "네이버 플레이스 관리": "2026-10-30T15:45:08",
-  "AI 음성 생성": "2026-10-30T16:16:35",
+  "AI 음성 생성": "2026-11-27T12:36:01",
   "AI 코딩 도구": "2026-11-16T01:52:35",
   "Make 자동화": "2026-11-16T02:48:00",
   "AI PPT 만들기": "2026-11-16T11:33:38",
